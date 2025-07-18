@@ -1,6 +1,6 @@
 # escher-web
 
-This is the repository that contains source code for the [website for escher](https://github.com/trishullab/escher) hosted on [https://trishullab.github.io/escher-web/](https://trishullab.github.io/escher-web/).
+This is the repository that contains source code for the [website for formula-code](https://github.com/formula-code) hosted on [https://formula-code.github.io/](https://formula-code.github.io/).
 
 
 This is the general workflow I follow to convert a slide deck into a scrollytelling website:
@@ -46,6 +46,7 @@ This is the general workflow I follow to convert a slide deck into a scrollytell
   ```
 
 
-Check out the source code for COSMOS and LaSR's website for similar examples. Available here:
+Check out the source code for COSMOS, ESCHER, and LaSR website for similar examples. Available here:
  - [https://trishullab.github.io/cosmos-web/](https://trishullab.github.io/cosmos-web/)
   - [https://trishullab.github.io/lasr-web/](https://trishullab.github.io/lasr-web/)
+  - [https://trishullab.github.io/escher-web/](https://trishullab.github.io/escher-web/)
