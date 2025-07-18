@@ -1,0 +1,420 @@
+	<section class="section">
+		<div class="container">
+			<div class="columns is-vcentered">
+				<div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Discovering visual concepts</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+						<p>
+							In many scientific fields, perceptual reasoning doesn't come naturally. Sometimes the
+							features of an image aren't obvious to the human eye. Other times the questions we pose
+							demand more than instinct, requiring deliberate analysis. As a result, scientists must learn
+							how to identify subtle traits by building domain knowledge and seeking constant feedback
+							from peers. Let's look at a concrete example from ecology.
+						</p>
+						<p>
+							In this iNaturalist exchange [<a
+								href="https://www.inaturalist.org/observations/1970016">Source</a>], an experienced
+							ecologist uploads a geo-tagged photo of a lizard, initially misidentifying it as a Florida
+							Scrub Lizard (<em>Sceloporus woodi</em>). Another user, a trained herpetologist, corrects
+							the identification, suggesting that the lizard is actually a Northern Curly-tailed Lizard
+							(<em>Leiocephalus carinatus</em>). They catch a distinguishing morphological detail:
+							Sceloporus (the family of the Florida Scrub Lizard) do not have a strongly <a
+								href="https://en.wikipedia.org/wiki/Keeled_scales">keeled</a> tail. The experienced
+							ecologist agrees with the correction and explains that they were focusing on the lizard's
+							color patterning, rather than the scales.
+						</p>
+						<p>
+							We are interested in the question: <strong>how can machine perception systems learn to
+								identify such subtle visual concepts?</strong>
+						</p>
+					</div>
+				</div>
+				<!-- Image. -->
+				<div class="column content">
+					<img src="static/concept-learning-in-the-wild.svg" loading="eager">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<div class="columns is-vcentered">
+				<div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Visual Programming</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left">
+						<p>
+							Visual programming attempts to decompose complex perceptual reasoning problems into
+							a logical combination of simpler perceptual tasks that can be solved using off-the-shelf
+							vision
+							foundation models. <a href="https://github.com/allenai/visprog">Such</a> <a
+								href="https://viper.cs.columbia.edu/">exciting</a> <a
+								href="https://glab-caltech.github.io/vadar/">works</a> leverage the code generation
+							capabilities of large language models (LLMs) along with a pre-specified API of visual
+							foundation models to generate code that can be executed to answer perceptual reasoning
+							questions.
+						</p>
+					</div>
+				</div>
+				<!-- Image. -->
+				<div class="column content">
+					<video src="static/vipergpt.webm" autoplay loop muted playsinline></video>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<h2 class="title is-2">Visual Programming's decoupling bottleneck</h2>
+			<!-- Method. -->
+			<div class="columns is-centered" id="cbd">
+				<div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Constructing visual programs for scientific
+						images</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							However, such approaches inherently suffer from <em>the decoupling of the program
+								synthesizer and the underlying vision foundation models</em>.
+							The program synthesizer is trained to generate deterministic code, and the stochastic nature
+							of the vision foundation model is hidden away by the API. This decoupling leads to a
+							disconnect between how the program synthesizer assumes the vision foundation model will
+							behave and how it actually behaves on
+							real-world images.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Our Hypothesis</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Our main goal is to understand whether we can overcome this decoupling by using the vision
+							foundation model as a critic to
+							guide the program synthesizer.
+						</p>
+					</div>
+				</div>
+				<!-- Image. -->
+				<!-- Make sure image fits in the container. -->
+				<div class="column content">
+					<img src="static/visual-programming-frames/1.svg" id="updateableFigure" loading="eager">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<h2 class="title is-2"><span class="formulacode">FormulaCode</span>: Evaluating Agentic Superoptimization on
+				Large Codebases</h2>
+			<!-- Method. -->
+			<div class="columns is-centered" id="FormulaCode-iterations-loop">
+				<div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Task: Fine-grained Image Classification</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							<span class="formulacode">FormulaCode</span> focuses on the task of fine-grained image
+							classification.
+							In this task, we're given an image and a set of classes (in natural language). Our goal
+							is to classify the image into one of the classes.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Prior work: (1) Visual concept-bottleneck models
+					</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Prior work in this area begins by asking an LLM to decompose the complex categorization task
+							into a series of simpler perceptual tasks.
+						</p>
+						<p>
+							For example, here, the LLM would be asked two questions (1) What does a <em>donut</em> look
+							like?
+							(2) What does a <em>bagel</em> look like?
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Prior work: (2) Visual concept-bottleneck models
+					</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Then, a CLIP-based VLM is used to estimate how well the image matches the visual concepts.
+							The final categorization is decided
+							by choosing the class whose average visual concept score is highest. Such approaches have
+							been shown to work well in practice compared
+							to naively using the class-image similarity.
+						</p>
+						<p>
+							There are other benefits too: (1) The visual concepts are interpretable, (2) The visual
+							concepts can be reused across different tasks, (3) The visual concepts can be used to
+							decompose otherwise out-of-distribution categorization tasks into in-distribution
+							classification tasks.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Prior work: (3) Visual concept-bottleneck models
+						- Limitations</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							However, on this input, the LLM generated visual concepts, while faithful to the
+							categorization task, yield very different results
+							when evaluated by the VLM.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Prior work: (4) Visual concept-bottleneck models
+						- Limitations</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							We hypothesize that such approach suffers from the same weakness that zero-shot visual
+							programming approaches suffer from: the LLMs decomposition is decoupled from the VLM's
+							performance.
+							The VLM and the LLM had very different training methodologies and hence, have different
+							inductive biases.
+							These biases can lead to the LLM generating visual concepts that, while faithful to the
+							categorization task, prove to be detrimental to the VLM's performance.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Concept Library: Introduction</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							<span class="formulacode">FormulaCode</span> attempts to overcome this limitation by
+							instantiating a
+							concept library that is iteratively refined using the VLM's feedback.
+						</p>
+						<p>
+							This concept library is a data structure that stores the visual concepts generated by the
+							LLM for each class.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Concept Library: Instantiation</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Following previous work, we generate concepts using an LLM conditioned on the class names
+							with a slight modification:
+							the LLM is also given access to the concept library. Initially, the concept library is empty
+							so this is equivalent to
+							how prior work uses the LLM.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Concept Library: VLM Forward Pass</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							To evaluate the generated concepts, <span class="formulacode">FormulaCode</span> simply
+							passes the
+							concepts to the underlying VLM.
+							However, instead of directly using the VLM outputs to predict the class, we use the VLM
+							outputs to better understand
+							what classes get confused with each other, and how the concept library can be improved to
+							reduce this confusion.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Feedback Generation: (1) Disambiguation
+						Heuristic</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							To generate feedback, <span class="formulacode">FormulaCode</span> attempts to find classes
+							that are
+							confused with each other.
+							If we have access to the ground truth labels, this can be achieved by constructing a
+							confusion matrix of the VLM outputs.
+						</p>
+						<p>
+							However, <span class="formulacode">FormulaCode</span> does not have access to the ground
+							truth labels.
+							Instead, <span class="formulacode">FormulaCode</span> analyzes the raw similarity scores for
+							each
+							image-class pair to make this decision. Generally, this necessitates a well-calibrated
+							backbone VLM model, and there are many heuristics to achieve this.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Feedback Generation: (2) Disambiguation
+						Heuristic</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Here, we showcase one such heuristic: <em>top-k pseudo-confusion</em>. This heuristic
+							selects the
+							top-k classes with the highest image-text similarity scores for each image, and identifies
+							the classes
+							that are consistently ranked within the top-k most-similar classes across all images. The
+							intuition is that if the VLM
+							consistently ranks two classes within the top-k most-similar classes for a given image, it
+							is likely that the VLM
+							is confused between these two classes.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Feedback Generation: (3) Example</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							For example, in this image, the pseudo-confusion matrix can be used to identify two classes
+							of birds in a fine-grained bird
+							classification dataset that are confused with each other: a <em>Slaty backed Gull</em> and a
+							<em>California Gull</em>.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Feedback Generation: (4) Disambiguation
+						Resolution</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Once <span class="formulacode">FormulaCode</span> identifies the classes that are confused
+							with each
+							other, it attempts to resolve this confusion by generating new concepts for the confused
+							classes. If classes are confused more than once, the resolution query reflects the history
+							of past disambiguations, as well as the VLM's feedback score after each disambiguation.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Concept Library: Feedback loop</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							This loop is repeated for a fixed number of iterations, and usually yields a concept library
+							that is much more
+							interpretable and useful than the initial concept library.
+						</p>
+						<p>
+							In our running example, this enables the discovery of visual concepts that help distinguish
+							between the donut and the bagel.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Feedback Generation: (5) Underlying Insight</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							<span class="formulacode">FormulaCode</span>'s key insight is in leveraging the concept
+							library to
+							couple the LLM's generation and the VLM's responses.
+							A VLM with a specialized concept library produces more fine-grained class disambiguation
+							feedback, prompting the LLM to uncover even finer concepts, which leads to an even more
+							specialized library for the next iteration. Like other <a
+								href="https://arxiv.org/abs/2006.08381">library</a> <a
+								href="https://arxiv.org/abs/2106.11053">learning</a> <a
+								href="https://arxiv.org/abs/2310.19791">algorithms</a>, ideally -- while the LLM
+							disambiguates concepts well and the VLM remains sensitive to them -- this self-reinforcing
+							loop continues until no further relevant concepts can be identified.
+					</div>
+				</div>
+				<!-- Image. -->
+				<div class="column content">
+					<img src="static/FormulaCode-iterations-frames/1.svg" id="updateableFigure" loading="eager">
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container">
+			<h2 class="title is-2"><span class="formulacode">FormulaCode</span> Results</h2>
+			<!-- Method. -->
+			<div class="columns is-centered" id="FormulaCode-results">
+				<div class="column is-max-mobile is-max-tablet is-max-desktop is-max-widescreen article">
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Fine-grained evolution w/ CBMs</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							Generally, algorithms that use intermediate concepts for decomposing perceptual tasks are
+							known as concept-bottleneck models (CBMs). Our running baseline so far -- using an LLM to
+							generate a set of textual concepts -- can also be expressed as a CBM.
+						</p>
+						<p>
+							<span class="formulacode">FormulaCode</span> is a meta-algorithm that is agnostic to the
+							underlying
+							choice of CBM. Furthermore, it doesn't
+							require any human provided concepts. We evaluated how <span
+								class="formulacode">FormulaCode</span>
+							behaves in two scenarios (more studies in the paper!):
+						<ol>
+							<li><em>Does evolving CBMs with <span class="formulacode">FormulaCode</span> improve the
+									performance
+									of the CBM?</em>: We compared the performance of a CBM in its first iteration with
+								the performance of the CBM after iterating with <span
+									class="formulacode">FormulaCode</span>. We
+								found that <span class="formulacode">FormulaCode</span> improves the performance of the
+								CBM in all
+								cases. The delta improvement depended on many factors that are discussed in greater
+								details in further experiments.</li>
+							<li><em>Does <span class="formulacode">FormulaCode</span> outperform the LLM's zero-shot
+									generated
+									concepts?</em>: Inherently, <span class="formulacode">FormulaCode</span> has an
+								unfair
+								advantage over the LLM's zero-shot generated concepts as it samples more concepts in
+								each iteration. In this experiment, we queried the LLM for a set of concepts that was
+								the same size as the number of concepts in <span
+									class="formulacode">FormulaCode</span>'s final
+								concept library. We found that <span class="formulacode">FormulaCode</span> outperformed
+								the LLM's
+								zero-shot generated concepts in all cases.</li>
+						</ol>
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Qualitative Results (1)</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							We start with an image of a <em>Male Ring-necked pheasant</em>. This is a category from the
+							North American birds dataset, which contains over 400 species of birds.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Qualitative Results (2)</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							With no iterations, the underlying VLM mispredicts this image as a <em>Female Ring-necked
+								pheasant</em>. Since this is a context-bottlenecked model, we can inspect the underlying
+							concepts to better understand the model's prediction.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Qualitative Results (3)</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							When examining the concept activations for the <em>Male Ring-necked pheasant</em>, we notice
+							a substantially lower overall score—likely because the LLM generates concepts for each class
+							in isolation. As a result, highly similar concepts may end up with slightly different
+							initializations, which can alter prediction outcomes. Moreover, these LLM-generated concepts
+							may lack the necessary discriminative power to distinguish between closely related classes
+							because they are unaware of which other classes are present in the dataset.
+						</p>
+					</div>
+					<h3 class="title is-size-6-mobile is-size-4-tablet">Qualitative Results (4)</h3>
+					<div class="content is-size-7-mobile is-size-6-tablet has-text-left step">
+						<p>
+							After five iterations with <span class="formulacode">FormulaCode</span>, the VLM correctly
+							predicts
+							the true class of the image. This is because we are able to identify that the underlying VLM
+							is getting confused between a <em>Male</em> and a <em>Female ring-necked pheasant</em>, and
+							generate concepts that resolve this confusion. Specifically, if we inspect the new most
+							activated concepts, we find that
+							the LLM identifies that a Male ring-necked pheasant has a <em>metallic green head and
+								neck</em>, which proves to be a very discriminative concept for the VLM.
+						</p>
+						<p>
+							<strong>Limitations</strong>: <span class="formulacode">FormulaCode</span> currently has
+							three main
+							constraints:
+
+						<ol>
+							<li>
+								<strong>Factual Accuracy</strong>: Because we rely on zero-shot queries from large
+								language models,
+								<span class="formulacode">FormulaCode</span> cannot guarantee the accuracy or
+								correctness of the
+								concepts
+								in its library. Moreover, concepts flagged as important may reflect biases from the
+								VLM's underlying
+								training process and risk misleading researchers.
+							</li>
+							<li>
+								<strong>Generality</strong>: The pseudo-confusion matrix approach is limited in fidelity
+								and
+								not well-suited for general-purpose use. Generating feedback for broader visual
+								reasoning
+								tasks remains a challenge.
+							</li>
+							<li>
+								<strong>VLM Robustness</strong>: CLIP-based visual language models (VLMs) are imperfect,
+								as identified in
+								<a href="https://arxiv.org/abs/2503.08723">recent studies</a>. Since <span
+									class="formulacode">FormulaCode</span> is largely model-agnostic, it would be
+								worthwhile to
+								explore how more advanced VLMs might improve its performance.
+							</li>
+						</ol>
+						</p>
+					</div>
+				</div>
+				<!-- Image. -->
+				<div class="column content">
+					<img src="static/FormulaCode-qualitative-results-frames/1.svg" id="updateableFigure"
+						loading="eager">
+				</div>
+			</div>
+		</div>
+	</section>

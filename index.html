@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="🏎️: Evaluating Agentic Superoptimization on Large Codebases">
+	<meta name="keywords"
+		content="FormulaCode, Visual Programming, Computer Vision, Context bottleneck Models, Scientific Discovery, Neurosymbolic Learning, Program Synthesis, Computer Vision">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>FormulaCode: Evaluating Agentic Superoptimization on Large Codebases</title>
+
+	<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+
+		gtag('js', new Date());
+		gtag('config', 'G-PYVRSFMDRL');
+	</script>
+
+	<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+	<link rel="stylesheet" href="./static/css/bulma.min.css">
+	<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+	<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+	<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+	<link rel="stylesheet" href="./static/css/index.css">
+	<link rel="stylesheet" href="./static/css/scrollytelling.css">
+	<link rel="icon" href="https://fav.farm/🌀" type="image/x-icon">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+	<script defer src="./static/js/fontawesome.all.min.js"></script>
+	<script src="./static/js/bulma-carousel.min.js"></script>
+	<script src="./static/js/bulma-slider.min.js"></script>
+	<script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+	<section class="hero">
+		<div class="hero-body">
+			<div class="container is-max-desktop">
+				<div class="columns is-centered">
+					<div class="column has-text-centered">
+						<h1 class="title is-1 publication-title"><span class="formulacode">FormulaCode</span>:
+							Evaluating Agentic Superoptimization on Large Codebases </h1>
+						<div class="is-size-5 publication-authors">
+							<span class="author-block">
+								<a href="https://atharvas.net">Atharva Sehgal</a><sup>1*</sup>,</span>
+							<span class="author-block">
+								<a href="https://www.linkedin.com/in/jamesahou/">James Hou</a><sup>3*</sup>,</span>
+							<span class="author-block">
+								<a href="https://www.cs.utexas.edu/~swarat">Swarat Chaudhuri</a><sup>1</sup>,
+							</span>
+							<span class="author-block">
+								<a href="https://www.jenjsun.com/">Jennifer Sun</a><sup>2</sup>,</span>
+							<span class="author-block">
+								<a href="https://www.cms.caltech.edu/people/yyue/">Yisong Yue</a><sup>3</sup></span>
+						</div>
+						<div class="is-size-5 publication-authors">
+							<span class="author-block"><sup>1</sup>UT Austin,</span>
+							<span class="author-block"><sup>2</sup>Cornell </span>
+							<span class="author-block"><sup>3</sup>Caltech</span>
+							<span class="author-block"><sup>*</sup>Equal Contribution</span>
+						</div>
+
+						<div class="column has-text-centered">
+							<div class="publication-links">
+								<span class="link-block">
+									<a href="static/paper.pdf"
+										class="external-link button is-normal is-rounded is-dark">
+										<span class="icon">
+											<i class="fas fa-file-pdf"></i>
+										</span>
+										<span>Paper</span>
+									</a>
+								</span>
+								<!-- Code Link. -->
+								<span class="link-block">
+									<a href="https://github.com/formula-code"
+										class="external-link button is-normal is-rounded is-dark">
+										<span class="icon">
+											<i class="fab fa-github"></i>
+										</span>
+										<span>Code</span>
+									</a>
+								</span>
+								<!-- <span class="link-block">
+									<a href="https://example.com"
+										class="external-link button is-normal is-rounded is-dark">
+										<span class="icon">
+											<i class="fas fa-external-link-alt"></i>
+										</span>
+										<span>Short Slide Deck</span>
+									</a>
+								</span> -->
+								<span class="link-block">
+									<a href="./static/icmlpral-poster.pdf"
+										class="external-link button is-normal is-rounded is-dark">
+										<span class="icon">
+											<i class="fas fa-external-link-alt"></i>
+										</span>
+										<span>ICML-PRAL Poster</span>
+									</a>
+								</span>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="hero teaser">
+		<div class="container is-max-desktop">
+			<div class="hero-body">
+				<img src="./static/images/teaser.svg" style="max-width: 100%; height: auto;" loading="eager">
+				<div class="subtitle has-text-centered is-size-6">
+					Test cases streamline performance evaluation but constrain coding agents (e.g., <a
+						href="https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/">AlphaEvolve</a>)
+					to a pass/fail reward – a signal too sparse for fostering iterative optimizations. <span
+						class="formulacode">FormulaCode</span> introduces a live
+					repository-level benchmark that complements existing work (In gray (<a
+						href="https://www.swebench.com/">SWE-Bench</a>)) by challenging agents to
+					optimize 451 real-world performance bottlenecks against human solutions drawn from
+					community-maintained benchmarks
+					(in light blue). These benchmarks provide evaluation functions that capture fine-grained performance
+					insights, are less
+					susceptible to data leakage, and expose a larger optimization surface to coding agents.
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+
+	<section class="section">
+		<div class="container is-max-desktop">
+			<!-- Abstract. -->
+			<div class="columns is-centered has-text-centered">
+				<div class="column is-four-fifths">
+					<h2 class="title is-3">Abstract</h2>
+					<div class="content has-text-justified">
+						<p>
+							Rapid advances in LLM agents have shown the ability to optimize code using continuous
+							objective functions — a significant leap beyond traditional code generation techniques.
+							However, there is an urgent need for novel benchmarks that can effectively measure this
+							capability and translate it into real-world impact. Current code benchmarks, which often
+							rely on binary pass/fail outcomes, offer a limited evaluation framework that falls short of
+							capturing the full potential of these emerging capabilities.
+						</p>
+						<p>
+							To bridge this gap, we introduce <span class="formulacode">FormulaCode</span>, a novel
+							benchmark designed for evaluating agentic superoptimization on large codebases, with a focus
+							on real-world performance optimization. Constructed from a dataset of 451 real-world
+							performance bottlenecks automatically mined from Github, FormulaCode enables comprehensive
+							testing of an agent's ability to triage, diagnose, and resolve inefficiencies in realistic
+							software environments.
+						</p>
+						<p>
+							FormulaCode proves to be a challenging benchmark for frontier LLMs and agentic frameworks,
+							with unrestricted repository exploration emerging as a principal component for finding
+							performance inefficiencies. By introducing FormulaCode, our goal is to drive the development
+							of next-generation optimization algorithms that meet the rigorous demands of real-world
+							software projects.
+						</p>
+					</div>
+				</div>
+			</div>
+			<!--/ Abstract. -->
+		</div>
+	</section>
+
+
+	<section class="section">
+		<div class="container is-max-desktop">
+			<div class="columns is-centered has-text-centered">
+				<div class="column is-four-fifths">
+					<h2 class="title is-3">⚠️ Work in progress. Check back in a few days for updates!</h2>
+					<div class="content has-text-justified">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="section">
+		<div class="container is-max-desktop">
+			<div class="columns is-centered">
+				<div class="column is-full-width">
+					<h2 class="title is-3">Related Links</h2>
+
+					<div class="content has-text-left">
+						<p>
+							This project would not be possible without the excellent work of the community. These are
+							some relevant papers to better understand the
+							premise of our work:
+						</p>
+						<ul>
+							<li><a href="https://arxiv.org/abs/2310.06770">SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</a> </li>
+							<li><a href="https://arxiv.org/abs/2401.03065">CRUXEval: Code Reasoning, Understanding, and Execution Evaluation</a> </li>
+							<li><a href="https://deepmind.google/discover/blog/alphaevolve-a-gemini-powered-coding-agent-for-designing-advanced-algorithms/">AlphaEvolve: A Gemini-powered coding agent for designing advanced algorithms</a> </li>
+							<li><a href="https://arxiv.org/abs/2210.05050 ">Neurosymbolic Programming for Science</a>
+							</li>
+						</ul>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+
+	<section class="section" id="BibTeX">
+		<div class="container is-max-desktop content">
+			<h2 class="title">BibTeX</h2>
+			<p>
+				If you found this post interesting, please read <a href="static/paper.pdf">our
+					paper</a> for mathematical details and
+				experimental results. You can cite our paper as follows:
+			</p>
+			<pre><code>@misc{sehgal2025selfevolvingvisualconceptlibrary,
+	title={Evaluating Agentic Superoptimization on Large Codebases}, 
+	author={Atharva Sehgal and Patrick Yuan and Ziniu Hu and Yisong Yue and Jennifer J. Sun and Swarat Chaudhuri},
+	year={2025},
+	eprint={????.?????},
+	archivePrefix={arXiv},
+	primaryClass={cs.CV},
+	url={https://arxiv.org/abs/????.?????}, 
+}</code></pre>
+		</div>
+	</section>
+
+	<footer class="footer">
+		<div class="container">
+			<div class="content has-text-centered">
+				<a class="icon-link" href="static/paper.pdf">
+					<i class="fas fa-file-pdf"></i>
+				</a>
+				<a class="icon-link" href="https://github.com/formula-code" class="external-link" disabled>
+					<i class="fab fa-github"></i>
+				</a>
+			</div>
+			<div class="columns is-centered">
+				<div class="column is-8">
+					<div class="content">
+						<p>
+							This template is based on the <a href="https://nerfies.github.io/">Nerfiles</a> project
+							page.
+							The source code is available <a href="https://github.com/nerfies/nerfies.github.io">here</a>
+							and is
+							licensed under a <a rel="license"
+								href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+								Commons Attribution-ShareAlike 4.0 International License</a>. I also make heavy use of
+							the
+							<a href="https://github.com/russellsamora/scrollama">Scrollama.js</a> package. Please
+							remember
+							to cite either the <a href="https://nerfies.github.io/">Nerfiles</a> website or
+							<a href="https://github.com/trishullab/FormulaCode-web">this website</a> if you use this
+							template!
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script src="./static/css/d3.min.js"></script>
+	<script src="./static/scrollama.js"></script>
+	<script src="./static/js/scrollytelling.js"></script>
+	<script>
+		// Init scrollable sections.
+		mobileCorrections();
+		// init("#scientific-discovery");
+		// init("#cbd");
+		// init("#FormulaCode-iterations-loop");
+		// init("#FormulaCode-results");
+	</script>
+</body>
+
+</html>
