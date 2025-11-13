@@ -11,7 +11,9 @@ const preprocess = sveltePreprocess({
 const config = {
 	preprocess,
 	kit: {
-		adapter: adapterStatic()
+		adapter: adapterStatic({
+			fallback: "200.html"
+		})
 	},
 	vitePlugin: {
 		// experimental: {

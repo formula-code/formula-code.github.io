@@ -1,6 +1,7 @@
 import allBenchmarkData from "$data/website_data.csv";
 
 export const ssr = false;
+export const prerender = false;
 
 export function load({ params, url }) {
 	const recordingPath = params.recordingPath || "";

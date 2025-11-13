@@ -1,6 +1,8 @@
 import path from "node:path";
 import { readFile } from "node:fs/promises";
 
+export const prerender = false;
+
 const recordingsRoot = path.resolve("src/data/recordings");
 
 export async function GET({ params }) {

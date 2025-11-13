@@ -26,7 +26,9 @@
     let isMounted;
     let introAgentsRef;
 
-    const METHODS_ANCHOR = "#methods";
+    const heroCTA = copy?.paperHeader?.hero?.cta || {};
+    const PAPER_LINK =
+        typeof heroCTA.href === "string" && heroCTA.href.trim().length > 0 ? heroCTA.href : "#";
 
     onMount(() => {
         setTimeout(() => {
@@ -59,7 +61,7 @@
         if (index === 1 || index === 2) {
             return html.replace(
                 /<span class=instructions>([\s\S]*?)<\/span>/g,
-                `<a class="methods-link" href="${METHODS_ANCHOR}"><span class="instructions">$1</span></a>`
+                `<a class="methods-link" href="${PAPER_LINK}" target="_blank" rel="noopener noreferrer"><span class="instructions">$1</span></a>`
             );
         }
         return html;
