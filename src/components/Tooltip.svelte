@@ -14,7 +14,7 @@
 	$: isMobile = w <= 500;
 
     function tooltipCloseClick() {
-        console.log("TOOLTIP close clicked");
+        // console.log("TOOLTIP close clicked");
   		lockedSelection.set(false);
 		tooltipVisible.set(false);
         tooltipType.set(null);
@@ -61,14 +61,14 @@
 		};
 
 		if (typeof document !== 'undefined') {
-            console.log("TOOLTIP: add global click listener");
+            // console.log("TOOLTIP: add global click listener");
 			document.addEventListener("click", handleClick, true);
 		}
 	});
 
 	onDestroy(() => {
 		if (typeof document !== 'undefined' && handleClick) {
-            console.log("TOOLTIP: remove global click listener");
+            // console.log("TOOLTIP: remove global click listener");
 			document.removeEventListener("click", handleClick, true);
 		}
 	});
