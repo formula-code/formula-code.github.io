@@ -163,7 +163,7 @@ onMount(() => {
 	.breadcrumbs h2 {
 		margin: 0.25rem 0;
 		font-size: 1.5rem;
-		font-family: var(--sans, "Space Grotesk", system-ui);
+		font-family: var(--sans);
 	}
 
 	.breadcrumbs .label {
@@ -176,7 +176,7 @@ onMount(() => {
 
 	.path {
 		margin: 0;
-		font-family: var(--mono, "IBM Plex Mono", monospace);
+		font-family: var(--mono);
 		font-size: 0.9rem;
 		color: #b2afa6;
 		word-break: break-all;
@@ -251,7 +251,7 @@ min-width: 0;
 	border: 1px solid rgba(255, 255, 255, 0.15);
 	border-radius: 4px;
 	padding: 0.35rem 0.5rem;
-	font-family: var(--mono, "IBM Plex Mono", monospace);
+	font-family: var(--mono);
 	/* truncate long selected text instead of overflowing */
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -276,7 +276,7 @@ min-width: 0;
 		border: 1px solid rgba(255, 255, 255, 0.15);
 		border-radius: 4px;
 		padding: 0.35rem 0.5rem;
-		font-family: var(--mono, "IBM Plex Mono", monospace);
+		font-family: var(--mono);
 	}
 
 .code-wrapper {
@@ -315,7 +315,7 @@ min-width: 0;
 }
 
 	.recording-path {
-		font-family: var(--mono, "IBM Plex Mono", monospace);
+		font-family: var(--mono);
 		font-size: 0.8rem;
 		color: #a5a5a0;
 		margin: 0;
@@ -324,7 +324,7 @@ min-width: 0;
 
 	.error {
 		color: #f6e7d1;
-		font-family: var(--sans, system-ui);
+		font-family: var(--sans);
 		font-size: 1rem;
 		text-align: center;
 	}

@@ -27,6 +27,10 @@
 const isAtLeast = step => chartScrollIndex === "exit" || (typeof chartScrollIndex === "number" && chartScrollIndex >= step);
 const isStep = step => typeof chartScrollIndex === "number" && chartScrollIndex === step;
     $: isExplorePhase = (typeof chartScrollIndex === "number" && chartScrollIndex >= 14) || chartScrollIndex == "exit";
+    const THRESHOLD_EPSILON = 1e-3;
+    const withinEpsilon = (value, target = 1) => Math.abs((Number(value) || target) - target) <= THRESHOLD_EPSILON;
+    $: showAgentThresholdLine = !withinEpsilon($thresholdAgentNum);
+    $: showOracleThresholdLine = !withinEpsilon($thresholdOracleNum);
 
     $: highlightPoint = highlightBenchmark && typeof highlightBenchmark?.[xKey] === "number" && typeof highlightBenchmark?.[yKey] === "number"
         ? { x: highlightBenchmark[xKey], y: highlightBenchmark[yKey] }
@@ -495,8 +499,12 @@ const isStep = step => typeof chartScrollIndex === "number" && chartScrollIndex 
     <line class="oracleAVG-gray" x1={0} y1={$yScale(1.0)} x2={$width} y2={$yScale(1.0)} />
     <line class="agentAVG-gray" x1={$xScale(1.0)} y1={0} x2={$xScale(1.0)} y2={$height} />
 
-    <line class="oracleAVG" x1={0} y1={$yScale($thresholdOracleNum)} x2={$width} y2={$yScale($thresholdOracleNum)} />
-    <line class="agentAVG" x1={$xScale($thresholdAgentNum)} y1={0} x2={$xScale($thresholdAgentNum)} y2={$height} />
+    {#if showOracleThresholdLine}
+        <line class="oracleAVG" x1={0} y1={$yScale($thresholdOracleNum)} x2={$width} y2={$yScale($thresholdOracleNum)} />
+    {/if}
+    {#if showAgentThresholdLine}
+        <line class="agentAVG" x1={$xScale($thresholdAgentNum)} y1={0} x2={$xScale($thresholdAgentNum)} y2={$height} />
+    {/if}
     <text
         class="label"
         x={$width-20}
@@ -593,7 +601,9 @@ const isStep = step => typeof chartScrollIndex === "number" && chartScrollIndex 
     g.trendline path {
         stroke: var(--wine-tan);
         fill: none;
-        stroke-width: 2;
+        stroke-width: 1.25;
+        stroke-dasharray: 4 6;
+        stroke-linecap: round;
     }
 
     .oracleAVG, .agentAVG {
@@ -602,9 +612,10 @@ const isStep = step => typeof chartScrollIndex === "number" && chartScrollIndex 
     }
 
     .oracleAVG-gray, .agentAVG-gray {
-        stroke-width: 1;
+        stroke-width: 0.85;
         stroke: var(--wine-dark-tan);
-        stroke-dasharray: 3;
+        stroke-dasharray: 2 6;
+        stroke-linecap: round;
     }
 
     .median-markings {

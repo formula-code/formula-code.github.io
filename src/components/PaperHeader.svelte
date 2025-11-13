@@ -196,7 +196,7 @@
 
 	/* Title */
 	.paper-title {
-		font-family: "Tiempos", Georgia, serif;
+		font-family: var(--serif);
 		font-size: var(--40px);
 		font-weight: 700;
 		line-height: 1.2;
@@ -206,7 +206,7 @@
 
 	/* Authors */
 	.authors {
-		font-family: "National 2", -apple-system, system-ui, sans-serif;
+		font-family: var(--sans);
 		font-size: var(--18px);
 		line-height: 1.6;
 		margin: 0 0 1rem;
@@ -235,7 +235,7 @@
 
 	/* Affiliations */
 	.affiliations {
-		font-family: "National 2", -apple-system, system-ui, sans-serif;
+		font-family: var(--sans);
 		font-size: var(--14px);
 		line-height: 1.6;
 		margin: 0 0 2rem;
@@ -265,7 +265,7 @@
 		color: var(--wine-tan);
 		text-decoration: none;
 		border-radius: 2rem;
-		font-family: "National 2", -apple-system, system-ui, sans-serif;
+		font-family: var(--sans);
 		font-size: var(--16px);
 		font-weight: 500;
 		transition: all 0.2s ease;
@@ -302,7 +302,7 @@
 	}
 
 	.abstract-title {
-		font-family: "National 2", -apple-system, system-ui, sans-serif;
+		font-family: var(--sans);
 		font-size: var(--24px);
 		font-weight: 700;
 		margin: 0 0 1.5rem;
@@ -310,7 +310,7 @@
 	}
 
 	.abstract-content {
-		font-family: "National 2", -apple-system, system-ui, sans-serif;
+		font-family: var(--sans);
 		font-size: var(--18px);
 		line-height: 1.65;
 		text-align: left;
