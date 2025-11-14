@@ -279,4 +279,11 @@
 		background: orange;
 		opacity: 0.5;
 	}
+
+	/* Hide arrow buttons on mobile/tablet where they render poorly */
+	@media (max-width: 900px) {
+		button {
+			display: none;
+		}
+	}
 </style>

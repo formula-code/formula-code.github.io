@@ -117,18 +117,26 @@
 <style>
     nav {
         width: 100%;
-        overflow-x: hidden;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
         position: sticky;
         top: 0;
         display: flex;
         flex-direction: row;
-        overflow: hidden;
         min-height: 5rem;
+        height: auto;
         pointer-events: auto;
         cursor: pointer;
         z-index: 1000;
-        background: rgba(24,26,31,0.98);
+        background: rgba(24,26,31,1);
         border-bottom: 1px solid var(--wine-dark-gray);
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    nav::-webkit-scrollbar {
+        display: none;
     }
 
     .agent-group {
@@ -198,9 +206,34 @@
         transition: all var(--250ms);
     }
 
+    /* Flex spacers for centering when content fits */
+    nav::before,
+    nav::after {
+        content: "";
+        flex: 1 0 0;
+    }
+
+    .agent-group {
+        flex: 0 0 auto; /* don't stretch cards */
+        scroll-snap-align: center; /* snap each card to center */
+    }
+
     @media (max-width: 700px) {
+        nav {
+            min-height: 4rem;
+            justify-content: flex-start; /* Remove centering on mobile to avoid white space */
+        }
+
+        /* Remove flex spacers on mobile */
+        nav::before,
+        nav::after {
+            display: none;
+        }
+
 		.agent-group {
             min-width: 100px;
+            margin: 0 0.5rem;
+            padding: 1rem 0 0.75rem 0;
         }
 
         .label-wrapper {
@@ -217,23 +250,5 @@
             transition: all var(--250ms);
         }
 	}
-    nav {
-    /* existing styles ... */
-    display: flex;
-    justify-content: center;           /* center when content fits */
-    scroll-snap-type: x mandatory;     /* optional: nice snap feel */
-    }
-
-    /* invisible flex spacers so content is centered when it doesn't overflow */
-    nav::before,
-    nav::after {
-    content: "";
-    flex: 1 0 0;
-    }
-
-    .agent-group {
-    flex: 0 0 auto;                    /* don't stretch cards */
-    scroll-snap-align: center;         /* optional: snap each card to center */
-    }
 
 </style>

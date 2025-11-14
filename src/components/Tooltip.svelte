@@ -254,15 +254,15 @@
     .left-column {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: 0.1rem;
         padding-right: 1rem;
     }
 
     .recording-section {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-        margin-top: 1rem;
+        gap: 0.1rem;
+        margin-top: 0.25rem;
     }
 
     .recording-section h4 {

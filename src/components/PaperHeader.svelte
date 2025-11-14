@@ -64,12 +64,25 @@
 			: [
 					{ label: "Agent", key: "agent" },
 					{ label: "Module Advantage", key: "moduleAdvantage" },
-					{ label: "Wins", key: "wins" },
-					{ label: "Losses", key: "losses" }
 				];
 	const leaderboardRows = Array.isArray(leaderboardConfig.rows) ? leaderboardConfig.rows : [];
 
 	const hero = headerCopy.hero || {};
+
+	// Helper function to get cell class based on value - matching Leaderboard.svelte
+	function getCellClass(value, columnKey) {
+		// Only apply color classes to numeric score columns (not agent names)
+		if (columnKey === 'agent') return '';
+
+		if (value === null || value === undefined || value === '—') return '';
+
+		const numValue = typeof value === 'string' ? parseFloat(value) : value;
+		if (isNaN(numValue)) return '';
+
+		if (numValue >= 0.1) return 'high';
+		if (numValue >= 0) return 'medium';
+		return 'low';
+	}
 </script>
 
 <section class="paper-header">
@@ -158,7 +171,10 @@
 							{#each leaderboardRows as row}
 								<tr>
 									{#each leaderboardColumns as column}
-										<td class="{column.key === 'agent' ? 'agent-cell' : column.key === 'overall' ? 'score-cell overall-cell' : 'score-cell'}">{row?.[column.key] ?? '—'}</td>
+										{@const value = row?.[column.key] ?? '—'}
+										{@const baseClass = column.key === 'agent' ? 'agent-name' : column.key === 'overall' ? 'score-cell overall-cell' : 'score-cell'}
+										{@const colorClass = getCellClass(value, column.key)}
+										<td class="{baseClass} {colorClass}">{value}</td>
 									{/each}
 								</tr>
 							{/each}
@@ -348,8 +364,8 @@
     .leaderboard-header p {
         margin: 0.5rem auto 0;
         max-width: 640px;
-        color: var(--wine-tan);
-        font-size: var(--18px);
+        color: var(--wine-dark-tan);
+        font-size: var(--16px);
         line-height: 1.65;
     }
 
@@ -399,7 +415,7 @@
         font-size: var(--16px);
     }
 
-    .header-leaderboard .agent-cell {
+    .header-leaderboard .agent-name {
         text-align: left;
         font-family: var(--sans);
         font-weight: 600;
@@ -415,6 +431,19 @@
         font-weight: 700;
         font-size: var(--16px);
         background: rgba(207, 202, 191, 0.05);
+    }
+
+    /* Color coding for scores - matching main Leaderboard.svelte */
+    .header-leaderboard .score-cell.high {
+        color: #0f9d58;
+    }
+
+    .header-leaderboard .score-cell.medium {
+        color: #d8d8d8;
+    }
+
+    .header-leaderboard .score-cell.low {
+        color: #e84545;
     }
 
 	.paper-hero {
@@ -524,9 +553,30 @@
 			max-width: 250px;
 		}
 
+		.header-leaderboard {
+			padding: 1rem;
+		}
+
+		.leaderboard-header h3 {
+			font-size: var(--24px);
+		}
+
+		.leaderboard-header p {
+			font-size: var(--14px);
+		}
+
 		.header-leaderboard th,
 		.header-leaderboard td {
-			font-size: var(--12px);
+			font-size: var(--11px);
+			padding: 0.5rem 0.25rem;
+		}
+
+		.header-leaderboard .agent-name {
+			font-size: var(--11px);
+		}
+
+		.header-leaderboard .score-cell {
+			font-size: var(--10px);
 		}
 
 		.paper-hero h3 {

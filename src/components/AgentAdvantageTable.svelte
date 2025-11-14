@@ -210,13 +210,45 @@
         padding: 0.5rem 0;
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 900px) {
         h4 {
             font-size: var(--18px);
         }
 
         .advantage-table-wrapper :global(.wx-grid) {
             font-size: 14px;
+            overflow-x: auto;
+        }
+
+        /* Make table horizontally scrollable */
+        .advantage-table-wrapper :global(.wx-grid-container) {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+    }
+
+    @media (max-width: 700px) {
+        h4 {
+            font-size: var(--16px);
+        }
+
+        .advantage-table-wrapper :global(.wx-grid) {
+            font-size: 12px;
+        }
+
+        /* Reduce column widths for mobile */
+        .advantage-table-wrapper :global([data-col-id="agent"]) {
+            min-width: 100px;
+            font-size: 12px;
+        }
+
+        .advantage-table-wrapper :global(.wx-cell) {
+            padding: 0.5rem 0.25rem;
+        }
+
+        .advantage-table-wrapper :global(.wx-header-cell) {
+            padding: 0.75rem 0.25rem;
+            font-size: 11px;
         }
     }
 </style>

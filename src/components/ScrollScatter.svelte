@@ -275,6 +275,7 @@
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         letter-spacing: 0.05em;
+        color: var(--wine-gold);
     }
 
     .range-wrapper {

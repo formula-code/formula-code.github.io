@@ -220,22 +220,58 @@
 
   @media (max-width: 700px) {
     .agent-stage {
-      flex-direction: column;
+      flex-direction: row;
+      flex-wrap: wrap;
       align-items: center;
-      gap: 1.5rem;
+      justify-content: center;
+      gap: 1rem;
       height: auto;
       min-height: 60svh;
-      padding: 2rem;
+      padding: 1rem;
     }
 
     .agent-box {
-      width: 80vw;
-      max-width: 300px;
+      width: calc(50% - 0.5rem);
+      min-width: 140px;
+      max-width: 180px;
+      padding: 1.25rem 0.75rem;
     }
 
     .agent-icon {
-      width: 56px;
-      height: 56px;
+      width: 40px;
+      height: 40px;
+      margin-bottom: 0.75rem;
+    }
+
+    .agent-name {
+      font-size: var(--14px);
+    }
+
+    .agent-framework {
+      font-size: var(--10px);
+      margin-top: 0.25rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .agent-box {
+      width: calc(50% - 0.5rem);
+      min-width: 120px;
+      padding: 1rem 0.5rem;
+    }
+
+    .agent-icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 0.5rem;
+    }
+
+    .agent-name {
+      font-size: var(--12px);
+    }
+
+    .agent-framework {
+      font-size: var(--9px);
     }
   }
 </style>

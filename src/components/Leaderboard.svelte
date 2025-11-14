@@ -255,4 +255,31 @@
             font-size: var(--12px);
         }
     }
+
+    @media (max-width: 480px) {
+        h2 {
+            font-size: var(--20px);
+        }
+
+        .description {
+            font-size: var(--13px);
+        }
+
+        th, td {
+            padding: 0.4rem 0.2rem;
+            font-size: var(--10px);
+        }
+
+        .agent-name {
+            font-size: var(--11px);
+        }
+
+        .score-cell {
+            font-size: var(--10px);
+        }
+
+        .overall-cell {
+            font-size: var(--12px);
+        }
+    }
 </style>

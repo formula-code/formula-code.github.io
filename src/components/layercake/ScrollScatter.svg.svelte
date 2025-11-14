@@ -306,7 +306,7 @@ const isStep = step => typeof chartScrollIndex === "number" && chartScrollIndex 
     })();
 </script>
 
-
+<!-- 
 {#if isStep(7)}
 <g class="zone-highlights">
     <polygon
@@ -316,7 +316,7 @@ const isStep = step => typeof chartScrollIndex === "number" && chartScrollIndex 
         opacity={0.3}
     />
 </g>
-{/if}
+{/if} -->
 
 <!-- Solid axis lines for steps 0-1 -->
 {#if typeof chartScrollIndex === "number" }
