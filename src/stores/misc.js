@@ -161,7 +161,7 @@ export const agentCopyKey = derived(
 function calculateDistance(agentSpeedup, oracleSpeedup, agentThresh, oracleThresh) {
 	if (agentSpeedup === undefined || oracleSpeedup === undefined) return null;
 
-	const numerator = (agentThresh * agentSpeedup) - (oracleThresh * oracleSpeedup);
+	const numerator = (oracleThresh * agentSpeedup) - (agentThresh * oracleSpeedup);
 	const denominator = Math.sqrt(agentThresh ** 2 + oracleThresh ** 2);
 
 	return numerator / denominator;

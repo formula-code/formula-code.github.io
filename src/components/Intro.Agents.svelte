@@ -221,57 +221,52 @@
   @media (max-width: 700px) {
     .agent-stage {
       flex-direction: row;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-      height: auto;
-      min-height: 60svh;
-      padding: 1rem;
+      gap: 0.75rem;
+      height: 80svh;
+      padding: 1rem 0.5rem;
     }
 
     .agent-box {
-      width: calc(50% - 0.5rem);
-      min-width: 140px;
-      max-width: 180px;
-      padding: 1.25rem 0.75rem;
+      flex: 1;
+      width: auto;
+      min-width: 0;
+      max-width: none;
+      padding: 1rem 0.5rem;
     }
 
     .agent-icon {
-      width: 40px;
-      height: 40px;
-      margin-bottom: 0.75rem;
+      width: clamp(32px, 8vw, 48px);
+      height: clamp(32px, 8vw, 48px);
+      margin-bottom: 0.5rem;
     }
 
     .agent-name {
-      font-size: var(--14px);
+      font-size: clamp(12px, 3vw, 16px);
+      line-height: 1.2;
     }
 
     .agent-framework {
-      font-size: var(--10px);
+      font-size: clamp(9px, 2.5vw, 12px);
       margin-top: 0.25rem;
     }
   }
 
   @media (max-width: 400px) {
+    .agent-stage {
+      gap: 0.5rem;
+      padding: 1rem 0.25rem;
+    }
+
     .agent-box {
-      width: calc(50% - 0.5rem);
-      min-width: 120px;
-      padding: 1rem 0.5rem;
+      padding: 0.75rem 0.25rem;
+      gap: 0.5rem;
     }
 
     .agent-icon {
-      width: 36px;
-      height: 36px;
-      margin-bottom: 0.5rem;
-    }
-
-    .agent-name {
-      font-size: var(--12px);
-    }
-
-    .agent-framework {
-      font-size: var(--9px);
+      margin-bottom: 0.25rem;
     }
   }
 </style>

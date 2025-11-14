@@ -274,11 +274,12 @@
 		#range-agent-nop {
 			left: calc(100% - 2rem);
 			top: 1rem;
+			z-index: 1001;
 		}
 
 		#range-oracle-nop {
-			left: 1rem;
-			top: 2.5rem;
+			left: 1.5rem;
+			top: calc(100% - 4rem);
 		}
 
 		.thumb-label p {

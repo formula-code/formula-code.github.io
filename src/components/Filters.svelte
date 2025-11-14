@@ -449,8 +449,13 @@
             gap: 0.75rem;
         }
 
-        .filter, .search-wrapper {
+        .filter {
             width: 100%;
+        }
+
+        /* Hide search/benchmark finder on mobile */
+        .search-wrapper {
+            display: none;
         }
 
         :global(#filters .multiselect) {
