@@ -123,13 +123,15 @@
 
                     <!-- Right: Code Block -->
                     <div class="code-section">
-                        <h4>All Objectives</h4>
                         {#if codeKeys.length > 1}
+                        <h4>Workloads in group</h4>
                             <select bind:value={selectedCodeKey} class="code-selector">
                                 {#each codeKeys as key}
                                     <option value={key}>{key}</option>
                                 {/each}
                             </select>
+                        {:else}
+                        <h4>Workload</h4>
                         {/if}
                         {#if displayCode}
                             <div class="code-wrapper">

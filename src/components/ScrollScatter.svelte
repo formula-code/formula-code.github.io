@@ -12,6 +12,7 @@
         chartScrollTrigger,
         agentStats,
         currentAggregationLabel,
+        selectedLevelSTORE,
         withFiltersData,
         tooltipData,
         tooltipType,
@@ -22,13 +23,14 @@
     import { onMount } from 'svelte';
     import { HUMAN_ANCHOR_BENCHMARK } from "$utils/agents.js";
 
-    const CLASS_LEVEL_KEYS = new Set([
-		"class-level",
-		"level 2",
-		"level 2: classes",
-		"2",
-		"classes"
+    const MODULE_LEVEL_KEYS = new Set([
+		"module-level",
+		"level 4",
+		"level 4: modules",
+		"4",
+		"modules"
     ]);
+    const MODULE_LEVEL_STORE_VALUE = "module-level";
 
     export let chartScrollIndex;
 
@@ -89,10 +91,10 @@
                 const levelRaw = d?.level;
                 if (levelRaw === undefined || levelRaw === null) return false;
                 if (typeof levelRaw === "string") {
-                    return CLASS_LEVEL_KEYS.has(levelRaw.trim().toLowerCase());
+                    return MODULE_LEVEL_KEYS.has(levelRaw.trim().toLowerCase());
                 }
                 if (typeof levelRaw === "number") {
-                    return Number(levelRaw) === 2;
+                    return Number(levelRaw) === 4;
                 }
                 return false;
             });
@@ -100,6 +102,38 @@
         }
         return $bigScatterData;
     })();
+
+    const cloneLevelSelection = selection =>
+        Array.isArray(selection)
+            ? selection.map(item => (typeof item === "object" && item !== null ? { ...item } : item))
+            : [];
+
+    const getLevelValue = selection => {
+        if (!Array.isArray(selection) || selection.length === 0) return null;
+        const first = selection[0];
+        return typeof first === "object" && first !== null ? first.value : first;
+    };
+
+    let forcedModuleAggregation = false;
+    let previousLevelSelection = [];
+
+    $: {
+        if (chartScrollIndex === 13) {
+            if (!forcedModuleAggregation) {
+                previousLevelSelection = cloneLevelSelection($selectedLevelSTORE);
+                forcedModuleAggregation = true;
+            }
+
+            if (getLevelValue($selectedLevelSTORE) !== MODULE_LEVEL_STORE_VALUE) {
+                selectedLevelSTORE.set([MODULE_LEVEL_STORE_VALUE]);
+            }
+        } else if (forcedModuleAggregation) {
+            const restored = cloneLevelSelection(previousLevelSelection);
+            selectedLevelSTORE.set(restored);
+            previousLevelSelection = [];
+            forcedModuleAggregation = false;
+        }
+    }
 
     $: isLockedTooltipStep = typeof chartScrollIndex === "number" && LOCKED_TOOLTIP_STEPS.has(chartScrollIndex);
 

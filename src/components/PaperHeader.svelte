@@ -54,34 +54,69 @@
 			? abstractConfig.paragraphs
 			: defaultAbstractParagraphs;
 
-	const leaderboardConfig = headerCopy.leaderboard || {};
-	const leaderboardTitle = leaderboardConfig.title ?? "Leaderboard Snapshot";
-	const leaderboardDescription =
-		leaderboardConfig.description ?? "Agent advantage scores by aggregation level.";
-	const leaderboardColumns =
-		Array.isArray(leaderboardConfig.columns) && leaderboardConfig.columns.length > 0
-			? leaderboardConfig.columns
-			: [
-					{ label: "Agent", key: "agent" },
-					{ label: "Module Advantage", key: "moduleAdvantage" },
-				];
-	const leaderboardRows = Array.isArray(leaderboardConfig.rows) ? leaderboardConfig.rows : [];
+	// Hardcoded leaderboard data matching main Leaderboard.svelte structure
+	const leaderboardTitle = "Leaderboard Snapshot";
+	const leaderboardDescription = "This leaderboard displays the agent advantage scores by aggregation level. Higher scores indicate better performance relative to the oracle.";
+
+	// Level display labels - matching main Leaderboard
+	const LEVEL_DISPLAY_LABELS = {
+		"no-aggregation": "L0: No Aggregation",
+		"param-level": "L1: Parameter",
+		"func-level": "L2: Function",
+		"class-level": "L3: Class",
+		"module-level": "L4: Module",
+	};
+
+	// Hardcoded levels in order
+	const levels = ["param-level", "func-level", "class-level", "module-level"];
+
+	// Hardcoded table data - example data, replace with actual values
+	const tableData = [
+		{
+			displayName: "GPT-5",
+			levels: {
+				"param-level": 0.15,
+				"func-level": 0.12,
+				"class-level": 0.08,
+				"module-level": 0.05,
+			},
+			overall: 0.10
+		},
+		{
+			displayName: "Claude Sonnet 4.0",
+			levels: {
+				"param-level": 0.13,
+				"func-level": 0.10,
+				"class-level": 0.06,
+				"module-level": 0.03,
+			},
+			overall: 0.08
+		},
+		{
+			displayName: "Oracle (Human)",
+			levels: {
+				"param-level": 0.25,
+				"func-level": 0.22,
+				"class-level": 0.18,
+				"module-level": 0.15,
+			},
+			overall: 0.20
+		}
+	];
 
 	const hero = headerCopy.hero || {};
 
-	// Helper function to get cell class based on value - matching Leaderboard.svelte
-	function getCellClass(value, columnKey) {
-		// Only apply color classes to numeric score columns (not agent names)
-		if (columnKey === 'agent') return '';
+	// Helper functions matching main Leaderboard.svelte
+	function formatAdvantage(value) {
+		if (value === null || value === undefined) return "—";
+		return value.toFixed(4);
+	}
 
-		if (value === null || value === undefined || value === '—') return '';
-
-		const numValue = typeof value === 'string' ? parseFloat(value) : value;
-		if (isNaN(numValue)) return '';
-
-		if (numValue >= 0.1) return 'high';
-		if (numValue >= 0) return 'medium';
-		return 'low';
+	function getCellClass(value) {
+		if (value === null || value === undefined) return "";
+		if (value >= 0.1) return "high";
+		if (value >= 0) return "medium";
+		return "low";
 	}
 </script>
 
@@ -150,32 +185,35 @@
 			</div>
 		</div>
 
-		{#if leaderboardRows.length}
+		{#if tableData.length}
 			<div class="header-leaderboard">
 				<div class="leaderboard-header">
 					<h3>{leaderboardTitle}</h3>
-					{#if leaderboardDescription}
-						<p>{leaderboardDescription}</p>
-					{/if}
+					<p class="description">{leaderboardDescription}</p>
 				</div>
-				<div class="leaderboard-table-wrapper">
+				<div class="table-wrapper">
 					<table>
 						<thead>
 							<tr>
-								{#each leaderboardColumns as column}
-									<th class="{column.key !== 'agent' ? 'level-col' : ''}">{column.label}</th>
+								<th class="agent-col">Agent</th>
+								{#each levels as level}
+									<th class="level-col">{LEVEL_DISPLAY_LABELS[level] || level}</th>
 								{/each}
+								<th class="overall-col">Overall</th>
 							</tr>
 						</thead>
 						<tbody>
-							{#each leaderboardRows as row}
+							{#each tableData as row}
 								<tr>
-									{#each leaderboardColumns as column}
-										{@const value = row?.[column.key] ?? '—'}
-										{@const baseClass = column.key === 'agent' ? 'agent-name' : column.key === 'overall' ? 'score-cell overall-cell' : 'score-cell'}
-										{@const colorClass = getCellClass(value, column.key)}
-										<td class="{baseClass} {colorClass}">{value}</td>
+									<td class="agent-name">{row.displayName}</td>
+									{#each levels as level}
+										<td class="score-cell {getCellClass(row.levels[level])}">
+											{formatAdvantage(row.levels[level])}
+										</td>
 									{/each}
+									<td class="score-cell overall-cell {getCellClass(row.overall)}">
+										{formatAdvantage(row.overall)}
+									</td>
 								</tr>
 							{/each}
 						</tbody>
@@ -341,110 +379,112 @@
 		margin-bottom: 0;
 	}
 
-    .header-leaderboard {
-        margin: 3rem auto 0;
-        padding: 2rem;
-        border-radius: 12px;
-        border: 1px solid var(--wine-dark-gray);
-        background: rgba(24, 26, 31, 0.5);
-    }
+	/* Leaderboard section - matching main Leaderboard.svelte exactly */
+	.header-leaderboard {
+		width: 100%;
+		padding: 4rem 0;
+		margin: 3rem auto 0;
+	}
 
-    .leaderboard-header {
-        text-align: center;
-        margin-bottom: 2rem;
-    }
+	.leaderboard-header {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
 
-    .leaderboard-header h3 {
-        margin: 0;
-        font-size: var(--36px);
-        font-weight: 700;
-        color: var(--wine-tan);
-    }
+	.leaderboard-header h3 {
+		color: var(--wine-tan);
+		font-size: var(--36px);
+		font-weight: 700;
+		margin: 0 0 1rem 0;
+	}
 
-    .leaderboard-header p {
-        margin: 0.5rem auto 0;
-        max-width: 640px;
-        color: var(--wine-dark-tan);
-        font-size: var(--16px);
-        line-height: 1.65;
-    }
+	.leaderboard-header .description {
+		color: var(--wine-dark-tan);
+		font-size: var(--16px);
+		text-align: center;
+		margin: 0 0 2rem 0;
+		max-width: 700px;
+		margin-left: auto;
+		margin-right: auto;
+	}
 
-    .leaderboard-table-wrapper {
-        overflow-x: auto;
-        border-radius: 3px;
-        border: 1px solid var(--wine-dark-gray);
-    }
+	.table-wrapper {
+		overflow-x: auto;
+		border-radius: 3px;
+		border: 1px solid var(--wine-dark-gray);
+	}
 
-    .header-leaderboard table {
-        width: 100%;
-        border-collapse: collapse;
-        background: rgba(24, 26, 31, 0.5);
-    }
+	.header-leaderboard table {
+		width: 100%;
+		border-collapse: collapse;
+		background: rgba(24, 26, 31, 0.5);
+	}
 
-    .header-leaderboard thead {
-        background: var(--wine-dark-gray);
-    }
+	.header-leaderboard thead {
+		background: var(--wine-dark-gray);
+	}
 
-    .header-leaderboard th {
-        padding: 1rem;
-        text-align: left;
-        font-family: var(--sans);
-        font-size: var(--14px);
-        font-weight: 700;
-        color: var(--wine-tan);
-        text-transform: uppercase;
-        border-bottom: 2px solid var(--wine-dark-gray);
-    }
+	.header-leaderboard th {
+		padding: 1rem;
+		text-align: left;
+		font-family: var(--sans);
+		font-size: var(--14px);
+		font-weight: 700;
+		color: var(--wine-tan);
+		text-transform: uppercase;
+		border-bottom: 2px solid var(--wine-dark-gray);
+	}
 
-    .header-leaderboard .level-col {
-        text-align: center;
-    }
+	.header-leaderboard .level-col,
+	.header-leaderboard .overall-col {
+		text-align: center;
+	}
 
-    .header-leaderboard tbody tr {
-        border-bottom: 1px solid var(--wine-dark-gray);
-        transition: background var(--250ms);
-    }
+	.header-leaderboard tbody tr {
+		border-bottom: 1px solid var(--wine-dark-gray);
+		transition: background var(--250ms);
+	}
 
-    .header-leaderboard tbody tr:hover {
-        background: rgba(207, 202, 191, 0.05);
-    }
+	.header-leaderboard tbody tr:hover {
+		background: rgba(207, 202, 191, 0.05);
+	}
 
-    .header-leaderboard td {
-        padding: 1rem;
-        color: var(--wine-tan);
-        font-size: var(--16px);
-    }
+	.header-leaderboard td {
+		padding: 1rem;
+		color: var(--wine-tan);
+		font-size: var(--16px);
+	}
 
-    .header-leaderboard .agent-name {
-        text-align: left;
-        font-family: var(--sans);
-        font-weight: 600;
-    }
+	.header-leaderboard .agent-name {
+		font-family: var(--sans);
+		font-weight: 600;
+		color: var(--wine-tan);
+	}
 
-    .header-leaderboard .score-cell {
-        text-align: center;
-        font-family: var(--mono);
-        font-size: var(--14px);
-    }
+	.header-leaderboard .score-cell {
+		text-align: center;
+		font-family: var(--mono);
+		font-size: var(--14px);
+	}
 
-    .header-leaderboard .overall-cell {
-        font-weight: 700;
-        font-size: var(--16px);
-        background: rgba(207, 202, 191, 0.05);
-    }
+	.header-leaderboard .overall-cell {
+		font-weight: 700;
+		font-size: var(--16px);
+		background: rgba(207, 202, 191, 0.05);
+	}
 
-    /* Color coding for scores - matching main Leaderboard.svelte */
-    .header-leaderboard .score-cell.high {
-        color: #0f9d58;
-    }
+	/* Color coding for scores - matching main Leaderboard.svelte */
+	.header-leaderboard .score-cell.high {
+		color: #0f9d58;
+	}
 
-    .header-leaderboard .score-cell.medium {
-        color: #d8d8d8;
-    }
+	.header-leaderboard .score-cell.medium {
+		color: #d8d8d8;
+	}
 
-    .header-leaderboard .score-cell.low {
-        color: #e84545;
-    }
+	.header-leaderboard .score-cell.low {
+		color: #e84545;
+	}
 
 	.paper-hero {
 		margin: 3rem auto 0;
@@ -530,7 +570,33 @@
 		}
 
 		.header-leaderboard {
-			padding: 1.5rem;
+			padding: 3rem 0;
+		}
+
+		.leaderboard-header h3 {
+			font-size: var(--28px);
+		}
+
+		.leaderboard-header .description {
+			font-size: var(--14px);
+		}
+
+		.header-leaderboard th,
+		.header-leaderboard td {
+			padding: 0.75rem 0.5rem;
+			font-size: var(--12px);
+		}
+
+		.header-leaderboard .agent-name {
+			font-size: var(--14px);
+		}
+
+		.header-leaderboard .score-cell {
+			font-size: var(--12px);
+		}
+
+		.header-leaderboard .overall-cell {
+			font-size: var(--14px);
 		}
 
 		.paper-hero {
@@ -553,30 +619,30 @@
 			max-width: 250px;
 		}
 
-		.header-leaderboard {
-			padding: 1rem;
-		}
-
 		.leaderboard-header h3 {
 			font-size: var(--24px);
 		}
 
-		.leaderboard-header p {
-			font-size: var(--14px);
+		.leaderboard-header .description {
+			font-size: var(--13px);
 		}
 
 		.header-leaderboard th,
 		.header-leaderboard td {
-			font-size: var(--11px);
 			padding: 0.5rem 0.25rem;
+			font-size: var(--11px);
 		}
 
 		.header-leaderboard .agent-name {
-			font-size: var(--11px);
+			font-size: var(--12px);
 		}
 
 		.header-leaderboard .score-cell {
 			font-size: var(--10px);
+		}
+
+		.header-leaderboard .overall-cell {
+			font-size: var(--12px);
 		}
 
 		.paper-hero h3 {

@@ -266,7 +266,7 @@
             </div>
             <p class="steals-sentence">
             Agent Advantage:
-                <span class="bold highlight">{$agentAdvantage !== undefined ? $agentAdvantage.toFixed(2) : 0}</span>
+                <span class="bold highlight">{$agentAdvantage !== undefined ? $agentAdvantage.toFixed(4) : 0}</span>
                 <span class="bold">
                 ({#if $withFiltersData.length !== 1}
                     {formatter($withFiltersData.length)} benchmarks
