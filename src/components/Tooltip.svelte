@@ -239,7 +239,6 @@
     }
 
     .metric-value.highlight {
-        color: var(--wine-green);
         font-weight: 700;
     }
 

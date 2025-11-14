@@ -68,11 +68,11 @@ onMount(() => {
 			</div>
 			<div class="metric">
 				<span class="metric-label">Agent speedup</span>
-				<span class="metric-value highlight">{agentSpeed !== undefined ? `${agentSpeed.toFixed(2)}x` : "—"}</span>
+				<span class="metric-value highlight">{agentSpeed !== undefined ? `${agentSpeed.toFixed(4)}x` : "—"}</span>
 			</div>
 			<div class="metric">
 				<span class="metric-label">Oracle speedup</span>
-				<span class="metric-value highlight">{oracleSpeed !== undefined ? `${oracleSpeed.toFixed(2)}x` : "—"}</span>
+				<span class="metric-value highlight">{oracleSpeed !== undefined ? `${oracleSpeed.toFixed(4)}x` : "—"}</span>
 			</div>
 			<div class="metric">
 				<span class="metric-label">Repository</span>
@@ -209,9 +209,6 @@ onMount(() => {
 		color: #f5efe3;
 	}
 
-	.metric-value.highlight {
-		color: var(--wine-green, #61d095);
-	}
 
 .code-panel {
     min-width: 0;
