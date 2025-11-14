@@ -312,7 +312,7 @@ export const currentAggregationLabel = derived(
 	($selectedLevels) => {
 		// Single-select mode: if nothing selected, show "All Levels"
 		if (!$selectedLevels || $selectedLevels.length === 0) {
-			return "All Levels";
+			return "None";
 		}
 
 		// Extract the value from the option object (MultiSelect returns [{label, value}])

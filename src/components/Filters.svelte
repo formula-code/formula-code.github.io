@@ -226,7 +226,7 @@
                         bind:selected={selectedLevel}
                         options={levelOptions}
                         valType = "level"
-                        placeholder="All levels"
+                        placeholder="None"
                         maxSelect={1}
                         ariaLabel="select aggregation level"
                     >

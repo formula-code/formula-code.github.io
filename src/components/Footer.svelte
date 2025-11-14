@@ -17,6 +17,12 @@
 	const relatedWorkText = relatedWorkConfig.text ?? "";
 	const showRelatedWork = relatedWorkConfig.show !== false && Boolean(relatedWorkText);
 
+	// Funding configuration
+	const fundingConfig = paperFooter.funding || {};
+	const fundingTitle = fundingConfig.title ?? "Funding";
+	const fundingDescription = fundingConfig.description ?? "";
+	const showFunding = fundingConfig.show !== false && Boolean(fundingDescription);
+
 	// Acknowledgements configuration
 	const acknowledgementsConfig = paperFooter.acknowledgements || {};
 	const acknowledgementsTitle = acknowledgementsConfig.title ?? "Acknowledgements";
@@ -41,6 +47,13 @@
 					<div class="bibtex-wrapper">
 						<pre class="bibtex-code"><code>{citationBibtex}</code></pre>
 					</div>
+				</section>
+			{/if}
+
+			{#if showFunding && fundingDescription}
+				<section class="paper-section funding-section">
+					<h3 class="paper-section-title">{fundingTitle}</h3>
+					<p class="paper-section-text">{@html fundingDescription}</p>
 				</section>
 			{/if}
 		</div>
@@ -153,6 +166,18 @@
     color: var(--wine-dark-tan);
     margin: 0;
     text-align: justify;
+  }
+
+  .paper-section-text :global(a) {
+    color: var(--wine-gold);
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .paper-section-text :global(a:hover),
+  .paper-section-text :global(a:focus-visible) {
+    color: var(--wine-dark-gold);
+    text-decoration: underline;
   }
 
   /* Footer-style Acknowledgements */

@@ -1,6 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 	import Icon from "$components/helpers/Icon.svelte";
+	import leaderboardData from "$data/leaderboard.json";
 
 	const copy = getContext("copy") || {};
 	const headerCopy = copy.paperHeader || {};
@@ -55,8 +56,8 @@
 			: defaultAbstractParagraphs;
 
 	// Hardcoded leaderboard data matching main Leaderboard.svelte structure
-	const leaderboardTitle = "Leaderboard Snapshot";
-	const leaderboardDescription = "This leaderboard displays the agent advantage scores by aggregation level. Higher scores indicate better performance relative to the oracle.";
+	const leaderboardTitle = headerCopy.leaderboard.title;
+	const leaderboardDescription = headerCopy.leaderboard.description;
 
 	// Level display labels - matching main Leaderboard
 	const LEVEL_DISPLAY_LABELS = {
@@ -71,40 +72,17 @@
 	const levels = ["param-level", "func-level", "class-level", "module-level"];
 
 	// Hardcoded table data - example data, replace with actual values
-	const tableData = [
-		{
-			displayName: "GPT-5",
-			levels: {
-				"param-level": 0.15,
-				"func-level": 0.12,
-				"class-level": 0.08,
-				"module-level": 0.05,
-			},
-			overall: 0.10
-		},
-		{
-			displayName: "Claude Sonnet 4.0",
-			levels: {
-				"param-level": 0.13,
-				"func-level": 0.10,
-				"class-level": 0.06,
-				"module-level": 0.03,
-			},
-			overall: 0.08
-		},
-		{
-			displayName: "Oracle (Human)",
-			levels: {
-				"param-level": 0.25,
-				"func-level": 0.22,
-				"class-level": 0.18,
-				"module-level": 0.15,
-			},
-			overall: 0.20
-		}
-	];
+	const tableData = Array.isArray(leaderboardData?.tableData) ? leaderboardData.tableData : [];
 
 	const hero = headerCopy.hero || {};
+	const heroCommand = typeof hero.command === "string" ? hero.command.trim() : "";
+	const hasHeroContent = Boolean(
+		hero?.eyebrow ||
+		hero?.instructions ||
+		heroCommand ||
+		hero?.body ||
+		(hero?.cta && hero.cta.label)
+	);
 
 	// Helper functions matching main Leaderboard.svelte
 	function formatAdvantage(value) {
@@ -222,13 +200,20 @@
 			</div>
 		{/if}
 
-		{#if hero?.title}
+		{#if hasHeroContent}
 			<div class="paper-hero">
 				{#if hero.eyebrow}<p class="hero-eyebrow">{hero.eyebrow}</p>{/if}
-				<h3>{hero.title}</h3>
-				{#if hero.body}<p class="hero-body">{hero.body}</p>{/if}
-				{#if hero.cta?.label}
-					<a class="hero-cta" href={hero.cta.href ?? "#"}>{hero.cta.label}</a>
+					{#if hero.instructions}
+						<p class="hero-instructions">{@html hero.instructions}</p>
+					{/if}
+					{#if heroCommand}
+						<div class="hero-command">
+							<pre class="hero-command__code" tabindex="0"><code>{heroCommand}</code></pre>
+						</div>
+					{/if}
+					{#if hero.body}<p class="hero-body">{hero.body}</p>{/if}
+					{#if hero.cta?.label}
+						<a class="hero-cta" href={hero.cta.href ?? "#"}>{hero.cta.label}</a>
 				{/if}
 			</div>
 		{/if}
@@ -492,6 +477,9 @@
 		border-radius: 8px;
 		background: rgba(24, 26, 31, 0.5);
 		border: 1px solid var(--wine-dark-gray);
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
 		text-align: center;
 	}
 
@@ -500,23 +488,52 @@
 		font-size: var(--12px);
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		margin: 0 0 0.75rem;
+		margin: 0 auto;
 		color: var(--wine-dark-tan);
 	}
 
-	.paper-hero h3 {
-		margin: 0 0 1rem;
-		font-size: var(--28px);
+	.hero-instructions {
+		margin: 0 auto;
 		color: var(--wine-tan);
+		font-size: var(--16px);
+		line-height: 1.6;
+		max-width: 620px;
 	}
 
 	.hero-body {
-		margin: 0 auto 1.5rem;
+		margin: 0 auto;
 		max-width: 640px;
 		color: var(--wine-tan);
 		font-size: var(--18px);
 		line-height: 1.65;
 	}
+
+	.hero-instructions :global(a) {
+		color: var(--wine-gold);
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	.hero-instructions :global(a:hover),
+	.hero-instructions :global(a:focus-visible) {
+		color: var(--wine-dark-gold);
+		text-decoration: underline;
+	}
+	/* hero instructions > a href color should be gold */
+	.hero-instructions a {
+		color: var(--wine-gold);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.hero-command {
+		background: rgba(5, 5, 5, 0.45);
+		border: 1px solid rgba(207, 202, 191, 0.2);
+		border-radius: 10px;
+		padding: 1.25rem 1.5rem;
+		font-family: var(--mono);
+	}
+
 
 	.hero-cta {
 		display: inline-flex;
@@ -602,6 +619,11 @@
 		.paper-hero {
 			padding: 2rem 1.25rem;
 		}
+
+		.hero-command {
+			padding: 1.5rem 1rem;
+		}
+
 	}
 
 	@media (max-width: 480px) {
@@ -643,10 +665,6 @@
 
 		.header-leaderboard .overall-cell {
 			font-size: var(--12px);
-		}
-
-		.paper-hero h3 {
-			font-size: var(--22px);
 		}
 
 		.hero-body {

@@ -1,6 +1,6 @@
 <script>
 	import { getContext, onMount } from "svelte";
-	import { line } from 'd3-shape';
+	import { line, area } from 'd3-shape';
 	import { thresholdAgentNum, thresholdOracleNum } from "$stores/misc.js";
 
 	const { data, xGet, yGet, xScale, yScale, width, height, padding, xDomain, yDomain } = getContext("LayerCake");
@@ -57,6 +57,8 @@
     return [uniq[0], uniq[uniq.length - 1]];
   })();
 
+	const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
   // UPDATED: build the path from the extended endpoints
   $: equalLinePath = extendedGuideLine
     ? line()
@@ -64,18 +66,60 @@
         .y(d => $yScale(d[1]))
         (extendedGuideLine)
     : null;
+
+	$: shadedAreaPath = (() => {
+		if (!$xDomain || !$yDomain) return null;
+
+		const [xMin, xMax] = $xDomain;
+		const [yMin, yMax] = $yDomain;
+		if (!Number.isFinite(xMin) || !Number.isFinite(xMax) || xMax <= xMin) return null;
+		if (!Number.isFinite(yMin) || !Number.isFinite(yMax) || yMax <= yMin) return null;
+
+		const agentThreshold = Number($thresholdAgentNum);
+		const oracleThreshold = Number($thresholdOracleNum);
+		if (!Number.isFinite(agentThreshold) || !Number.isFinite(oracleThreshold)) return null;
+
+		const xStart = clamp(agentThreshold, xMin, xMax);
+		if (xStart >= xMax) return null;
+
+		if (Math.abs(agentThreshold) < 1e-6) return null; // vertical red line => undefined "under" region
+
+		const slope = oracleThreshold / agentThreshold;
+		if (!Number.isFinite(slope) || slope < 0) return null;
+
+		const steps = 40;
+		const dx = (xMax - xStart) / steps;
+		const points = [];
+		let hasArea = false;
+
+		for (let i = 0; i <= steps; i++) {
+			const xVal = xStart + dx * i;
+			const rawY = slope * xVal;
+			const clampedY = clamp(rawY, yMin, yMax);
+			if (clampedY > yMin + 1e-6) {
+				hasArea = true;
+			}
+			points.push({ x: xVal, y: clampedY });
+		}
+
+		if (!hasArea) return null;
+
+		const shadedArea = area()
+			.x(d => $xScale(d.x))
+			.y0(() => $yScale(yMin))
+			.y1(d => $yScale(d.y));
+
+		return shadedArea(points);
+	})();
 </script>
 
 <g class="median-markings">
-	<rect
-		class="highlight-quadrant"
-		x={$xScale($thresholdAgentNum)}
-		y={$yScale($thresholdOracleNum)}
-		width={$width - $xScale($thresholdAgentNum)}
-		height={$height - $yScale($thresholdOracleNum)}
-		fill="#363B45"
-		opacity=0.3
-	/>
+	{#if shadedAreaPath}
+		<path
+			class="highlight-region"
+			d={shadedAreaPath}
+		/>
+	{/if}
 </g>
 <g class="card-benchmark-circle">
 	{#each $data[0] as d, i}
@@ -104,12 +148,19 @@
 	}
 	.equal-advantage-line {
 		stroke-width: 2;
-		stroke: var(--wine-red);
+		stroke: var(--wine-tan);
 		fill: none;
 	}
 
-	.oracleAVG, .agentAVG {
-		stroke-width: 2;
+	.oracleAVG,
+	.agentAVG {
+		stroke-width: 1;
 		stroke: var(--wine-tan);
+		stroke-dasharray: 4 4;
+	}
+
+	.highlight-region {
+		fill: #363B45;
+		opacity: 0.3;
 	}
 </style>

@@ -1,7 +1,7 @@
 <script>
     import ScrollHisto from "$components/ScrollHisto.svelte";
     import Scatter from "$components/Scatter.svelte";
-    import { navAgent, agentStats, agentAdvantageByAgent, thresholdAgentNum, thresholdOracleNum } from "$stores/misc.js";
+    import { navAgent, agentStats, overallAgentAdvantage, thresholdAgentNum, thresholdOracleNum } from "$stores/misc.js";
     import inView from "$actions/inView.js";
     import { format } from "d3-format";
     import { formatAgentDisplayName } from "$utils/benchmarkData.js";
@@ -18,7 +18,7 @@
 
     // Calculate agent statistics
     $: stats = $agentStats[agent];
-    $: agentAdvantageValue = $agentAdvantageByAgent[agent] || 0;
+    $: agentAdvantageValue = $overallAgentAdvantage?.[agent] ?? 0;
     $: summaryBullets = stats ? [
         `Median agent speedup: ${(stats.medianAgentNop || 0).toFixed(2)}× (target ${$thresholdAgentNum.toFixed(2)}×)`,
         `Median oracle speedup: ${(stats.medianOracleNop || 0).toFixed(2)}× (target ${$thresholdOracleNum.toFixed(2)}×)`,
