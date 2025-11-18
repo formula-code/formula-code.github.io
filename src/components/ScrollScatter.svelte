@@ -22,6 +22,7 @@
     import Range from "$components/helpers/Range.svelte";
     import { onMount } from 'svelte';
     import { HUMAN_ANCHOR_BENCHMARK } from "$utils/agents.js";
+    import { SCATTER_MAX_WIDTH_HEIGHT_RATIO } from "$utils/constants.js";
 
     const MODULE_LEVEL_KEYS = new Set([
 		"module-level",
@@ -64,8 +65,12 @@
     let windowW;
     let rangeW;
     let rangeH;
+    let scatterHeight;
 
     let reduceMotion = false;
+
+    // Calculate max width based on height and ratio constraint
+    $: maxScatterWidth = scatterHeight ? scatterHeight * SCATTER_MAX_WIDTH_HEIGHT_RATIO : null;
 
 	onMount(() => {
 		const media = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -170,7 +175,7 @@
 
 <svelte:window bind:innerWidth={windowW} />
 
-<section id="scatter">
+<section id="scatter" bind:clientHeight={scatterHeight} style:max-width={maxScatterWidth ? `${maxScatterWidth}px` : 'none'}>
     <div class="chart-container" id="scatterplot">
         {#if (typeof chartScrollIndex === "number" && chartScrollIndex >= 14) || chartScrollIndex == "exit"}
             <div class="range-wrapper" bind:offsetWidth={rangeW} bind:offsetHeight={rangeH}>
@@ -234,7 +239,7 @@
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
-        margin-bottom: 5rem;
+        margin: 0 auto 5rem auto;
         overflow: hidden;
     }
 

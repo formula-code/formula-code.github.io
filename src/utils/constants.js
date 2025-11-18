@@ -27,3 +27,7 @@ export const CELL_NEUTRAL_RANGE = {
 	MIN: 0.95,
 	MAX: 1.05
 };
+
+// Scatterplot dimension constraints
+// Maximum ratio of width to height for the scrollytelling scatterplot
+export const SCATTER_MAX_WIDTH_HEIGHT_RATIO = 2.0;
