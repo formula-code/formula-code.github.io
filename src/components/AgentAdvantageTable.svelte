@@ -2,6 +2,7 @@
     import { onMount } from "svelte";
     import { browser } from "$app/environment";
     import { bigScatterData } from "$stores/misc.js";
+    import { LEVEL_DISPLAY_LABELS, LEVEL_ORDER, CELL_NEUTRAL_RANGE } from "$utils/constants.js";
 
     // Lazy-load grid only in browser to avoid SSR 'document' errors
     let GridComponent = null;
@@ -12,15 +13,9 @@
         }
     });
 
-    // Map of level names for display
-    const levelLabels = {
-        "param-level": "Level 0: Params",
-        "func-level": "Level 1: Functions",
-        "class-level": "Level 2: Classes",
-        "module-level": "Level 3: Modules"
-    };
-
-    const levelOrder = ["param-level", "func-level", "class-level", "module-level"];
+    // Use centralized level labels and order
+    const levelLabels = LEVEL_DISPLAY_LABELS;
+    const levelOrder = LEVEL_ORDER;
 
     // Helper to calculate median
     function calculateMedian(values) {
@@ -45,7 +40,7 @@
             return 'cell-neutral';
         }
         const numValue = parseFloat(value);
-        if (numValue >= 0.95 && numValue <= 1.05) {
+        if (numValue >= CELL_NEUTRAL_RANGE.MIN && numValue <= CELL_NEUTRAL_RANGE.MAX) {
             return 'cell-neutral';
         }
         if (numValue < 1.00) {
@@ -151,8 +146,8 @@
 
     /* wx-svelte-grid custom theme */
     .advantage-table-wrapper :global(.wx-grid) {
-        --wx-background: #181a1f;
-        --wx-color: #CFCABF;
+        --wx-background: var(--wine-black);
+        --wx-color: var(--wine-tan);
         --wx-border: #3a3d45;
         --wx-font-family: var(--sans);
         font-size: 16px;
@@ -160,7 +155,7 @@
 
     .advantage-table-wrapper :global(.wx-header) {
         background: #2a2d35;
-        color: #CFCABF;
+        color: var(--wine-tan);
         font-weight: 700;
     }
 
@@ -174,8 +169,8 @@
 
     /* Cell styling based on value */
     .advantage-table-wrapper :global(.cell-neutral) {
-        background-color: rgba(207, 202, 191, 0.05);
-        color: #CFCABF;
+        background-color: var(--wine-tan-transparent);
+        color: var(--wine-tan);
         padding: 0.25rem 0.5rem;
         border-radius: 3px;
         display: inline-block;
@@ -183,7 +178,7 @@
 
     .advantage-table-wrapper :global(.cell-negative) {
         background-color: rgba(232, 69, 69, 0.15);
-        color: #e84545;
+        color: var(--score-bad);
         font-weight: 600;
         padding: 0.25rem 0.5rem;
         border-radius: 3px;
@@ -192,7 +187,7 @@
 
     .advantage-table-wrapper :global(.cell-positive) {
         background-color: rgba(15, 157, 88, 0.15);
-        color: #0f9d58;
+        color: var(--score-good);
         font-weight: 600;
         padding: 0.25rem 0.5rem;
         border-radius: 3px;
@@ -205,7 +200,7 @@
     }
 
     .grid-fallback {
-        color: #CFCABF;
+        color: var(--wine-tan);
         opacity: 0.7;
         padding: 0.5rem 0;
     }

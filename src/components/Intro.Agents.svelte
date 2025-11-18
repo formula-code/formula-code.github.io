@@ -1,6 +1,7 @@
 <script>
   import { createEventDispatcher, onMount } from "svelte";
   import { agentSelected, uniqueAgents, agentStats } from "$stores/misc.js";
+  import { AGENT_NAMES, SCROLL_STEPS } from "$utils/agents.js";
   import claudeSVG from "$svg/claude.svg";
   import openaiSVG from "$svg/openai.svg";
   import humanSVG from "$svg/human.svg";
@@ -14,8 +15,8 @@
     if (!str) return "";
     const lower = str.toLowerCase();
     if (lower === "gpt-5") return "GPT‑5";
-    if (lower === "claude") return "Claude Sonnet 4.0";
-    if (lower === "oracle") return "Oracle (Human)";
+    if (lower === "claude") return AGENT_NAMES["terminus-2,claude"] || "Claude Sonnet 4.0";
+    if (lower === "oracle") return AGENT_NAMES["terminus-2,oracle"] || "Oracle";
     return str.charAt(0).toUpperCase() + str.slice(1);
   };
 
@@ -55,7 +56,7 @@
     })
     .filter(Boolean);
 
-  $: visible = scrollIndex === undefined || scrollIndex <= 1;
+  $: visible = scrollIndex === undefined || scrollIndex <= SCROLL_STEPS.AGENTS_VISIBLE_UNTIL;
   $: selectedId = $agentSelected;
 
   function handleSelect(agent) {

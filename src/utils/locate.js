@@ -19,6 +19,8 @@ const TEST_DATA = {
 	timezone: "America/New_York"
 };
 
+// Maximum time (in milliseconds) to wait for geolocation API response before timing out
+// Set to 4 seconds to balance between waiting for slow connections and not blocking page load
 const MAX_TIME = 4000;
 
 async function lookup(test) {

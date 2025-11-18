@@ -2,6 +2,8 @@
 	import { getContext } from "svelte";
 	import Icon from "$components/helpers/Icon.svelte";
 	import leaderboardData from "$data/leaderboard.json";
+	import { LEVEL_DISPLAY_LABELS, LEVEL_ORDER } from "$utils/constants.js";
+	import { formatAdvantage, getCellClass } from "$utils/formatting.js";
 
 	const copy = getContext("copy") || {};
 	const headerCopy = copy.paperHeader || {};
@@ -55,21 +57,12 @@
 			? abstractConfig.paragraphs
 			: defaultAbstractParagraphs;
 
-	// Hardcoded leaderboard data matching main Leaderboard.svelte structure
+	// Leaderboard data
 	const leaderboardTitle = headerCopy.leaderboard.title;
 	const leaderboardDescription = headerCopy.leaderboard.description;
 
-	// Level display labels - matching main Leaderboard
-	const LEVEL_DISPLAY_LABELS = {
-		"no-aggregation": "L0: No Aggregation",
-		"param-level": "L1: Parameter",
-		"func-level": "L2: Function",
-		"class-level": "L3: Class",
-		"module-level": "L4: Module",
-	};
-
-	// Hardcoded levels in order
-	const levels = ["param-level", "func-level", "class-level", "module-level"];
+	// Use centralized level order
+	const levels = LEVEL_ORDER;
 
 	// Hardcoded table data - example data, replace with actual values
 	const tableData = Array.isArray(leaderboardData?.tableData) ? leaderboardData.tableData : [];
@@ -83,19 +76,6 @@
 		hero?.body ||
 		(hero?.cta && hero.cta.label)
 	);
-
-	// Helper functions matching main Leaderboard.svelte
-	function formatAdvantage(value) {
-		if (value === null || value === undefined) return "—";
-		return value.toFixed(4);
-	}
-
-	function getCellClass(value) {
-		if (value === null || value === undefined) return "";
-		if (value >= 0.1) return "high";
-		if (value >= 0) return "medium";
-		return "low";
-	}
 </script>
 
 <section class="paper-header">
@@ -431,7 +411,7 @@
 	}
 
 	.header-leaderboard tbody tr:hover {
-		background: rgba(207, 202, 191, 0.05);
+		background: var(--wine-tan-transparent);
 	}
 
 	.header-leaderboard td {
@@ -455,12 +435,12 @@
 	.header-leaderboard .overall-cell {
 		font-weight: 700;
 		font-size: var(--16px);
-		background: rgba(207, 202, 191, 0.05);
+		background: var(--wine-tan-transparent);
 	}
 
-	/* Color coding for scores - matching main Leaderboard.svelte */
+	/* Color coding for scores */
 	.header-leaderboard .score-cell.high {
-		color: #0f9d58;
+		color: var(--score-good);
 	}
 
 	.header-leaderboard .score-cell.medium {
@@ -468,7 +448,7 @@
 	}
 
 	.header-leaderboard .score-cell.low {
-		color: #e84545;
+		color: var(--score-bad);
 	}
 
 	.paper-hero {

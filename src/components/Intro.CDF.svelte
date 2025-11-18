@@ -2,7 +2,7 @@
 	import { LayerCake, Svg } from "layercake";
 	import { scaleLinear } from "d3-scale";
 	import { agentSelected, bigScatterData } from "$stores/misc.js";
-	import { AGENT_IDS } from "$utils/agents.js";
+	import { AGENT_IDS, AGENT_COLORS, AGENT_NAMES_SHORT, SCROLL_STEPS } from "$utils/agents.js";
 	import AxisX from "$components/layercake/AxisX.svg.svelte";
 	import AxisY from "$components/layercake/AxisY.svg.svelte";
 	import CDFLines from "$components/layercake/CDF.svg.svelte";
@@ -15,18 +15,8 @@
 	// Use the bigScatterData store which contains the full website_data.csv
 	$: data = $bigScatterData && Array.isArray($bigScatterData) ? $bigScatterData : [];
 
-	// Agent colors
-	const AGENT_COLORS = {
-		[AGENT_IDS.CLAUDE]: "#F7B956", // wine-gold
-		[AGENT_IDS.GPT5]: "#4477AA",   // category-blue
-		[AGENT_IDS.HUMAN]: "#66CCEE"   // category-cyan
-	};
-
-	const AGENT_NAMES = {
-		[AGENT_IDS.CLAUDE]: "Claude",
-		[AGENT_IDS.GPT5]: "GPT-5",
-		[AGENT_IDS.HUMAN]: "Oracle"
-	};
+	// Use centralized agent names (short version for compact display)
+	const AGENT_NAMES = AGENT_NAMES_SHORT;
 
 	// Calculate CDF data for each agent
 	function calculateCDF(agentId, dataset) {
@@ -82,8 +72,7 @@
 	$: selectedAgent = $agentSelected;
 
 	// Visibility based on scroll position
-	// Show CDF starting from step 4 (after methodology explanation) through step 5
-	$: visible = scrollIndex >= 4 && scrollIndex <= 6;
+	$: visible = scrollIndex >= SCROLL_STEPS.CDF_START && scrollIndex <= SCROLL_STEPS.CDF_END;
 	$: transform = visible ? 'translate(-50%, -50%) scale(1)' : 'translate(-50%, -50%) scale(0.85)';
 	$: opacity = visible ? 1 : 0;
 	$: paddingStyle = `

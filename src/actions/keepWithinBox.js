@@ -5,7 +5,9 @@ function getXY(node) {
 		.map((d) => +d.replace(/[^0-9.]/g, ""));
 }
 
-// TODO top and bottom
+// TODO: Top and bottom bounds not implemented - currently only handles left/right edges
+// This is sufficient for current use case (horizontal scroll positioning)
+// If vertical bounds are needed, add similar logic for top/bottom edges
 export default function keepWithinBox(node, params = {}) {
 	function check({ width }) {
 		const { top, left, right, bottom } = node.getBoundingClientRect();

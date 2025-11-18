@@ -1,5 +1,5 @@
 {
-	"name": "svelte-starter",
+	"name": "formulacode-www",
 	"version": "5.15.1",
 	"scripts": {
 		"deleteImgs": "node tasks/deleteNonAnimalImgs.js",

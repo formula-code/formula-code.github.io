@@ -2,7 +2,8 @@
     import { createEventDispatcher } from "svelte";
     import { bottleSelected, animalSelected } from "$stores/misc.js";
     import viewport from "$stores/viewport.js";
-    
+    import { SCROLL_STEPS } from "$utils/agents.js";
+
     export let bottleIndex;
     export let wineData;
     export let bottlePosLeft;
@@ -110,11 +111,11 @@
     }
 
     $: transitionDelay = $bottleSelected == false 
-        ? (3 - 1 - bottleIndex) * 50 
-        : bottleIndex == 4 
-        ? 0  
+        ? (3 - 1 - bottleIndex) * 50
+        : bottleIndex == 4
+        ? 0
         : bottleIndex * 50;
-    $: if (scrollIndex >= 2) { shouldSpin = [true,true,true,true]; } 
+    $: if (scrollIndex >= SCROLL_STEPS.SPINNING_BOTTLE_START) { shouldSpin = [true,true,true,true]; } 
     $: if (outroVisible == false || outroVisible == undefined) { spin4 = true };
 </script>
 
