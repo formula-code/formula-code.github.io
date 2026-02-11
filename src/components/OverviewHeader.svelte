@@ -1,9 +1,9 @@
 <script>
 	import { getContext } from "svelte";
 	import Icon from "$components/helpers/Icon.svelte";
-	import SortableTable from "$components/helpers/SortableTable.svelte";
 	import leaderboardData from "$data/leaderboard.json";
 	import { LEVEL_DISPLAY_LABELS, LEVEL_ORDER } from "$utils/constants.js";
+	import { formatAdvantage, getCellClass } from "$utils/formatting.js";
 
 	const copy = getContext("copy") || {};
 	const headerCopy = copy.paperHeader || {};
@@ -89,36 +89,10 @@
 	// Use centralized level order
 	const levels = LEVEL_ORDER;
 
-	// Build SortableTable columns from levels
-	const headerTableColumns = [
-		{ key: "displayName", label: "Agent", numeric: false },
-		...levels.map((level) => ({
-			key: level,
-			label: LEVEL_DISPLAY_LABELS[level] || level,
-			numeric: true,
-			colorCode: true,
-			colorThreshold: 0
-		})),
-		{
-			key: "overall",
-			label: "Overall",
-			numeric: true,
-			colorCode: true,
-			colorThreshold: 0
-		}
-	];
-
-	// Flatten nested levels into flat row objects for SortableTable
-	const rawTableData = Array.isArray(leaderboardData?.tableData)
+	// Hardcoded table data - example data, replace with actual values
+	const tableData = Array.isArray(leaderboardData?.tableData)
 		? leaderboardData.tableData
 		: [];
-	const headerTableRows = rawTableData.map((row) => {
-		const flat = { displayName: row.displayName, overall: row.overall };
-		levels.forEach((level) => {
-			flat[level] = row.levels?.[level] ?? null;
-		});
-		return flat;
-	});
 
 	const hero = headerCopy.hero || {};
 	const heroCommand =
@@ -207,18 +181,44 @@
 			</div>
 		</div>
 
-		{#if headerTableRows.length}
+		{#if tableData.length}
 			<div class="header-leaderboard">
 				<div class="leaderboard-header">
 					<h2>{leaderboardTitle}</h2>
 					<p class="description">{leaderboardDescription}</p>
 				</div>
-				<SortableTable
-					columns={headerTableColumns}
-					rows={headerTableRows}
-					initialSortKey="overall"
-					initialSortOrder="desc"
-				/>
+				<div class="table-wrapper">
+					<table>
+						<thead>
+							<tr>
+								<th class="agent-col">Agent</th>
+								{#each levels as level}
+									<th class="level-col"
+										>{LEVEL_DISPLAY_LABELS[level] || level}</th
+									>
+								{/each}
+								<th class="overall-col">Overall</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each tableData as row}
+								<tr>
+									<td class="agent-name">{row.displayName}</td>
+									{#each levels as level}
+										<td class="score-cell {getCellClass(row.levels[level])}">
+											{formatAdvantage(row.levels[level])}
+										</td>
+									{/each}
+									<td
+										class="score-cell overall-cell {getCellClass(row.overall)}"
+									>
+										{formatAdvantage(row.overall)}
+									</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
 			</div>
 		{/if}
 
@@ -400,7 +400,7 @@
 		margin-bottom: 2rem;
 	}
 
-	.leaderboard-header h2 {
+	.leaderboard-header h3 {
 		color: var(--wine-tan);
 		font-size: var(--36px);
 		font-weight: 700;
@@ -415,6 +415,84 @@
 		max-width: 700px;
 		margin-left: auto;
 		margin-right: auto;
+	}
+
+	.table-wrapper {
+		overflow-x: auto;
+		border-radius: 3px;
+		border: 1px solid var(--wine-dark-gray);
+	}
+
+	.header-leaderboard table {
+		width: 100%;
+		border-collapse: collapse;
+		background: rgba(24, 26, 31, 0.5);
+	}
+
+	.header-leaderboard thead {
+		background: var(--wine-dark-gray);
+	}
+
+	.header-leaderboard th {
+		padding: 1rem;
+		text-align: left;
+		font-family: var(--sans);
+		font-size: var(--14px);
+		font-weight: 700;
+		color: var(--wine-tan);
+		text-transform: uppercase;
+		border-bottom: 2px solid var(--wine-dark-gray);
+	}
+
+	.header-leaderboard .level-col,
+	.header-leaderboard .overall-col {
+		text-align: center;
+	}
+
+	.header-leaderboard tbody tr {
+		border-bottom: 1px solid var(--wine-dark-gray);
+		transition: background var(--250ms);
+	}
+
+	.header-leaderboard tbody tr:hover {
+		background: var(--wine-tan-transparent);
+	}
+
+	.header-leaderboard td {
+		padding: 1rem;
+		color: var(--wine-tan);
+		font-size: var(--16px);
+	}
+
+	.header-leaderboard .agent-name {
+		font-family: var(--sans);
+		font-weight: 600;
+		color: var(--wine-tan);
+	}
+
+	.header-leaderboard .score-cell {
+		text-align: center;
+		font-family: var(--mono);
+		font-size: var(--14px);
+	}
+
+	.header-leaderboard .overall-cell {
+		font-weight: 700;
+		font-size: var(--16px);
+		background: var(--wine-tan-transparent);
+	}
+
+	/* Color coding for scores */
+	.header-leaderboard .score-cell.high {
+		color: var(--score-good);
+	}
+
+	.header-leaderboard .score-cell.medium {
+		color: #d8d8d8;
+	}
+
+	.header-leaderboard .score-cell.low {
+		color: var(--score-bad);
 	}
 
 	.paper-hero {

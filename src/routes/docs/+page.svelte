@@ -1,8 +1,7 @@
 <script>
 	import { setContext } from "svelte";
-	import { browser } from "$app/environment";
 	import Meta from "$components/Meta.svelte";
-	import OverviewPage from "$components/OverviewPage.svelte";
+	import DocsPage from "$components/DocsPage.svelte";
 	import copy from "$data/copy.json";
 	import version from "$utils/version.js";
 
@@ -10,10 +9,13 @@
 
 	version();
 
-	const { title, description, url, keywords } = copy;
+	const title = "Documentation - FormulaCode";
+	const description = "Getting Started with FormulaCode Benchmark";
+	const { url, keywords } = copy;
+
 	setContext("copy", copy);
 	setContext("data", data.data);
 </script>
 
 <Meta {title} {description} {url} {keywords} />
-<OverviewPage leaderboardData={data.leaderboard} />
+<DocsPage />

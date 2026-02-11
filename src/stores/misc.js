@@ -61,6 +61,7 @@ export const tooltipType = writable(null);
 export const lockedSelection = writable(false);
 export const tooltipData = writable(null);
 export const tooltipVisible = writable(false);
+export const tooltipAutoHideTimer = writable(null);
 
 // SECTION
 export const activeSection = writable("Finding the Deals");
@@ -97,43 +98,43 @@ export const agentStats = readable(agentStatsMap);
 // Kept for backward compatibility or future reference
 /*
 export const selectedAgentReason = derived(
-    [agentSelected, agentStats, thresholdAgentNum, thresholdOracleNum],
-    ([$agentSelected, $agentStats, $agentThresh, $oracleThresh]) => {
-        if (!$agentSelected) return null;
+	[agentSelected, agentStats, thresholdAgentNum, thresholdOracleNum],
+	([$agentSelected, $agentStats, $agentThresh, $oracleThresh]) => {
+		if (!$agentSelected) return null;
 
-        const stats = $agentStats?.[$agentSelected];
-        if (!stats) return null;
+		const stats = $agentStats?.[$agentSelected];
+		if (!stats) return null;
 
-        const agentMed = Number(stats.medianAgentNop ?? 0);
-        const oracleMed = Number(stats.medianOracleNop ?? 0);
+		const agentMed = Number(stats.medianAgentNop ?? 0);
+		const oracleMed = Number(stats.medianOracleNop ?? 0);
 
-        const agentOk = agentMed >= $agentThresh;
-        const oracleOk = oracleMed >= $oracleThresh;
+		const agentOk = agentMed >= $agentThresh;
+		const oracleOk = oracleMed >= $oracleThresh;
 
-        let badge = "mixed";
-        let title = "Mixed";
-        let text = "Balanced tradeoffs.";
+		let badge = "mixed";
+		let title = "Mixed";
+		let text = "Balanced tradeoffs.";
 
-        if (agentOk && oracleOk) {
-            badge = "good";
-            title = "High Performance";
-            text = "Both agent and oracle show balanced speedups.";
-        } else if (agentOk && !oracleOk) {
-            badge = "mixed";
-            title = "Under-optimized";
-            text = "Agent benefits, but the oracle limits overall gains.";
-        } else if (!agentOk && oracleOk) {
-            badge = "mixed";
-            title = "Sub-optimized";
-            text = "Oracle improves, but the agent lags behind.";
-        } else {
-            badge = "bad";
-            title = "Regression";
-            text = "Neither agent nor oracle meets speedup thresholds.";
-        }
+		if (agentOk && oracleOk) {
+			badge = "good";
+			title = "High Performance";
+			text = "Both agent and oracle show balanced speedups.";
+		} else if (agentOk && !oracleOk) {
+			badge = "mixed";
+			title = "Under-optimized";
+			text = "Agent benefits, but the oracle limits overall gains.";
+		} else if (!agentOk && oracleOk) {
+			badge = "mixed";
+			title = "Sub-optimized";
+			text = "Oracle improves, but the agent lags behind.";
+		} else {
+			badge = "bad";
+			title = "Regression";
+			text = "Neither agent nor oracle meets speedup thresholds.";
+		}
 
-        return { badge, title, text, agentMed, oracleMed };
-    }
+		return { badge, title, text, agentMed, oracleMed };
+	}
 );
 */
 

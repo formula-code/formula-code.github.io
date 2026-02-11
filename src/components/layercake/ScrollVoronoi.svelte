@@ -1,13 +1,22 @@
 <script>
-	import { getContext } from 'svelte';
-	import { uniques } from 'layercake';
-	import { Delaunay } from 'd3-delaunay';
-	import { selectAll, select } from 'd3-selection';
-import { tooltipType, tooltipData, lockedSelection, thresholdAgentNum, thresholdOracleNum, tooltipVisible, withFiltersData } from "$stores/misc.js";
-import { STEP_AGENT_FILTERS } from "$utils/agents.js";
+	import { getContext, onDestroy } from "svelte";
+	import { uniques } from "layercake";
+	import { Delaunay } from "d3-delaunay";
+	import { selectAll, select } from "d3-selection";
+	import {
+		tooltipType,
+		tooltipData,
+		lockedSelection,
+		thresholdAgentNum,
+		thresholdOracleNum,
+		tooltipVisible,
+		withFiltersData,
+		tooltipAutoHideTimer
+	} from "$stores/misc.js";
+	import { STEP_AGENT_FILTERS } from "$utils/agents.js";
 	import viewport from "$stores/viewport.js";
 
-	const { data, xGet, yGet, width, height } = getContext('LayerCake');
+	const { data, xGet, yGet, width, height } = getContext("LayerCake");
 
 	export let chartScrollIndex;
 
@@ -16,28 +25,64 @@ import { STEP_AGENT_FILTERS } from "$utils/agents.js";
 	$: h = $viewport.height;
 	$: isMobile = w <= 500;
 
-let pointsData = [];
-let selectedPoint;
-$: voronoiEnabled =
-	!isMobile &&
-	(((typeof chartScrollIndex === "number") && chartScrollIndex >= 14) || chartScrollIndex == "exit");
+	let pointsData = [];
+	let selectedPoint;
+	$: voronoiEnabled =
+		!isMobile &&
+		((typeof chartScrollIndex === "number" && chartScrollIndex >= 14) ||
+			chartScrollIndex == "exit");
 
-    const isSelectablePoint = (point, thresholdAgent = 1, thresholdOracle = 1) => {
-        const agent = Number(point['agent/nop']);
-        const oracle = Number(point['oracle/nop']);
-        const agentThreshold = Number.isFinite(thresholdAgent) ? thresholdAgent : 1;
-        const oracleThreshold = Number.isFinite(thresholdOracle) ? thresholdOracle : 1;
-        if (!Number.isFinite(agent) || !Number.isFinite(oracle)) return false;
-        const meetsVertical = agentThreshold <= 0 ? true : agent >= agentThreshold;
-        const belowEqual = oracleThreshold <= 0 ? true : (oracle * agentThreshold <= agent * oracleThreshold);
-        return meetsVertical && belowEqual;
-    };
+	const isSelectablePoint = (
+		point,
+		thresholdAgent = 1,
+		thresholdOracle = 1
+	) => {
+		const agent = Number(point["agent/nop"]);
+		const oracle = Number(point["oracle/nop"]);
+		const agentThreshold = Number.isFinite(thresholdAgent) ? thresholdAgent : 1;
+		const oracleThreshold = Number.isFinite(thresholdOracle)
+			? thresholdOracle
+			: 1;
+		if (!Number.isFinite(agent) || !Number.isFinite(oracle)) return false;
+		const meetsVertical = agentThreshold <= 0 ? true : agent >= agentThreshold;
+		const belowEqual =
+			oracleThreshold <= 0
+				? true
+				: oracle * agentThreshold <= agent * oracleThreshold;
+		return meetsVertical && belowEqual;
+	};
+
+	// --- Auto-hide timer for hover tooltips ---
+	function cancelAutoHide() {
+		const timerId = $tooltipAutoHideTimer;
+		if (timerId) {
+			clearTimeout(timerId);
+			tooltipAutoHideTimer.set(null);
+		}
+	}
+
+	function startAutoHide() {
+		cancelAutoHide();
+		const id = setTimeout(() => {
+			if (!$lockedSelection) {
+				tooltipVisible.set(false);
+				tooltipData.set(null);
+				tooltipType.set(null);
+			}
+			tooltipAutoHideTimer.set(null);
+		}, 400);
+		tooltipAutoHideTimer.set(id);
+	}
+
+	onDestroy(() => {
+		cancelAutoHide();
+	});
 
 	function mouseoverCircle(point) {
-		tooltipType.set("benchmark")
+		cancelAutoHide();
+		tooltipType.set("benchmark");
 
-		selectAll(".benchmark-circle circle")
-			.style("opacity", 0.3)
+		selectAll(".benchmark-circle circle").style("opacity", 0.3);
 
 		selectAll(`#circle-${point.data.id}`)
 			.style("opacity", 1)
@@ -48,15 +93,14 @@ $: voronoiEnabled =
 				this.parentNode.appendChild(this); // Append to the end of the parent
 			});
 
-		setTooltip(point.data)
+		setTooltip(point.data);
 	}
 
 	function mouseClickCircle(point) {
 		selectedPoint = point;
-		tooltipType.set("benchmark")
+		tooltipType.set("benchmark");
 
-		selectAll(".benchmark-circle circle")
-			.style("opacity", 0.3)
+		selectAll(".benchmark-circle circle").style("opacity", 0.3);
 
 		selectAll(`#circle-${point.data.id}`)
 			.style("opacity", 1)
@@ -67,18 +111,22 @@ $: voronoiEnabled =
 				this.parentNode.appendChild(this); // Append to the end of the parent
 			});
 
-		setTooltip(point.data)
+		setTooltip(point.data);
 	}
 
 	function mouseleaveCircle(point) {
-		selectAll(".benchmark-circle circle")
-			.style("opacity", 0.8)
+		selectAll(".benchmark-circle circle").style("opacity", 0.8);
 
 		selectAll(`#circle-${point.data.id}`)
 			.style("opacity", 0.8)
 			.style("fill", null)
 			.transition(500)
-			.attr("r", 5)
+			.attr("r", 5);
+
+		// Start auto-hide timer for hover-triggered (non-locked) tooltips
+		if (!$lockedSelection) {
+			startAutoHide();
+		}
 	}
 
 	function setTooltip(data) {
@@ -87,35 +135,49 @@ $: voronoiEnabled =
 		tooltipType.set("benchmark");
 	}
 
-function setPointsData(chartScrollIndex, filteredData = [], thresholdAgent = 1, thresholdOracle = 1) {
-	const agentFilter = STEP_AGENT_FILTERS[chartScrollIndex];
+	function setPointsData(
+		chartScrollIndex,
+		filteredData = [],
+		thresholdAgent = 1,
+		thresholdOracle = 1
+	) {
+		const agentFilter = STEP_AGENT_FILTERS[chartScrollIndex];
 
-	if (!voronoiEnabled) {
-		pointsData = [];
-		return;
+		if (!voronoiEnabled) {
+			pointsData = [];
+			return;
+		}
+
+		const basePool = agentFilter
+			? $data[1].filter((d) => d.agent_id === agentFilter)
+			: filteredData.length
+				? filteredData
+				: $data[1];
+
+		pointsData = agentFilter
+			? basePool
+			: basePool.filter((d) =>
+					isSelectablePoint(d, thresholdAgent, thresholdOracle)
+				);
 	}
 
-	const basePool = agentFilter
-		? $data[1].filter(d => d.agent_id === agentFilter)
-		: (filteredData.length ? filteredData : $data[1]);
+	// Include thresholds in the reactive dependency so the interactive set updates as sliders move
+	$: setPointsData(
+		chartScrollIndex,
+		$withFiltersData,
+		$thresholdAgentNum,
+		$thresholdOracleNum
+	);
 
-	pointsData = agentFilter
-		? basePool
-		: basePool.filter(d => isSelectablePoint(d, thresholdAgent, thresholdOracle));
-}
-
-    // Include thresholds in the reactive dependency so the interactive set updates as sliders move
-		$: setPointsData(chartScrollIndex, $withFiltersData, $thresholdAgentNum, $thresholdOracleNum);
-  
 	$: points = voronoiEnabled
-		? pointsData.map(d => {
+		? pointsData.map((d) => {
 				const point = [$xGet(d), $yGet(d)];
 				point.data = d;
 				return point;
-		})
+			})
 		: [];
-  
-	$: uniquePoints = uniques(points, d => d.join(), false);
+
+	$: uniquePoints = uniques(points, (d) => d.join(), false);
 	$: voronoi = Delaunay.from(uniquePoints).voronoi([0, 0, $width, $height]);
 
 	$: {
@@ -137,13 +199,11 @@ function setPointsData(chartScrollIndex, filteredData = [], thresholdAgent = 1, 
 			let selectedCircle = select(`#circle-${selectedPoint.data.id}`)
 				.style("opacity", 1)
 				.raise(); // Optional: bring to front
-			select(selectedCircle.node().parentNode)
-				.style("opacity", 1)
-				.raise();
+			select(selectedCircle.node().parentNode).style("opacity", 1).raise();
 		}
 	}
 
-    $: if (!$tooltipVisible && selectedPoint) {
+	$: if (!$tooltipVisible && selectedPoint) {
 		const selectedCircle = select(`#circle-${selectedPoint.data.id}`);
 		if (!selectedCircle.empty()) {
 			selectedCircle
@@ -154,55 +214,58 @@ function setPointsData(chartScrollIndex, filteredData = [], thresholdAgent = 1, 
 			select(selectedCircle.node().parentNode).style("opacity", 0.5);
 		}
 	}
-  </script>
-  
-  {#if voronoiEnabled && voronoi}
-  {#each uniquePoints as point, i}
-    <path
-        id={`voronoi-${point.data.id}`}
-        class={"voronoi-cell"}
-            class:active={voronoiEnabled}
-        d={voronoi.renderCell(i)}
-		aria-label={`Benchmark ${point.data.benchmark_name}, Agent speedup ${point.data['agent/nop']}, Oracle speedup ${point.data['oracle/nop']}`}
-		tabindex="0"
-		role="button"
+</script>
 
-		on:mouseover={() => {
-			if (!$lockedSelection && !isMobile) mouseoverCircle(point);
-		}}
-		on:mouseleave={() => {
-			if (!$lockedSelection  && !isMobile) mouseleaveCircle(point);
-		}}
-		on:focus={() => {
-			if (!$lockedSelection  && !isMobile) mouseoverCircle(point);
-		}}
-		on:click={() => {
-			if(!isMobile) {
-				lockedSelection.set(true);
-				mouseClickCircle(point);
-			}
-		}}
-		on:keydown={(e) => {
-			if (!$lockedSelection && !isMobile && (e.key === 'Enter' || e.key === ' ')) {
-			lockedSelection.set(true);
-			mouseClickCircle(point);
-			e.preventDefault();
-			}
-		}}
-	></path>
-  {/each}
-  {/if}
-  
-  <style>
+{#if voronoiEnabled && voronoi}
+	{#each uniquePoints as point, i}
+		<path
+			id={`voronoi-${point.data.id}`}
+			class={"voronoi-cell"}
+			class:active={voronoiEnabled}
+			d={voronoi.renderCell(i)}
+			aria-label={`Benchmark ${point.data.benchmark_name}, Agent speedup ${point.data["agent/nop"]}, Oracle speedup ${point.data["oracle/nop"]}`}
+			tabindex="0"
+			role="button"
+			on:mouseover={() => {
+				if (!$lockedSelection && !isMobile) mouseoverCircle(point);
+			}}
+			on:mouseleave={() => {
+				if (!$lockedSelection && !isMobile) mouseleaveCircle(point);
+			}}
+			on:focus={() => {
+				if (!$lockedSelection && !isMobile) mouseoverCircle(point);
+			}}
+			on:click={() => {
+				if (!isMobile) {
+					lockedSelection.set(true);
+					mouseClickCircle(point);
+				}
+			}}
+			on:keydown={(e) => {
+				if (
+					!$lockedSelection &&
+					!isMobile &&
+					(e.key === "Enter" || e.key === " ")
+				) {
+					lockedSelection.set(true);
+					mouseClickCircle(point);
+					e.preventDefault();
+				}
+			}}
+		></path>
+	{/each}
+{/if}
+
+<style>
 	.voronoi-cell {
-	  fill: none;
-	  stroke: none;
-	  pointer-events: none;
-	  outline: none;
-	  cursor: pointer;
-	  pointer-events: none;
+		fill: none;
+		stroke: none;
+		pointer-events: none;
+		outline: none;
+		cursor: pointer;
+		pointer-events: none;
 	}
 	.voronoi-cell.active {
 		pointer-events: all;
 	}
-  </style>
+</style>

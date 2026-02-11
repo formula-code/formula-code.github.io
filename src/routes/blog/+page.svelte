@@ -2,7 +2,7 @@
 	import { setContext } from "svelte";
 	import { browser } from "$app/environment";
 	import Meta from "$components/Meta.svelte";
-	import OverviewPage from "$components/OverviewPage.svelte";
+	import BlogPage from "$components/BlogPage.svelte";
 	import copy from "$data/copy.json";
 	import version from "$utils/version.js";
 
@@ -16,4 +16,4 @@
 </script>
 
 <Meta {title} {description} {url} {keywords} />
-<OverviewPage leaderboardData={data.leaderboard} />
+<BlogPage />

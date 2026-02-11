@@ -1,12 +1,12 @@
 <script>
 	// SVELTE
-	import { getContext } from "svelte";
+	import { getContext, onMount } from "svelte";
 
 	// STORES
 	import { currAgentSlide, uniqueAgents } from "$stores/misc.js";
 
 	// COMPONENTS
-	import OverviewHeader from "$components/OverviewHeader.svelte";
+	import PaperHeader from "$components/PaperHeader.svelte";
 	import Intro from "$components/Intro.svelte";
 	import ChartScroll from "$components/ChartScroll.svelte";
 	import AgentAdvantageTable from "$components/AgentAdvantageTable.svelte";
@@ -19,6 +19,11 @@
 	// import Outro from "$components/Outro.svelte";
 	import Footer from "$components/Footer.svelte";
 	import Tooltip from "$components/Tooltip.svelte";
+
+	// Enable scrolling (was previously done in Intro component)
+	onMount(() => {
+		document.body.style.overflowY = "scroll";
+	});
 
 	// VARIABLES
 	const copy = getContext("copy");
@@ -45,48 +50,50 @@
 	}
 </script>
 
-<!-- Overview Header -->
-<OverviewHeader />
+<div class="blog-page">
+	<!-- Paper Header -->
+	<PaperHeader />
 
-<!-- Intro section (interactive) -->
-<Intro />
+	<!-- Intro section (interactive) -->
+	<Intro />
 
-<!-- MAIN FEATURE: Scrollytelling with scatterplot -->
-<ChartScroll />
+	<!-- MAIN FEATURE: Scrollytelling with scatterplot -->
+	<ChartScroll />
 
-<!-- Agent Cards with Slider Navigation -->
-{#if agents && agents.length > 0}
-	<div class="agent-slider-shell">
-		<AgentCardNav />
-		<Slider bind:this={sliderEl} bind:current={$currAgentSlide}>
-			{#each agents as agent, i}
-				<Slide index={i}>
-					<AgentCard {agent} />
-				</Slide>
-			{/each}
-		</Slider>
+	<!-- Agent Cards with Slider Navigation -->
+	{#if agents && agents.length > 0}
+		<div class="agent-slider-shell">
+			<AgentCardNav />
+			<Slider bind:this={sliderEl} bind:current={$currAgentSlide}>
+				{#each agents as agent, i}
+					<Slide index={i}>
+						<AgentCard {agent} />
+					</Slide>
+				{/each}
+			</Slider>
 
-		<!-- Keyboard and visual navigation -->
-		<Tap
-			enableKeyboard={true}
-			showArrows={true}
-			arrowPosition="center"
-			positionMode="container"
-			on:tap={handleTap}
-		/>
-	</div>
-{/if}
+			<!-- Keyboard and visual navigation -->
+			<Tap
+				enableKeyboard={true}
+				showArrows={true}
+				arrowPosition="center"
+				positionMode="container"
+				on:tap={handleTap}
+			/>
+		</div>
+	{/if}
 
-<!-- DISABLED: Outro section -->
-<!-- <Outro /> -->
+	<!-- DISABLED: Outro section -->
+	<!-- <Outro /> -->
 
-<!-- Leaderboard section -->
-<Leaderboard />
+	<!-- Leaderboard section -->
+	<Leaderboard />
 
-<!-- ENABLED: Tooltip for scatterplot interactions -->
-<Tooltip />
+	<!-- ENABLED: Tooltip for scatterplot interactions -->
+	<Tooltip />
 
-<!-- <Explore />  -->
+	<!-- <Explore />  -->
+</div>
 
 <style>
 	/* Agent cards slider styles are handled by the Slider component */
@@ -94,5 +101,9 @@
 	.agent-slider-shell {
 		position: relative;
 		width: 100%;
+	}
+
+	.blog-page {
+		padding-top: 0;
 	}
 </style>
