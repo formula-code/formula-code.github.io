@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	
+		<link href="../_app/immutable/assets/0.CQv66jvY.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/7.4ppUjHHy.css" rel="stylesheet">
+		<link rel="modulepreload" href="../_app/immutable/entry/start.wNpMMrjh.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DCEIPI36.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/BEinvJTW.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DAkbCCox.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/CS7aBpam.js">
+		<link rel="modulepreload" href="../_app/immutable/entry/app.Cf_nhJXQ.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/C1FmrZbK.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DuBysls-.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/0.wR9jyTS5.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Cyq3z6cx.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/AAcfnxvo.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/DMHOg7Eb.js">
+		<link rel="modulepreload" href="../_app/immutable/nodes/7.Ck3xZhtG.js">
+		<link rel="modulepreload" href="../_app/immutable/chunks/Deiux9lq.js"><title>Getting Started — FormulaCode</title><!-- HEAD_svelte-ya7uab_START --><meta name="description" content="Learn how to install, run, and submit results to the FormulaCode benchmark."><meta name="author" content="Atharva Sehgal"><meta name="news_keywords" content="FormulaCode, documentation, getting started, benchmark, installation"><meta property="og:title" content="Getting Started — FormulaCode"><meta property="og:site_name" content="🏎️ FormulaCode"><meta property="og:url" content="https://formula-code.github.io/docs"><meta property="og:description" content="Learn how to install, run, and submit results to the FormulaCode benchmark."><meta property="og:type" content="article"><meta property="og:locale" content="en_US"><meta property="og:image:type" content="image/jpeg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="600"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content="https://formula-code.github.io/"><meta name="twitter:creator" content="@atharvas"><meta name="twitter:title" content="Getting Started — FormulaCode"><meta name="twitter:description" content="Learn how to install, run, and submit results to the FormulaCode benchmark."><meta name="robots" content="max-image-preview:large"><link rel="canonical" href="https://formula-code.github.io/docs/"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&amp;family=Castoro:ital@0;1&amp;display=swap" rel="stylesheet"><!-- HEAD_svelte-ya7uab_END -->
+</head>
+
+<body>
+	<a href="#content" class="skip-to-main">Skip to main content</a>
+	<div>  <nav class="navbar svelte-16kkjp5" aria-label="Main navigation"><div class="navbar-inner svelte-16kkjp5"><a class="navbar-brand svelte-16kkjp5" href="/" data-svelte-h="svelte-169ip8e"><span class="brand-icon svelte-16kkjp5">⚡</span> <span class="brand-text svelte-16kkjp5">FormulaCode</span></a> <button class="hamburger svelte-16kkjp5" aria-label="Toggle navigation menu" aria-expanded="false"><span class="bar svelte-16kkjp5"></span> <span class="bar svelte-16kkjp5"></span> <span class="bar svelte-16kkjp5"></span></button> <ul class="nav-links svelte-16kkjp5"><li><a href="/" class="svelte-16kkjp5">Overview</a> </li><li><a href="/blog/" class="svelte-16kkjp5">Blog</a> </li><li><a href="/leaderboard/" class="svelte-16kkjp5">Leaderboard</a> </li><li><a href="/docs/" class="svelte-16kkjp5 active">Getting Started</a> </li></ul></div> </nav> <main id="content"> <section class="docs-page svelte-s2t5c8"> <aside class="sidebar svelte-s2t5c8"><div class="sidebar-inner svelte-s2t5c8"><h3 class="sidebar-title svelte-s2t5c8" data-svelte-h="svelte-1lrhy0k">Documentation</h3> <nav><ul class="svelte-s2t5c8"><li><button class="svelte-s2t5c8 active">Motivation</button> </li><li><button class="svelte-s2t5c8">Installation</button> </li><li><button class="svelte-s2t5c8">Running an Evaluation</button> </li><li><button class="svelte-s2t5c8">Benchmark Structure</button> </li><li><button class="svelte-s2t5c8">Metrics Reference</button> </li><li><button class="svelte-s2t5c8">Submitting Results</button> </li></ul></nav></div></aside>  <main class="docs-content svelte-s2t5c8" data-svelte-h="svelte-sln6zs"> <article id="motivation" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Motivation</h1> <p class="svelte-s2t5c8">Existing code benchmarks often rely on synthetic or LLM-generated tasks,
+				single-objective workloads, or binary pass/fail outcomes—all of which
+				offer a constrained evaluation landscape compared to the emerging
+				capabilities of LLM coding agents.</p> <p class="svelte-s2t5c8">Real-world performance optimization is rarely isolated: improving one
+				function often degrades performance elsewhere. Engineers must balance
+				multiple competing workloads, maintain correctness constraints, and
+				structure improvements across the entire codebase hierarchy.</p> <p class="svelte-s2t5c8">FormulaCode bridges this gap by providing <strong>961 real-world performance bottleneck tasks</strong>
+				mined from <strong>70 scientific GitHub repositories</strong>, each with
+				an average of
+				<strong>1,532 community-maintained performance workloads</strong> and expert-authored
+				optimization patches. This enables the first large-scale analysis of the
+				holistic ability of LLM agents to optimize codebases.</p></article>  <article id="installation" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Installation</h1> <h2 class="svelte-s2t5c8">Prerequisites</h2> <ul class="req-list svelte-s2t5c8"><li class="svelte-s2t5c8">Docker (version 20.10+)</li> <li class="svelte-s2t5c8">Python 3.10 or higher</li> <li class="svelte-s2t5c8">At least 16 GB of RAM recommended</li> <li class="svelte-s2t5c8">An API key for the LLM provider you want to evaluate</li></ul> <h2 class="svelte-s2t5c8">Install Terminal-Bench</h2> <p class="svelte-s2t5c8">FormulaCode evaluations are run through the Terminal-Bench framework:</p> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">pip install terminal-bench
+# or via the GitHub repository
+git clone https://github.com/formula-code/terminal-bench.git
+cd terminal-bench
+pip install -e .</code></pre></div> <h2 class="svelte-s2t5c8">Verify Installation</h2> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">harbor --version
+harbor list -d formulacode</code></pre></div></article>  <article id="running" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Running an Evaluation</h1> <h2 class="svelte-s2t5c8">Quick Start</h2> <p class="svelte-s2t5c8">Run an evaluation using the Oracle (human expert) agent to verify your
+				setup:</p> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">harbor run -d formulacode@0.1.0.post20251025 -a oracle</code></pre></div> <h2 class="svelte-s2t5c8">Evaluating a Custom Agent</h2> <p class="svelte-s2t5c8">To evaluate your own agent, specify the agent configuration:</p> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8"># Run with a specific agent and model
+harbor run -d formulacode@0.1.0.post20251025 \
+    -a your_agent \
+    --model your_model \
+    --max-cost 10.0</code></pre></div> <h2 class="svelte-s2t5c8">Common Options</h2> <div class="options-table svelte-s2t5c8"><table class="svelte-s2t5c8"><thead><tr><th class="svelte-s2t5c8">Flag</th> <th class="svelte-s2t5c8">Description</th> <th class="svelte-s2t5c8">Default</th></tr></thead> <tbody><tr><td class="svelte-s2t5c8"><code class="svelte-s2t5c8">-d</code></td><td class="svelte-s2t5c8">Dataset specifier</td><td class="svelte-s2t5c8">—</td></tr> <tr><td class="svelte-s2t5c8"><code class="svelte-s2t5c8">-a</code></td><td class="svelte-s2t5c8">Agent framework</td><td class="svelte-s2t5c8">—</td></tr> <tr><td class="svelte-s2t5c8"><code class="svelte-s2t5c8">--model</code></td><td class="svelte-s2t5c8">LLM model to use</td><td class="svelte-s2t5c8">gpt-5</td></tr> <tr><td class="svelte-s2t5c8"><code class="svelte-s2t5c8">--max-cost</code></td><td class="svelte-s2t5c8">Maximum inference budget ($)</td><td class="svelte-s2t5c8">10.0</td></tr> <tr><td class="svelte-s2t5c8"><code class="svelte-s2t5c8">--tasks</code></td><td class="svelte-s2t5c8">Specific task IDs to run</td><td class="svelte-s2t5c8">all</td></tr> <tr><td class="svelte-s2t5c8"><code class="svelte-s2t5c8">--output</code></td><td class="svelte-s2t5c8">Output directory for results</td><td class="svelte-s2t5c8">./results</td></tr></tbody></table></div></article>  <article id="structure" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Benchmark Structure</h1> <p class="svelte-s2t5c8">Each FormulaCode task consists of:</p> <div class="structure-cards svelte-s2t5c8"><div class="struct-card svelte-s2t5c8"><h3 class="svelte-s2t5c8">📦 Repository Snapshot</h3> <p class="svelte-s2t5c8">A Docker container with the repository frozen at the PR&#39;s base
+						commit, including all dependencies and build tools.</p></div> <div class="struct-card svelte-s2t5c8"><h3 class="svelte-s2t5c8">📋 Problem Statement</h3> <p class="svelte-s2t5c8">The GitHub issue describing the performance problem, including
+						context from linked issues, discussions, and the knowledge graph.</p></div> <div class="struct-card svelte-s2t5c8"><h3 class="svelte-s2t5c8">⚡ Performance Workloads</h3> <p class="svelte-s2t5c8">Community-maintained benchmarks (via airspeed-velocity) covering
+						timing, memory, and user-defined metrics, with a median of 81
+						workloads per task.</p></div> <div class="struct-card svelte-s2t5c8"><h3 class="svelte-s2t5c8">✅ Correctness Tests</h3> <p class="svelte-s2t5c8">Unit tests (manually validated) and snapshot tests (automated)
+						ensuring agent patches don&#39;t break functionality.</p></div> <div class="struct-card svelte-s2t5c8"><h3 class="svelte-s2t5c8">👤 Expert Patch</h3> <p class="svelte-s2t5c8">The human-authored solution from the merged PR, serving as a
+						reference baseline for computing Advantage metrics.</p></div></div> <h2 class="svelte-s2t5c8">Workload Hierarchy</h2> <p class="svelte-s2t5c8">Workloads are organized in a code hierarchy for stratified evaluation:</p> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">hierarchy</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">Level 0 (Module):    algorithms.*
+Level 1 (Class):     algorithms.Sorting.*
+Level 2 (Function):  algorithms.Sorting.time_sort_int.*</code></pre></div></article>  <article id="metrics" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Metrics Reference</h1> <div class="metric-def svelte-s2t5c8"><h2 class="svelte-s2t5c8">Speedup</h2> <p class="svelte-s2t5c8">For each workload <em>w<sub>i</sub></em>, the speedup ratio compares
+					baseline to agent execution time:</p> <div class="formula svelte-s2t5c8">S<sub>i</sub> = w<sub>i</sub>(baseline) / w<sub>i</sub>(agent)</div> <p class="svelte-s2t5c8">A value &gt; 1 indicates improvement. Failed correctness tests reset
+					speedup to 1. The overall speedup is the geometric mean across all
+					workloads.</p></div> <div class="metric-def svelte-s2t5c8"><h2 class="svelte-s2t5c8">Advantage</h2> <p class="svelte-s2t5c8">Measures agent performance relative to human experts:</p> <div class="formula svelte-s2t5c8">Adv = S<sub>agent</sub> − S<sub>expert</sub></div> <p class="svelte-s2t5c8">Positive advantage means the agent outperformed the human. If the
+					agent memorized the expert solution, advantage is exactly zero—making
+					data leakage detectable.</p></div> <div class="metric-def svelte-s2t5c8"><h2 class="svelte-s2t5c8">Stratified Advantage</h2> <p class="svelte-s2t5c8">Advantage computed within groups at each code hierarchy level ℓ, then
+					averaged across groups:</p> <div class="formula svelte-s2t5c8">Adv<sup>(ℓ)</sup> = (1/|G<sup>ℓ</sup>|) Σ Adv<sub>g</sub></div> <p class="svelte-s2t5c8">This captures whether improvements are spread evenly or concentrated
+					in specific subsystems.</p></div> <div class="metric-def svelte-s2t5c8"><h2 class="svelte-s2t5c8">Normalized Advantage</h2> <p class="svelte-s2t5c8">Signal-to-noise ratio of the advantage, penalizing erratic performance
+					across workloads:</p> <div class="formula svelte-s2t5c8">Ã = Adv / √(σ²<sub>agent</sub> + σ²<sub>expert</sub>)</div> <p class="svelte-s2t5c8">Rewards agents that deliver steady improvements across many workloads
+					rather than volatile, concentrated gains.</p></div> <div class="metric-def svelte-s2t5c8"><h2 class="svelte-s2t5c8">Cost-Weighted Advantage</h2> <p class="svelte-s2t5c8">Advantage divided by total inference cost (input + output tokens ×
+					per-token price):</p> <div class="formula svelte-s2t5c8">Cost(Adv) = Adv / C<sub>agent</sub></div> <p class="svelte-s2t5c8">Captures the human-relative improvement obtained per unit of inference
+					budget.</p></div></article>  <article id="submitting" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Submitting Results</h1> <p class="svelte-s2t5c8">After running your evaluation, you can submit results to be included on
+				the <a href="/leaderboard/" class="svelte-s2t5c8">public leaderboard</a>:</p> <ol class="steps-list svelte-s2t5c8"><li class="svelte-s2t5c8"><strong class="svelte-s2t5c8">Run the full evaluation</strong> on the FormulaCode dataset with
+					your agent configuration.</li> <li class="svelte-s2t5c8"><strong class="svelte-s2t5c8">Export results</strong> using the built-in export command:
+					<div class="code-block svelte-s2t5c8" style="margin-top: 0.5rem;"><pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">harbor export --format json --output results.json</code></pre></div></li> <li class="svelte-s2t5c8"><strong class="svelte-s2t5c8">Create a pull request</strong> to the
+					<a href="https://github.com/formula-code/formula-code.github.io" target="_blank" rel="noopener" class="svelte-s2t5c8">FormulaCode repository</a> with your results file. Include your agent name, model, and any relevant
+					configuration details.</li> <li class="svelte-s2t5c8"><strong class="svelte-s2t5c8">We&#39;ll review and publish</strong> your results on the leaderboard
+					within one update cycle (monthly).</li></ol> <div class="info-box svelte-s2t5c8"><strong class="svelte-s2t5c8">Questions?</strong> Open an issue on
+				<a href="https://github.com/formula-code/" target="_blank" rel="noopener" class="svelte-s2t5c8">GitHub</a>
+				or reach out to the authors listed on the <a href="/" class="svelte-s2t5c8">overview page</a>.</div></article></main> </section></main> <footer class="svelte-126cfes"><div class="c svelte-126cfes"> <div class="paper-footer-sections svelte-126cfes"> <section class="paper-section citation-section svelte-126cfes"><h3 class="paper-section-title svelte-126cfes">Citation</h3> <div class="bibtex-wrapper svelte-126cfes"><pre class="bibtex-code svelte-126cfes"><code class="svelte-126cfes">@misc{sehgal2025formulacode,
+        title={FormulaCode: Evaluating Agentic Optimization on Large Codebases}, 
+        author={Atharva Sehgal and James Hou and Akanksha Sarkar and Ishaan Mantripragada and Swarat Chaudhuri and Jennifer J. Sun and Yisong Yue},
+        year={2025},
+        eprint={2409.XXXXX},
+        archivePrefix={arXiv},
+        primaryClass={cs.LG},
+        url={https://arxiv.org/abs/2409.XXXXX}, 
+}</code></pre></div></section> <section class="paper-section funding-section svelte-126cfes"><h3 class="paper-section-title svelte-126cfes">Acknowledgements</h3> <p class="paper-section-text svelte-126cfes"><!-- HTML_TAG_START -->This project was made possible by a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a> and an <a href=https://www.neurosymbolic.org/>NSF Expeditions</a> grant.<!-- HTML_TAG_END --></p></section></div>  <div class="footer-acknowledgements svelte-126cfes"><p class="svelte-126cfes"><!-- HTML_TAG_START -->The website design heavily uses the template developed by <a href=https://pudding.cool/author/fox-meyer/>Fox Meyer</a> and <a href=https://pudding.cool/author/jan-diehm/>Jan Diehm</a> for their interactive article in <a href='https://pudding.cool/'>Pudding.cool</a> on <a href='https://github.com/the-pudding/wine-animals'>The Pour-ing of species</a> that is distributed under an MIT license. The code itself is based on <a href='https://github.com/the-pudding/svelte-starter' target='_blank'>The Pudding's SvelteKit starter template</a>. The Visualizations use <a href='https://layercake.graphics/' target='_blank'>LayerCake</a> and <a href='https://d3js.org/' target='_blank'>D3.js</a>. The source code for this website is available <a href='https://github.com/formula-code/formula-code.github.io/'>here</a>, also under an MIT license.<!-- HTML_TAG_END --></p></div></div> </footer> 
+			
+			<script>
+				{
+					__sveltekit_6t74sx = {
+						base: new URL("..", location).pathname.slice(0, -1)
+					};
+
+					const element = document.currentScript.parentElement;
+
+					Promise.all([
+						import("../_app/immutable/entry/start.wNpMMrjh.js"),
+						import("../_app/immutable/entry/app.Cf_nhJXQ.js")
+					]).then(([kit, app]) => {
+						kit.start(app, element, {
+							node_ids: [0, 7],
+							data: [null,null],
+							form: null,
+							error: null
+						});
+					});
+				}
+			</script>
+		</div>
+</body>
+
+</html>
