@@ -119,7 +119,7 @@
 
 <section id="intro">
 	<div class="sticky">
-		<IntroHeadline {scrollIndex} />
+		<IntroHeadline />
 		<IntroAgents bind:this={introAgentsRef} {scrollIndex} {scrollyContainer} />
 		<IntroCDF {scrollIndex} />
 	</div>

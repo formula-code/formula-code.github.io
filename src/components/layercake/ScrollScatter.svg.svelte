@@ -1,6 +1,6 @@
 <script>
 	import { getContext } from "svelte";
-	import { line } from "d3-shape";
+	import { area, line } from "d3-shape";
 	import {
 		agentSelected,
 		thresholdAgentNum,
@@ -107,68 +107,54 @@
 		.x((d) => $xScale(d[0]))
 		.y((d) => $yScale(d[1]))(equalAdvantagePoints);
 
-	// Calculate polygon for shaded "sweet spot" (right of agent threshold & below equal advantage)
-	$: highPerformancePolygonPoints = (() => {
-		if (!$xScale || !$yScale) return "";
+	const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-		const xDomain =
-			typeof $xScale?.domain === "function" ? $xScale.domain() : [0, 3];
-		const yDomain =
-			typeof $yScale?.domain === "function" ? $yScale.domain() : [0, 3];
+	// Calculate shaded "sweet spot" with the same area logic as the agent-card scatterplot
+	$: highPerformanceRegionPath = (() => {
+		if (!xDomain || !yDomain) return null;
+
 		const [xMin, xMax] = xDomain;
 		const [yMin, yMax] = yDomain;
+		if (!Number.isFinite(xMin) || !Number.isFinite(xMax) || xMax <= xMin)
+			return null;
+		if (!Number.isFinite(yMin) || !Number.isFinite(yMax) || yMax <= yMin)
+			return null;
 
-		const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
-		const rawThresholdX = Number.isFinite($thresholdAgentNum)
-			? $thresholdAgentNum
-			: xMin;
-		const thresholdX = clamp(rawThresholdX, xMin, xMax);
-		if (thresholdX >= xMax) return "";
+		const agentThreshold = Number($thresholdAgentNum);
+		const oracleThreshold = Number($thresholdOracleNum);
+		if (!Number.isFinite(agentThreshold) || !Number.isFinite(oracleThreshold))
+			return null;
 
-		const slope =
-			Number.isFinite($thresholdAgentNum) && Math.abs($thresholdAgentNum) > 0
-				? $thresholdOracleNum / $thresholdAgentNum
-				: null;
+		const xStart = clamp(agentThreshold, xMin, xMax);
+		if (xStart >= xMax) return null;
 
-		const yAtThreshold =
-			slope === null
-				? Number.isFinite($thresholdOracleNum)
-					? $thresholdOracleNum
-					: yMax
-				: slope * thresholdX;
-		const startY = clamp(yAtThreshold, yMin, yMax);
+		// Vertical equal-advantage line has no well-defined "under" region.
+		if (Math.abs(agentThreshold) < 1e-6) return null;
 
+		const slope = oracleThreshold / agentThreshold;
+		if (!Number.isFinite(slope) || slope < 0) return null;
+
+		const steps = 40;
+		const dx = (xMax - xStart) / steps;
 		const points = [];
-		points.push([$xScale(thresholdX), $yScale(startY)]);
+		let hasArea = false;
 
-		if (slope === null || !Number.isFinite(slope) || slope <= 0) {
-			const yLine =
-				slope === null
-					? clamp(
-							Number.isFinite($thresholdOracleNum) ? $thresholdOracleNum : yMax,
-							yMin,
-							yMax
-						)
-					: clamp(slope * xMax, yMin, yMax);
-			points.push([$xScale(xMax), $yScale(yLine)]);
-		} else {
-			const xAtTop = yMax / slope;
-			if (xAtTop >= xMax) {
-				const yRight = clamp(slope * xMax, yMin, yMax);
-				points.push([$xScale(xMax), $yScale(yRight)]);
-			} else {
-				const clampedXTop = Math.max(thresholdX, Math.min(xAtTop, xMax));
-				points.push([$xScale(clampedXTop), $yScale(yMax)]);
-				if (clampedXTop < xMax) {
-					points.push([$xScale(xMax), $yScale(yMax)]);
-				}
+		for (let i = 0; i <= steps; i++) {
+			const xVal = xStart + dx * i;
+			const rawY = slope * xVal;
+			const clampedY = clamp(rawY, yMin, yMax);
+			if (clampedY > yMin + 1e-6) {
+				hasArea = true;
 			}
+			points.push({ x: xVal, y: clampedY });
 		}
 
-		points.push([$xScale(xMax), $yScale(yMin)]);
-		points.push([$xScale(thresholdX), $yScale(yMin)]);
+		if (!hasArea) return null;
 
-		return points.map(([x, y]) => `${x},${y}`).join(" ");
+		return area()
+			.x((d) => $xScale(d.x))
+			.y0(() => $yScale(yMin))
+			.y1((d) => $yScale(d.y))(points);
 	})();
 
 	// Regression zone: x < 1.0 AND y < 1.0
@@ -346,17 +332,11 @@
 	})();
 </script>
 
-<!-- 
-{#if isStep(7)}
-<g class="zone-highlights">
-    <polygon
-        class="highlight-quadrant"
-        points={highPerformancePolygonPoints}
-        fill="var(--bg-tertiary)"
-        opacity={0.3}
-    />
-</g>
-{/if} -->
+{#if isExplorePhase && highPerformanceRegionPath}
+	<g class="zone-highlights">
+		<path class="highlight-region" d={highPerformanceRegionPath} />
+	</g>
+{/if}
 
 <defs>
 	<marker
@@ -784,6 +764,11 @@
 
 	.zone-highlights {
 		pointer-events: none;
+	}
+
+	.highlight-region {
+		fill: var(--bg-tertiary);
+		opacity: 0.3;
 	}
 
 	.overflow-indicators {

@@ -1,13 +1,8 @@
 <script>
 	import OverviewHeader from "$components/layout/OverviewHeader.svelte";
-	import Icon from "$components/helpers/Icon.svelte";
 	import SortableTable from "$components/helpers/SortableTable.svelte";
-	import { getContext } from "svelte";
 
 	export let leaderboardData = { global: [] };
-
-	const copy = getContext("copy");
-	const paperFooter = copy.paperFooter || {};
 
 	const compactColumns = [
 		{ key: "agent", label: "Agent", numeric: false },
@@ -33,22 +28,6 @@
 
 <div class="overview-page">
 	<OverviewHeader />
-
-	<section class="section" id="introduction">
-		<div class="container">
-			<h2>Introduction</h2>
-			<p>
-				Large Language Models (LLMs) for code are rapidly evolving from isolated
-				function-level synthesis to file-level editing, and now, to
-				repository-level optimization. FormulaCode is a benchmark for evaluating
-				agentic optimization on large codebases, constructed from 961 real-world
-				performance bottlenecks mined from 70 scientific open-source Python
-				repositories including Pandas, Scikit-Learn, and SciPy. Each task is
-				paired with ~1,532 community-maintained performance workloads alongside
-				expert-authored patches.
-			</p>
-		</div>
-	</section>
 
 	<section class="section bg-light" id="benchmark-design">
 		<div class="container">
@@ -195,15 +174,6 @@
 				></pre>
 		</div>
 	</section>
-
-	{#if paperFooter.citation && paperFooter.citation.show === "true"}
-		<section class="section" id="bibtex">
-			<div class="container">
-				<h2>{paperFooter.citation.title}</h2>
-				<pre><code>{paperFooter.citation.bibtex}</code></pre>
-			</div>
-		</section>
-	{/if}
 </div>
 
 <style>

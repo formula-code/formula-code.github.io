@@ -6,7 +6,6 @@
 		getContext("LayerCake");
 
 	export let selectedAgent = null;
-	export let agentColors = {};
 	const clipId = "cdf-plot-clip";
 
 	// Create path generator

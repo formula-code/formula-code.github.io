@@ -67,7 +67,9 @@
 			: defaultAffiliations;
 
 	const equalContributionNote =
-		headerCopy.equalContributionNote ?? "* Equal Contribution";
+		typeof headerCopy.equalContributionNote === "string"
+			? headerCopy.equalContributionNote.trim()
+			: "";
 
 	const actions =
 		Array.isArray(headerCopy.actions) && headerCopy.actions.length > 0

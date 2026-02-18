@@ -212,7 +212,7 @@
 						controlsMetric={"oracle/nop"}
 						{rangeW}
 						{rangeH}
-						padding={windowW >= 700 ? 156 : 32}
+						padding={windowW >= 700 ? 192 : 32}
 					/>
 					<Range
 						min={0}

@@ -4,9 +4,6 @@
 
 	const { data, xGet, yGet, width, height } = getContext("LayerCake");
 
-	export let agentColors = {};
-	export let agentNames = {};
-
 	let hoveredPoint = null;
 	let mouseX = 0;
 	let mouseY = 0;
@@ -73,6 +70,8 @@
 <!-- Invisible overlay for mouse tracking -->
 <rect
 	class="tooltip-overlay"
+	role="presentation"
+	aria-hidden="true"
 	width={$width}
 	height={$height}
 	on:mousemove={handleMouseMove}

@@ -4,9 +4,6 @@
     import { cubicInOut } from 'svelte/easing';
     import { interpolateString } from 'd3-interpolate';
 
-    // EXPORTS
-    export let scrollIndex;
-
     //VARIABLES
     const copy = getContext("copy");
     const startD = `M0,0.2 C0.15,0 0.35,0.42 0.6,0.2 C0.85,0 1.05,0.42 1.2,0.2 L1.2,1 L0,1 Z`;
@@ -73,4 +70,3 @@
         </clipPath>
     </defs>
 </svg> -->
-

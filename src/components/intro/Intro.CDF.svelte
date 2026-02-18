@@ -126,8 +126,8 @@
 							ticks={[0, 25, 50, 75, 100]}
 							formatTick={(d) => `${d}%`}
 						/>
-						<CDFLines {selectedAgent} agentColors={AGENT_COLORS} />
-						<CDFTooltip agentColors={AGENT_COLORS} agentNames={AGENT_NAMES} />
+						<CDFLines {selectedAgent} />
+						<CDFTooltip />
 					</Svg>
 				</LayerCake>
 				<div class="cdf-overlay">

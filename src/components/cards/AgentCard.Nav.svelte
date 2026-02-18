@@ -131,6 +131,7 @@
 		cursor: pointer;
 		z-index: 1000;
 		background: var(--bg-primary);
+		border-top: 1px solid var(--border-secondary);
 		border-bottom: 1px solid var(--border-secondary);
 		scrollbar-width: none; /* Firefox */
 		-ms-overflow-style: none; /* IE and Edge */
