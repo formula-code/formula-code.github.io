@@ -187,7 +187,7 @@
 			<h2>Submitting Custom Models</h2>
 			<p>
 				To evaluate an agent on FormulaCode, follow the <a
-					href="https://formula-code.github.io/terminal-bench"
+					href="https://github.com/formula-code/terminal-bench"
 					>Installation instructions</a
 				> and run:
 			</p>

@@ -30,6 +30,13 @@
 		tooltipData.set(null);
 		selectedCodeKey = "";
 		activeBenchmarkId = undefined;
+
+		// Clear any pending timer
+		const timerId = $tooltipAutoHideTimer;
+		if (timerId) {
+			clearTimeout(timerId);
+			tooltipAutoHideTimer.set(null);
+		}
 	}
 
 	let handleClick;
@@ -128,7 +135,7 @@
 					tooltipCloseClick();
 				}
 				tooltipAutoHideTimer.set(null);
-			}, 400);
+			}, 200);
 			tooltipAutoHideTimer.set(id);
 		}
 	}

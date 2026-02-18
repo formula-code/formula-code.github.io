@@ -51,7 +51,7 @@
 		{ name: "Leaderboard", href: "/leaderboard/" },
 		{
 			name: "Getting Started",
-			href: "https://formula-code.github.io/terminal-bench"
+			href: "https://github.com/formula-code/terminal-bench"
 		}
 	];
 </script>

@@ -16,7 +16,6 @@
 	import Slide from "$components/helpers/Slider.Slide.svelte";
 	import Tap from "$components/helpers/Tap.svelte";
 	import Leaderboard from "$components/sections/Leaderboard.svelte";
-	// import Outro from "$components/sections/Outro.svelte";
 	import Footer from "$components/layout/Footer.svelte";
 	import Tooltip from "$components/ui/Tooltip.svelte";
 
@@ -83,16 +82,11 @@
 		</div>
 	{/if}
 
-	<!-- DISABLED: Outro section -->
-	<!-- <Outro /> -->
-
 	<!-- Leaderboard section -->
 	<Leaderboard />
 
 	<!-- ENABLED: Tooltip for scatterplot interactions -->
 	<Tooltip />
-
-	<!-- <Explore />  -->
 </div>
 
 <style>

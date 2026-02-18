@@ -9,9 +9,11 @@
 		tooltipData,
 		tooltipVisible,
 		thresholdAgentNum,
-		thresholdOracleNum
+		thresholdOracleNum,
+		tooltipAutoHideTimer
 	} from "$stores/misc.js";
 	import viewport from "$stores/viewport.js";
+	import { onDestroy } from "svelte";
 
 	const { data, xGet, yGet, width, height } = getContext("LayerCake");
 
@@ -67,6 +69,33 @@
 			.attr("r", 5);
 	}
 
+	function startAutoHide() {
+		if ($lockedSelection) return;
+		// Clear any existing timer first
+		cancelAutoHide();
+		const id = setTimeout(() => {
+			if (!$lockedSelection) {
+				tooltipVisible.set(false);
+				tooltipData.set(null);
+				tooltipType.set(null);
+			}
+			tooltipAutoHideTimer.set(null);
+		}, 200);
+		tooltipAutoHideTimer.set(id);
+	}
+
+	function cancelAutoHide() {
+		const id = $tooltipAutoHideTimer;
+		if (id) {
+			clearTimeout(id);
+			tooltipAutoHideTimer.set(null);
+		}
+	}
+
+	onDestroy(() => {
+		cancelAutoHide();
+	});
+
 	function setTooltip(data) {
 		tooltipVisible.set(true);
 		tooltipData.set(data);
@@ -97,13 +126,22 @@
 		tabindex="0"
 		role="button"
 		on:mouseover={() => {
-			if (!$lockedSelection && !isMobile) mouseoverCircle(point);
+			if (!$lockedSelection && !isMobile) {
+				cancelAutoHide();
+				mouseoverCircle(point);
+			}
 		}}
 		on:mouseleave={() => {
-			if (!$lockedSelection && !isMobile) mouseleaveCircle(point);
+			if (!$lockedSelection && !isMobile) {
+				mouseleaveCircle(point);
+				startAutoHide();
+			}
 		}}
 		on:focus={() => {
-			if (!$lockedSelection && !isMobile) mouseoverCircle(point);
+			if (!$lockedSelection && !isMobile) {
+				cancelAutoHide();
+				mouseoverCircle(point);
+			}
 		}}
 		on:click={() => {
 			if (!isMobile) {

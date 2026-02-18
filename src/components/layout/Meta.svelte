@@ -1,5 +1,5 @@
 <script>
-	export let title = "🏎️ FormulaCode";
+	export let title = "FormulaCode";
 	export let description = "FormulaCode is the first large-scale analysis of the holistic ability of LLM agents to optimize codebases.";
 	export let url = "https://formula-code.github.io/";
 	export let keywords = "Code Optimization, Large Language Models, LLMs, AI Agents, Software Performance, Machine Learning, AI Research";
@@ -15,7 +15,7 @@
 	<meta name="news_keywords" content={keywords} />
 
 	<meta property="og:title" content={title} />
-	<meta property="og:site_name" content="🏎️ FormulaCode" />
+	<meta property="og:site_name" content="FormulaCode" />
 	<meta property="og:url" content={url} />
 	<meta property="og:description" content={description} />
 	<meta property="og:type" content="article" />

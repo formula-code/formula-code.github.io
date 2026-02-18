@@ -121,7 +121,7 @@
 					guide.
 				</p>
 				<a
-					href="https://formula-code.github.io/terminal-bench"
+					href="https://github.com/formula-code/terminal-bench"
 					class="cta-button">Get Started</a
 				>
 			</div>

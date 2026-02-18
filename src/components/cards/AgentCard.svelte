@@ -6,7 +6,12 @@
 		agentStats,
 		overallAgentAdvantage,
 		thresholdAgentNum,
-		thresholdOracleNum
+		thresholdOracleNum,
+		tooltipData,
+		tooltipVisible,
+		tooltipType,
+		lockedSelection,
+		tooltipAutoHideTimer
 	} from "$stores/misc.js";
 	import inView from "$actions/inView.js";
 	import { format } from "d3-format";
@@ -39,6 +44,21 @@
 			navAgent.set(agent);
 		} else {
 			navAgent.set(undefined);
+
+			// If we are exiting and the tooltip is showing data for this agent, close it
+			if ($tooltipVisible && $tooltipData && $tooltipData.agent_id === agent) {
+				lockedSelection.set(false);
+				tooltipVisible.set(false);
+				tooltipType.set(null);
+				tooltipData.set(null);
+
+				// Clear timer
+				const timerId = $tooltipAutoHideTimer;
+				if (timerId) {
+					clearTimeout(timerId);
+					tooltipAutoHideTimer.set(null);
+				}
+			}
 		}
 	}
 </script>
