@@ -1,21 +1,4 @@
 <script>
-	/**
-	 * SortableTable — a reusable, click-to-sort table.
-	 *
-	 * Props
-	 *   columns  – Array of { key, label, numeric, decimals, colorCode, colorThreshold }
-	 *              key:            property name in the row objects
-	 *              label:          displayed header text
-	 *              numeric:        if true the column is right-aligned & sorted numerically
-	 *              decimals:       number of decimal places (default 4 for numeric)
-	 *              colorCode:      if true, color green for >= threshold, red for < threshold
-	 *              colorThreshold: threshold for color coding (default 0)
-	 *              prefix:         string prepended to the formatted value (e.g. "#")
-	 *              suffix:         string appended to the formatted value (e.g. "x")
-	 *   rows     – Array of row objects
-	 *   initialSortKey    – (optional) key to sort by on mount
-	 *   initialSortOrder  – (optional) 'asc' | 'desc'  (default 'asc')
-	 */
 	export let columns = [];
 	export let rows = [];
 	export let initialSortKey = null;

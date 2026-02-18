@@ -139,7 +139,7 @@
 					<h3>Multi-Workload Tradeoffs</h3>
 					<p>
 						Compared to human experts, agents make less favorable
-						performance–cost trade-off decisions.
+						performance-cost trade-off decisions.
 					</p>
 				</div>
 			</div>
@@ -163,14 +163,15 @@
 
 	<section class="section bg-light" id="submitting">
 		<div class="container">
-			<h2>Submitting Custom Models</h2>
+			<h2>Don't see your model? Submit it!</h2>
 			<p>
 				To evaluate an agent on FormulaCode, follow the <a
 					href="https://github.com/formula-code/terminal-bench"
 					>Installation instructions</a
 				> and run:
 			</p>
-			<pre><code>harbor run -d formulacode@0.1.0.post20251025 -a oracle</code
+			<pre><code
+					>$ tb run -d formulacode -a [your-agent-name] -m [your-model-name]</code
 				></pre>
 		</div>
 	</section>
@@ -265,6 +266,7 @@
 	/* Leaderboard link */
 
 	.leaderboard-link {
+		margin-top: 2rem;
 		text-align: center;
 	}
 
@@ -290,12 +292,12 @@
 		padding: 1.5rem;
 		border-radius: 8px;
 		overflow-x: auto;
-		border: 1px solid var(--border-secondary);
+		border: 0.5px solid var(--border-secondary);
 	}
 
 	code {
 		font-family: var(--mono);
 		color: var(--text-primary);
-		font-size: 0.9rem;
+		font-size: 1rem;
 	}
 </style>

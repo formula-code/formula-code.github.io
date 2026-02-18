@@ -178,7 +178,7 @@
 	.footer-acknowledgements :global(a) {
 		color: var(--link-color) !important;
 		text-decoration: none;
-		font-weight: 500;
+		font-weight: 200;
 	}
 
 	.footer-acknowledgements :global(a:hover) {
