@@ -8,18 +8,18 @@
 	export let snapTicks = false;
 	export let yTick = 16;
 	export let formatTick = (d) => d;
-	export let ticks = [0,25,50,75,100,125,150];
+	export let ticks = [0, 25, 50, 75, 100, 125, 150];
 	/** If this is a number, it passes that along to the [d3Scale.ticks](https://github.com/d3/d3-scale) function. If this is an array, hardcodes the ticks to those values. If it's a function, passes along the default tick values and expects an array of tick values in return. If nothing, it uses the default ticks supplied by the D3 function. */
 
-	$: isBandwidth = typeof $xScale.bandwidth === 'function';
+	$: isBandwidth = typeof $xScale.bandwidth === "function";
 
 	$: tickVals = Array.isArray(ticks)
 		? ticks
 		: isBandwidth
-		? $xScale.domain()
-		: typeof ticks === 'function'
-			? ticks($xScale.ticks())
-			: $xScale.ticks(ticks);
+			? $xScale.domain()
+			: typeof ticks === "function"
+				? ticks($xScale.ticks())
+				: $xScale.ticks(ticks);
 
 	const textAnchor = (i) => {
 		if (snapTicks === true) {
@@ -34,7 +34,7 @@
 	};
 
 	function tickCheck(tick, i, width) {
-		return $xScale(tick) + (width/5/2)
+		return $xScale(tick) + width / 5 / 2;
 	}
 </script>
 
@@ -74,12 +74,12 @@
 
 	line,
 	.tick line {
-		stroke: var(--wine-med-gray);
+		stroke: var(--border-secondary);
 		stroke-dasharray: 2px 2px;
 	}
 
 	.tick text {
-		fill: var(--wine-dark-tan);
+		fill: var(--text-secondary);
 		font-family: var(--sans);
 		font-size: 14px;
 	}
@@ -97,7 +97,7 @@
 		transform: translateX(-6px);
 	}
 
-	@media(max-width:700px) {
+	@media (max-width: 700px) {
 		.tick text {
 			font-size: 12px;
 		}

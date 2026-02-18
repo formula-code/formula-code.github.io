@@ -2,9 +2,9 @@
 	import { getContext } from "svelte";
 	import { line, curveStepAfter } from "d3";
 
-	const { data, xGet, yGet, xScale, } = getContext("LayerCake");
+	const { data, xGet, yGet, xScale } = getContext("LayerCake");
 
-	export let stroke = "#CFCABF";
+	export let stroke = "var(--text-primary)";
 
 	export let curve = curveStepAfter;
 

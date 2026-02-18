@@ -6,19 +6,19 @@
 	import { currAgentSlide, uniqueAgents } from "$stores/misc.js";
 
 	// COMPONENTS
-	import OverviewHeader from "$components/OverviewHeader.svelte";
-	import Intro from "$components/Intro.svelte";
-	import ChartScroll from "$components/ChartScroll.svelte";
-	import AgentAdvantageTable from "$components/AgentAdvantageTable.svelte";
-	import AgentCard from "$components/AgentCard.svelte";
-	import AgentCardNav from "$components/AgentCard.Nav.svelte";
+	import OverviewHeader from "$components/layout/OverviewHeader.svelte";
+	import Intro from "$components/intro/Intro.svelte";
+	import ChartScroll from "$components/charts/ChartScroll.svelte";
+	import AgentAdvantageTable from "$components/sections/AgentAdvantageTable.svelte";
+	import AgentCard from "$components/cards/AgentCard.svelte";
+	import AgentCardNav from "$components/cards/AgentCard.Nav.svelte";
 	import Slider from "$components/helpers/Slider.svelte";
 	import Slide from "$components/helpers/Slider.Slide.svelte";
 	import Tap from "$components/helpers/Tap.svelte";
-	import Leaderboard from "$components/Leaderboard.svelte";
-	// import Outro from "$components/Outro.svelte";
-	import Footer from "$components/Footer.svelte";
-	import Tooltip from "$components/Tooltip.svelte";
+	import Leaderboard from "$components/sections/Leaderboard.svelte";
+	// import Outro from "$components/sections/Outro.svelte";
+	import Footer from "$components/layout/Footer.svelte";
+	import Tooltip from "$components/ui/Tooltip.svelte";
 
 	// VARIABLES
 	const copy = getContext("copy");

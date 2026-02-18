@@ -86,7 +86,7 @@
 
 		selectAll(`#circle-${point.data.id}`)
 			.style("opacity", 1)
-			.style("fill", "#CFCABF")
+			.style("fill", "var(--text-primary)")
 			.transition(500)
 			.attr("r", 10)
 			.each(function () {
@@ -104,7 +104,7 @@
 
 		selectAll(`#circle-${point.data.id}`)
 			.style("opacity", 1)
-			.style("fill", "#CFCABF")
+			.style("fill", "var(--text-primary)")
 			.transition(500)
 			.attr("r", 10)
 			.each(function () {
@@ -191,7 +191,7 @@
 				// only include circles NOT selected
 				return !selectedPoint || id !== selectedPoint.data.id;
 			})
-			.style("fill", "#475171")
+			.style("fill", "var(--bg-tertiary)")
 			.transition(500)
 			.attr("r", 5);
 
@@ -208,7 +208,7 @@
 		if (!selectedCircle.empty()) {
 			selectedCircle
 				.style("opacity", 0.8)
-				.style("fill", "#475171")
+				.style("fill", "var(--bg-tertiary)")
 				.transition(500)
 				.attr("r", 5);
 			select(selectedCircle.node().parentNode).style("opacity", 0.5);
@@ -223,7 +223,7 @@
 			class={"voronoi-cell"}
 			class:active={voronoiEnabled}
 			d={voronoi.renderCell(i)}
-			aria-label={`Benchmark ${point.data.benchmark_name}, Agent speedup ${point.data["agent/nop"]}, Oracle speedup ${point.data["oracle/nop"]}`}
+			aria-label={`Benchmark ${point.data.benchmark_name}, Agent speedup ${point.data["agent/nop"]}, Expert Human speedup ${point.data["oracle/nop"]}`}
 			tabindex="0"
 			role="button"
 			on:mouseover={() => {

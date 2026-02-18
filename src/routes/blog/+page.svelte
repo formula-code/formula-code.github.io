@@ -1,8 +1,8 @@
 <script>
 	import { setContext } from "svelte";
 	import { browser } from "$app/environment";
-	import Meta from "$components/Meta.svelte";
-	import BlogPage from "$components/BlogPage.svelte";
+	import Meta from "$components/layout/Meta.svelte";
+	import BlogPage from "$components/pages/BlogPage.svelte";
 	import copy from "$data/copy.json";
 	import version from "$utils/version.js";
 

@@ -8,7 +8,7 @@
   --wine-dark-gray: #272a31;
   --wine-med-gray: #363B45;
   --wine-blue: #38425D;
-  --wine--light-blue: #475171;
+  --wine-light-blue: #475171;
   --wine-tan: #CFCABF;
   --wine-tan-transparent: rgba(207, 202, 191, 0.05);
   --wine-dark-tan: #9A968E;
@@ -62,4 +62,51 @@
   --96px: 6rem;
   --112px: 7rem;
   --128px: 8rem;
+
+  /* Semantic Theme Tokens (Dark Mode Default) */
+  --bg-primary: var(--wine-black);
+  --bg-secondary: var(--wine-dark-gray);
+  --bg-tertiary: var(--wine-med-gray);
+
+  --text-primary: var(--wine-tan);
+  --text-secondary: var(--wine-dark-tan);
+  --text-inverse: var(--wine-black);
+
+  --border-primary: rgba(244, 228, 188, 0.1);
+  --border-secondary: rgba(244, 228, 188, 0.2);
+
+  --accent-primary: var(--wine-red);
+  --accent-secondary: var(--wine-gold);
+
+  --link-color: var(--wine-gold);
+  --link-hover: var(--wine-dark-gold);
+
+  --color-agent-gpt5: var(--category-blue);
+  --color-agent-human: var(--category-cyan);
+}
+
+:root[data-theme="light"] {
+  /* Light Mode Overrides */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7f7f7;
+  --bg-tertiary: #e5e5e5;
+
+  --text-primary: #181A1F;
+  --text-secondary: #4e4e4e;
+  --text-inverse: #ffffff;
+
+  --border-primary: rgba(0, 0, 0, 0.1);
+  --border-secondary: rgba(0, 0, 0, 0.2);
+
+  /* Retain brand colors but maybe tweak contrast if needed, for now stick to brand */
+  --accent-primary: var(--wine-red);
+  --accent-secondary: #d48e26;
+  /* Darker gold for better contrast on white */
+
+  --link-color: #d48e26;
+  --link-hover: #b07010;
+
+  --color-agent-gpt5: var(--category-blue);
+  --color-agent-human: #0088cc;
+  /* Darker cyan for better contrast on white */
 }

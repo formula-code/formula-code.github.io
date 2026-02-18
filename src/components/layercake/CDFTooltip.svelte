@@ -13,9 +13,9 @@
 
 	// Flatten all points from all series for Voronoi
 	$: allPoints = Array.isArray($data)
-		? $data.flatMap(series =>
+		? $data.flatMap((series) =>
 				series.values
-					.map(point => {
+					.map((point) => {
 						const x = $xGet(point);
 						const y = $yGet(point);
 						// Skip incomplete points to avoid NaNs sneaking into Delaunay
@@ -29,11 +29,15 @@
 						return coords;
 					})
 					.filter(Boolean)
-		  )
+			)
 		: [];
 
 	// Create Voronoi diagram
-	$: hasBounds = Number.isFinite($width) && Number.isFinite($height) && $width > 0 && $height > 0;
+	$: hasBounds =
+		Number.isFinite($width) &&
+		Number.isFinite($height) &&
+		$width > 0 &&
+		$height > 0;
 	$: voronoi =
 		hasBounds && allPoints.length > 0
 			? Delaunay.from(allPoints).voronoi([0, 0, $width, $height])

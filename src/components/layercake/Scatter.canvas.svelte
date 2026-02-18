@@ -15,13 +15,27 @@
 		scaleCanvas($ctx, $width, $height);
 		$ctx.clearRect(0, 0, $width, $height);
 
+		// Resolve CSS variables if present
+		const resolveColor = (c) => {
+			if (typeof c === "string" && c.startsWith("var(")) {
+				const varName = c.match(/var\(([^)]+)\)/)[1];
+				return getComputedStyle(document.documentElement)
+					.getPropertyValue(varName)
+					.trim();
+			}
+			return c;
+		};
+
+		const resolvedFill = resolveColor(fill);
+		const resolvedStroke = resolveColor(stroke);
+
 		$data.forEach((d) => {
 			$ctx.beginPath();
-			$ctx.arc($xGet(d), $yGet(d), r, 0, 5 * Math.PI, false);
+			$ctx.arc($xGet(d), $yGet(d), r, 0, 2 * Math.PI, false);
 			$ctx.lineWidth = strokeWidth;
-			$ctx.strokeStyle = stroke;
+			$ctx.strokeStyle = resolvedStroke;
 			$ctx.stroke();
-			$ctx.fillStyle = fill;
+			$ctx.fillStyle = resolvedFill;
 			$ctx.fill();
 		});
 	}

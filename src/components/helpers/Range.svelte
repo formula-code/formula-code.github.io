@@ -26,7 +26,10 @@
 
 	let normalizedId = "range-control";
 	$: normalizedId = metric
-		? `range-${metric.replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "").toLowerCase()}`
+		? `range-${metric
+				.replace(/[^a-z0-9]+/gi, "-")
+				.replace(/^-+|-+$/g, "")
+				.toLowerCase()}`
 		: "range-control";
 
 	let isAgentRange = false;
@@ -94,15 +97,16 @@
 	id={normalizedId}
 	style={`width: calc(${(isAgentRange ? rangeH : rangeW) ?? 0}px - ${padding}px);`}
 >
-	<input 
-        type="range" 
-        aria-label={label} 
-        {min} 
-        {max} 
-        {step} 
-        bind:value 
+	<input
+		type="range"
+		aria-label={label}
+		{min}
+		{max}
+		{step}
+		bind:value
 		bind:this={rangeInput}
-        on:input={handleInput} />
+		on:input={handleInput}
+	/>
 	<div class="thumb-label" style={`left: ${thumbOffset}px;`}>
 		<p>
 			{displayValue}
@@ -134,14 +138,18 @@
 		width: 60px;
 		left: 0;
 		transform: translateX(-50%);
-		color: var(--wine-gold);
+		color: var(--accent-secondary);
 		border-radius: 4px;
 		font-size: var(--18px);
 		font-family: var(--sans);
 		font-weight: bold;
 		text-align: right;
-		text-shadow: -2px -2px 0 var(--wine-black), 2px -2px 0 var(--wine-black), -2px 2px 0 var(--wine-black), 2px 2px 0 var(--wine-black);
-		pointer-events: none; 
+		text-shadow:
+			-2px -2px 0 var(--bg-primary),
+			2px -2px 0 var(--bg-primary),
+			-2px 2px 0 var(--bg-primary),
+			2px 2px 0 var(--bg-primary);
+		pointer-events: none;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -157,7 +165,11 @@
 	.thumb-label p {
 		margin: 0;
 		line-height: 1;
-		text-shadow: -2px -2px 0 var(--wine-black), 2px -2px 0 var(--wine-black), -2px 2px 0 var(--wine-black), 2px 2px 0 var(--wine-black);
+		text-shadow:
+			-2px -2px 0 var(--bg-primary),
+			2px -2px 0 var(--bg-primary),
+			-2px 2px 0 var(--bg-primary),
+			2px 2px 0 var(--bg-primary);
 	}
 
 	.range {
@@ -183,7 +195,7 @@
 
 	input[type="range"]:disabled {
 		cursor: not-allowed;
-		opacity: 0.6;       
+		opacity: 0.6;
 	}
 
 	input[type="range"]::-webkit-slider-runnable-track {
@@ -203,7 +215,7 @@
 		background: url("/assets/images/range-vert.png");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
-		border: 3px solid var(--wine-black);
+		border: 3px solid var(--text-primary);
 
 		/* center vertically over the track */
 		margin-top: calc((var(--track-height) - var(--thumb-width)) / 2);
@@ -220,7 +232,7 @@
 		background: url("/assets/images/range-vert.png");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
-		border: 3px solid var(--wine-black);
+		border: 3px solid var(--text-primary);
 
 		/* same centering logic as vertical; keeps the thumb on the track axis */
 		margin-top: calc((var(--track-height) - var(--thumb-width)) / 2);
@@ -230,7 +242,7 @@
 	input[type="range"]::-moz-range-track {
 		width: 100%;
 		height: var(--track-height);
-		background: var(--wine-med-gray);
+		background: var(--bg-tertiary);
 		border-radius: 4px;
 	}
 
@@ -242,7 +254,7 @@
 		background: url("/assets/images/range-vert.png");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
-		border: 2px solid var(--wine-black);
+		border: 2px solid var(--text-primary);
 	}
 
 	input[type="range"]::-ms-track {
@@ -256,7 +268,7 @@
 
 	input[type="range"]::-ms-fill-lower,
 	input[type="range"]::-ms-fill-upper {
-		background: var(--wine-med-gray);
+		background: var(--bg-tertiary);
 		border-radius: 4px;
 	}
 
@@ -267,10 +279,10 @@
 		background: url("/assets/images/range-vert.png");
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
-		border: 3px solid var(--wine-black);
+		border: 3px solid var(--text-primary);
 	}
 
-	@media(max-width: 700px) {
+	@media (max-width: 700px) {
 		#range-agent-nop {
 			left: calc(100% - 2rem);
 			top: 1rem;

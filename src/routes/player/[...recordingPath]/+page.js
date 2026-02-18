@@ -1,9 +1,9 @@
-import allBenchmarkData from "$data/website_data.csv";
+import allBenchmarkData from "$data/website_data_lite.csv";
 
 export const ssr = false;
 export const prerender = false;
 
-export function load({ params, url }) {
+export async function load({ params, url }) {
 	const recordingPath = params.recordingPath || "";
 	const normalizedRecording = recordingPath ? `/${recordingPath}` : null;
 	const benchmarkId = url.searchParams.get("benchmark");
@@ -16,6 +16,20 @@ export function load({ params, url }) {
 
 	if (!benchmark && normalizedRecording) {
 		benchmark = allBenchmarkData.find(d => d.agent_recording === normalizedRecording);
+	}
+
+	// Lazy load the heavy code data
+	if (benchmark) {
+		try {
+			const module = await import("$data/website_data_codes.json");
+			const heavyData = module.default;
+			const extra = heavyData[benchmark.id];
+			if (extra) {
+				benchmark = { ...benchmark, ...extra };
+			}
+		} catch (e) {
+			console.error("Failed to load code data for player", e);
+		}
 	}
 
 	return {

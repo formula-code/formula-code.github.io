@@ -17,8 +17,8 @@
 	$: tickVals = Array.isArray(ticks)
 		? ticks
 		: typeof ticks === "function"
-		? ticks($yScale.ticks())
-		: $yScale.ticks(ticks);
+			? ticks($yScale.ticks())
+			: $yScale.ticks(ticks);
 </script>
 
 <g class="axis y-axis" transform="translate(0, 0)">
@@ -29,8 +29,8 @@
 		>
 			{#if gridlines !== false || tick === 0}
 				<line class="gridline" x2={$width} y1={yTick} y2={yTick} />
-					{#if gridlines !== false}
-						<text
+				{#if gridlines !== false}
+					<text
 						transform="translate(2, -2)"
 						x={xTick}
 						y={yTick}
@@ -38,7 +38,7 @@
 						dy={dyTick}
 						style="text-anchor:{textAnchor};">{formatTick(tick)}</text
 					>
-					{/if}
+				{/if}
 			{/if}
 			{#if tickMarks === true}
 				<line class="tick-mark" x1="0" x2={6} y1={yTick} y2={yTick} />
@@ -54,19 +54,19 @@
 	}
 
 	.tick line {
-		stroke: var(--wine-med-gray);
+		stroke: var(--border-secondary);
 	}
 	.tick .gridline {
 		stroke-dasharray: 2px 2px;
 	}
 
 	.tick text {
-		fill: var(--wine-dark-tan);
+		fill: var(--text-secondary);
 		font-family: var(--sans);
 		font-size: 14px;
 	}
 
-	@media(max-width:700px) {
+	@media (max-width: 700px) {
 		.tick text {
 			font-size: 12px;
 		}

@@ -21,23 +21,25 @@
 
 	$: localHeight = $height;
 
-export let stroke = "#000";
-export let strokeWidth = 0;
+	export let stroke = "#000";
+	export let strokeWidth = 0;
 
 	function colorByValue(d) {
 		// Simple color based on percentage - higher percentage = greener
 		const percent = d.percent || 0;
-		return percent > 20 ? "#3E5C4B" : "#38425D";
+		return percent > 20 ? "var(--score-good)" : "var(--bg-tertiary)";
 	}
 
 	function handleMouseover(e, d) {
-		tooltipType.set("histo")
+		tooltipType.set("histo");
 		let categoryChart = e.target.closest(".chart-wrapper");
 
-		setTooltip(d)
+		setTooltip(d);
 
 		// Highlight hovered bar only within this chart
-		categoryChart.querySelectorAll("rect").forEach(rect => rect.classList.add("notHover"));
+		categoryChart
+			.querySelectorAll("rect")
+			.forEach((rect) => rect.classList.add("notHover"));
 		e.target.classList.add("hover");
 	}
 
@@ -49,7 +51,9 @@ export let strokeWidth = 0;
 
 	function handleMouseleave(e) {
 		let parentChart = e.target.closest("#distribution");
-		parentChart?.querySelectorAll("rect").forEach(rect => rect.classList.remove("notHover", "hover"));
+		parentChart
+			?.querySelectorAll("rect")
+			.forEach((rect) => rect.classList.remove("notHover", "hover"));
 	}
 </script>
 
@@ -75,16 +79,21 @@ export let strokeWidth = 0;
 				{stroke}
 				stroke-width={strokeWidth}
 				on:mouseover|preventDefault={(e) => {
-					if(!isMobile) handleMouseover(e,d)
+					if (!isMobile) handleMouseover(e, d);
 				}}
 				on:focus={(e) => {
-					if(!isMobile) handleMouseover(e,d)
+					if (!isMobile) handleMouseover(e, d);
 				}}
 				on:mouseleave={(e) => {
-					if(!isMobile) handleMouseleave(e)
+					if (!isMobile) handleMouseleave(e);
 				}}
 			/>
-			<text class="bucket-text" x={x + width / 2} y={localHeight + 24} text-anchor="middle">
+			<text
+				class="bucket-text"
+				x={x + width / 2}
+				y={localHeight + 24}
+				text-anchor="middle"
+			>
 				{d.bucket}
 			</text>
 		{/if}
@@ -104,14 +113,14 @@ export let strokeWidth = 0;
 	}
 
 	rect:focus {
-		outline: none
+		outline: none;
 	}
 
 	.bucket-text {
 		font-size: 14px;
 		font-weight: 500;
 		font-family: var(--sans);
-		fill: var(--wine-dark-tan);
+		fill: var(--text-secondary);
 	}
 
 	@media (max-width: 700px) {

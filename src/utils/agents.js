@@ -8,21 +8,21 @@ export const AGENT_IDS = {
 export const AGENT_NAMES = {
 	[AGENT_IDS.CLAUDE]: "Claude Sonnet 4.0",
 	[AGENT_IDS.GPT5]: "GPT-5",
-	[AGENT_IDS.HUMAN]: "Oracle"
+	[AGENT_IDS.HUMAN]: "Expert Human"
 };
 
 // Short names for compact display
 export const AGENT_NAMES_SHORT = {
 	[AGENT_IDS.CLAUDE]: "Claude",
 	[AGENT_IDS.GPT5]: "GPT-5",
-	[AGENT_IDS.HUMAN]: "Oracle"
+	[AGENT_IDS.HUMAN]: "Expert Human"
 };
 
 // Agent brand colors (for charts and visualizations)
 export const AGENT_COLORS = {
-	[AGENT_IDS.CLAUDE]: "#F7B956", // wine-gold
-	[AGENT_IDS.GPT5]: "#4477AA",   // category-blue
-	[AGENT_IDS.HUMAN]: "#66CCEE"   // category-cyan
+	[AGENT_IDS.CLAUDE]: "var(--accent-secondary)", // wine-gold
+	[AGENT_IDS.GPT5]: "var(--color-agent-gpt5)",   // category-blue / blue
+	[AGENT_IDS.HUMAN]: "var(--color-agent-human)"   // category-cyan / teal
 };
 
 // Scroll step thresholds for different visualizations

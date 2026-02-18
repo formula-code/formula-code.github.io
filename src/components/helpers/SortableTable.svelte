@@ -116,26 +116,26 @@
 	.table-wrapper {
 		overflow-x: auto;
 		border-radius: 8px;
-		border: 1px solid var(--wine-med-gray);
+		border: 1px solid var(--border-secondary);
 	}
 
 	table {
 		width: 100%;
 		border-collapse: collapse;
-		background: rgba(24, 26, 31, 0.5);
+		background: var(--bg-secondary);
 	}
 
 	th,
 	td {
 		padding: 1rem;
 		text-align: left;
-		border-bottom: 1px solid var(--wine-med-gray);
+		border-bottom: 1px solid var(--border-secondary);
 		font-family: var(--sans);
-		color: var(--wine-tan);
+		color: var(--text-primary);
 	}
 
 	th {
-		background: var(--wine-dark-gray);
+		background: var(--bg-tertiary);
 		font-weight: 700;
 		font-size: 0.9rem;
 		text-transform: uppercase;
@@ -146,12 +146,12 @@
 	}
 
 	th:hover {
-		background: rgba(255, 255, 255, 0.08);
+		background: var(--bg-secondary);
 	}
 
 	th.sorted {
-		background: rgba(255, 255, 255, 0.1);
-		color: var(--wine-gold);
+		background: var(--bg-secondary);
+		color: var(--accent-secondary);
 	}
 
 	th.numeric,
@@ -165,7 +165,7 @@
 	}
 
 	tr:hover td {
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--bg-tertiary);
 	}
 
 	.th-content {
@@ -185,10 +185,10 @@
 
 	/* Color coding */
 	td.positive {
-		color: #4ade80;
+		color: var(--score-good);
 	}
 
 	td.negative {
-		color: #f87171;
+		color: var(--score-bad);
 	}
 </style>

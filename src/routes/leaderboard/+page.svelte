@@ -1,7 +1,7 @@
 <script>
 	import { setContext } from "svelte";
-	import Meta from "$components/Meta.svelte";
-	import LeaderboardPage from "$components/LeaderboardPage.svelte";
+	import Meta from "$components/layout/Meta.svelte";
+	import LeaderboardPage from "$components/pages/LeaderboardPage.svelte";
 	import copy from "$data/copy.json";
 	import version from "$utils/version.js";
 

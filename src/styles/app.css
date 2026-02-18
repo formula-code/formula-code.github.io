@@ -6,7 +6,8 @@
 /* colors defined in variables.css */
 :root {
 	/* font */
-	--sans: "Noto Sans", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+	--sans:
+		"Noto Sans", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--serif: "Castoro", Iowan Old Style, Times New Roman, Times, serif;
 	--mono: Menlo, Consolas, Monaco, monospace;
 
@@ -15,25 +16,26 @@
 	--z-middle: 0;
 	--z-top: 100;
 	--z-overlay: 1000;
+	--navbar-height: 0px;
 
 	/* presets (used in reset.css) */
 	--border-radius: 2px;
 	--font-body: var(--serif);
 	--font-form: var(--sans);
-	--color-bg: var(--color-white);
-	--color-fg: var(--color-gray-900);
-	--color-primary: var(--color-black);
-	--color-link: var(--color-black);
-	--color-focus: var(--wine-tan);
-	--color-mark: var(--color-yellow);
+	--color-bg: var(--bg-primary);
+	--color-fg: var(--text-primary);
+	--color-primary: var(--text-primary);
+	--color-link: var(--link-color);
+	--color-focus: var(--accent-secondary);
+	--color-mark: var(--wine-gold);
 	--color-selection: var(--wine-blue);
-	--color-border: var(--color-gray-300);
-	--color-button-bg: var(--color-gray-300);
-	--color-button-fg: var(--color-gray-900);
-	--color-button-hover: var(--color-gray-400);
-	--color-input-bg: var(--color-gray-50);
-	--color-input-fg: var(--color-gray-900);
-	--color-placeholder: var(--color-gray-500);
+	--color-border: var(--border-primary);
+	--color-button-bg: var(--bg-secondary);
+	--color-button-fg: var(--text-primary);
+	--color-button-hover: var(--bg-tertiary);
+	--color-input-bg: var(--bg-secondary);
+	--color-input-fg: var(--text-primary);
+	--color-placeholder: var(--text-secondary);
 
 	/* "1" second duration */
 	--250ms: 250ms;
@@ -96,4 +98,30 @@ h5 {
 
 h6 {
 	font-size: var(--20px, 20px);
+}
+
+@media (max-width: 600px) {
+	h1 {
+		font-size: var(--36px, 36px);
+	}
+
+	h2 {
+		font-size: var(--28px, 28px);
+	}
+
+	h3 {
+		font-size: var(--24px, 24px);
+	}
+
+	h4 {
+		font-size: var(--22px, 22px);
+	}
+
+	h5 {
+		font-size: var(--20px, 20px);
+	}
+
+	h6 {
+		font-size: var(--18px, 18px);
+	}
 }

@@ -14,7 +14,7 @@ import{s as q,n as $,d as p,l as V,i as E,b as m,m as k,c as f,e as _,q as I,u a
 git clone https://github.com/formula-code/terminal-bench.git
 cd terminal-bench
 pip install -e .</code></pre></div> <h2 class="svelte-s2t5c8">Verify Installation</h2> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">harbor --version
-harbor list -d formulacode</code></pre></div></article> <article id="running" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Running an Evaluation</h1> <h2 class="svelte-s2t5c8">Quick Start</h2> <p class="svelte-s2t5c8">Run an evaluation using the Oracle (human expert) agent to verify your
+harbor list -d formulacode</code></pre></div></article> <article id="running" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Running an Evaluation</h1> <h2 class="svelte-s2t5c8">Quick Start</h2> <p class="svelte-s2t5c8">Run an evaluation using the Expert Human (human expert) agent to verify your
 				setup:</p> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8">harbor run -d formulacode@0.1.0.post20251025 -a oracle</code></pre></div> <h2 class="svelte-s2t5c8">Evaluating a Custom Agent</h2> <p class="svelte-s2t5c8">To evaluate your own agent, specify the agent configuration:</p> <div class="code-block svelte-s2t5c8"><div class="code-header svelte-s2t5c8">bash</div> <pre class="svelte-s2t5c8"><code class="svelte-s2t5c8"># Run with a specific agent and model
 harbor run -d formulacode@0.1.0.post20251025 \\
     -a your_agent \\

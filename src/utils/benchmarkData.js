@@ -51,7 +51,7 @@ export function extractAgentName(agentId) {
 
 /**
  * Format agent ID to display name
- * Converts "terminus-2,oracle" to "Terminus 2 - Oracle"
+ * Converts "terminus-2,oracle" to "Terminus 2 - Expert Human"
  * Converts "terminus-2,gpt-5" to "Terminus 2 - GPT-5"
  * Converts "terminus-2,claude" to "Terminus 2 - Claude Sonnet 4.0"
  * @param {string} agentId - Full agent ID (e.g., "terminus-2,oracle")
@@ -74,7 +74,7 @@ export function formatAgentDisplayName(agentId) {
 
 	switch (modelPart.toLowerCase()) {
 		case 'oracle':
-			formattedModel = 'Oracle';
+			formattedModel = 'Expert Human';
 			break;
 		case 'gpt-5':
 		case 'gpt5':

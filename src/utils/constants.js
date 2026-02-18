@@ -30,4 +30,14 @@ export const CELL_NEUTRAL_RANGE = {
 
 // Scatterplot dimension constraints
 // Maximum ratio of width to height for the scrollytelling scatterplot
+// TODO: Find a better heuristic for this constraint
 export const SCATTER_MAX_WIDTH_HEIGHT_RATIO = 2.0;
+
+// Breakpoints for responsive design
+// These should generally match the media queries in CSS
+export const BREAKPOINTS = {
+	MOBILE: 700,
+	TABLET: 768,
+	DESKTOP: 1100,
+	LARGE_DESKTOP: 1400
+};

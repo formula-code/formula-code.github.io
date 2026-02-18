@@ -1,5 +1,5 @@
 import { writable, derived, readable } from "svelte/store";
-import allBenchmarkData from "$data/website_data.csv";
+import allBenchmarkData from "$data/website_data_lite.csv";
 import medianStatsRaw from "$data/median_data.csv";
 
 // EXPLORE DATA
@@ -50,7 +50,7 @@ export const benchmarkSelected = writable(false);
 
 // PERFORMANCE THRESHOLDS
 export const thresholdAgentNum = writable(1.0);  // Agent speedup threshold
-export const thresholdOracleNum = writable(1.0); // Oracle speedup threshold
+export const thresholdOracleNum = writable(1.0); // Expert Human speedup threshold
 
 // AGENT CARDS
 export const navAgent = writable("terminus-2,oracle");
@@ -118,19 +118,19 @@ export const selectedAgentReason = derived(
 		if (agentOk && oracleOk) {
 			badge = "good";
 			title = "High Performance";
-			text = "Both agent and oracle show balanced speedups.";
+			text = "Both agent and Expert Human show balanced speedups.";
 		} else if (agentOk && !oracleOk) {
 			badge = "mixed";
 			title = "Under-optimized";
-			text = "Agent benefits, but the oracle limits overall gains.";
+			text = "Agent benefits, but the Expert Human limits overall gains.";
 		} else if (!agentOk && oracleOk) {
 			badge = "mixed";
 			title = "Sub-optimized";
-			text = "Oracle improves, but the agent lags behind.";
+			text = "Expert Human improves, but the agent lags behind.";
 		} else {
 			badge = "bad";
 			title = "Regression";
-			text = "Neither agent nor oracle meets speedup thresholds.";
+			text = "Neither agent nor Expert Human meets speedup thresholds.";
 		}
 
 		return { badge, title, text, agentMed, oracleMed };

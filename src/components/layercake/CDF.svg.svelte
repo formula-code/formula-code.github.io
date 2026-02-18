@@ -2,7 +2,8 @@
 	import { getContext } from "svelte";
 	import { line, curveLinear } from "d3";
 
-	const { data, xGet, yGet, width, height, xRange, yRange } = getContext("LayerCake");
+	const { data, xGet, yGet, width, height, xRange, yRange } =
+		getContext("LayerCake");
 
 	export let selectedAgent = null;
 	export let agentColors = {};
@@ -10,8 +11,8 @@
 
 	// Create path generator
 	$: pathGenerator = line()
-		.x(d => $xGet(d))
-		.y(d => $yGet(d))
+		.x((d) => $xGet(d))
+		.y((d) => $yGet(d))
 		.curve(curveLinear);
 
 	// Function to determine stroke width based on selection
@@ -56,7 +57,9 @@
 	.cdf-line {
 		stroke-linejoin: round;
 		stroke-linecap: round;
-		transition: stroke-width 300ms ease, opacity 300ms ease;
+		transition:
+			stroke-width 300ms ease,
+			opacity 300ms ease;
 	}
 
 	.cdf-line.selected {

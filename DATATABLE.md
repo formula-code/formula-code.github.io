@@ -43,7 +43,7 @@ Create `src/data/results.json` with structure:
     {
       "id": "3",
       "agent": "terminus-2,oracle",
-      "displayName": "Oracle (Human)",
+      "displayName": "Expert Human (Human)",
       "levels": {
         "param-level": 0.2500,
         "func-level": 0.2200,
