@@ -1,11 +1,11 @@
 <script>
 	export let title = "FormulaCode";
-	export let description = "FormulaCode is the first large-scale analysis of the holistic ability of LLM agents to optimize codebases.";
+	export let description =
+		"FormulaCode is the first large-scale analysis of the holistic ability of LLM agents to optimize codebases.";
 	export let url = "https://formula-code.github.io/";
-	export let keywords = "Code Optimization, Large Language Models, LLMs, AI Agents, Software Performance, Machine Learning, AI Research";
-	export let preloadFont = [
-		
-	];
+	export let keywords =
+		"Code Optimization, Large Language Models, LLMs, AI Agents, Software Performance, Machine Learning, AI Research";
+	export let preloadFont = [];
 </script>
 
 <svelte:head>
@@ -21,8 +21,15 @@
 	<meta property="og:type" content="article" />
 	<meta property="og:locale" content="en_US" />
 
-	<!-- <meta property="og:image" content="{url}/assets/images/social2.jpg" /> -->
-	<meta property="og:image:type" content="image/jpeg" />
+	<meta
+		property="og:image"
+		content="{url}assets/images/formula-code-banner.png"
+	/>
+	<meta
+		property="og:image:alt"
+		content="FormulaCode Data Analysis Logo and Banner"
+	/>
+	<meta property="og:image:type" content="image/png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="600" />
 
@@ -31,9 +38,17 @@
 	<meta name="twitter:creator" content="@atharvas" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<!-- <meta name="twitter:image:src" content="{url}/assets/images/social2.jpg" /> -->
+	<meta
+		name="twitter:image:src"
+		content="{url}assets/images/formula-code-banner.png"
+	/>
+	<meta
+		name="twitter:image:alt"
+		content="FormulaCode Data Analysis Logo and Banner"
+	/>
 
 	<meta name="robots" content="max-image-preview:large" />
+	<meta name="theme-color" content="#ffffff" />
 
 	<link rel="canonical" href="{url}/" />
 
