@@ -52,29 +52,15 @@
 		return cdfPoints;
 	}
 
-	// Process data for all three agents
+	// Process data for all agents dynamically
 	$: cdfData =
 		data.length > 0
-			? [
-					{
-						agent: AGENT_IDS.CLAUDE,
-						agentName: AGENT_NAMES[AGENT_IDS.CLAUDE],
-						color: AGENT_COLORS[AGENT_IDS.CLAUDE],
-						values: calculateCDF(AGENT_IDS.CLAUDE, data)
-					},
-					{
-						agent: AGENT_IDS.GPT5,
-						agentName: AGENT_NAMES[AGENT_IDS.GPT5],
-						color: AGENT_COLORS[AGENT_IDS.GPT5],
-						values: calculateCDF(AGENT_IDS.GPT5, data)
-					},
-					{
-						agent: AGENT_IDS.HUMAN,
-						agentName: AGENT_NAMES[AGENT_IDS.HUMAN],
-						color: AGENT_COLORS[AGENT_IDS.HUMAN],
-						values: calculateCDF(AGENT_IDS.HUMAN, data)
-					}
-				]
+			? Object.values(AGENT_IDS).map((agentId) => ({
+					agent: agentId,
+					agentName: AGENT_NAMES[agentId],
+					color: AGENT_COLORS[agentId],
+					values: calculateCDF(agentId, data)
+				})).filter(d => d.values.length > 0)
 			: [];
 
 	// Determine which agent is selected

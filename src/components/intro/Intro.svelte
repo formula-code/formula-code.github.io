@@ -123,7 +123,7 @@
 		<IntroAgents bind:this={introAgentsRef} {scrollIndex} {scrollyContainer} />
 		<IntroCDF {scrollIndex} />
 	</div>
-	<Scrolly bind:value={scrollIndex} bind:container={scrollyContainer}>
+	<Scrolly bind:value={scrollIndex} bind:container={scrollyContainer} increments={25}>
 		<!-- Step 0: Opening prompt -->
 		<div class="step">
 			<div class="step-inner">
@@ -209,7 +209,9 @@
 
 	.sticky {
 		width: 100%;
-		height: 100svh;
+		height: 100dvh;
+		will-change: transform;
+		contain: layout style paint;
 		position: sticky;
 		display: flex;
 		flex-direction: column;
@@ -233,7 +235,7 @@
 	}
 
 	.step:first-of-type {
-		margin-top: calc(-100svh + 6rem);
+		margin-top: calc(-100dvh + 6rem);
 	}
 
 	.step-inner {

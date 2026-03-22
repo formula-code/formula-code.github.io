@@ -66,7 +66,11 @@
 			<Slider bind:this={sliderEl} bind:current={$currAgentSlide}>
 				{#each agents as agent, i}
 					<Slide index={i}>
-						<AgentCard {agent} />
+						{#if Math.abs(i - $currAgentSlide) <= 1}
+							<AgentCard {agent} />
+						{:else}
+							<div class="agent-card-placeholder" style="min-height: 400px;" />
+						{/if}
 					</Slide>
 				{/each}
 			</Slider>

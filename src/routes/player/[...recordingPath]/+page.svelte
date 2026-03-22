@@ -41,7 +41,7 @@
 			? Number(benchmark["oracle/nop"])
 			: undefined;
 	$: benchmarkPath =
-		benchmark?.benchmark_decoposed || benchmark?.benchmark_without_params || "";
+		benchmark?.benchmark_decomposed || benchmark?.benchmark_without_params || "";
 
 	// Reactive theme subscription
 	let currentTheme;
@@ -122,7 +122,7 @@
 				>
 			</div>
 			<div class="metric">
-				<span class="metric-label">Expert Human speedup</span>
+				<span class="metric-label">Oracle speedup</span>
 				<span class="metric-value highlight"
 					>{oracleSpeed !== undefined
 						? `${oracleSpeed.toFixed(4)}x`
