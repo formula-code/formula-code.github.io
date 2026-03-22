@@ -120,7 +120,7 @@
 		transform: rotate(-90deg) translate(-100%, 0);
 		transform-origin: left top;
 		top: 4.25rem;
-		left: calc(100% - 6rem);
+		left: calc(100% - var(--chart-padding, 6rem));
 		pointer-events: auto;
 		overflow: visible;
 	}
@@ -128,7 +128,7 @@
 	#range-oracle-nop {
 		position: absolute;
 		pointer-events: auto;
-		left: 78px;
+		left: var(--chart-padding, 6rem);
 		top: 10%;
 	}
 
@@ -284,13 +284,13 @@
 
 	@media (max-width: 700px) {
 		#range-agent-nop {
-			left: calc(100% - 2rem);
+			left: calc(100% - var(--chart-padding, 2rem));
 			top: 1rem;
 			z-index: 1001;
 		}
 
 		#range-oracle-nop {
-			left: 1.5rem;
+			left: var(--chart-padding, 1.5rem);
 			top: calc(100% - 4rem);
 		}
 

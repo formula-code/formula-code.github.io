@@ -249,7 +249,7 @@
 		});
 
 		const indicators = [];
-		const padding = 20;
+		const padding = Math.max(14, Math.min(20, $width * 0.03));
 
 		// Right edge
 		if (overflow.right.length > 0) {
@@ -587,7 +587,7 @@
 			class="label equal-advantage-label"
 			x={x1}
 			y={y1}
-			transform={`translate(-30, 5) rotate(${angle}, ${x1}, ${y1})`}
+			transform={`translate(${-Math.max(20, $width * 0.04)}, 5) rotate(${angle}, ${x1}, ${y1})`}
 			text-anchor="end"
 			fill="var(--text-primary)"
 		>
@@ -637,7 +637,7 @@
 	{/if}
 	<text
 		class="label"
-		x={$width - 20}
+		x={$width - Math.max(20, $width * 0.04)}
 		y={$yScale(1.0) - 10}
 		text-anchor="end"
 		fill="var(--text-primary)"
@@ -647,7 +647,7 @@
 
 	<text
 		class="label"
-		x={$xScale(1.0) - 180}
+		x={$xScale(1.0) - Math.min(180, $width * 0.25)}
 		y={17}
 		transform={`rotate(-90, ${$xScale(1.0)}, 0)`}
 		text-anchor="start"

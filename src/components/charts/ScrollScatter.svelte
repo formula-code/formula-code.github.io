@@ -212,7 +212,7 @@
 						controlsMetric={"oracle/nop"}
 						{rangeW}
 						{rangeH}
-						padding={windowW >= 700 ? 192 : 32}
+						padding={rangeH ? rangeH * 0.2 : 32}
 					/>
 					<Range
 						min={0}
@@ -222,7 +222,7 @@
 						controlsMetric={"agent/nop"}
 						{rangeW}
 						{rangeH}
-						padding={windowW >= 700 ? 156 : 54}
+						padding={rangeW ? rangeW * 0.16 : 54}
 					/>
 				{/if}
 			</div>
@@ -311,10 +311,11 @@
 	}
 
 	.chart-container {
+		--chart-padding: clamp(2rem, 8%, 6rem);
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
-		padding: 6rem;
+		padding: var(--chart-padding);
 		position: relative;
 	}
 
@@ -362,20 +363,20 @@
 	}
 
 	.label-price {
-		top: 8.25rem;
-		left: -1.5rem;
+		top: calc(var(--chart-padding) + 2.25rem);
+		left: calc(var(--chart-padding) * -0.25);
 		transform: rotate(-90deg);
 	}
 
 	.label-rating {
-		right: 2.5rem;
-		bottom: 2rem;
+		right: calc(var(--chart-padding) * 0.4);
+		bottom: calc(var(--chart-padding) * 0.33);
 		transform: translate(-50%, 0);
 	}
 
 	.label-aggregation {
-		left: 6.5rem;
-		bottom: 2rem;
+		left: calc(var(--chart-padding) + 0.5rem);
+		bottom: calc(var(--chart-padding) * 0.33);
 		font-size: var(--14px);
 		color: var(--text-primary);
 	}
@@ -395,33 +396,17 @@
 		width: 100%;
 		height: 100%;
 		z-index: 1000;
-		padding: 6rem;
+		padding: var(--chart-padding);
 		pointer-events: none;
 		overflow: hidden;
 	}
 
 	@media (max-width: 700px) {
 		.chart-container {
-			padding: 3rem 2rem;
-		}
-
-		.range-wrapper {
-			padding: 3rem 2rem;
-		}
-
-		.label-price {
-			top: 5rem;
-			left: -2.5rem;
-		}
-
-		.label-rating {
-			right: -1.5rem;
-			bottom: -0.5rem;
+			--chart-padding: clamp(1.5rem, 6%, 3rem);
 		}
 
 		.label-aggregation {
-			left: 2.5rem;
-			bottom: -0.5rem;
 			font-size: var(--12px);
 		}
 
