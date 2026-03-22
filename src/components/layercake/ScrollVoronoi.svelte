@@ -28,9 +28,8 @@
 	let pointsData = [];
 	let selectedPoint;
 	$: voronoiEnabled =
-		!isMobile &&
-		((typeof chartScrollIndex === "number" && chartScrollIndex >= 14) ||
-			chartScrollIndex == "exit");
+		(typeof chartScrollIndex === "number" && chartScrollIndex >= 14) ||
+		chartScrollIndex == "exit";
 
 	const isSelectablePoint = (
 		point,
@@ -233,18 +232,19 @@
 				if (!$lockedSelection && !isMobile) mouseleaveCircle(point);
 			}}
 			on:focus={() => {
-				if (!$lockedSelection && !isMobile) mouseoverCircle(point);
+				if (!$lockedSelection) mouseoverCircle(point);
 			}}
 			on:click={() => {
-				if (!isMobile) {
-					lockedSelection.set(true);
-					mouseClickCircle(point);
-				}
+				lockedSelection.set(true);
+				mouseClickCircle(point);
+			}}
+			on:touchend|preventDefault={() => {
+				lockedSelection.set(true);
+				mouseClickCircle(point);
 			}}
 			on:keydown={(e) => {
 				if (
 					!$lockedSelection &&
-					!isMobile &&
 					(e.key === "Enter" || e.key === " ")
 				) {
 					lockedSelection.set(true);

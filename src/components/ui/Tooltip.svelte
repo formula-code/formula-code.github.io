@@ -238,11 +238,12 @@
 
 <style>
 	#universal-tooltip {
+		--tooltip-height: clamp(200px, 35vh, 400px);
 		position: fixed;
 		left: 0;
-		bottom: -300px;
+		bottom: calc(-1 * var(--tooltip-height));
 		width: 100%;
-		height: 300px;
+		height: var(--tooltip-height);
 		padding: 1rem;
 		background: var(--bg-tertiary);
 		border-top: 1px solid var(--border-secondary);
@@ -452,8 +453,7 @@
 	/* Mobile Responsive */
 	@media (max-width: 700px) {
 		#universal-tooltip {
-			bottom: -400px;
-			height: 400px;
+			--tooltip-height: clamp(250px, 45vh, 400px);
 			padding: 0.75rem;
 		}
 

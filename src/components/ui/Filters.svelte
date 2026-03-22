@@ -336,7 +336,7 @@
 		align-items: flex-start;
 		margin: 0 auto;
 		position: absolute;
-		top: 0;
+		top: var(--navbar-height, 3.5rem);
 		z-index: 1000;
 		padding: 1rem;
 	}
