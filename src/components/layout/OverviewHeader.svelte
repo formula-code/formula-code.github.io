@@ -44,7 +44,7 @@
 		{
 			label: "Paper",
 			icon: "file-text",
-			href: "https://arxiv.org/abs/placeholder"
+			href: "https://arxiv.org/abs/2603.16011"
 		},
 		{ label: "Code", icon: "github", href: "https://github.com/username/repo" }
 	];

@@ -44,7 +44,7 @@
 		{
 			label: "Paper",
 			icon: "file-text",
-			href: "https://arxiv.org/abs/placeholder"
+			href: "https://arxiv.org/abs/2603.16011"
 		},
 		{ label: "Code", icon: "github", href: "https://github.com/username/repo" }
 	];
@@ -75,6 +75,10 @@
 		Array.isArray(headerCopy.actions) && headerCopy.actions.length > 0
 			? headerCopy.actions
 			: defaultActions;
+
+	const disclaimer =
+		headerCopy.disclaimer ??
+		"This is an interactive blog post that presents the core ideas of FormulaCode using a very tiny subset of our dataset. There is a high likelihood that the our findings differ from this exposition. Please read the full paper for accurate information!";
 
 	const abstractConfig = headerCopy.abstract || {};
 	const abstractTitle = abstractConfig.title ?? "Abstract";
@@ -147,11 +151,7 @@
 			<div class="abstract-content">
 				<center>
 					<p>
-						<em>
-							This is an interactive blog post that presents the core ideas of
-							FormulaCode using a sample dataset that is easy to share and
-							reflects the propoerties of our core dataset.
-						</em>
+						<em>{@html disclaimer}</em>
 					</p>
 				</center>
 				<!-- {#each abstractParagraphs as paragraph}
