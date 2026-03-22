@@ -9,21 +9,22 @@
 	const citationConfig = paperFooter.citation || {};
 	const citationTitle = citationConfig.title ?? "Citation";
 	const citationBibtex = citationConfig.bibtex ?? "";
-	const showCitation = citationConfig.show !== false && Boolean(citationBibtex);
+	const showCitation =
+		String(citationConfig.show) !== "false" && Boolean(citationBibtex);
 
 	// Related Work configuration (as paragraph)
 	const relatedWorkConfig = paperFooter.relatedWork || {};
 	const relatedWorkTitle = relatedWorkConfig.title ?? "Related Work";
 	const relatedWorkText = relatedWorkConfig.text ?? "";
 	const showRelatedWork =
-		relatedWorkConfig.show !== false && Boolean(relatedWorkText);
+		String(relatedWorkConfig.show) !== "false" && Boolean(relatedWorkText);
 
 	// Funding configuration
 	const fundingConfig = paperFooter.funding || {};
 	const fundingTitle = fundingConfig.title ?? "Funding";
 	const fundingDescription = fundingConfig.description ?? "";
 	const showFunding =
-		fundingConfig.show !== false && Boolean(fundingDescription);
+		String(fundingConfig.show) !== "false" && Boolean(fundingDescription);
 
 	// Acknowledgements configuration
 	const acknowledgementsConfig = paperFooter.acknowledgements || {};
@@ -31,7 +32,8 @@
 		acknowledgementsConfig.title ?? "Acknowledgements";
 	const acknowledgementsText = acknowledgementsConfig.text ?? "";
 	const showAcknowledgements =
-		acknowledgementsConfig.show !== false && Boolean(acknowledgementsText);
+		String(acknowledgementsConfig.show) !== "false" &&
+		Boolean(acknowledgementsText);
 </script>
 
 <footer>
