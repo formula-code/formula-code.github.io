@@ -44,7 +44,7 @@
 	});
 
 	const xKey = "agent/nop"; // Agent speedup on X-axis
-	const yKey = "oracle/nop"; // Expert Human speedup on Y-axis
+	const yKey = "oracle/nop"; // Oracle speedup on Y-axis
 
 	const clampToDomain = (value, min = 0, max = 5) => {
 		const num = Number(value);

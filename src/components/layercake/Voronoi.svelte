@@ -122,7 +122,7 @@
 		class={"voronoi-cell"}
 		class:active={!isMobile}
 		d={voronoi.renderCell(i)}
-		aria-label={`Benchmark ${point.data.benchmark_name}, Agent speedup ${point.data["agent/nop"]}, Expert Human speedup ${point.data["oracle/nop"]}`}
+		aria-label={`Benchmark ${point.data.benchmark_name}, Agent speedup ${point.data["agent/nop"]}, Oracle speedup ${point.data["oracle/nop"]}`}
 		tabindex="0"
 		role="button"
 		on:mouseover={() => {

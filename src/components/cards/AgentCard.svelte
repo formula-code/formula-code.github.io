@@ -33,7 +33,7 @@
 	$: summaryBullets = stats
 		? [
 				`Median agent speedup: ${(stats.medianAgentNop || 0).toFixed(2)}× (target ${$thresholdAgentNum.toFixed(2)}×)`,
-				`Median Expert Human speedup: ${(stats.medianOracleNop || 0).toFixed(2)}× (target ${$thresholdOracleNum.toFixed(2)}×)`,
+				`Median Oracle speedup: ${(stats.medianOracleNop || 0).toFixed(2)}× (target ${$thresholdOracleNum.toFixed(2)}×)`,
 				`Benchmarks analyzed: ${formatter(stats.count || 0)}`,
 				`Agent advantage score: ${agentAdvantageValue.toFixed(2)}`
 			]
@@ -87,7 +87,7 @@
 							<p>{formatter(stats.count || 0)}</p>
 						</div>
 						<div class="metric">
-							<p>Median Expert Human Speedup</p>
+							<p>Median Oracle Speedup</p>
 							<p>{(stats.medianOracleNop || 0).toFixed(2)}x</p>
 						</div>
 						<div class="metric">

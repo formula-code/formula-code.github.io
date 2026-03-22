@@ -33,7 +33,7 @@
 		})
 	);
 
-	// Bin the Expert Human speedup data
+	// Bin the Oracle speedup data
 	$: oracleBins = oracleBinner(agentData.map((d) => d["oracle/nop"])).map(
 		(bin) => ({
 			bucket: `${bin.x0}-${bin.x1}`,
@@ -45,7 +45,7 @@
 	const xKey = "bucket";
 	const yKey = "percent";
 
-	const categoryLabel = (key) => (key === "oracle" ? "Expert Human" : "Agent");
+	const categoryLabel = (key) => (key === "oracle" ? "Oracle" : "Agent");
 
 	$: agentHistoData = [
 		{
@@ -65,7 +65,7 @@
 	<h4>{agent} Benchmark Performance Distribution</h4>
 	<div class="key">
 		<p class="agent-benchmarks">Agent speedup distribution</p>
-		<p class="oracle-benchmarks">Expert Human speedup distribution</p>
+		<p class="oracle-benchmarks">Oracle speedup distribution</p>
 	</div>
 	<div class="quad-wrapper">
 		{#each agentHistoData as category, i}
