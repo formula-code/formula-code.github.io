@@ -1,7 +1,25 @@
 <script>
+	import { getContext } from "svelte";
 	import SortableTable from "$components/helpers/SortableTable.svelte";
 
 	export let leaderboardData = { global: [], stratified: [] };
+
+	const copy = getContext("copy") || {};
+	const lp = copy.leaderboardPage || {};
+
+	const pageTitle = lp.title ?? "FormulaCode Leaderboard";
+	const globalTitle = lp.global?.title ?? "Global Leaderboard";
+	const stratTitle = lp.stratified?.title ?? "Stratified Leaderboard";
+	const stratDesc =
+		lp.stratified?.description ??
+		'Performance broken down by optimization scope: <strong>L1</strong> (Params), <strong>L2</strong> (Function), <strong>L3</strong> (Class), <strong>L4</strong> (Module).';
+	const submitTitle = lp.submit?.title ?? "Submit Your Model";
+	const submitDesc =
+		lp.submit?.description ??
+		"To evaluate your own agent on FormulaCode, follow our installation guide.";
+	const submitButtonText = lp.submit?.buttonText ?? "Get Started";
+	const submitRepoUrl =
+		lp.submit?.repoUrl ?? "https://github.com/formula-code/fc-eval";
 
 	const globalColumns = [
 		{ key: "rank", label: "RP Rank", numeric: true, decimals: 0, prefix: "#" },
@@ -36,21 +54,28 @@
 		},
 		{
 			key: "level1",
-			label: "Level 1 (Module)",
+			label: "L1 (Params)",
 			numeric: true,
 			colorCode: true,
 			colorThreshold: 0
 		},
 		{
 			key: "level2",
-			label: "Level 2 (Class)",
+			label: "L2 (Function)",
 			numeric: true,
 			colorCode: true,
 			colorThreshold: 0
 		},
 		{
 			key: "level3",
-			label: "Level 3 (Function)",
+			label: "L3 (Class)",
+			numeric: true,
+			colorCode: true,
+			colorThreshold: 0
+		},
+		{
+			key: "level4",
+			label: "L4 (Module)",
 			numeric: true,
 			colorCode: true,
 			colorThreshold: 0
@@ -61,35 +86,10 @@
 <div class="leaderboard-page">
 	<section class="section">
 		<div class="container">
-			<h1>FormulaCode Leaderboard</h1>
-
-			<ul class="metrics-list">
-				<li class="metric-item">
-					<h3>Advantage (Adv)</h3>
-					<p>
-						Human-relative advantage. A value of 0 means the agent performs
-						exactly as well as a human expert. Positive values indicate
-						superhuman performance.
-					</p>
-				</li>
-				<li class="metric-item">
-					<h3>Speedup</h3>
-					<p>
-						Geometric mean of speedup ratios across all workloads. &gt;1.0 means
-						faster than baseline.
-					</p>
-				</li>
-				<li class="metric-item">
-					<h3>RP Rank</h3>
-					<p>
-						Ranked Pairs algorithm rank. Aggregate ranking based on pairwise
-						comparisons.
-					</p>
-				</li>
-			</ul>
+			<h1>{pageTitle}</h1>
 
 			<div class="table-section">
-				<h2>Global Leaderboard</h2>
+				<h2>{globalTitle}</h2>
 				<SortableTable
 					columns={globalColumns}
 					rows={leaderboardData.global}
@@ -99,12 +99,9 @@
 			</div>
 
 			<div class="table-section">
-				<h2>Stratified Leaderboard</h2>
+				<h2>{stratTitle}</h2>
 				<p class="section-desc">
-					Performance broken down by optimization scope:
-					<strong>Level 1</strong> (Module),
-					<strong>Level 2</strong> (Class),
-					<strong>Level 3</strong> (Function).
+					{@html stratDesc}
 				</p>
 				<SortableTable
 					columns={stratifiedColumns}
@@ -115,14 +112,11 @@
 			</div>
 
 			<div class="submission-highlight">
-				<h2>Submit Your Model</h2>
-				<p>
-					To evaluate your own agent on FormulaCode, follow our installation
-					guide.
-				</p>
+				<h2>{submitTitle}</h2>
+				<p>{submitDesc}</p>
 				<a
-					href="https://github.com/formula-code/terminal-bench"
-					class="cta-button">Get Started</a
+					href={submitRepoUrl}
+					class="cta-button">{submitButtonText}</a
 				>
 			</div>
 		</div>
@@ -161,37 +155,6 @@
 		font-family: var(--sans);
 		margin-bottom: 1.5rem;
 		color: var(--text-secondary);
-	}
-
-	.metrics-list {
-		list-style: none;
-		padding: 0;
-		margin: 0 0 4rem 0;
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-		gap: 1.5rem;
-	}
-
-	.metric-item {
-		background: var(--bg-secondary);
-		padding: 1.5rem;
-		border-radius: 8px;
-		border: 1px solid var(--border-secondary);
-	}
-
-	.metric-item h3 {
-		font-family: var(--sans);
-		font-size: 1.1rem;
-		margin-bottom: 0.5rem;
-		color: var(--accent-secondary);
-	}
-
-	.metric-item p {
-		font-family: var(--sans);
-		font-size: 0.9rem;
-		line-height: 1.5;
-		color: var(--text-secondary);
-		margin: 0;
 	}
 
 	.table-section {

@@ -1,8 +1,36 @@
 <script>
+	import { getContext } from "svelte";
 	import OverviewHeader from "$components/layout/OverviewHeader.svelte";
 	import SortableTable from "$components/helpers/SortableTable.svelte";
 
 	export let leaderboardData = { global: [] };
+
+	const copy = getContext("copy") || {};
+	const ov = copy.overview || {};
+
+	const bd = ov.benchmarkDesign || {};
+	const bdTitle = bd.title ?? "Benchmark Design";
+	const bdParagraphs = Array.isArray(bd.paragraphs) ? bd.paragraphs : [];
+
+	const dc = ov.datasetConstruction || {};
+	const dcTitle = dc.title ?? "Dataset Construction";
+	const dcIntro = dc.intro ?? "";
+	const dcSteps = Array.isArray(dc.steps) ? dc.steps : [];
+
+	const kf = ov.keyFindings || {};
+	const kfTitle = kf.title ?? "Key Findings";
+	const kfFindings = Array.isArray(kf.findings) ? kf.findings : [];
+
+	const cl = ov.compactLeaderboard || {};
+	const clTitle = cl.title ?? "Compact Leaderboard";
+	const clButtonText = cl.buttonText ?? "View Full Leaderboard";
+
+	const sub = ov.submit || {};
+	const subTitle = sub.title ?? "Don't see your model? Submit it!";
+	const subInstructions = sub.instructions ?? "";
+	const subCommand = sub.command ?? "";
+	const subRepoUrl =
+		sub.repoUrl ?? "https://github.com/formula-code/fc-eval";
 
 	const compactColumns = [
 		{ key: "agent", label: "Agent", numeric: false },
@@ -31,124 +59,45 @@
 
 	<section class="section bg-light" id="benchmark-design">
 		<div class="container">
-			<h2>Benchmark Design</h2>
-			<p>
-				Each FormulaCode task evaluates the ability of an agent to optimize a
-				real-world codebase under strict correctness constraints. A task begins
-				with a baseline repository, which represents the unmodified
-				implementation. The agent operates on the baseline and produces a
-				modified version of the repository by making arbitrary repository-level
-				edits.
-			</p>
-			<p>
-				Performance evaluation proceeds by executing the full set of workloads
-				on both the baseline and the agent-modified code and comparing their
-				measured outcomes. Improving performance on one workload may degrade
-				performance on others. As a result, optimization in FormulaCode is
-				inherently multi-objective: agents must reason about trade-offs across
-				subsystems and deliver improvements that are broad and consistent rather
-				than localized to a single execution path.
-			</p>
+			<h2>{bdTitle}</h2>
+			{#each bdParagraphs as para}
+				<p>{@html para}</p>
+			{/each}
 		</div>
 	</section>
 
 	<section class="section" id="dataset-construction">
 		<div class="container">
-			<h2>Dataset Construction</h2>
-			<p>
-				FormulaCode consists of multi-workload real-world code optimization
-				problems from 70 repositories. We developed an automated four-stage
-				pipeline that extracts these problems:
-			</p>
+			<h2>{dcTitle}</h2>
+			<p>{@html dcIntro}</p>
 			<div class="pipeline-steps">
-				<div class="step">
-					<h3>1. Repository Scraping</h3>
-					<p>
-						We crawl GitHub repositories with high-quality expert-defined
-						performance workloads.
-					</p>
-				</div>
-				<div class="step">
-					<h3>2. Attribute Filtering</h3>
-					<p>
-						We filter out candidate pull requests where the primary intent was
-						not performance related, using rule-based and LLM-based filters.
-					</p>
-				</div>
-				<div class="step">
-					<h3>3. Environment Synthesis</h3>
-					<p>
-						We synthesize environment building scripts using a reflexive LLM
-						agent so that terminal interface tools function correctly.
-					</p>
-				</div>
-				<div class="step">
-					<h3>4. Statistical Validation</h3>
-					<p>
-						We filter all candidate PRs that do not show statistically
-						significant improvement in performance workloads.
-					</p>
-				</div>
+				{#each dcSteps as step}
+					<div class="step">
+						<h3>{step.title}</h3>
+						<p>{@html step.description}</p>
+					</div>
+				{/each}
 			</div>
 		</div>
 	</section>
 
 	<section class="section bg-light" id="key-findings">
 		<div class="container">
-			<h2>Key Findings</h2>
+			<h2>{kfTitle}</h2>
 			<div class="findings-grid">
-				<div class="finding-card">
-					<h3>Agents Improve Runtime but Underperform Experts</h3>
-					<p>
-						Agents generally can improve run-time performance, but perform worse
-						than human experts.
-					</p>
-				</div>
-				<div class="finding-card">
-					<h3>Local vs. Global Optimization</h3>
-					<p>
-						Agents are better at local or function-level optimization, rather
-						than repository-level optimization.
-					</p>
-				</div>
-				<div class="finding-card">
-					<h3>Optimization Strategy Strengths</h3>
-					<p>
-						Agents excel at using specific optimization strategies (e.g.,
-						parallelizing or batching) and struggle with others (e.g.,
-						vectorized operations).
-					</p>
-				</div>
-				<div class="finding-card">
-					<h3>Long-Tail Repository Performance</h3>
-					<p>
-						Agent performance relative to experts can vary dramatically by
-						popularity of the repository, performing worst on the 4th quintile
-						and best on the 2nd quintile.
-					</p>
-				</div>
-				<div class="finding-card">
-					<h3>Cost Efficiency</h3>
-					<p>
-						Despite being more expensive per call, agents using frontier LLMs
-						are overall more cost effective than those using open weights
-						models.
-					</p>
-				</div>
-				<div class="finding-card">
-					<h3>Multi-Workload Tradeoffs</h3>
-					<p>
-						Compared to human experts, agents make less favorable
-						performance-cost trade-off decisions.
-					</p>
-				</div>
+				{#each kfFindings as finding}
+					<div class="finding-card">
+						<h3>{finding.title}</h3>
+						<p>{@html finding.description}</p>
+					</div>
+				{/each}
 			</div>
 		</div>
 	</section>
 
 	<section class="section" id="leaderboard">
 		<div class="container">
-			<h2>Compact Leaderboard</h2>
+			<h2>{clTitle}</h2>
 			<SortableTable
 				columns={compactColumns}
 				rows={leaderboardData.global}
@@ -156,23 +105,16 @@
 				initialSortOrder="asc"
 			/>
 			<div class="leaderboard-link">
-				<a href="/leaderboard/" class="button">View Full Leaderboard &rarr;</a>
+				<a href="/leaderboard/" class="button">{clButtonText} &rarr;</a>
 			</div>
 		</div>
 	</section>
 
 	<section class="section bg-light" id="submitting">
 		<div class="container">
-			<h2>Don't see your model? Submit it!</h2>
-			<p>
-				To evaluate an agent on FormulaCode, follow the <a
-					href="https://github.com/formula-code/terminal-bench"
-					>Installation instructions</a
-				> and run:
-			</p>
-			<pre><code
-					>$ tb run -d formulacode -a [your-agent-name] -m [your-model-name]</code
-				></pre>
+			<h2>{subTitle}</h2>
+			<p>{@html subInstructions}</p>
+			<pre><code>{subCommand}</code></pre>
 		</div>
 	</section>
 </div>
@@ -216,13 +158,16 @@
 
 	/* Pipeline Steps */
 	.pipeline-steps {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
 		margin-top: 2rem;
 	}
 
 	.step {
+		display: flex;
+		gap: 1.5rem;
+		align-items: baseline;
 		background: var(--bg-secondary);
 		padding: 1.5rem;
 		border-radius: 8px;
@@ -231,7 +176,9 @@
 
 	.step h3 {
 		font-size: 1.25rem;
-		margin-bottom: 0.5rem;
+		margin-bottom: 0;
+		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.step p {

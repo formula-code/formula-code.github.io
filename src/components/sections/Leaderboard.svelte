@@ -1,4 +1,5 @@
 <script>
+	import { getContext } from "svelte";
 	import {
 		agentAdvantageByAgentAndLevel,
 		overallAgentAdvantage,
@@ -8,22 +9,30 @@
 	import { formatAgentDisplayName } from "$utils/benchmarkData.js";
 	import SortableTable from "$components/helpers/SortableTable.svelte";
 
+	const copy = getContext("copy") || {};
+	const il = copy.inlineLeaderboard || {};
+	const ilTitle = il.title ?? "Leaderboard";
+	const ilDescription =
+		il.description ??
+		"This leaderboard displays the agent advantage scores by aggregation level. Higher scores indicate better performance relative to the Oracle.";
+	const ilInstructions =
+		il.instructions ??
+		"Use the thresholding filters above and see how they change the leaderboard.";
+
 	// Level display labels
 	const LEVEL_DISPLAY_LABELS = {
-		"no-aggregation": "L0: No Aggregation",
-		"param-level": "L1: Parameter",
-		"func-level": "L2: Function",
-		"class-level": "L3: Class",
-		"module-level": "L4: Module"
+		"1-Params": "L1: Parameter",
+		"2-Func": "L2: Function",
+		"3-Class": "L3: Class",
+		"4-Module": "L4: Module"
 	};
 
 	// Sort levels in logical order
 	const levelOrder = [
-		"no-aggregation",
-		"param-level",
-		"func-level",
-		"class-level",
-		"module-level"
+		"1-Params",
+		"2-Func",
+		"3-Class",
+		"4-Module"
 	];
 
 	$: agents = $uniqueAgents;
@@ -74,16 +83,10 @@
 
 <section id="leaderboard">
 	<div class="leaderboard-container">
-		<h2>Leaderboard</h2>
-		<p class="description">
-			This leaderboard displays the agent advantage scores by aggregation level.
-			Higher scores indicate better performance relative to the Expert Human.
-		</p>
+		<h2>{ilTitle}</h2>
+		<p class="description">{@html ilDescription}</p>
 		<center>
-			<p class="instructions">
-				Use the thresholding filters above and see how they change the
-				leaderboard.
-			</p>
+			<p class="instructions">{@html ilInstructions}</p>
 		</center>
 
 		<SortableTable
