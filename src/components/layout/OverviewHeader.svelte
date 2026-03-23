@@ -262,7 +262,7 @@
 
 	/* Title */
 	.paper-title {
-		font-family: var(--serif);
+		font-family: var(--sans);
 		font-size: var(--40px);
 		font-weight: 700;
 		line-height: 1.2;

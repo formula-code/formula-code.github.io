@@ -135,7 +135,7 @@
 	}
 
 	h2 {
-		font-family: var(--serif);
+		font-family: var(--sans);
 		font-size: 2.5rem;
 		margin-bottom: 1.5rem;
 		color: var(--text-primary);
@@ -223,14 +223,14 @@
 		background: var(--accent-primary);
 		color: white;
 		text-decoration: none;
-		border-radius: 4px;
+		border-radius: 6px;
 		font-family: var(--sans);
 		font-weight: 600;
 		transition: background 0.2s;
 	}
 
 	.button:hover {
-		background: var(--wine-dark-red);
+		background: #2563eb;
 	}
 
 	/* Code Blocks */

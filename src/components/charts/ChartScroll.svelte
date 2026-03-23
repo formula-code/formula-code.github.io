@@ -259,19 +259,19 @@
 	}
 
 	:global(.regression-span::before) {
-		background: #5a6a7a;
+		background: var(--bg-tertiary);
 		top: 0;
 		border-radius: 3px;
 	}
 
 	:global(.sub-optimization-span::before) {
-		background: #7a3a3a;
+		background: rgba(232, 69, 69, 0.4);
 		top: 0;
 		border-radius: 3px;
 	}
 
 	:global(.under-optimization-span::before) {
-		background: #6a7a5a;
+		background: rgba(34, 197, 94, 0.3);
 		top: 0;
 		border-radius: 3px;
 	}

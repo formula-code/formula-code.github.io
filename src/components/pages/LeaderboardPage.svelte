@@ -137,7 +137,7 @@
 	}
 
 	h1 {
-		font-family: var(--serif);
+		font-family: var(--sans);
 		font-size: 3rem;
 		text-align: center;
 		margin-bottom: 3rem;
@@ -145,7 +145,7 @@
 	}
 
 	h2 {
-		font-family: var(--serif);
+		font-family: var(--sans);
 		font-size: 2rem;
 		margin-bottom: 1rem;
 		color: var(--accent-secondary);
@@ -182,11 +182,11 @@
 		text-decoration: none;
 		font-family: var(--sans);
 		font-weight: 600;
-		border-radius: 4px;
+		border-radius: 6px;
 		transition: background 0.2s;
 	}
 
 	.cta-button:hover {
-		background: var(--wine-dark-red);
+		background: #2563eb;
 	}
 </style>

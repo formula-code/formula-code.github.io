@@ -7,8 +7,8 @@
 :root {
 	/* font */
 	--sans:
-		"Noto Sans", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
-	--serif: "Castoro", Iowan Old Style, Times New Roman, Times, serif;
+		"Inter", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
+	--serif: "Inter", -apple-system, BlinkMacSystemFont, Helvetica, Arial, sans-serif;
 	--mono: Menlo, Consolas, Monaco, monospace;
 
 	/* z-index */
@@ -19,16 +19,16 @@
 	--navbar-height: 0px;
 
 	/* presets (used in reset.css) */
-	--border-radius: 2px;
-	--font-body: var(--serif);
+	--border-radius: 6px;
+	--font-body: var(--sans);
 	--font-form: var(--sans);
 	--color-bg: var(--bg-primary);
 	--color-fg: var(--text-primary);
 	--color-primary: var(--text-primary);
 	--color-link: var(--link-color);
 	--color-focus: var(--accent-secondary);
-	--color-mark: var(--wine-gold);
-	--color-selection: var(--wine-blue);
+	--color-mark: #F7B956;
+	--color-selection: #1e3a5f;
 	--color-border: var(--border-primary);
 	--color-button-bg: var(--bg-secondary);
 	--color-button-fg: var(--text-primary);

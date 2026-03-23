@@ -139,7 +139,7 @@
 	.desktop-links a {
 		text-decoration: none;
 		color: var(--text-primary);
-		font-family: var(--font-body, sans-serif);
+		font-family: var(--sans);
 		font-weight: 500;
 		opacity: 0.8;
 		transition: opacity 0.2s;
@@ -185,7 +185,7 @@
 	.mobile-menu a {
 		text-decoration: none;
 		color: var(--text-primary);
-		font-family: var(--font-body, sans-serif);
+		font-family: var(--sans);
 		font-size: 1.1rem;
 		padding: 0.5rem 0;
 	}

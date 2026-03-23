@@ -179,7 +179,7 @@
 			.transition()
 			.duration(500)
 			.attr("r", 10)
-			.style("fill", "#CFCABF")
+			.style("fill", "var(--text-primary)")
 			.style("opacity", 1);
 
 		parent.raise().classed("filteredOut", false).style("opacity", 1);
@@ -199,7 +199,7 @@
 				.transition()
 				.duration(500)
 				.attr("r", 5)
-				.style("fill", "#475171")
+				.style("fill", "var(--text-secondary)")
 				.style("opacity", 0.8);
 		}
 	}

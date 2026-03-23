@@ -1,21 +1,21 @@
 /**
- * Do not edit directly
- * Generated on Tue, 31 May 2022 13:42:06 GMT
+ * Design tokens — manually maintained (do not run `npm run style` without merging).
+ * Palette: Zinc grays + Blue accents
  */
 
 :root {
-  --wine-black: #181A1F;
-  --wine-dark-gray: #272a31;
-  --wine-med-gray: #363B45;
-  --wine-blue: #38425D;
-  --wine-light-blue: #475171;
-  --wine-tan: #CFCABF;
-  --wine-tan-transparent: rgba(207, 202, 191, 0.05);
-  --wine-dark-tan: #9A968E;
-  --wine-red: #7b0439;
+  --wine-black: #09090b;
+  --wine-dark-gray: #18181b;
+  --wine-med-gray: #27272a;
+  --wine-blue: #1e3a5f;
+  --wine-light-blue: #3f3f46;
+  --wine-tan: #fafafa;
+  --wine-tan-transparent: rgba(250, 250, 250, 0.05);
+  --wine-dark-tan: #a1a1aa;
+  --wine-red: #3b82f6;
   --wine-gold: #F7B956;
   --wine-dark-gold: #e7a53b;
-  --wine-green: #3E5C4B;
+  --wine-green: #22c55e;
   --score-good: #0f9d58;
   --score-bad: #e84545;
   --category-blue: #4477AA;
@@ -64,22 +64,22 @@
   --128px: 8rem;
 
   /* Semantic Theme Tokens (Dark Mode Default) */
-  --bg-primary: var(--wine-black);
-  --bg-secondary: var(--wine-dark-gray);
-  --bg-tertiary: var(--wine-med-gray);
+  --bg-primary: #09090b;
+  --bg-secondary: #18181b;
+  --bg-tertiary: #27272a;
 
-  --text-primary: var(--wine-tan);
-  --text-secondary: var(--wine-dark-tan);
-  --text-inverse: var(--wine-black);
+  --text-primary: #fafafa;
+  --text-secondary: #a1a1aa;
+  --text-inverse: #09090b;
 
-  --border-primary: rgba(244, 228, 188, 0.1);
-  --border-secondary: rgba(244, 228, 188, 0.2);
+  --border-primary: rgba(255, 255, 255, 0.08);
+  --border-secondary: rgba(255, 255, 255, 0.14);
 
-  --accent-primary: var(--wine-red);
-  --accent-secondary: var(--wine-gold);
+  --accent-primary: #3b82f6;
+  --accent-secondary: #F7B956;
 
-  --link-color: var(--wine-gold);
-  --link-hover: var(--wine-dark-gold);
+  --link-color: #F7B956;
+  --link-hover: #e7a53b;
 
   --color-agent-gpt5: var(--category-blue);
   --color-agent-human: var(--category-cyan);
@@ -88,25 +88,22 @@
 :root[data-theme="light"] {
   /* Light Mode Overrides */
   --bg-primary: #ffffff;
-  --bg-secondary: #f7f7f7;
-  --bg-tertiary: #e5e5e5;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f4f4f5;
 
-  --text-primary: #181A1F;
-  --text-secondary: #4e4e4e;
+  --text-primary: #09090b;
+  --text-secondary: #71717a;
   --text-inverse: #ffffff;
 
-  --border-primary: rgba(0, 0, 0, 0.1);
-  --border-secondary: rgba(0, 0, 0, 0.2);
+  --border-primary: rgba(0, 0, 0, 0.08);
+  --border-secondary: rgba(0, 0, 0, 0.14);
 
-  /* Retain brand colors but maybe tweak contrast if needed, for now stick to brand */
-  --accent-primary: var(--wine-red);
+  --accent-primary: #2563eb;
   --accent-secondary: #d48e26;
-  /* Darker gold for better contrast on white */
 
   --link-color: #d48e26;
   --link-hover: #b07010;
 
   --color-agent-gpt5: var(--category-blue);
   --color-agent-human: #0088cc;
-  /* Darker cyan for better contrast on white */
 }

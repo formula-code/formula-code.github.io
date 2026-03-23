@@ -453,7 +453,7 @@
 							r={smallestR}
 							fill={isSelectable && (isStep(7) || isExplorePhase)
 								? "var(--score-good)"
-								: "var(--bg-tertiary)"}
+								: "var(--text-secondary)"}
 							stroke="none"
 							stroke-width={strokeWidth}
 							opacity={0.8}
@@ -520,7 +520,7 @@
 							fill={(isSelectable && (isAtLeast(7) || isExplorePhase)) ||
 							isStep(1)
 								? "var(--score-good)"
-								: "var(--bg-tertiary)"}
+								: "var(--text-secondary)"}
 							stroke={isStep(1) ||
 							(chartScrollIndex >= 2 && chartScrollIndex < 15)
 								? "var(--accent-secondary)"
