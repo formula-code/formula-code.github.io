@@ -148,23 +148,23 @@
     .advantage-table-wrapper :global(.wx-grid) {
         --wx-background: var(--wine-black);
         --wx-color: var(--wine-tan);
-        --wx-border: #3a3d45;
+        --wx-border: var(--border-secondary);
         --wx-font-family: var(--sans);
         font-size: 16px;
     }
 
     .advantage-table-wrapper :global(.wx-header) {
-        background: #2a2d35;
+        background: var(--bg-secondary);
         color: var(--wine-tan);
         font-weight: 700;
     }
 
     .advantage-table-wrapper :global(.wx-row:nth-child(odd)) {
-        background: #1e2028;
+        background: var(--bg-primary);
     }
 
     .advantage-table-wrapper :global(.wx-row:hover) {
-        background: rgba(207, 202, 191, 0.1);
+        background: rgba(255, 255, 255, 0.05);
     }
 
     /* Cell styling based on value */

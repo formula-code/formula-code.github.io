@@ -47,6 +47,13 @@ jobs:
           if [ -f build/200.html ]; then
             cp build/200.html build/404.html
           fi
+          # Ensure CNAME made it into the artifact so GitHub Pages serves
+          # the custom domain. (SvelteKit's static adapter copies anything
+          # in /static, so this is normally a no-op safety net.)
+          if [ ! -f build/CNAME ] && [ -f static/CNAME ]; then
+            cp static/CNAME build/CNAME
+          fi
+          echo "Deploying with CNAME:"; cat build/CNAME || echo "  (none — custom domain not configured)"
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

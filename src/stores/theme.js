@@ -1,55 +1,10 @@
 import { writable } from "svelte/store";
-import { browser } from "$app/environment";
 
-const defaultValue = "system";
-const storageKey = "theme";
+// Dark mode temporarily removed. This store is a no-op and always reports "light".
+// See CLAUDE.md (Known Gaps / TODO). Kept so existing imports don't break in one pass.
 
-export const theme = writable(defaultValue);
-
-const updateDocument = (newValue) => {
-    if (!browser) return;
-    const root = document.documentElement;
-    if (newValue === "system") {
-        const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        root.setAttribute("data-theme", isDark ? "dark" : "light");
-    } else {
-        root.setAttribute("data-theme", newValue);
-    }
-    localStorage.setItem(storageKey, newValue);
-};
-
-if (browser) {
-    const stored = localStorage.getItem(storageKey);
-    if (stored) {
-        theme.set(stored);
-        updateDocument(stored);
-    } else {
-        theme.set(defaultValue);
-        updateDocument(defaultValue);
-    }
-
-    theme.subscribe((value) => {
-        updateDocument(value);
-    });
-
-    // Listen for system changes if mode is system
-    window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", (e) => {
-            if (localStorage.getItem(storageKey) === "system") {
-                const newTheme = e.matches ? "dark" : "light";
-                document.documentElement.setAttribute("data-theme", newTheme);
-            }
-        });
-}
+export const theme = writable("light");
 
 export const toggleTheme = () => {
-    theme.update((current) => {
-        if (current === "system") {
-            const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            return isDark ? "light" : "dark";
-        }
-        const next = current === "dark" ? "light" : "dark";
-        return next;
-    });
+	// no-op while dark mode is disabled
 };

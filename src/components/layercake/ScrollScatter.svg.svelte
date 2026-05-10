@@ -157,26 +157,30 @@
 			.y1((d) => $yScale(d.y))(points);
 	})();
 
-	// Regression zone: x < 1.0 AND y < 1.0
+	// Regression zone: bottom-left rectangle (x < 1, y < 1).
 	$: regressionPoints = (() => {
 		const xThreshold = $xScale(1.0);
 		const yThreshold = $yScale(1.0);
 		return `0,${yThreshold} ${xThreshold},${yThreshold} ${xThreshold},${$height} 0,${$height}`;
 	})();
 
-	// Under-optimization zone: x >= 1.0 AND above equal advantage line
+	// Sub-optimization zone: top-left rectangle (x < 1, y >= 1).
+	$: subOptimizationPoints = (() => {
+		const xThreshold = $xScale(1.0);
+		const yThreshold = $yScale(1.0);
+		return `0,0 ${xThreshold},0 ${xThreshold},${yThreshold} 0,${yThreshold}`;
+	})();
+
+	// Under-optimization zone: x >= 1 AND above the equal-advantage line.
 	$: underOptimizationPoints = (() => {
-		const [x0d, y0d] = equalAdvantagePoints[0];
+		const [, ] = equalAdvantagePoints[0];
 		const [x1d, y1d] = equalAdvantagePoints[1];
-		const x0 = $xScale(x0d);
-		const y0 = $yScale(y0d);
 		const x1 = $xScale(x1d);
 		const y1 = $yScale(y1d);
 		const xThreshold = $xScale(1.0);
 		const yThreshold = $yScale(1.0);
 
 		const points = [`${xThreshold},${yThreshold}`, `${x1},${y1}`];
-		// Complete the polygon
 		if (y1 > 0) {
 			points.push(`${x1},0`);
 		}
@@ -184,23 +188,29 @@
 		return points.join(" ");
 	})();
 
-	// Sub-optimization zone: x < 1.0 AND y >= 1.0
-	$: subOptimizationPoints = (() => {
-		const [x0d, y0d] = equalAdvantagePoints[0];
+	// Super-optimization zone (sweet rect): x >= 1 AND below the equal-advantage
+	// line — agent matches or exceeds expert at the same workload.
+	$: superOptimizationPoints = (() => {
 		const [x1d, y1d] = equalAdvantagePoints[1];
-		const x0 = $xScale(x0d);
-		const y0 = $yScale(y0d);
 		const x1 = $xScale(x1d);
 		const y1 = $yScale(y1d);
 		const xThreshold = $xScale(1.0);
 		const yThreshold = $yScale(1.0);
 
+		// Trace clockwise from (1,1):
+		//   (1,1) → along equal-advantage line to its endpoint →
+		//   if the line exited the top (y1 ≈ 0) extend along the top edge to
+		//   the right edge → down the right edge → left along the bottom →
+		//   close back up to (1,1).
 		const points = [
-			[x0, y0], // intersection on one threshold
-			[xThreshold, yThreshold], // the (1, 1) corner
-			[x1, y1] // intersection on the other threshold
-		].map(([x, y]) => `${x},${y}`);
-
+			`${xThreshold},${yThreshold}`,
+			`${x1},${y1}`
+		];
+		if (Math.abs(x1 - $width) > 0.5) {
+			points.push(`${$width},0`);
+		}
+		points.push(`${$width},${$height}`);
+		points.push(`${xThreshold},${$height}`);
 		return points.join(" ");
 	})();
 
@@ -338,6 +348,31 @@
 	</g>
 {/if}
 
+<!-- Region overlays: each lights up while the matching scrollytelling step is
+     active, in the same color used for that region's text marker. -->
+<g class="region-overlays" aria-hidden="true">
+	<polygon
+		class="zone-regression"
+		class:active={isStep(4)}
+		points={regressionPoints}
+	/>
+	<polygon
+		class="zone-sub-optimization"
+		class:active={isStep(5)}
+		points={subOptimizationPoints}
+	/>
+	<polygon
+		class="zone-under-optimization"
+		class:active={isStep(6)}
+		points={underOptimizationPoints}
+	/>
+	<polygon
+		class="zone-super-optimization"
+		class:active={isStep(7)}
+		points={superOptimizationPoints}
+	/>
+</g>
+
 <defs>
 	<marker
 		id="arrowhead"
@@ -453,7 +488,7 @@
 							r={smallestR}
 							fill={isSelectable && (isStep(7) || isExplorePhase)
 								? "var(--score-good)"
-								: "var(--bg-tertiary)"}
+								: "var(--text-secondary)"}
 							stroke="none"
 							stroke-width={strokeWidth}
 							opacity={0.8}
@@ -520,7 +555,7 @@
 							fill={(isSelectable && (isAtLeast(7) || isExplorePhase)) ||
 							isStep(1)
 								? "var(--score-good)"
-								: "var(--bg-tertiary)"}
+								: "var(--text-secondary)"}
 							stroke={isStep(1) ||
 							(chartScrollIndex >= 2 && chartScrollIndex < 15)
 								? "var(--accent-secondary)"
@@ -663,6 +698,36 @@
 	.highlight-sub-optimization,
 	.highlight-under-optimization {
 		transition: opacity var(--500ms);
+	}
+
+	/* Region overlays — colors mirror the side-panel span markers in
+	   ChartScroll.svelte. */
+	.region-overlays polygon {
+		opacity: 0;
+		transition: opacity var(--500ms) ease;
+		pointer-events: none;
+	}
+
+	.region-overlays polygon.active {
+		opacity: 1;
+	}
+
+	.zone-regression {
+		fill: var(--bg-tertiary);
+	}
+
+	.zone-sub-optimization {
+		fill: rgba(232, 69, 69, 0.4);
+	}
+
+	.zone-under-optimization {
+		fill: rgba(34, 197, 94, 0.3);
+	}
+
+	.zone-super-optimization {
+		fill: var(--bg-tertiary);
+		stroke: var(--text-primary);
+		stroke-width: 2;
 	}
 	.benchmarks-wrapper g.active {
 		opacity: 1;

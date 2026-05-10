@@ -3,7 +3,6 @@
 	import { Menu, X } from "lucide-svelte";
 	import { onMount } from "svelte";
 	import { BREAKPOINTS } from "$utils/constants.js";
-	import ThemeToggle from "$components/layout/ThemeToggle.svelte";
 
 	let isMenuOpen = false;
 	let innerWidth;
@@ -47,22 +46,30 @@
 
 	const links = [
 		{ name: "Overview", href: "/" },
-		{ name: "Blog", href: "/blog/" },
 		{ name: "Leaderboard", href: "/leaderboard/" },
-		{
-			name: "Getting Started",
-			href: "https://github.com/formula-code/terminal-bench"
-		}
+		{ name: "Documentation", href: "/docs/" },
+		{ name: "Blog", href: "/blog/" }
 	];
+
+	const ctaLink = { name: "Open Explorer →", href: "/explorer/" };
 </script>
 
 <svelte:window bind:innerWidth />
 
-<nav bind:this={navElement}>
-	<div class="nav-container">
-		<a href="/" class="brand">FormulaCode</a>
+<nav class="site-nav" bind:this={navElement}>
+	<div class="nav-inner">
+		<a class="nav-brand" href="/">
+			<img
+				class="brand-mark"
+				src="/assets/images/formula-code-icon.svg"
+				alt=""
+				width="28"
+				height="28"
+			/>
+			FormulaCode
+		</a>
 
-		<div class="desktop-links">
+		<div class="nav-links">
 			{#each links as link}
 				<a
 					href={link.href}
@@ -72,14 +79,24 @@
 					{link.name}
 				</a>
 			{/each}
-			<ThemeToggle />
+			<a
+				href={ctaLink.href}
+				class="nav-cta"
+				class:active={$page.url.pathname.startsWith(ctaLink.href)}
+			>
+				{ctaLink.name}
+			</a>
 		</div>
 
-		<button class="menu-button" on:click={toggleMenu} aria-label="Toggle menu">
+		<button
+			class="menu-button"
+			on:click={toggleMenu}
+			aria-label="Toggle menu"
+		>
 			{#if isMenuOpen}
-				<X size={24} />
+				<X size={22} />
 			{:else}
-				<Menu size={24} />
+				<Menu size={22} />
 			{/if}
 		</button>
 	</div>
@@ -96,73 +113,105 @@
 					{link.name}
 				</a>
 			{/each}
-			<div class="mobile-toggle-wrapper">
-				<ThemeToggle />
-			</div>
+			<a
+				href={ctaLink.href}
+				class="cta"
+				on:click={toggleMenu}
+			>
+				{ctaLink.name}
+			</a>
 		</div>
 	{/if}
 </nav>
 
 <style>
-	nav {
+	.site-nav {
 		position: sticky;
 		top: 0;
 		width: 100%;
-		background-color: var(--bg-primary);
+		background: var(--bg-primary);
 		color: var(--text-primary);
-		z-index: 1000;
+		z-index: 50;
 		border-bottom: 1px solid var(--border-primary);
+		padding: 0.75rem var(--space-md);
 	}
 
-	.nav-container {
-		max-width: 1200px;
+	.nav-inner {
+		max-width: 1000px;
 		margin: 0 auto;
-		padding: 1rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: var(--space-md);
 	}
 
-	.brand {
-		font-family: var(--sans, sans-serif);
-		font-size: 1.5rem;
-		font-weight: bold;
-		text-decoration: none;
+	.nav-brand {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-family: var(--sans);
+		font-weight: 600;
+		font-size: 1.05rem;
+		letter-spacing: -0.015em;
 		color: var(--text-primary);
+		text-decoration: none;
 	}
 
-	.desktop-links {
+	.nav-brand:hover {
+		text-decoration: none;
+		color: var(--accent-primary);
+	}
+
+	.brand-mark {
+		display: inline-block;
+		width: 28px;
+		height: 28px;
+		object-fit: contain;
+	}
+
+	.nav-links {
 		display: none;
-		gap: 2rem;
+		gap: 4px;
+		flex-wrap: wrap;
+		align-items: center;
 	}
 
-	.desktop-links a {
+	.nav-links a {
+		font-family: var(--sans);
+		font-size: 0.85rem;
+		color: var(--text-muted);
 		text-decoration: none;
+		padding: 6px 10px;
+		border-radius: var(--radius);
+		border: 1px solid transparent;
+		transition:
+			border-color 120ms,
+			color 120ms;
+	}
+
+	.nav-links a:hover {
 		color: var(--text-primary);
-		font-family: var(--font-body, sans-serif);
-		font-weight: 500;
-		opacity: 0.8;
-		transition: opacity 0.2s;
-		position: relative;
+		border-color: var(--border-primary);
+		text-decoration: none;
 	}
 
-	.desktop-links a:hover {
-		opacity: 1;
+	.nav-links a.active {
+		color: var(--text-primary);
+		border-color: var(--border-primary);
 	}
 
-	.desktop-links a.active {
-		opacity: 1;
-		font-weight: 700;
+	.nav-cta {
+		background: var(--accent-primary) !important;
+		color: #fff !important;
+		border-color: var(--accent-primary) !important;
+		font-weight: 600 !important;
 	}
 
-	.desktop-links a.active::after {
-		content: "";
-		position: absolute;
-		bottom: -4px;
-		left: 0;
-		width: 100%;
-		height: 2px;
-		background-color: var(--accent-primary);
+	.nav-cta:hover {
+		background: var(--link-hover) !important;
+		color: #fff !important;
+		border-color: var(--link-hover) !important;
+		box-shadow: var(--shadow);
 	}
 
 	.menu-button {
@@ -171,40 +220,47 @@
 		color: var(--text-primary);
 		cursor: pointer;
 		display: block;
+		padding: 4px;
 	}
 
 	.mobile-menu {
-		background-color: var(--bg-primary);
-		padding: 1rem;
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: var(--space-sm) 0 var(--space-md);
 		border-top: 1px solid var(--border-primary);
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
+		gap: var(--space-xs);
+		margin-top: var(--space-sm);
 	}
 
 	.mobile-menu a {
+		font-family: var(--sans);
+		font-size: 0.95rem;
+		color: var(--text-secondary);
+		padding: 0.55rem 0;
 		text-decoration: none;
-		color: var(--text-primary);
-		font-family: var(--font-body, sans-serif);
-		font-size: 1.1rem;
-		padding: 0.5rem 0;
-	}
-
-	.mobile-toggle-wrapper {
-		display: flex;
-		padding: 0.5rem 0;
 	}
 
 	.mobile-menu a.active {
 		color: var(--accent-primary);
-		font-weight: bold;
+		font-weight: 600;
+	}
+
+	.mobile-menu a.cta {
+		margin-top: var(--space-xs);
+		padding: 0.55rem var(--space-md);
+		background: var(--accent-primary);
+		color: #fff;
+		border-radius: var(--radius);
+		font-weight: 600;
+		text-align: center;
 	}
 
 	@media (min-width: 768px) {
-		.desktop-links {
+		.nav-links {
 			display: flex;
 		}
-
 		.menu-button {
 			display: none;
 		}

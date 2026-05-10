@@ -190,7 +190,7 @@
 				// only include circles NOT selected
 				return !selectedPoint || id !== selectedPoint.data.id;
 			})
-			.style("fill", "var(--bg-tertiary)")
+			.style("fill", "var(--text-secondary)")
 			.transition(500)
 			.attr("r", 5);
 
@@ -207,7 +207,7 @@
 		if (!selectedCircle.empty()) {
 			selectedCircle
 				.style("opacity", 0.8)
-				.style("fill", "var(--bg-tertiary)")
+				.style("fill", "var(--text-secondary)")
 				.transition(500)
 				.attr("r", 5);
 			select(selectedCircle.node().parentNode).style("opacity", 0.5);

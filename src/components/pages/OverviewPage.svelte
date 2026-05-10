@@ -1,9 +1,11 @@
 <script>
 	import { getContext } from "svelte";
 	import OverviewHeader from "$components/layout/OverviewHeader.svelte";
-	import SortableTable from "$components/helpers/SortableTable.svelte";
+	import CompactLeaderboard from "$components/sections/CompactLeaderboard.svelte";
+	import ResultsHighlights from "$components/sections/ResultsHighlights.svelte";
+	import SubmitCta from "$components/sections/SubmitCta.svelte";
 
-	export let leaderboardData = { global: [] };
+	export let leaderboardData = { global: [], stratified: [] };
 
 	const copy = getContext("copy") || {};
 	const ov = copy.overview || {};
@@ -31,59 +33,45 @@
 	const subCommand = sub.command ?? "";
 	const subRepoUrl =
 		sub.repoUrl ?? "https://github.com/formula-code/fc-eval";
-
-	const compactColumns = [
-		{ key: "agent", label: "Agent", numeric: false },
-		{ key: "model", label: "Model", numeric: false },
-		{ key: "rank", label: "RP Rank", numeric: true, decimals: 0 },
-		{
-			key: "advantage",
-			label: "Adv",
-			numeric: true,
-			colorCode: true,
-			colorThreshold: 0
-		},
-		{
-			key: "speedup",
-			label: "Speedup",
-			numeric: true,
-			colorCode: true,
-			colorThreshold: 1.0,
-			suffix: "x"
-		}
-	];
 </script>
 
 <div class="overview-page">
 	<OverviewHeader />
 
-	<section class="section bg-light" id="benchmark-design">
-		<div class="container">
-			<h2>{bdTitle}</h2>
-			{#each bdParagraphs as para}
-				<p>{@html para}</p>
-			{/each}
-		</div>
-	</section>
+	<main class="mathnet-main">
+		<section class="mathnet-section" id="benchmark-design">
+			<div class="mathnet-section-head">
+				<h2 class="section-title">{bdTitle}</h2>
+			</div>
+			<div class="prose">
+				{#each bdParagraphs as para}
+					<p>{@html para}</p>
+				{/each}
+			</div>
+		</section>
 
-	<section class="section" id="dataset-construction">
-		<div class="container">
-			<h2>{dcTitle}</h2>
-			<p>{@html dcIntro}</p>
+		<section class="mathnet-section" id="dataset-construction">
+			<div class="mathnet-section-head">
+				<h2 class="section-title">{dcTitle}</h2>
+			</div>
+			<p class="prose-intro">{@html dcIntro}</p>
 			<div class="pipeline-steps">
-				{#each dcSteps as step}
+				{#each dcSteps as step, i}
 					<div class="step">
-						<h3>{step.title}</h3>
-						<p>{@html step.description}</p>
+						<div class="step-num">{String(i + 1).padStart(2, "0")}</div>
+						<div class="step-body">
+							<h3>{step.title.replace(/^\d+\.\s*/, "")}</h3>
+							<p>{@html step.description}</p>
+						</div>
 					</div>
 				{/each}
 			</div>
-		</div>
-	</section>
+		</section>
 
-	<section class="section bg-light" id="key-findings">
-		<div class="container">
-			<h2>{kfTitle}</h2>
+		<section class="mathnet-section" id="key-findings">
+			<div class="mathnet-section-head">
+				<h2 class="section-title">{kfTitle}</h2>
+			</div>
 			<div class="findings-grid">
 				{#each kfFindings as finding}
 					<div class="finding-card">
@@ -92,159 +80,146 @@
 					</div>
 				{/each}
 			</div>
-		</div>
-	</section>
+		</section>
+	</main>
 
-	<section class="section" id="leaderboard">
-		<div class="container">
-			<h2>{clTitle}</h2>
-			<SortableTable
-				columns={compactColumns}
-				rows={leaderboardData.global}
-				initialSortKey="rank"
-				initialSortOrder="asc"
-			/>
-			<div class="leaderboard-link">
-				<a href="/leaderboard/" class="button">{clButtonText} &rarr;</a>
-			</div>
-		</div>
-	</section>
+	<ResultsHighlights stratified={leaderboardData.stratified} />
 
-	<section class="section bg-light" id="submitting">
-		<div class="container">
-			<h2>{subTitle}</h2>
-			<p>{@html subInstructions}</p>
-			<pre><code>{subCommand}</code></pre>
-		</div>
-	</section>
+	<CompactLeaderboard
+		title={clTitle}
+		rows={leaderboardData.global}
+		buttonText={clButtonText}
+	/>
+
+	<SubmitCta
+		title={subTitle}
+		instructions={subInstructions}
+		command={subCommand}
+		repoUrl={subRepoUrl}
+	/>
 </div>
 
 <style>
-	.section {
-		padding: 4rem 1rem;
-		border-bottom: 1px solid var(--border-secondary);
-	}
-
-	.bg-light {
-		background-color: var(--bg-secondary);
-	}
-
-	.container {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-
-	h2 {
-		font-family: var(--serif);
-		font-size: 2.5rem;
-		margin-bottom: 1.5rem;
+	.overview-page {
+		min-height: 100vh;
+		background: var(--bg-primary);
 		color: var(--text-primary);
 	}
 
-	h3 {
-		font-family: var(--sans);
+	/* The landing has more breathing room than other pages, so bump section
+	   titles a touch larger here. */
+	.overview-page :global(.section-title) {
 		font-size: 1.5rem;
-		margin-bottom: 1rem;
-		color: var(--accent-secondary);
 	}
 
-	p {
+	.prose,
+	.prose-intro {
 		font-family: var(--sans);
-		font-size: 1.125rem;
-		line-height: 1.7;
-		margin-bottom: 1.5rem;
+		font-size: 0.95rem;
+		line-height: 1.75;
+		color: var(--text-secondary);
+		max-width: 740px;
+	}
+
+	.prose p {
+		margin: 0 0 var(--space-md);
+	}
+
+	.prose p:last-child,
+	.prose-intro {
+		margin-bottom: var(--space-md);
+	}
+
+	.prose :global(strong),
+	.prose-intro :global(strong) {
+		color: var(--text-primary);
+		font-weight: 600;
+	}
+
+	.prose :global(em),
+	.prose-intro :global(em) {
 		color: var(--text-primary);
 	}
 
-	/* Pipeline Steps */
 	.pipeline-steps {
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-		margin-top: 2rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: var(--space-md);
 	}
 
 	.step {
+		background: var(--bg-primary);
+		border: 1px solid var(--border-primary);
+		border-radius: var(--radius);
+		padding: var(--space-lg);
+		box-shadow: var(--shadow);
 		display: flex;
-		gap: 1.5rem;
-		align-items: baseline;
-		background: var(--bg-secondary);
-		padding: 1.5rem;
-		border-radius: 8px;
-		border: 1px solid var(--border-secondary);
+		flex-direction: column;
+		gap: var(--space-xs);
+	}
+
+	.step-num {
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--accent-secondary);
+		margin-bottom: 2px;
 	}
 
 	.step h3 {
-		font-size: 1.25rem;
-		margin-bottom: 0;
-		white-space: nowrap;
-		flex-shrink: 0;
+		font-family: var(--sans);
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0;
+		color: var(--text-primary);
 	}
 
 	.step p {
-		font-size: 1rem;
-		margin-bottom: 0;
+		font-family: var(--sans);
+		font-size: 0.875rem;
+		line-height: 1.65;
+		color: var(--text-muted);
+		margin: 0;
 	}
 
-	/* Findings Grid */
 	.findings-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 2rem;
+		grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+		gap: var(--space-md);
 	}
 
 	.finding-card {
-		background: var(--bg-secondary);
-		padding: 1.5rem;
-		border-radius: 8px;
-		border: 1px solid var(--border-secondary);
+		background: var(--bg-primary);
+		border: 1px solid var(--border-primary);
+		border-radius: var(--radius);
+		padding: var(--space-lg);
+		box-shadow: var(--shadow);
+		transition:
+			border-color 140ms,
+			box-shadow 140ms,
+			transform 140ms;
+	}
+
+	.finding-card:hover {
+		border-color: var(--accent-primary);
+		box-shadow: var(--shadow-lg);
+		transform: translateY(-2px);
 	}
 
 	.finding-card h3 {
-		font-size: 1.25rem;
-		margin-bottom: 0.5rem;
+		font-family: var(--sans);
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0 0 var(--space-sm);
+		color: var(--text-primary);
 	}
 
 	.finding-card p {
-		font-size: 1rem;
-		margin-bottom: 0;
-	}
-
-	/* Leaderboard link */
-
-	.leaderboard-link {
-		margin-top: 2rem;
-		text-align: center;
-	}
-
-	.button {
-		display: inline-block;
-		padding: 0.75rem 1.5rem;
-		background: var(--accent-primary);
-		color: white;
-		text-decoration: none;
-		border-radius: 4px;
 		font-family: var(--sans);
-		font-weight: 600;
-		transition: background 0.2s;
-	}
-
-	.button:hover {
-		background: var(--wine-dark-red);
-	}
-
-	/* Code Blocks */
-	pre {
-		background: var(--bg-tertiary);
-		padding: 1.5rem;
-		border-radius: 8px;
-		overflow-x: auto;
-		border: 0.5px solid var(--border-secondary);
-	}
-
-	code {
-		font-family: var(--mono);
-		color: var(--text-primary);
-		font-size: 1rem;
+		font-size: 0.875rem;
+		line-height: 1.65;
+		color: var(--text-muted);
+		margin: 0;
 	}
 </style>

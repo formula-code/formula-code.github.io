@@ -1,60 +1,62 @@
 <script>
 	import { getContext } from "svelte";
 	import Icon from "$components/helpers/Icon.svelte";
-	import leaderboardData from "$data/leaderboard.json";
-	import { LEVEL_DISPLAY_LABELS, LEVEL_ORDER } from "$utils/constants.js";
-	import { formatAdvantage, getCellClass } from "$utils/formatting.js";
 
 	const copy = getContext("copy") || {};
 	const headerCopy = copy.paperHeader || {};
 
-	const defaultTitle =
-		"FormulaCode: Benchmarking Agent-Driven Code Optimization";
+	const defaultTitle = "FormulaCode";
+	const defaultSubtitle =
+		"Evaluating Agentic Optimization on Large Codebases";
 
 	const defaultAuthors = [
+		{ name: "Atharva Sehgal", url: "https://atharvas.net/", superscript: "1" },
+		{ name: "James Hou", url: "https://jamesahou.github.io/", superscript: "2" },
 		{
-			name: "Author Name2",
-			url: "https://example.com/author1",
-			superscript: "1,*"
+			name: "Akanksha Sarkar",
+			url: "https://milstein-program.as.cornell.edu/akanksha-sarkar/",
+			superscript: "3"
 		},
 		{
-			name: "Author Name",
-			url: "https://example.com/author2",
-			superscript: "1,*"
-		},
-		{
-			name: "Author Name",
-			url: "https://example.com/author3",
+			name: "Ishaan Mantripragada",
+			url: "https://www.linkedin.com/in/ishaanmantri/",
 			superscript: "2"
 		},
 		{
-			name: "Author Name",
-			url: "https://example.com/author4",
-			superscript: "3"
-		}
+			name: "Swarat Chaudhuri",
+			url: "https://www.cs.utexas.edu/~swarat/",
+			superscript: "1"
+		},
+		{ name: "Jennifer J. Sun", url: "https://jenjsun.com/", superscript: "3" },
+		{ name: "Yisong Yue", url: "https://www.yisongyue.com/", superscript: "2" }
 	];
 
 	const defaultAffiliations = [
-		{ superscript: "1", label: "University Name" },
-		{ superscript: "2", label: "Research Institution" },
-		{ superscript: "3", label: "Company Name" }
+		{ superscript: "1", label: "UT Austin" },
+		{ superscript: "2", label: "Caltech" },
+		{ superscript: "3", label: "Cornell" }
 	];
 
 	const defaultActions = [
+		{ label: "arXiv", icon: "file-text", href: "https://arxiv.org/abs/2603.16011" },
 		{
-			label: "Paper",
-			icon: "file-text",
-			href: "https://arxiv.org/abs/2603.16011"
+			label: "Dataset",
+			icon: "database",
+			href: "https://huggingface.co/datasets/formulacode/formulacode-all"
 		},
-		{ label: "Code", icon: "github", href: "https://github.com/username/repo" }
+		{ label: "GitHub", icon: "github", href: "https://github.com/formula-code/fc-eval" }
 	];
 
-	const defaultAbstractParagraphs = [
-		"We introduce FormulaCode, a comprehensive benchmark for evaluating AI agents on real-world code optimization tasks. Our benchmark comprises 961 performance-improving tasks with over 1.4 million performance workloads, derived from 110+ GitHub repositories with crowdsourced performance improvements. We evaluate frontier language models including GPT-5 and Claude Sonnet 4.0 on their ability to produce holistic code optimizations that consistently improve performance across multiple workloads.",
-		"Our findings reveal that while AI agents can produce impressive isolated optimizations, they struggle to maintain consistent aggregate advantages over human experts when evaluated across complete modules. We introduce a novel advantage metric that captures the holistic optimization capabilities of agents by measuring their performance relative to human baselines across grouped workloads."
+	const defaultStats = [
+		{ num: "957", label: "Tasks" },
+		{ num: "70+", label: "Repositories" },
+		{ num: "1.4M", label: "Workloads" },
+		{ num: "4", label: "Strata" }
 	];
 
-	const title = headerCopy.title ?? defaultTitle;
+	const title = headerCopy.title?.split(":")[0]?.trim() || defaultTitle;
+	const subtitle =
+		headerCopy.title?.split(":")[1]?.trim() || defaultSubtitle;
 
 	const authors =
 		Array.isArray(headerCopy.authors) && headerCopy.authors.length > 0
@@ -66,368 +68,220 @@
 			? headerCopy.affiliations
 			: defaultAffiliations;
 
-	const equalContributionNote =
-		typeof headerCopy.equalContributionNote === "string"
-			? headerCopy.equalContributionNote.trim()
-			: "";
-
 	const actions =
 		Array.isArray(headerCopy.actions) && headerCopy.actions.length > 0
 			? headerCopy.actions
 			: defaultActions;
 
-	const abstractConfig = headerCopy.abstract || {};
-	const abstractTitle = abstractConfig.title ?? "Abstract";
-	const abstractParagraphs =
-		Array.isArray(abstractConfig.paragraphs) &&
-		abstractConfig.paragraphs.length > 0
-			? abstractConfig.paragraphs
-			: defaultAbstractParagraphs;
+	const stats = Array.isArray(headerCopy.stats) && headerCopy.stats.length > 0
+		? headerCopy.stats
+		: defaultStats;
 
-	// Leaderboard data
-	const leaderboardTitle = headerCopy.leaderboard.title;
-	const leaderboardDescription = headerCopy.leaderboard.description;
-
-	// Use centralized level order
-	const levels = LEVEL_ORDER;
-
-	// Hardcoded table data - example data, replace with actual values
-	const tableData = Array.isArray(leaderboardData?.tableData)
-		? leaderboardData.tableData
-		: [];
-
-	const hero = headerCopy.hero || {};
-	const heroCommand =
-		typeof hero.command === "string" ? hero.command.trim() : "";
-	const hasHeroContent = Boolean(
-		hero?.eyebrow ||
-			hero?.instructions ||
-			heroCommand ||
-			hero?.body ||
-			(hero?.cta && hero.cta.label)
-	);
+	const tagline =
+		headerCopy.tagline ||
+		"A live benchmark of <strong>957 performance bottlenecks</strong> mined from scientific Python repositories — pairing every task with expert patches and ~265 community workloads.";
 </script>
 
-<section class="paper-header">
-	<div class="container">
-		<!-- Paper Title -->
-		<h1 class="paper-title">
-			{title}
-		</h1>
+<section class="hero">
+	<div class="hero-banner">
+		<img
+			src="/assets/images/formula-code-banner.svg"
+			alt="FormulaCode — {subtitle}"
+			width="660"
+			height="155"
+		/>
+	</div>
 
-		<!-- Authors -->
-		{#if authors.length}
-			<div class="authors">
-				{#each authors as author, index}
-					<span class="author-block">
-						{#if author.url}
-							<a href={author.url} rel="noopener noreferrer" target="_blank"
-								>{author.name}</a
-							>
-						{:else}
-							{author.name}
-						{/if}
-						{#if author.superscript}
-							<sup>{author.superscript}</sup>
-						{/if}
-						{#if index < authors.length - 1},
-						{/if}
-					</span>
-				{/each}
-			</div>
-		{/if}
-
-		<!-- Affiliations -->
-		{#if affiliations.length}
-			<div class="affiliations">
-				{#each affiliations as affiliation, index}
-					<span class="affiliation-block">
-						{#if affiliation.superscript}<sup>{affiliation.superscript}</sup
-							>{/if}{affiliation.label}{#if index < affiliations.length - 1},
-						{/if}
-					</span>
-				{/each}
-				{#if equalContributionNote}
-					<br />
-					<span class="affiliation-block">{equalContributionNote}</span>
-				{/if}
-			</div>
-		{/if}
-
-		<!-- Action Buttons -->
-		{#if actions.length}
-			<div class="action-buttons">
-				{#each actions as action}
-					<a
-						href={action.href}
-						class="button"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<span class="button-icon">
-							<Icon name={action.icon} size="20px" strokeWidth={2} />
-						</span>
-						<span>{action.label}</span>
+	{#if authors.length}
+		<p class="hero-authors">
+			{#each authors as author, i}
+				{#if author.url}
+					<a href={author.url} target="_blank" rel="noopener noreferrer">
+						<strong>{author.name}</strong>
 					</a>
-				{/each}
-			</div>
-		{/if}
+				{:else}
+					<strong>{author.name}</strong>
+				{/if}<sup>{author.superscript}</sup>{#if i < authors.length - 1}{" "}&ensp;{/if}
+			{/each}
+		</p>
+	{/if}
 
-		<!-- Abstract -->
-		<div class="abstract-section">
-			<h2 class="abstract-title">{abstractTitle}</h2>
-			<div class="abstract-content">
-				{#each abstractParagraphs as paragraph}
-					<p>{@html paragraph}</p>
+	{#if affiliations.length}
+		<div class="hero-affil">
+			<div class="affil-row">
+				{#each affiliations as a}
+					<span class="affil-item">
+						<sup>{a.superscript}</sup>{a.label}
+					</span>
 				{/each}
 			</div>
 		</div>
+	{/if}
 
-		<!-- {#if tableData.length}
-			<div class="header-leaderboard">
-				<div class="leaderboard-header">
-					<h2>{leaderboardTitle}</h2>
-					<p class="description">{leaderboardDescription}</p>
-				</div>
-				<div class="table-wrapper">
-					<table>
-						<thead>
-							<tr>
-								<th class="agent-col">Agent</th>
-								{#each levels as level}
-									<th class="level-col"
-										>{LEVEL_DISPLAY_LABELS[level] || level}</th
-									>
-								{/each}
-								<th class="overall-col">Overall</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each tableData as row}
-								<tr>
-									<td class="agent-name">{row.displayName}</td>
-									{#each levels as level}
-										<td class="score-cell {getCellClass(row.levels[level])}">
-											{formatAdvantage(row.levels[level])}
-										</td>
-									{/each}
-									<td
-										class="score-cell overall-cell {getCellClass(row.overall)}"
-									>
-										{formatAdvantage(row.overall)}
-									</td>
-								</tr>
-							{/each}
-						</tbody>
-					</table>
-				</div>
-			</div>
-		{/if} -->
+	{#if tagline}
+		<p class="hero-tagline">{@html tagline}</p>
+	{/if}
 
-		<!-- {#if hasHeroContent}
-			<div class="paper-hero">
-				{#if hero.eyebrow}<p class="hero-eyebrow">{hero.eyebrow}</p>{/if}
-				{#if hero.instructions}
-					<p class="hero-instructions">{@html hero.instructions}</p>
-				{/if}
-				{#if heroCommand}
-					<div class="hero-command">
-						<pre class="hero-command__code" tabindex="0"><code
-								>{heroCommand}</code
-							></pre>
-					</div>
-				{/if}
-				{#if hero.body}<p class="hero-body">{hero.body}</p>{/if}
-				{#if hero.cta?.label}
-					<a class="hero-cta" href={hero.cta.href ?? "#"}>{hero.cta.label}</a>
-				{/if}
+	<div class="hero-ctas hero-ctas-wide">
+		<a class="btn btn-primary btn-wide" href="/explorer/">
+			<span class="cta-mark">⌕</span>
+			Browse all 957 tasks
+		</a>
+	</div>
+
+	<div class="hero-ctas">
+		{#each actions as action}
+			<a
+				class="btn btn-secondary"
+				href={action.href}
+				target="_blank"
+				rel="noopener noreferrer"
+			>
+				<span class="action-icon">
+					<Icon name={action.icon} size="15px" strokeWidth={2} />
+				</span>
+				<span>{action.label}</span>
+			</a>
+		{/each}
+	</div>
+
+	<div class="stats-strip">
+		{#each stats as s}
+			<div class="stat-item">
+				<div class="stat-num">{s.num}</div>
+				<div class="stat-label">{s.label}</div>
 			</div>
-		{/if}
-	</div> -->
+		{/each}
 	</div>
 </section>
 
 <style>
-	.paper-header {
-		background-color: var(--bg-primary);
-		color: var(--text-primary);
-		padding: 3rem 1rem 4rem;
+	.hero {
+		max-width: 900px;
+		margin: 0 auto;
+		padding: var(--space-lg) var(--space-md) var(--space-md);
 		text-align: center;
 	}
 
-	.container {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-
-	/* Title */
-	.paper-title {
-		font-family: var(--serif);
-		font-size: var(--40px);
-		font-weight: 700;
-		line-height: 1.2;
-		margin: 0 0 2rem;
-		color: var(--text-primary);
-	}
-
-	/* Authors */
-	.authors {
-		font-family: var(--sans);
-		font-size: var(--18px);
-		line-height: 1.6;
-		margin: 0 0 1rem;
-		color: var(--text-primary);
-	}
-
-	.author-block {
-		display: inline-block;
-		margin: 0 0.25rem;
-	}
-
-	.author-block a {
-		color: var(--link-color);
-		text-decoration: none;
-		transition: color 0.2s ease;
-	}
-
-	.author-block a:hover {
-		color: var(--link-hover);
-		text-decoration: underline;
-	}
-
-	.author-block sup {
-		margin-left: 0.1rem;
-	}
-
-	/* Affiliations */
-	.affiliations {
-		font-family: var(--sans);
-		font-size: var(--14px);
-		line-height: 1.6;
-		margin: 0 0 2rem;
-		color: var(--text-secondary);
-	}
-
-	.affiliation-block {
-		display: inline-block;
-		margin: 0 0.35rem;
-	}
-
-	/* Action Buttons */
-	.action-buttons {
+	.hero-banner {
 		display: flex;
+		align-items: center;
 		justify-content: center;
-		gap: 1rem;
-		margin: 0 0 3rem;
-		flex-wrap: wrap;
+		margin-bottom: var(--space-md);
 	}
 
-	.button {
+	.hero-banner img {
+		width: 100%;
+		max-width: 620px;
+		height: auto;
+	}
+
+	.hero-authors {
+		font-size: 0.9rem;
+		color: var(--text-primary);
+		line-height: 1.85;
+		margin: 0 0 var(--space-xs);
+	}
+
+	.hero-authors strong {
+		font-weight: 500;
+	}
+
+	.hero-authors a {
+		color: var(--text-primary);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+	}
+
+	.hero-authors a:hover {
+		border-bottom-color: var(--accent-primary);
+		color: var(--accent-primary);
+		text-decoration: none;
+	}
+
+	.hero-authors sup {
+		font-size: 0.65rem;
+		margin-left: 1px;
+		color: var(--text-muted);
+	}
+
+	.hero-affil {
+		margin-bottom: var(--space-md);
+	}
+
+	.affil-row {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		align-items: center;
+		gap: var(--space-lg);
+	}
+
+	.affil-item {
 		display: inline-flex;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.75rem 1.5rem;
-		background-color: var(--bg-tertiary);
+		gap: 4px;
+		font-size: 0.82rem;
+		color: var(--text-muted);
+	}
+
+	.affil-item sup {
+		font-size: 0.65rem;
+		color: var(--text-muted);
+	}
+
+	.hero-tagline {
+		font-size: clamp(0.95rem, 1.8vw, 1.05rem);
+		color: var(--text-muted);
+		max-width: 620px;
+		margin: 0 auto var(--space-md);
+		line-height: 1.65;
+	}
+
+	.hero-tagline :global(strong) {
 		color: var(--text-primary);
-		text-decoration: none;
-		border-radius: 2rem;
-		font-family: var(--sans);
-		font-size: var(--16px);
-		font-weight: 500;
-		transition: all 0.2s ease;
-		border: 1px solid var(--border-secondary);
+		font-weight: 600;
 	}
 
-	.button:hover {
-		background-color: var(--bg-secondary);
-		border-color: var(--border-primary);
-		transform: translateY(-1px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-	}
-
-	.button-icon {
+	.hero-ctas {
 		display: flex;
+		justify-content: center;
+		gap: var(--space-sm);
+		flex-wrap: wrap;
+		margin-bottom: var(--space-sm);
+	}
+
+	.hero-ctas-wide {
+		margin-bottom: var(--space-xs);
+	}
+
+	.cta-mark {
+		font-family: var(--sans);
+		font-size: 1.05em;
+		line-height: 1;
+	}
+
+	.action-icon {
+		display: inline-flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	.button-icon :global(.icon) {
-		display: flex;
-		align-items: center;
-	}
-
-	.button-icon :global(svg) {
+	.action-icon :global(svg) {
 		stroke: currentColor;
 	}
 
-	/* Abstract */
-	.abstract-section {
-		max-width: 800px;
-		margin: 0 auto;
-		text-align: center;
+	.stats-strip {
+		max-width: 900px;
+		margin: var(--space-lg) auto 0;
 	}
 
-	.abstract-title {
-		font-family: var(--sans);
-		font-size: var(--24px);
-		font-weight: 700;
-		margin: 0 0 1.5rem;
-		color: var(--text-primary);
-	}
-
-	.abstract-content {
-		font-family: var(--sans);
-		font-size: var(--18px);
-		line-height: 1.65;
-		text-align: left;
-		color: var(--text-primary);
-	}
-
-	.abstract-content p {
-		margin: 0 0 1rem;
-	}
-
-	.abstract-content p:last-child {
-		margin-bottom: 0;
-	}
-
-	/* Responsive Design */
-	@media (max-width: 768px) {
-		.paper-header {
-			padding: 2rem 1rem 3rem;
+	@media (max-width: 640px) {
+		.hero {
+			padding: var(--space-xl) var(--space-md);
 		}
-
-		.paper-title {
-			font-size: var(--32px);
-		}
-
-		.affiliations {
-			font-size: var(--14px);
-		}
-
-		.button {
-			font-size: var(--16px);
-			padding: 0.65rem 1.25rem;
-		}
-
-		.abstract-title {
-			font-size: var(--20px);
-		}
-	}
-
-	@media (max-width: 480px) {
-		.paper-title {
-			font-size: var(--28px);
-		}
-
-		.action-buttons {
-			flex-direction: column;
-			align-items: center;
-		}
-
-		.button {
-			width: 100%;
-			max-width: 250px;
+		.affil-row {
+			gap: var(--space-md);
 		}
 	}
 </style>
