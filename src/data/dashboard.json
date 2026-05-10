@@ -1,0 +1,1573 @@
+{
+  "generated_at": "2026-05-10T04:02:45.037Z",
+  "source": "https://api.formulacode.org/rest/v1",
+  "totals": {
+    "pull_requests": 245477,
+    "problems": 1555,
+    "repositories": 154,
+    "performance_prs": 13008,
+    "pr_to_problem_rate": 0.006334605686072422
+  },
+  "monthly": [
+    {
+      "month": "2017-01",
+      "count": 3
+    },
+    {
+      "month": "2017-02",
+      "count": 4
+    },
+    {
+      "month": "2017-03",
+      "count": 6
+    },
+    {
+      "month": "2017-04",
+      "count": 2
+    },
+    {
+      "month": "2017-05",
+      "count": 6
+    },
+    {
+      "month": "2017-06",
+      "count": 3
+    },
+    {
+      "month": "2017-07",
+      "count": 7
+    },
+    {
+      "month": "2017-08",
+      "count": 9
+    },
+    {
+      "month": "2017-09",
+      "count": 11
+    },
+    {
+      "month": "2017-10",
+      "count": 7
+    },
+    {
+      "month": "2017-11",
+      "count": 6
+    },
+    {
+      "month": "2017-12",
+      "count": 6
+    },
+    {
+      "month": "2018-01",
+      "count": 7
+    },
+    {
+      "month": "2018-02",
+      "count": 6
+    },
+    {
+      "month": "2018-03",
+      "count": 7
+    },
+    {
+      "month": "2018-04",
+      "count": 9
+    },
+    {
+      "month": "2018-05",
+      "count": 3
+    },
+    {
+      "month": "2018-06",
+      "count": 7
+    },
+    {
+      "month": "2018-07",
+      "count": 3
+    },
+    {
+      "month": "2018-08",
+      "count": 5
+    },
+    {
+      "month": "2018-09",
+      "count": 4
+    },
+    {
+      "month": "2018-10",
+      "count": 11
+    },
+    {
+      "month": "2018-11",
+      "count": 18
+    },
+    {
+      "month": "2018-12",
+      "count": 21
+    },
+    {
+      "month": "2019-01",
+      "count": 15
+    },
+    {
+      "month": "2019-02",
+      "count": 9
+    },
+    {
+      "month": "2019-03",
+      "count": 4
+    },
+    {
+      "month": "2019-04",
+      "count": 2
+    },
+    {
+      "month": "2019-05",
+      "count": 9
+    },
+    {
+      "month": "2019-06",
+      "count": 6
+    },
+    {
+      "month": "2019-07",
+      "count": 10
+    },
+    {
+      "month": "2019-08",
+      "count": 13
+    },
+    {
+      "month": "2019-09",
+      "count": 22
+    },
+    {
+      "month": "2019-10",
+      "count": 17
+    },
+    {
+      "month": "2019-11",
+      "count": 12
+    },
+    {
+      "month": "2019-12",
+      "count": 24
+    },
+    {
+      "month": "2020-01",
+      "count": 43
+    },
+    {
+      "month": "2020-02",
+      "count": 29
+    },
+    {
+      "month": "2020-03",
+      "count": 27
+    },
+    {
+      "month": "2020-04",
+      "count": 18
+    },
+    {
+      "month": "2020-05",
+      "count": 29
+    },
+    {
+      "month": "2020-06",
+      "count": 22
+    },
+    {
+      "month": "2020-07",
+      "count": 9
+    },
+    {
+      "month": "2020-08",
+      "count": 4
+    },
+    {
+      "month": "2020-09",
+      "count": 9
+    },
+    {
+      "month": "2020-10",
+      "count": 16
+    },
+    {
+      "month": "2020-11",
+      "count": 16
+    },
+    {
+      "month": "2020-12",
+      "count": 13
+    },
+    {
+      "month": "2021-01",
+      "count": 11
+    },
+    {
+      "month": "2021-02",
+      "count": 7
+    },
+    {
+      "month": "2021-03",
+      "count": 14
+    },
+    {
+      "month": "2021-04",
+      "count": 12
+    },
+    {
+      "month": "2021-05",
+      "count": 14
+    },
+    {
+      "month": "2021-06",
+      "count": 12
+    },
+    {
+      "month": "2021-07",
+      "count": 6
+    },
+    {
+      "month": "2021-08",
+      "count": 8
+    },
+    {
+      "month": "2021-09",
+      "count": 9
+    },
+    {
+      "month": "2021-10",
+      "count": 11
+    },
+    {
+      "month": "2021-11",
+      "count": 13
+    },
+    {
+      "month": "2021-12",
+      "count": 9
+    },
+    {
+      "month": "2022-01",
+      "count": 13
+    },
+    {
+      "month": "2022-02",
+      "count": 12
+    },
+    {
+      "month": "2022-03",
+      "count": 12
+    },
+    {
+      "month": "2022-04",
+      "count": 8
+    },
+    {
+      "month": "2022-05",
+      "count": 13
+    },
+    {
+      "month": "2022-06",
+      "count": 10
+    },
+    {
+      "month": "2022-07",
+      "count": 6
+    },
+    {
+      "month": "2022-08",
+      "count": 10
+    },
+    {
+      "month": "2022-09",
+      "count": 9
+    },
+    {
+      "month": "2022-10",
+      "count": 21
+    },
+    {
+      "month": "2022-11",
+      "count": 9
+    },
+    {
+      "month": "2022-12",
+      "count": 12
+    },
+    {
+      "month": "2023-01",
+      "count": 23
+    },
+    {
+      "month": "2023-02",
+      "count": 18
+    },
+    {
+      "month": "2023-03",
+      "count": 22
+    },
+    {
+      "month": "2023-04",
+      "count": 16
+    },
+    {
+      "month": "2023-05",
+      "count": 19
+    },
+    {
+      "month": "2023-06",
+      "count": 35
+    },
+    {
+      "month": "2023-07",
+      "count": 19
+    },
+    {
+      "month": "2023-08",
+      "count": 11
+    },
+    {
+      "month": "2023-09",
+      "count": 6
+    },
+    {
+      "month": "2023-10",
+      "count": 17
+    },
+    {
+      "month": "2023-11",
+      "count": 15
+    },
+    {
+      "month": "2023-12",
+      "count": 11
+    },
+    {
+      "month": "2024-01",
+      "count": 4
+    },
+    {
+      "month": "2024-02",
+      "count": 22
+    },
+    {
+      "month": "2024-03",
+      "count": 30
+    },
+    {
+      "month": "2024-04",
+      "count": 33
+    },
+    {
+      "month": "2024-05",
+      "count": 27
+    },
+    {
+      "month": "2024-06",
+      "count": 31
+    },
+    {
+      "month": "2024-07",
+      "count": 23
+    },
+    {
+      "month": "2024-08",
+      "count": 21
+    },
+    {
+      "month": "2024-09",
+      "count": 16
+    },
+    {
+      "month": "2024-10",
+      "count": 21
+    },
+    {
+      "month": "2024-11",
+      "count": 24
+    },
+    {
+      "month": "2024-12",
+      "count": 13
+    },
+    {
+      "month": "2025-01",
+      "count": 15
+    },
+    {
+      "month": "2025-02",
+      "count": 16
+    },
+    {
+      "month": "2025-03",
+      "count": 13
+    },
+    {
+      "month": "2025-04",
+      "count": 20
+    },
+    {
+      "month": "2025-05",
+      "count": 22
+    },
+    {
+      "month": "2025-06",
+      "count": 21
+    },
+    {
+      "month": "2025-07",
+      "count": 23
+    },
+    {
+      "month": "2025-08",
+      "count": 40
+    },
+    {
+      "month": "2025-09",
+      "count": 26
+    },
+    {
+      "month": "2025-10",
+      "count": 21
+    },
+    {
+      "month": "2025-11",
+      "count": 15
+    },
+    {
+      "month": "2025-12",
+      "count": 21
+    },
+    {
+      "month": "2026-01",
+      "count": 10
+    },
+    {
+      "month": "2026-02",
+      "count": 4
+    },
+    {
+      "month": "2026-03",
+      "count": 1
+    }
+  ],
+  "by_repository": [
+    {
+      "repository": "pandas-dev/pandas",
+      "count": 126
+    },
+    {
+      "repository": "apache/arrow",
+      "count": 114
+    },
+    {
+      "repository": "dask/dask",
+      "count": 79
+    },
+    {
+      "repository": "datalad/datalad",
+      "count": 55
+    },
+    {
+      "repository": "apache/arrow-adbc",
+      "count": 44
+    },
+    {
+      "repository": "astropy/astropy",
+      "count": 44
+    },
+    {
+      "repository": "scikit-learn/scikit-learn",
+      "count": 40
+    },
+    {
+      "repository": "pymc-devs/pymc",
+      "count": 36
+    },
+    {
+      "repository": "scipy/scipy",
+      "count": 36
+    },
+    {
+      "repository": "google-deepmind/mujoco_warp",
+      "count": 36
+    },
+    {
+      "repository": "optuna/optuna",
+      "count": 35
+    },
+    {
+      "repository": "dipy/dipy",
+      "count": 24
+    },
+    {
+      "repository": "geopandas/geopandas",
+      "count": 22
+    },
+    {
+      "repository": "napari/napari",
+      "count": 21
+    },
+    {
+      "repository": "dask/distributed",
+      "count": 21
+    },
+    {
+      "repository": "modin-project/modin",
+      "count": 21
+    },
+    {
+      "repository": "bluesky/tiled",
+      "count": 21
+    },
+    {
+      "repository": "WagnerGroup/pyqmc",
+      "count": 19
+    },
+    {
+      "repository": "scikit-image/scikit-image",
+      "count": 18
+    },
+    {
+      "repository": "h5py/h5py",
+      "count": 17
+    },
+    {
+      "repository": "pydata/xarray",
+      "count": 17
+    },
+    {
+      "repository": "microsoft/Qcodes",
+      "count": 17
+    },
+    {
+      "repository": "OGGM/oggm",
+      "count": 17
+    },
+    {
+      "repository": "pydata/bottleneck",
+      "count": 17
+    },
+    {
+      "repository": "SciTools/iris",
+      "count": 16
+    },
+    {
+      "repository": "networkx/networkx",
+      "count": 16
+    },
+    {
+      "repository": "ActivitySim/activitysim",
+      "count": 16
+    },
+    {
+      "repository": "man-group/arctic",
+      "count": 15
+    },
+    {
+      "repository": "DASDAE/dascore",
+      "count": 14
+    },
+    {
+      "repository": "sourmash-bio/sourmash",
+      "count": 14
+    },
+    {
+      "repository": "deshaw/versioned-hdf5",
+      "count": 13
+    },
+    {
+      "repository": "xarray-contrib/flox",
+      "count": 13
+    },
+    {
+      "repository": "UXARRAY/uxarray",
+      "count": 12
+    },
+    {
+      "repository": "apache/arrow-nanoarrow",
+      "count": 12
+    },
+    {
+      "repository": "dwavesystems/dimod",
+      "count": 12
+    },
+    {
+      "repository": "isce-framework/dolphin",
+      "count": 11
+    },
+    {
+      "repository": "django-components/django-components",
+      "count": 11
+    },
+    {
+      "repository": "JDASoftwareGroup/kartothek",
+      "count": 11
+    },
+    {
+      "repository": "devitocodes/devito",
+      "count": 10
+    },
+    {
+      "repository": "holoviz/datashader",
+      "count": 10
+    },
+    {
+      "repository": "pybamm-team/PyBaMM",
+      "count": 10
+    },
+    {
+      "repository": "bartz-org/bartz",
+      "count": 9
+    },
+    {
+      "repository": "tensorwerk/hangar-py",
+      "count": 9
+    },
+    {
+      "repository": "pysal/libpysal",
+      "count": 9
+    },
+    {
+      "repository": "arviz-devs/arviz",
+      "count": 9
+    },
+    {
+      "repository": "bloomberg/memray",
+      "count": 9
+    },
+    {
+      "repository": "dedupeio/dedupe",
+      "count": 9
+    },
+    {
+      "repository": "pygeos/pygeos",
+      "count": 9
+    },
+    {
+      "repository": "makepath/xarray-spatial",
+      "count": 8
+    },
+    {
+      "repository": "sgkit-dev/sgkit",
+      "count": 8
+    },
+    {
+      "repository": "xorbitsai/xorbits",
+      "count": 8
+    },
+    {
+      "repository": "contourpy/contourpy",
+      "count": 8
+    },
+    {
+      "repository": "MDAnalysis/mdanalysis",
+      "count": 8
+    },
+    {
+      "repository": "mie-lab/trackintel",
+      "count": 8
+    },
+    {
+      "repository": "inducer/loopy",
+      "count": 8
+    },
+    {
+      "repository": "pydicom/pynetdicom",
+      "count": 8
+    },
+    {
+      "repository": "pangeo-data/climpred",
+      "count": 8
+    },
+    {
+      "repository": "deepchecks/deepchecks",
+      "count": 8
+    },
+    {
+      "repository": "kedro-org/kedro",
+      "count": 8
+    },
+    {
+      "repository": "pymc-devs/pymc3",
+      "count": 8
+    },
+    {
+      "repository": "scverse/anndata",
+      "count": 8
+    },
+    {
+      "repository": "nilearn/nilearn",
+      "count": 7
+    },
+    {
+      "repository": "Qiskit/qiskit",
+      "count": 7
+    },
+    {
+      "repository": "GAA-UAM/scikit-fda",
+      "count": 7
+    },
+    {
+      "repository": "glotzerlab/signac",
+      "count": 7
+    },
+    {
+      "repository": "joblib/joblib",
+      "count": 7
+    },
+    {
+      "repository": "lmfit/lmfit-py",
+      "count": 7
+    },
+    {
+      "repository": "mars-project/mars",
+      "count": 7
+    },
+    {
+      "repository": "pysb/pysb",
+      "count": 7
+    },
+    {
+      "repository": "python-adaptive/adaptive",
+      "count": 7
+    },
+    {
+      "repository": "xdslproject/xdsl",
+      "count": 7
+    },
+    {
+      "repository": "TileDB-Inc/TileDB-Py",
+      "count": 6
+    },
+    {
+      "repository": "pybop-team/PyBOP",
+      "count": 6
+    },
+    {
+      "repository": "AllenCellModeling/aicsimageio",
+      "count": 6
+    },
+    {
+      "repository": "holgern/beem",
+      "count": 6
+    },
+    {
+      "repository": "shapely/shapely",
+      "count": 6
+    },
+    {
+      "repository": "stac-utils/pystac",
+      "count": 6
+    },
+    {
+      "repository": "Textualize/rich",
+      "count": 6
+    },
+    {
+      "repository": "SciTools/cartopy",
+      "count": 5
+    },
+    {
+      "repository": "probabilistic-numerics/probnum",
+      "count": 5
+    },
+    {
+      "repository": "Unidata/MetPy",
+      "count": 5
+    },
+    {
+      "repository": "numpy/numpy",
+      "count": 5
+    },
+    {
+      "repository": "pysal/momepy",
+      "count": 5
+    },
+    {
+      "repository": "python-control/python-control",
+      "count": 5
+    },
+    {
+      "repository": "Quansight-Labs/ndindex",
+      "count": 5
+    },
+    {
+      "repository": "royerlab/ultrack",
+      "count": 5
+    },
+    {
+      "repository": "scipp/scipp",
+      "count": 5
+    },
+    {
+      "repository": "tskit-dev/msprime",
+      "count": 5
+    },
+    {
+      "repository": "xarray-contrib/xarray-spatial",
+      "count": 5
+    },
+    {
+      "repository": "pymor/pymor",
+      "count": 4
+    },
+    {
+      "repository": "dottxt-ai/outlines",
+      "count": 4
+    },
+    {
+      "repository": "HIPS/autograd",
+      "count": 4
+    },
+    {
+      "repository": "neurostuff/NiMARE",
+      "count": 4
+    },
+    {
+      "repository": "scverse/spatialdata",
+      "count": 4
+    },
+    {
+      "repository": "scverse/scanpy",
+      "count": 4
+    },
+    {
+      "repository": "tqdm/tqdm",
+      "count": 4
+    },
+    {
+      "repository": "xarray-contrib/xskillscore",
+      "count": 4
+    },
+    {
+      "repository": "danielgtaylor/python-betterproto",
+      "count": 3
+    },
+    {
+      "repository": "holoviz/param",
+      "count": 3
+    },
+    {
+      "repository": "ipython/ipyparallel",
+      "count": 3
+    },
+    {
+      "repository": "pyapp-kit/psygnal",
+      "count": 3
+    },
+    {
+      "repository": "pybamm-team/liionpack",
+      "count": 3
+    },
+    {
+      "repository": "pydicom/pydicom",
+      "count": 3
+    },
+    {
+      "repository": "python-hyper/h11",
+      "count": 3
+    },
+    {
+      "repository": "pytroll/satpy",
+      "count": 3
+    },
+    {
+      "repository": "quantumlib/Cirq",
+      "count": 3
+    },
+    {
+      "repository": "scikit-learn-contrib/metric-learn",
+      "count": 3
+    },
+    {
+      "repository": "xarray-contrib/xbatcher",
+      "count": 3
+    },
+    {
+      "repository": "newton-physics/newton",
+      "count": 3
+    },
+    {
+      "repository": "saeyslab/harpy",
+      "count": 3
+    },
+    {
+      "repository": "spotify/voyager",
+      "count": 3
+    },
+    {
+      "repository": "CURENT/andes",
+      "count": 2
+    },
+    {
+      "repository": "innobi/pantab",
+      "count": 2
+    },
+    {
+      "repository": "NCAR/geocat-comp",
+      "count": 2
+    },
+    {
+      "repository": "newrelic/newrelic-python-agent",
+      "count": 2
+    },
+    {
+      "repository": "NVIDIA/physicsnemo",
+      "count": 2
+    },
+    {
+      "repository": "pvlib/pvlib-python",
+      "count": 2
+    },
+    {
+      "repository": "pypa/packaging",
+      "count": 2
+    },
+    {
+      "repository": "PyWavelets/pywt",
+      "count": 2
+    },
+    {
+      "repository": "sunpy/sunpy",
+      "count": 2
+    },
+    {
+      "repository": "xitorch/xitorch",
+      "count": 2
+    },
+    {
+      "repository": "dottxt-ai/outlines-core",
+      "count": 2
+    },
+    {
+      "repository": "iterorganization/imas-python",
+      "count": 2
+    },
+    {
+      "repository": "CalebBell/fluids",
+      "count": 1
+    },
+    {
+      "repository": "bjodah/chempy",
+      "count": 1
+    },
+    {
+      "repository": "CalebBell/thermo",
+      "count": 1
+    },
+    {
+      "repository": "asdf-format/asdf",
+      "count": 1
+    },
+    {
+      "repository": "IntelPython/dpnp",
+      "count": 1
+    },
+    {
+      "repository": "numpy/numpy-financial",
+      "count": 1
+    },
+    {
+      "repository": "dwavesystems/dwave-cloud-client",
+      "count": 1
+    },
+    {
+      "repository": "jkjkil4/JAnim",
+      "count": 1
+    },
+    {
+      "repository": "NVIDIA/warp",
+      "count": 1
+    },
+    {
+      "repository": "wmayner/pyphi",
+      "count": 1
+    }
+  ],
+  "repository_stars": [
+    {
+      "repository": "scikit-learn/scikit-learn",
+      "stars": 65530
+    },
+    {
+      "repository": "Textualize/rich",
+      "stars": 55903
+    },
+    {
+      "repository": "pandas-dev/pandas",
+      "stars": 48265
+    },
+    {
+      "repository": "apache/spark",
+      "stars": 43055
+    },
+    {
+      "repository": "PostHog/posthog",
+      "stars": 32258
+    },
+    {
+      "repository": "numpy/numpy",
+      "stars": 31693
+    },
+    {
+      "repository": "tqdm/tqdm",
+      "stars": 31064
+    },
+    {
+      "repository": "networkx/networkx",
+      "stars": 16764
+    },
+    {
+      "repository": "apache/arrow",
+      "stars": 16625
+    },
+    {
+      "repository": "bloomberg/memray",
+      "stars": 14970
+    },
+    {
+      "repository": "scipy/scipy",
+      "stars": 14570
+    },
+    {
+      "repository": "optuna/optuna",
+      "stars": 13778
+    },
+    {
+      "repository": "dask/dask",
+      "stars": 13777
+    },
+    {
+      "repository": "kedro-org/kedro",
+      "stars": 10801
+    },
+    {
+      "repository": "modin-project/modin",
+      "stars": 10365
+    },
+    {
+      "repository": "pymc-devs/pymc",
+      "stars": 9551
+    },
+    {
+      "repository": "HIPS/autograd",
+      "stars": 7469
+    },
+    {
+      "repository": "Qiskit/qiskit",
+      "stars": 7181
+    },
+    {
+      "repository": "scikit-image/scikit-image",
+      "stars": 6487
+    },
+    {
+      "repository": "NVIDIA/warp",
+      "stars": 6446
+    },
+    {
+      "repository": "astropy/astropy",
+      "stars": 5099
+    },
+    {
+      "repository": "geopandas/geopandas",
+      "stars": 5078
+    },
+    {
+      "repository": "quantumlib/Cirq",
+      "stars": 4903
+    },
+    {
+      "repository": "dedupeio/dedupe",
+      "stars": 4449
+    },
+    {
+      "repository": "shapely/shapely",
+      "stars": 4408
+    },
+    {
+      "repository": "joblib/joblib",
+      "stars": 4332
+    },
+    {
+      "repository": "pydata/xarray",
+      "stars": 4121
+    },
+    {
+      "repository": "deepchecks/deepchecks",
+      "stars": 3999
+    },
+    {
+      "repository": "newton-physics/newton",
+      "stars": 3735
+    },
+    {
+      "repository": "holoviz/datashader",
+      "stars": 3527
+    },
+    {
+      "repository": "man-group/arctic",
+      "stars": 3087
+    },
+    {
+      "repository": "mars-project/mars",
+      "stars": 2744
+    },
+    {
+      "repository": "ipython/ipyparallel",
+      "stars": 2640
+    },
+    {
+      "repository": "napari/napari",
+      "stars": 2621
+    },
+    {
+      "repository": "NVIDIA/physicsnemo",
+      "stars": 2599
+    },
+    {
+      "repository": "scverse/scanpy",
+      "stars": 2394
+    },
+    {
+      "repository": "PyWavelets/pywt",
+      "stars": 2354
+    },
+    {
+      "repository": "man-group/ArcticDB",
+      "stars": 2233
+    },
+    {
+      "repository": "h5py/h5py",
+      "stars": 2217
+    },
+    {
+      "repository": "pydicom/pydicom",
+      "stars": 2154
+    },
+    {
+      "repository": "python-control/python-control",
+      "stars": 1991
+    },
+    {
+      "repository": "arviz-devs/arviz",
+      "stars": 1803
+    },
+    {
+      "repository": "dynamicslab/pysindy",
+      "stars": 1783
+    },
+    {
+      "repository": "danielgtaylor/python-betterproto",
+      "stars": 1756
+    },
+    {
+      "repository": "dask/distributed",
+      "stars": 1665
+    },
+    {
+      "repository": "SciTools/cartopy",
+      "stars": 1595
+    },
+    {
+      "repository": "MDAnalysis/mdanalysis",
+      "stars": 1558
+    },
+    {
+      "repository": "spotify/voyager",
+      "stars": 1556
+    },
+    {
+      "repository": "pvlib/pvlib-python",
+      "stars": 1527
+    },
+    {
+      "repository": "pybamm-team/PyBaMM",
+      "stars": 1521
+    },
+    {
+      "repository": "django-components/django-components",
+      "stars": 1507
+    },
+    {
+      "repository": "scikit-learn-contrib/metric-learn",
+      "stars": 1433
+    },
+    {
+      "repository": "Unidata/MetPy",
+      "stars": 1407
+    },
+    {
+      "repository": "nilearn/nilearn",
+      "stars": 1379
+    },
+    {
+      "repository": "python-adaptive/adaptive",
+      "stars": 1217
+    },
+    {
+      "repository": "lmfit/lmfit-py",
+      "stars": 1209
+    },
+    {
+      "repository": "xorbitsai/xorbits",
+      "stars": 1202
+    },
+    {
+      "repository": "pytroll/satpy",
+      "stars": 1175
+    },
+    {
+      "repository": "pydata/bottleneck",
+      "stars": 1172
+    },
+    {
+      "repository": "google-deepmind/mujoco_warp",
+      "stars": 1144
+    },
+    {
+      "repository": "sunpy/sunpy",
+      "stars": 1006
+    },
+    {
+      "repository": "xarray-contrib/xarray-spatial",
+      "stars": 932
+    },
+    {
+      "repository": "dipy/dipy",
+      "stars": 815
+    },
+    {
+      "repository": "CalebBell/thermo",
+      "stars": 736
+    },
+    {
+      "repository": "scverse/anndata",
+      "stars": 727
+    },
+    {
+      "repository": "pypa/packaging",
+      "stars": 719
+    },
+    {
+      "repository": "SciTools/iris",
+      "stars": 711
+    },
+    {
+      "repository": "devitocodes/devito",
+      "stars": 684
+    },
+    {
+      "repository": "bjodah/chempy",
+      "stars": 638
+    },
+    {
+      "repository": "datalad/datalad",
+      "stars": 629
+    },
+    {
+      "repository": "inducer/loopy",
+      "stars": 627
+    },
+    {
+      "repository": "pysal/momepy",
+      "stars": 593
+    },
+    {
+      "repository": "apache/arrow-adbc",
+      "stars": 579
+    },
+    {
+      "repository": "pydicom/pynetdicom",
+      "stars": 554
+    },
+    {
+      "repository": "python-hyper/h11",
+      "stars": 549
+    },
+    {
+      "repository": "sourmash-bio/sourmash",
+      "stars": 542
+    },
+    {
+      "repository": "Rockhopper-Technologies/enlighten",
+      "stars": 530
+    },
+    {
+      "repository": "holoviz/param",
+      "stars": 513
+    },
+    {
+      "repository": "xdslproject/xdsl",
+      "stars": 504
+    },
+    {
+      "repository": "oddt/oddt",
+      "stars": 462
+    },
+    {
+      "repository": "Calysto/octave_kernel",
+      "stars": 459
+    },
+    {
+      "repository": "probabilistic-numerics/probnum",
+      "stars": 458
+    },
+    {
+      "repository": "stac-utils/pystac",
+      "stars": 438
+    },
+    {
+      "repository": "microsoft/Qcodes",
+      "stars": 423
+    },
+    {
+      "repository": "CalebBell/fluids",
+      "stars": 422
+    },
+    {
+      "repository": "wmayner/pyphi",
+      "stars": 417
+    },
+    {
+      "repository": "numpy/numpy-financial",
+      "stars": 400
+    },
+    {
+      "repository": "conda/conda-build",
+      "stars": 395
+    },
+    {
+      "repository": "pygeos/pygeos",
+      "stars": 389
+    },
+    {
+      "repository": "scverse/spatialdata",
+      "stars": 358
+    },
+    {
+      "repository": "CURENT/andes",
+      "stars": 347
+    },
+    {
+      "repository": "GAA-UAM/scikit-fda",
+      "stars": 343
+    },
+    {
+      "repository": "pymor/pymor",
+      "stars": 340
+    },
+    {
+      "repository": "pysal/libpysal",
+      "stars": 289
+    },
+    {
+      "repository": "EmbraceLife/shendusuipian",
+      "stars": 285
+    },
+    {
+      "repository": "dottxt-ai/outlines-core",
+      "stars": 278
+    },
+    {
+      "repository": "CalebBell/chemicals",
+      "stars": 277
+    },
+    {
+      "repository": "sgkit-dev/sgkit",
+      "stars": 275
+    },
+    {
+      "repository": "blink1073/oct2py",
+      "stars": 270
+    },
+    {
+      "repository": "mie-lab/trackintel",
+      "stars": 259
+    },
+    {
+      "repository": "pangeo-data/climpred",
+      "stars": 257
+    },
+    {
+      "repository": "OGGM/oggm",
+      "stars": 249
+    },
+    {
+      "repository": "SiEPIC/SiEPIC-Tools",
+      "stars": 243
+    },
+    {
+      "repository": "not522/ac-library-python",
+      "stars": 239
+    },
+    {
+      "repository": "jkjkil4/JAnim",
+      "stars": 238
+    },
+    {
+      "repository": "xarray-contrib/xskillscore",
+      "stars": 237
+    },
+    {
+      "repository": "tardis-sn/tardis",
+      "stars": 236
+    },
+    {
+      "repository": "casact/chainladder-python",
+      "stars": 236
+    },
+    {
+      "repository": "CalebBell/ht",
+      "stars": 232
+    },
+    {
+      "repository": "ActivitySim/activitysim",
+      "stars": 229
+    },
+    {
+      "repository": "apache/arrow-nanoarrow",
+      "stars": 228
+    },
+    {
+      "repository": "AllenCellModeling/aicsimageio",
+      "stars": 222
+    },
+    {
+      "repository": "UXARRAY/uxarray",
+      "stars": 212
+    },
+    {
+      "repository": "tskit-dev/msprime",
+      "stars": 210
+    },
+    {
+      "repository": "neurostuff/NiMARE",
+      "stars": 209
+    },
+    {
+      "repository": "newrelic/newrelic-python-agent",
+      "stars": 206
+    },
+    {
+      "repository": "tensorwerk/hangar-py",
+      "stars": 205
+    },
+    {
+      "repository": "TileDB-Inc/TileDB-Py",
+      "stars": 199
+    },
+    {
+      "repository": "xarray-contrib/xbatcher",
+      "stars": 194
+    },
+    {
+      "repository": "pysb/pysb",
+      "stars": 193
+    },
+    {
+      "repository": "anhaidgroup/py_entitymatching",
+      "stars": 192
+    },
+    {
+      "repository": "scikit-sparse/scikit-sparse",
+      "stars": 189
+    },
+    {
+      "repository": "pybop-team/PyBOP",
+      "stars": 186
+    },
+    {
+      "repository": "royerlab/ultrack",
+      "stars": 174
+    },
+    {
+      "repository": "JDASoftwareGroup/kartothek",
+      "stars": 160
+    },
+    {
+      "repository": "xitorch/xitorch",
+      "stars": 158
+    },
+    {
+      "repository": "NCAR/geocat-comp",
+      "stars": 144
+    },
+    {
+      "repository": "DASDAE/dascore",
+      "stars": 143
+    },
+    {
+      "repository": "scipp/scipp",
+      "stars": 142
+    },
+    {
+      "repository": "glotzerlab/signac",
+      "stars": 141
+    },
+    {
+      "repository": "dwavesystems/dimod",
+      "stars": 140
+    },
+    {
+      "repository": "holgern/beem",
+      "stars": 138
+    },
+    {
+      "repository": "xarray-contrib/flox",
+      "stars": 135
+    },
+    {
+      "repository": "freegs-plasma/freegs",
+      "stars": 130
+    },
+    {
+      "repository": "isce-framework/dolphin",
+      "stars": 127
+    },
+    {
+      "repository": "UVA-Computer-Vision-Lab/LabelAny3D",
+      "stars": 126
+    },
+    {
+      "repository": "IntelPython/dpnp",
+      "stars": 125
+    },
+    {
+      "repository": "IntelPython/dpctl",
+      "stars": 123
+    },
+    {
+      "repository": "innobi/pantab",
+      "stars": 122
+    },
+    {
+      "repository": "pyapp-kit/psygnal",
+      "stars": 122
+    },
+    {
+      "repository": "pybamm-team/liionpack",
+      "stars": 113
+    },
+    {
+      "repository": "mongodb-labs/mongo-arrow",
+      "stars": 113
+    },
+    {
+      "repository": "Quansight-Labs/ndindex",
+      "stars": 110
+    },
+    {
+      "repository": "contourpy/contourpy",
+      "stars": 105
+    },
+    {
+      "repository": "WagnerGroup/pyqmc",
+      "stars": 100
+    }
+  ]
+}

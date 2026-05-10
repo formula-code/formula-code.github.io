@@ -2,6 +2,8 @@
 	import { getContext } from "svelte";
 	import OverviewHeader from "$components/layout/OverviewHeader.svelte";
 	import CompactLeaderboard from "$components/sections/CompactLeaderboard.svelte";
+	import DatasetGrowth from "$components/sections/DatasetGrowth.svelte";
+	import ProblemsByRepository from "$components/sections/ProblemsByRepository.svelte";
 	import ResultsHighlights from "$components/sections/ResultsHighlights.svelte";
 	import SubmitCta from "$components/sections/SubmitCta.svelte";
 
@@ -82,6 +84,9 @@
 			</div>
 		</section>
 	</main>
+
+	<DatasetGrowth />
+	<ProblemsByRepository />
 
 	<ResultsHighlights stratified={leaderboardData.stratified} />
 

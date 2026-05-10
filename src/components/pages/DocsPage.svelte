@@ -1,7 +1,6 @@
 <script>
 	const repos = [
 		{
-			path: "formula-code/fc-eval",
 			name: "fc-eval",
 			description:
 				"Run frontier LLM agents against the FormulaCode benchmark. Spins up reproducible Docker environments, replays the unit-test suite, and computes per-workload speedup, advantage, and stratified scores. Bring your own Terminus or OpenHands agent — `fceval run -d formulacode -a <your-agent>` is all it takes.",
@@ -11,7 +10,6 @@
 			imageAlt: "fc-eval repository preview"
 		},
 		{
-			path: "formula-code/datasmith",
 			name: "datasmith",
 			description:
 				"The four-stage pipeline that mines FormulaCode's tasks from real GitHub repositories: scraping high-quality performance PRs, attribute-filtering them with LLM judges, synthesising reproducible build environments, and running the statistical-significance tests that admit a candidate into the benchmark.",
@@ -71,9 +69,6 @@
 						href={r.docsUrl}
 						aria-label="Open {r.name} documentation"
 					>
-						<div class="card-header">
-							<span class="repo-path">{r.path}</span>
-						</div>
 						<div class="card-image">
 							<img src={r.image} alt={r.imageAlt} loading="lazy" />
 						</div>
@@ -227,21 +222,6 @@
 	.card-link:hover {
 		text-decoration: none;
 		color: inherit;
-	}
-
-	.card-header {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		gap: var(--space-sm);
-		padding: var(--space-md) var(--space-lg) 0;
-		flex-wrap: wrap;
-	}
-
-	.repo-path {
-		font-family: var(--mono);
-		font-size: 0.78rem;
-		color: var(--text-muted);
 	}
 
 	.card-image {

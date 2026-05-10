@@ -2,19 +2,19 @@
  * formulacode.css — brand overrides for MkDocs Material to match the
  * main FormulaCode site (formulacode.org).
  *
- * Typography:  Lexend (body) + Roboto Mono (code).
+ * Typography:  Material default (Roboto) for body — Lexend looks too tight
+ *              at docs body sizes. Roboto Mono kept for code so it still
+ *              matches the main site's monospace.
  * Palette:     Brand red (#dc2418) primary, brand blue (#1e3a8a) accent,
  *              cool slate neutrals — mirrors src/styles/variables.css on www.
  * Light only:  the dark scheme below is just a softer version that respects
  *              the user's system preference; the main site is light-only.
  */
 
-/* ── Fonts (loaded directly so docs work without preconnect tweaks) ── */
-@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Lexend+Deca:wght@400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap");
+/* ── Fonts (Roboto loaded by Material when theme.font.text is set) ── */
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap");
 
 :root {
-	--md-text-font: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI",
-		system-ui, sans-serif;
 	--md-code-font: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
 		monospace;
 
