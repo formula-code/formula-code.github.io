@@ -11,3 +11,10 @@ remote/
 HELP.md
 AGENTS.md
 CLAUDE.md
+
+# Vendor docs: cloned working trees and the local mkdocs build venv. The
+# *built* output under static/docs/{eval,data}/ is checked in so that the
+# main www deploy can serve formulacode.org/docs/{eval,data} without a
+# Python toolchain in CI. Refresh with `make docs` (see Makefile).
+_repos/
+.venv-docs/

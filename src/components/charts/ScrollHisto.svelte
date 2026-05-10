@@ -186,7 +186,7 @@
 	}
 
 	h4 {
-		font-family: var(--serif);
+		font-family: var(--sans);
 		font-size: var(--20px);
 		font-weight: 700;
 		margin: 2.5rem 0 1rem 0;

@@ -426,7 +426,7 @@
 		overflow-y: auto;
 		border: 1px solid var(--border-secondary);
 		border-radius: 3px;
-		background: #282c34;
+		background: var(--bg-secondary);
 	}
 
 	.code-wrapper :global(pre) {

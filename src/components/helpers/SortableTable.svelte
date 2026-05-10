@@ -133,8 +133,8 @@
 	}
 
 	th.sorted {
-		background: var(--bg-secondary);
-		color: var(--accent-secondary);
+		background: var(--brand-red-soft);
+		color: var(--brand-red);
 	}
 
 	th.numeric,

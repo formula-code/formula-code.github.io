@@ -1,0 +1,341 @@
+/*
+ * formulacode.css — brand overrides for MkDocs Material to match the
+ * main FormulaCode site (formulacode.org).
+ *
+ * Typography:  Lexend (body) + Roboto Mono (code).
+ * Palette:     Brand red (#dc2418) primary, brand blue (#1e3a8a) accent,
+ *              cool slate neutrals — mirrors src/styles/variables.css on www.
+ * Light only:  the dark scheme below is just a softer version that respects
+ *              the user's system preference; the main site is light-only.
+ */
+
+/* ── Fonts (loaded directly so docs work without preconnect tweaks) ── */
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Lexend+Deca:wght@400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap");
+
+:root {
+	--md-text-font: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI",
+		system-ui, sans-serif;
+	--md-code-font: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+		monospace;
+
+	/* Brand identity */
+	--fc-red: #dc2418;
+	--fc-red-dark: #b21d12;
+	--fc-red-soft: #fdecea;
+	--fc-blue: #1e3a8a;
+	--fc-blue-dark: #162a66;
+	--fc-blue-soft: #e8edf9;
+
+	/* Slate neutrals */
+	--fc-text: #0f172a;
+	--fc-text-muted: #64748b;
+	--fc-border: #e2e8f0;
+	--fc-bg: #ffffff;
+	--fc-bg-soft: #f8fafc;
+	--fc-bg-tertiary: #f1f5f9;
+}
+
+/* High specificity (combine :root with the scheme attribute) so we win the
+ * cascade against Material's default indigo, which it sets at :root. */
+:root,
+:root[data-md-color-scheme="default"],
+[data-md-color-primary="custom"],
+[data-md-color-accent="custom"] {
+	--md-primary-fg-color: var(--fc-red) !important;
+	--md-primary-fg-color--light: var(--fc-red) !important;
+	--md-primary-fg-color--dark: var(--fc-red-dark) !important;
+	--md-primary-bg-color: #ffffff !important;
+	--md-primary-bg-color--light: rgba(255, 255, 255, 0.7) !important;
+	--md-accent-fg-color: var(--fc-blue) !important;
+	--md-accent-fg-color--transparent: var(--fc-blue-soft) !important;
+	--md-accent-bg-color: #ffffff !important;
+	--md-accent-bg-color--light: rgba(255, 255, 255, 0.7) !important;
+
+	--md-default-fg-color: var(--fc-text);
+	--md-default-fg-color--light: var(--fc-text-muted);
+	--md-default-fg-color--lighter: rgba(15, 23, 42, 0.32);
+	--md-default-fg-color--lightest: rgba(15, 23, 42, 0.07);
+
+	--md-default-bg-color: var(--fc-bg);
+	--md-default-bg-color--light: var(--fc-bg-soft);
+
+	--md-typeset-color: var(--fc-text);
+	--md-typeset-a-color: var(--fc-blue);
+
+	--md-code-bg-color: var(--fc-bg-tertiary);
+	--md-code-fg-color: var(--fc-text);
+
+	--md-footer-bg-color: var(--fc-text);
+	--md-footer-bg-color--dark: #020617;
+}
+
+[data-md-color-scheme="slate"] {
+	--md-primary-fg-color: var(--fc-red) !important;
+	--md-accent-fg-color: #93c5fd !important;
+}
+
+/* ── Body typography ── */
+.md-typeset {
+	font-family: var(--md-text-font);
+	font-size: 0.85rem;
+	line-height: 1.7;
+	letter-spacing: -0.005em;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5 {
+	font-family: var(--md-text-font);
+	font-weight: 700;
+	letter-spacing: -0.015em;
+	color: var(--fc-text);
+}
+
+.md-typeset h1 {
+	font-size: 2.2rem;
+	line-height: 1.2;
+	margin: 0 0 1.4rem;
+	font-weight: 700;
+}
+
+.md-typeset h2 {
+	font-size: 1.5rem;
+	margin-top: 2.2rem;
+	font-weight: 700;
+}
+
+.md-typeset h3 {
+	font-size: 1.15rem;
+	font-weight: 600;
+}
+
+.md-typeset h4 {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--fc-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.md-typeset a {
+	color: var(--fc-blue);
+	text-decoration: none;
+	border-bottom: 1px solid transparent;
+	transition: border-color 120ms;
+}
+
+.md-typeset a:hover {
+	border-bottom-color: var(--fc-blue);
+	color: var(--fc-blue-dark);
+}
+
+.md-typeset code,
+.md-typeset pre {
+	font-family: var(--md-code-font);
+	font-feature-settings: "calt" 0;
+}
+
+.md-typeset code {
+	font-size: 0.78em;
+	padding: 1px 5px;
+	background: var(--fc-bg-tertiary);
+	border-radius: 4px;
+	color: var(--fc-text);
+}
+
+.md-typeset pre > code {
+	font-size: 0.8rem;
+	padding: 0;
+	background: transparent;
+}
+
+.md-typeset .highlight {
+	background: var(--fc-bg-tertiary);
+	border: 1px solid var(--fc-border);
+	border-radius: 8px;
+}
+
+.md-typeset .highlight code {
+	background: transparent;
+}
+
+.md-typeset blockquote {
+	border-left: 3px solid var(--fc-red);
+	padding-left: 1rem;
+	color: var(--fc-text-muted);
+}
+
+/* ── Header (top bar) ── */
+.md-header {
+	background: var(--fc-bg);
+	color: var(--fc-text);
+	border-bottom: 1px solid var(--fc-border);
+	box-shadow: none;
+}
+
+.md-header__title {
+	font-family: var(--md-text-font);
+	font-weight: 600;
+	letter-spacing: -0.015em;
+	color: var(--fc-text);
+}
+
+.md-header__topic .md-ellipsis,
+.md-header__button {
+	color: var(--fc-text);
+}
+
+.md-header__option [data-md-component="palette"] .md-icon svg {
+	fill: var(--fc-text-muted);
+}
+
+.md-search__input {
+	background: var(--fc-bg-tertiary);
+	color: var(--fc-text);
+}
+
+.md-search__input::placeholder {
+	color: var(--fc-text-muted);
+}
+
+/* ── Tabs (top-level navigation) ── */
+.md-tabs {
+	background: var(--fc-bg);
+	color: var(--fc-text);
+	border-bottom: 1px solid var(--fc-border);
+}
+
+.md-tabs__link {
+	color: var(--fc-text-muted);
+	font-weight: 500;
+	opacity: 1;
+	font-size: 0.78rem;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active {
+	color: var(--fc-red);
+}
+
+/* ── Sidebar nav ── */
+.md-nav {
+	font-family: var(--md-text-font);
+	font-size: 0.78rem;
+}
+
+.md-nav__title {
+	font-weight: 700;
+	color: var(--fc-text);
+	letter-spacing: -0.01em;
+}
+
+.md-nav__link {
+	color: var(--fc-text-muted);
+	transition: color 120ms;
+}
+
+.md-nav__link:hover,
+.md-nav__link--active {
+	color: var(--fc-red);
+}
+
+/* Active page in sidebar — pill instead of underline. */
+.md-nav__item .md-nav__link[aria-current="page"] {
+	color: var(--fc-red);
+	font-weight: 600;
+}
+
+/* ── Buttons ── */
+.md-typeset .md-button {
+	font-family: var(--md-text-font);
+	font-weight: 600;
+	letter-spacing: -0.005em;
+	padding: 0.5rem 1.1rem;
+	border-radius: 8px;
+	border-color: var(--fc-border);
+	color: var(--fc-text);
+	background: var(--fc-bg);
+	transition: all 120ms;
+}
+
+.md-typeset .md-button:hover {
+	border-color: var(--fc-red);
+	color: var(--fc-red);
+}
+
+.md-typeset .md-button--primary {
+	background: var(--fc-red);
+	border-color: var(--fc-red);
+	color: #fff;
+}
+
+.md-typeset .md-button--primary:hover {
+	background: var(--fc-red-dark);
+	border-color: var(--fc-red-dark);
+	color: #fff;
+}
+
+/* ── Admonitions ── */
+.md-typeset .admonition,
+.md-typeset details {
+	border-radius: 8px;
+	border-width: 1px;
+	font-size: 0.85rem;
+	box-shadow: none;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+	font-weight: 600;
+}
+
+/* ── Tables ── */
+.md-typeset table:not([class]) {
+	border: 1px solid var(--fc-border);
+	border-radius: 8px;
+	overflow: hidden;
+	font-size: 0.82rem;
+}
+
+.md-typeset table:not([class]) th {
+	background: var(--fc-bg-soft);
+	font-weight: 700;
+	color: var(--fc-text);
+	letter-spacing: -0.005em;
+}
+
+/* ── Footer ── */
+.md-footer {
+	background: var(--fc-text);
+}
+
+.md-footer-meta {
+	background: #020617;
+}
+
+/* ── Banner / breadcrumb back to formulacode.org ── */
+.md-typeset .fc-back-banner {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin: 0 0 1.5rem;
+	padding: 0.55rem 0.85rem;
+	font-size: 0.78rem;
+	color: var(--fc-text-muted);
+	background: var(--fc-bg-soft);
+	border: 1px solid var(--fc-border);
+	border-radius: 6px;
+	width: fit-content;
+}
+
+.md-typeset .fc-back-banner a {
+	font-weight: 600;
+	color: var(--fc-red);
+	border-bottom: none;
+}
+
+.md-typeset .fc-back-banner a:hover {
+	color: var(--fc-red-dark);
+}

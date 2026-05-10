@@ -5,206 +5,249 @@
 	const copy = getContext("copy") || copyData || {};
 	const paperFooter = copy.paperFooter || {};
 
-	// Citation configuration
 	const citationConfig = paperFooter.citation || {};
 	const citationTitle = citationConfig.title ?? "Citation";
 	const citationBibtex = citationConfig.bibtex ?? "";
 	const showCitation =
 		String(citationConfig.show) !== "false" && Boolean(citationBibtex);
 
-	// Related Work configuration (as paragraph)
-	const relatedWorkConfig = paperFooter.relatedWork || {};
-	const relatedWorkTitle = relatedWorkConfig.title ?? "Related Work";
-	const relatedWorkText = relatedWorkConfig.text ?? "";
-	const showRelatedWork =
-		String(relatedWorkConfig.show) !== "false" && Boolean(relatedWorkText);
-
-	// Funding configuration
 	const fundingConfig = paperFooter.funding || {};
-	const fundingTitle = fundingConfig.title ?? "Funding";
+	const fundingTitle = fundingConfig.title ?? "Acknowledgements";
 	const fundingDescription = fundingConfig.description ?? "";
 	const showFunding =
 		String(fundingConfig.show) !== "false" && Boolean(fundingDescription);
 
-	// Acknowledgements configuration
 	const acknowledgementsConfig = paperFooter.acknowledgements || {};
-	const acknowledgementsTitle =
-		acknowledgementsConfig.title ?? "Acknowledgements";
 	const acknowledgementsText = acknowledgementsConfig.text ?? "";
 	const showAcknowledgements =
 		String(acknowledgementsConfig.show) !== "false" &&
 		Boolean(acknowledgementsText);
+
+	let copyState = "idle";
+	let copyTimer;
+
+	async function copyBibtex(text) {
+		if (!text) return;
+		try {
+			await navigator.clipboard.writeText(text);
+			copyState = "copied";
+		} catch (e) {
+			copyState = "error";
+		}
+		clearTimeout(copyTimer);
+		copyTimer = setTimeout(() => (copyState = "idle"), 1800);
+	}
 </script>
 
-<footer>
-	<div class="c">
-		<!-- Paper Footer Sections -->
-		<div class="paper-footer-sections">
-			{#if showRelatedWork && relatedWorkText}
-				<section class="paper-section related-work-section">
-					<h3 class="paper-section-title">{relatedWorkTitle}</h3>
-					<p class="paper-section-text">{@html relatedWorkText}</p>
-				</section>
-			{/if}
-
-			{#if showCitation}
-				<section class="paper-section citation-section">
-					<h3 class="paper-section-title">{citationTitle}</h3>
-					<div class="bibtex-wrapper">
-						<pre class="bibtex-code"><code>{citationBibtex}</code></pre>
-					</div>
-				</section>
-			{/if}
-
-			{#if showFunding && fundingDescription}
-				<section class="paper-section funding-section">
-					<h3 class="paper-section-title">{fundingTitle}</h3>
-					<p class="paper-section-text">{@html fundingDescription}</p>
-				</section>
-			{/if}
-		</div>
-
-		<!-- Acknowledgements as footer -->
-		{#if showAcknowledgements && acknowledgementsText}
-			<div class="footer-acknowledgements">
-				<p>{@html acknowledgementsText}</p>
-			</div>
+<footer class="site-footer">
+	<div class="footer-main">
+		{#if showCitation}
+			<section id="bibtex" class="bibtex-section">
+				<div class="section-head">
+					<h2 class="section-title">{citationTitle}</h2>
+				</div>
+				<div class="bibtex-wrap">
+					<button
+						class="copy-btn"
+						class:copied={copyState === "copied"}
+						class:error={copyState === "error"}
+						on:click={() => copyBibtex(citationBibtex)}
+						aria-label="Copy citation to clipboard"
+						type="button"
+					>
+						{#if copyState === "copied"}
+							✓ Copied
+						{:else if copyState === "error"}
+							Copy failed
+						{:else}
+							Copy
+						{/if}
+					</button>
+					<pre class="bibtex-box"><code>{citationBibtex}</code></pre>
+				</div>
+			</section>
 		{/if}
+
+		{#if showFunding && fundingDescription}
+			<section class="funding-section">
+				<div class="section-head">
+					<h2 class="section-title">{fundingTitle}</h2>
+				</div>
+				<p class="funding-text">{@html fundingDescription}</p>
+			</section>
+		{/if}
+	</div>
+
+	<div class="footer-strip">
+		<div class="footer-inner">
+			{#if showAcknowledgements && acknowledgementsText}
+				<div class="footer-credit">{@html acknowledgementsText}</div>
+			{/if}
+			<div class="footer-links">
+				<a href="/">Overview</a>
+				<a href="/explorer/">Explorer</a>
+				<a href="/leaderboard/">Leaderboard</a>
+				<a
+					href="https://github.com/formula-code/fc-eval"
+					target="_blank"
+					rel="noopener noreferrer">GitHub</a
+				>
+			</div>
+		</div>
 	</div>
 </footer>
 
 <style>
-	footer {
-		margin-top: 100px;
-		width: 100%;
-		position: relative;
-		color: var(--text-primary);
-		overflow-x: hidden;
+	.site-footer {
+		margin-top: var(--space-2xl);
+		background: var(--bg-primary);
+		color: var(--text-secondary);
+		font-family: var(--sans);
 	}
 
-	.c {
+	.footer-main {
 		max-width: 1000px;
-		padding: 3rem 1rem;
 		margin: 0 auto;
-		font-family: var(--sans);
+		padding: var(--space-2xl) var(--space-md) var(--space-xl);
 	}
 
-	/* Paper Footer Sections */
-	.paper-footer-sections {
-		max-width: 900px;
-		margin: 0 auto;
+	.section-head {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: var(--space-sm);
+		margin-bottom: var(--space-md);
 	}
 
-	.paper-section {
-		margin-bottom: 3rem;
+	.bibtex-section,
+	.funding-section {
+		margin-bottom: var(--space-xl);
 	}
 
-	.paper-section:last-child {
-		margin-bottom: 0;
-	}
-
-	.paper-section-title {
-		font-family: var(--sans);
-		font-size: var(--20px);
-		font-weight: 700;
-		margin: 0 0 1.5rem;
-		color: var(--text-primary);
-		text-align: center;
-	}
-
-	/* Citation Section */
-	.bibtex-wrapper {
+	.bibtex-wrap {
 		position: relative;
-		background-color: var(--bg-secondary);
-		border: 1px solid var(--border-secondary);
-		border-radius: 8px;
-		padding: 1.5rem;
-		overflow-x: auto;
 	}
 
-	.bibtex-code {
-		margin: 0;
-		padding: 0;
+	.bibtex-box {
+		background: #0f172a;
+		color: #e2e8f0;
+		border-radius: var(--radius);
+		padding: var(--space-lg);
 		font-family: var(--mono);
-		font-size: var(--14px);
-		line-height: 1.6;
-		color: var(--text-primary);
-		background: transparent;
+		font-size: 0.8125rem;
+		line-height: 1.7;
 		white-space: pre;
 		overflow-x: auto;
+		margin: 0;
 	}
 
-	.bibtex-code code {
+	.bibtex-box code {
 		font-family: inherit;
 		color: inherit;
 	}
 
-	/* Related Work Text */
-	.paper-section-text {
+	.copy-btn {
+		position: absolute;
+		top: var(--space-sm);
+		right: var(--space-sm);
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		color: rgba(255, 255, 255, 0.85);
+		border-radius: var(--radius);
+		padding: 4px 10px;
 		font-family: var(--sans);
-		font-size: var(--16px);
+		font-size: 0.75rem;
+		cursor: pointer;
+		transition:
+			color 120ms,
+			background 120ms,
+			border-color 120ms;
+		z-index: 1;
+	}
+
+	.copy-btn:hover {
+		background: rgba(255, 255, 255, 0.12);
+		border-color: rgba(255, 255, 255, 0.32);
+		color: #fff;
+	}
+
+	.copy-btn.copied {
+		background: var(--score-good);
+		color: #fff;
+		border-color: var(--score-good);
+	}
+
+	.copy-btn.error {
+		background: var(--score-bad);
+		color: #fff;
+		border-color: var(--score-bad);
+	}
+
+	.funding-text {
+		font-size: 0.92rem;
 		line-height: 1.7;
-		color: var(--text-secondary);
+		color: var(--text-muted);
+		max-width: 70ch;
 		margin: 0;
-		text-align: justify;
 	}
 
-	.paper-section-text :global(a) {
+	.funding-text :global(a) {
 		color: var(--link-color);
-		text-decoration: none;
-		font-weight: 600;
-	}
-
-	.paper-section-text :global(a:hover),
-	.paper-section-text :global(a:focus-visible) {
-		color: var(--link-hover);
 		text-decoration: underline;
+		text-decoration-color: var(--border-secondary);
 	}
 
-	/* Footer-style Acknowledgements */
-	.footer-acknowledgements {
-		margin-top: 3rem;
-		padding-top: 2rem;
+	.funding-text :global(a:hover) {
+		text-decoration-color: var(--link-color);
+	}
+
+	.footer-strip {
 		border-top: 1px solid var(--border-primary);
-		text-align: center;
+		padding: var(--space-md) var(--space-md);
+		font-size: 0.8125rem;
+		color: var(--text-muted);
 	}
 
-	.footer-acknowledgements p {
-		font-family: var(--sans);
-		font-size: var(--12px);
+	.footer-inner {
+		max-width: 1000px;
+		margin: 0 auto;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--space-md);
+	}
+
+	.footer-credit {
+		max-width: 60ch;
 		line-height: 1.6;
-		color: var(--text-primary);
-		margin: 0;
+		color: var(--text-muted);
 	}
 
-	.footer-acknowledgements :global(a) {
-		color: var(--link-color) !important;
-		text-decoration: none;
-		font-weight: 200;
-	}
-
-	.footer-acknowledgements :global(a:hover) {
-		color: var(--link-hover) !important;
+	.footer-credit :global(a) {
+		color: var(--text-muted);
 		text-decoration: underline;
+		text-decoration-color: var(--border-secondary);
 	}
 
-	/* Responsive adjustments for paper sections */
-	@media (max-width: 768px) {
-		.paper-section-title {
-			font-size: var(--18px);
-		}
+	.footer-credit :global(a:hover) {
+		color: var(--text-primary);
+	}
 
-		.paper-section-text {
-			text-align: left;
-		}
+	.footer-links {
+		display: flex;
+		gap: var(--space-md);
+		flex-wrap: wrap;
+	}
 
-		.footer-acknowledgements {
-			margin-top: 2rem;
-			padding-top: 1.5rem;
-		}
+	.footer-links a {
+		color: var(--text-muted);
+		text-decoration: underline;
+		text-decoration-color: var(--border-secondary);
+	}
 
-		.footer-acknowledgements p {
-			font-size: var(--12px);
-		}
+	.footer-links a:hover {
+		color: var(--text-primary);
 	}
 </style>

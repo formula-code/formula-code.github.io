@@ -18,4 +18,7 @@
 </script>
 
 <Meta {title} {description} {url} {keywords} />
-<LeaderboardPage leaderboardData={data.leaderboard} />
+<LeaderboardPage
+	leaderboardData={data.leaderboard}
+	rows={data.rows}
+/>

@@ -1,112 +1,140 @@
 /**
- * Do not edit directly
- * Generated on Tue, 31 May 2022 13:42:06 GMT
+ * Design tokens — manually maintained.
+ * Light-mode only. Aesthetic: academic / MathNet-inspired.
+ *   - Inter for body prose
+ *   - Computer Modern small-caps for brand and section titles
+ *   - JetBrains Mono only for code blocks
+ *   - Navy/indigo accent on a cool blue-gray neutral
  */
 
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Lexend+Deca:wght@400;500;600;700&family=Roboto+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap");
+
 :root {
-  --wine-black: #181A1F;
-  --wine-dark-gray: #272a31;
-  --wine-med-gray: #363B45;
-  --wine-blue: #38425D;
-  --wine-light-blue: #475171;
-  --wine-tan: #CFCABF;
-  --wine-tan-transparent: rgba(207, 202, 191, 0.05);
-  --wine-dark-tan: #9A968E;
-  --wine-red: #7b0439;
-  --wine-gold: #F7B956;
-  --wine-dark-gold: #e7a53b;
-  --wine-green: #3E5C4B;
-  --score-good: #0f9d58;
-  --score-bad: #e84545;
-  --category-blue: #4477AA;
-  --category-red: #EE6677;
-  --category-green: #228833;
-  --category-yellow: #CCBB44;
-  --category-cyan: #66CCEE;
-  --category-purple: #AA3377;
-  --category-gray: #BBBBBB;
-  --color-black: #000000;
-  --color-white: #ffffff;
-  --color-gray-50: #f7f7f7;
-  --color-gray-100: #efefef;
-  --color-gray-200: #dfdfdf;
-  --color-gray-300: #cacaca;
-  --color-gray-400: #a8a8a8;
-  --color-gray-500: #878787;
-  --color-gray-600: #6d6d6d;
-  --color-gray-700: #4e4e4e;
-  --color-gray-800: #373737;
-  --color-gray-900: #262626;
-  --color-gray-1000: #191919;
-  --color-purple: #a239ca;
-  --color-blue: #4717f6;
-  --color-green: #34a29e;
-  --color-red: #ff533d;
-  --color-yellow: #e5e338;
-  --12px: 0.75rem;
-  --14px: 0.875rem;
-  --16px: 1rem;
-  --18px: 1.125rem;
-  --20px: 1.25rem;
-  --22px: 1.375rem;
-  --24px: 1.5rem;
-  --28px: 1.75rem;
-  --32px: 2rem;
-  --36px: 2.25rem;
-  --40px: 2.5rem;
-  --44px: 2.75rem;
-  --48px: 3rem;
-  --56px: 3.5rem;
-  --64px: 4rem;
-  --80px: 5rem;
-  --96px: 6rem;
-  --112px: 7rem;
-  --128px: 8rem;
+	/* MathNet base palette */
+	--bg-primary: #ffffff;
+	--bg-secondary: #f8fafc;
+	--bg-tertiary: #f1f5f9;
+	--bg-inverse: #0f172a;
 
-  /* Semantic Theme Tokens (Dark Mode Default) */
-  --bg-primary: var(--wine-black);
-  --bg-secondary: var(--wine-dark-gray);
-  --bg-tertiary: var(--wine-med-gray);
+	--text-primary: #0f172a;
+	--text-secondary: #475569;
+	--text-muted: #64748b;
+	--text-inverse: #f8fafc;
 
-  --text-primary: var(--wine-tan);
-  --text-secondary: var(--wine-dark-tan);
-  --text-inverse: var(--wine-black);
+	--border-primary: #e2e8f0;
+	--border-secondary: #cbd5e1;
+	--border-strong: #94a3b8;
 
-  --border-primary: rgba(244, 228, 188, 0.1);
-  --border-secondary: rgba(244, 228, 188, 0.2);
+	/* Brand identity (FormulaCode F1 logo) */
+	--brand-red: #dc2418; /* "Code" word, car body */
+	--brand-red-dark: #b21d12; /* hover / pressed */
+	--brand-red-soft: #fdecea; /* tinted bg for active chips, sorted cols */
+	--brand-blue: #1e3a8a; /* "Agent" word, mechanic overalls */
+	--brand-blue-dark: #162a66; /* hover */
+	--brand-blue-soft: #e8edf9; /* tinted bg */
 
-  --accent-primary: var(--wine-red);
-  --accent-secondary: var(--wine-gold);
+	--accent-primary: var(--brand-red); /* dominant accent — CTAs, glyphs, badges */
+	--accent-secondary: var(--brand-blue); /* secondary — links, subtler highlights */
+	--accent-terminal: #30631b; /* used for "good" gradients */
 
-  --link-color: var(--wine-gold);
-  --link-hover: var(--wine-dark-gold);
+	/* Links stay blue for legibility — independent of accent-primary */
+	--link-color: var(--brand-blue);
+	--link-hover: var(--brand-blue-dark);
 
-  --color-agent-gpt5: var(--category-blue);
-  --color-agent-human: var(--category-cyan);
-}
+	/* Score / signal colors */
+	--score-good: #0f9d58;
+	--score-bad: var(--brand-red);
 
-:root[data-theme="light"] {
-  /* Light Mode Overrides */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f7f7f7;
-  --bg-tertiary: #e5e5e5;
+	/* Agent colors */
+	--color-agent-gpt5: var(--brand-blue);
+	--color-agent-human: #50a4e7;
 
-  --text-primary: #181A1F;
-  --text-secondary: #4e4e4e;
-  --text-inverse: #ffffff;
+	/* Category palette (kept for legacy charts) */
+	--category-blue: #4477aa;
+	--category-red: #ee6677;
+	--category-green: #228833;
+	--category-yellow: #ccbb44;
+	--category-cyan: #66ccee;
+	--category-purple: #aa3377;
+	--category-gray: #bbbbbb;
 
-  --border-primary: rgba(0, 0, 0, 0.1);
-  --border-secondary: rgba(0, 0, 0, 0.2);
+	/* Legacy wine tokens (kept for any lingering references in scrollytelling) */
+	--wine-black: #09090b;
+	--wine-dark-gray: #18181b;
+	--wine-med-gray: #27272a;
+	--wine-blue: #1e3a5f;
+	--wine-light-blue: #3f3f46;
+	--wine-tan: #fafafa;
+	--wine-tan-transparent: rgba(250, 250, 250, 0.05);
+	--wine-dark-tan: #a1a1aa;
+	--wine-red: #3b82f6;
+	--wine-gold: #f7b956;
+	--wine-dark-gold: #e7a53b;
+	--wine-green: #22c55e;
 
-  /* Retain brand colors but maybe tweak contrast if needed, for now stick to brand */
-  --accent-primary: var(--wine-red);
-  --accent-secondary: #d48e26;
-  /* Darker gold for better contrast on white */
+	--color-black: #000000;
+	--color-white: #ffffff;
+	--color-gray-50: #f8fafc;
+	--color-gray-100: #f1f5f9;
+	--color-gray-200: #e2e8f0;
+	--color-gray-300: #cbd5e1;
+	--color-gray-400: #94a3b8;
+	--color-gray-500: #64748b;
+	--color-gray-600: #475569;
+	--color-gray-700: #334155;
+	--color-gray-800: #1e293b;
+	--color-gray-900: #0f172a;
+	--color-gray-1000: #020617;
+	--color-purple: #5451f4;
+	--color-blue: #5451f4;
+	--color-green: #34a29e;
+	--color-red: #e84545;
+	--color-yellow: #f7b956;
 
-  --link-color: #d48e26;
-  --link-hover: #b07010;
+	/* Font-size scale */
+	--12px: 0.75rem;
+	--14px: 0.875rem;
+	--16px: 1rem;
+	--18px: 1.125rem;
+	--20px: 1.25rem;
+	--22px: 1.375rem;
+	--24px: 1.5rem;
+	--28px: 1.75rem;
+	--32px: 2rem;
+	--36px: 2.25rem;
+	--40px: 2.5rem;
+	--44px: 2.75rem;
+	--48px: 3rem;
+	--56px: 3.5rem;
+	--64px: 4rem;
+	--80px: 5rem;
+	--96px: 6rem;
+	--112px: 7rem;
+	--128px: 8rem;
 
-  --color-agent-gpt5: var(--category-blue);
-  --color-agent-human: #0088cc;
-  /* Darker cyan for better contrast on white */
+	/* Font families — Lexend everywhere, Roboto Mono for code/numerics. */
+	--sans: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+		sans-serif;
+	--serif: "Lexend Deca", "Lexend", -apple-system, BlinkMacSystemFont,
+		sans-serif;
+	--mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+		monospace;
+
+	/* Spacing scale (matches MathNet) */
+	--space-xs: 0.25rem;
+	--space-sm: 0.5rem;
+	--space-md: 1rem;
+	--space-lg: 1.5rem;
+	--space-xl: 2rem;
+	--space-2xl: 3rem;
+
+	/* Radius */
+	--radius: 8px;
+	--radius-lg: 12px;
+	--radius-sm: 4px;
+
+	/* Shadows */
+	--shadow: 0 1px 3px rgba(15, 23, 42, 0.07), 0 1px 2px rgba(15, 23, 42, 0.05);
+	--shadow-lg:
+		0 8px 24px rgba(15, 23, 42, 0.08), 0 2px 6px rgba(15, 23, 42, 0.04);
 }

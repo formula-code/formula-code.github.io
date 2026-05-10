@@ -26,9 +26,7 @@
 		if (!mathDoc || cancelled) {
 			return;
 		}
-		// Wrap expression with color command to render in white
-		const coloredExpression = `\\color{white}{${expression}}`;
-		const node = mathDoc.convert(coloredExpression, { display });
+		const node = mathDoc.convert(expression, { display });
 		container.innerHTML = "";
 		container.appendChild(node);
 	};
@@ -59,9 +57,15 @@
 		margin: 0.5rem 0;
 	}
 
+	.mathjax-wrapper {
+		color: var(--text-primary);
+	}
+
 	.mathjax-wrapper :global(svg) {
 		width: 100%;
 		max-width: 420px;
 		height: auto;
+		fill: currentColor;
+		stroke: currentColor;
 	}
 </style>
