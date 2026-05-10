@@ -69,7 +69,12 @@
 				{/each}
 			</div>
 		</section>
+	</main>
 
+	<DatasetGrowth />
+	<ProblemsByRepository />
+
+	<main class="mathnet-main">
 		<section class="mathnet-section" id="key-findings">
 			<div class="mathnet-section-head">
 				<h2 class="section-title">{kfTitle}</h2>
@@ -84,9 +89,6 @@
 			</div>
 		</section>
 	</main>
-
-	<DatasetGrowth />
-	<ProblemsByRepository />
 
 	<ResultsHighlights stratified={leaderboardData.stratified} />
 

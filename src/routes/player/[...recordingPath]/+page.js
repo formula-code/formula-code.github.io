@@ -4,7 +4,10 @@ export const ssr = false;
 export const prerender = false;
 
 export async function load({ params, url }) {
-	const recordingPath = params.recordingPath || "";
+	const rawRecordingPath = params.recordingPath || "";
+	// Trim any trailing slash that SvelteKit's catch-all may include so the
+	// agent_recording lookup matches the CSV's no-trailing-slash form.
+	const recordingPath = rawRecordingPath.replace(/\/$/, "");
 	const normalizedRecording = recordingPath ? `/${recordingPath}` : null;
 	const benchmarkId = url.searchParams.get("benchmark");
 

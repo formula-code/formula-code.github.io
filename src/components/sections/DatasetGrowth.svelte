@@ -36,6 +36,24 @@
 				])
 			)
 		: [];
+
+	let histoWrap;
+	let hovered = null;
+	let tipX = 0;
+	let tipY = 0;
+	let flipX = false;
+
+	function hoverBar(m, ev) {
+		hovered = m;
+		const r = histoWrap.getBoundingClientRect();
+		tipX = ev.clientX - r.left;
+		tipY = ev.clientY - r.top;
+		flipX = tipX > r.width - 200;
+	}
+
+	function clearHover() {
+		hovered = null;
+	}
 </script>
 
 <section class="dataset-growth">
@@ -66,20 +84,42 @@
 			{/each}
 		</div>
 
-		<div class="histogram-wrap">
+		<div class="histogram-wrap" bind:this={histoWrap}>
 			<div class="histogram-meta">
 				<span class="histogram-title">Tasks merged per month</span>
 				<span class="histogram-axis">peak: {peakCount}</span>
 			</div>
-			<div class="histogram" role="img" aria-label="Monthly distribution of tasks">
+			<div
+				class="histogram"
+				role="img"
+				aria-label="Monthly distribution of tasks"
+				on:mouseleave={clearHover}
+			>
 				{#each monthly as m, i}
 					<div
 						class="bar"
+						class:active={hovered === m}
 						style="height: {(m.count / peakCount) * 100}%; --i: {i}"
-						title={`${monthLabel(m.month)} — ${m.count} task${m.count === 1 ? "" : "s"}`}
+						aria-label={`${monthLabel(m.month)}: ${m.count} task${m.count === 1 ? "" : "s"}`}
+						on:mouseenter={(e) => hoverBar(m, e)}
+						on:mousemove={(e) => hoverBar(m, e)}
 					></div>
 				{/each}
 			</div>
+
+			{#if hovered}
+				<div
+					class="tooltip"
+					class:flip-x={flipX}
+					style="left: {tipX}px; top: {tipY}px;"
+					role="tooltip"
+				>
+					<div class="tip-month">{monthLabel(hovered.month)}</div>
+					<div class="tip-count">
+						<strong>{fmt.format(hovered.count)}</strong> task{hovered.count === 1 ? "" : "s"}
+					</div>
+				</div>
+			{/if}
 			<div class="histogram-axis-row">
 				{#each monthly as m, i}
 					<span class="tick" class:show={tickIdxs.includes(i)}>
@@ -202,6 +242,7 @@
 
 	/* ── Histogram ── */
 	.histogram-wrap {
+		position: relative;
 		padding: var(--space-md) var(--space-md) var(--space-sm);
 		background: var(--bg-secondary);
 		border: 1px solid var(--border-primary);
@@ -238,11 +279,44 @@
 		background: var(--brand-red);
 		border-radius: 1px 1px 0 0;
 		cursor: default;
-		transition: background 120ms;
+		transition:
+			background 120ms,
+			opacity 120ms;
 	}
 
+	.histogram:hover .bar:not(.active) {
+		opacity: 0.55;
+	}
+
+	.bar.active,
 	.bar:hover {
 		background: var(--brand-red-dark);
+	}
+
+	.tooltip {
+		position: absolute;
+		transform: translate(12px, 12px);
+		pointer-events: none;
+		background: var(--text-primary);
+		color: #fff;
+		padding: 8px 12px;
+		border-radius: var(--radius-sm);
+		font-family: var(--sans);
+		font-size: 0.82rem;
+		line-height: 1.35;
+		box-shadow: 0 4px 16px rgba(15, 23, 42, 0.18);
+		z-index: 5;
+		white-space: nowrap;
+	}
+
+	.tooltip.flip-x {
+		transform: translate(calc(-100% - 12px), 12px);
+	}
+
+	.tip-month {
+		font-family: var(--mono);
+		font-weight: 700;
+		margin-bottom: 2px;
 	}
 
 	.histogram-axis-row {

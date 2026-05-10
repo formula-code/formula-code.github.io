@@ -47,13 +47,6 @@
 		{ label: "GitHub", icon: "github", href: "https://github.com/formula-code/fc-eval" }
 	];
 
-	const defaultStats = [
-		{ num: "957", label: "Tasks" },
-		{ num: "70+", label: "Repositories" },
-		{ num: "1.4M", label: "Workloads" },
-		{ num: "4", label: "Strata" }
-	];
-
 	const title = headerCopy.title?.split(":")[0]?.trim() || defaultTitle;
 	const subtitle =
 		headerCopy.title?.split(":")[1]?.trim() || defaultSubtitle;
@@ -73,13 +66,9 @@
 			? headerCopy.actions
 			: defaultActions;
 
-	const stats = Array.isArray(headerCopy.stats) && headerCopy.stats.length > 0
-		? headerCopy.stats
-		: defaultStats;
-
 	const tagline =
 		headerCopy.tagline ||
-		"A live benchmark of <strong>957 performance bottlenecks</strong> mined from scientific Python repositories — pairing every task with expert patches and ~265 community workloads.";
+		"A live benchmark of <strong>real-world performance bottlenecks</strong> mined from scientific Python repositories — pairing every task with expert patches and a community-curated workload corpus.";
 </script>
 
 <section class="hero">
@@ -125,7 +114,7 @@
 	<div class="hero-ctas hero-ctas-wide">
 		<a class="btn btn-primary btn-wide" href="/explorer/">
 			<span class="cta-mark">⌕</span>
-			Browse all 957 tasks
+			Browse all tasks
 		</a>
 	</div>
 
@@ -142,15 +131,6 @@
 				</span>
 				<span>{action.label}</span>
 			</a>
-		{/each}
-	</div>
-
-	<div class="stats-strip">
-		{#each stats as s}
-			<div class="stat-item">
-				<div class="stat-num">{s.num}</div>
-				<div class="stat-label">{s.label}</div>
-			</div>
 		{/each}
 	</div>
 </section>
@@ -269,11 +249,6 @@
 
 	.action-icon :global(svg) {
 		stroke: currentColor;
-	}
-
-	.stats-strip {
-		max-width: 900px;
-		margin: var(--space-lg) auto 0;
 	}
 
 	@media (max-width: 640px) {

@@ -44,12 +44,18 @@
 	let hovered = null;
 	let tipX = 0;
 	let tipY = 0;
+	let flipX = false;
+	let flipY = false;
 
 	function hoverCell(c, ev) {
 		hovered = c;
 		const r = wrap.getBoundingClientRect();
 		tipX = ev.clientX - r.left;
 		tipY = ev.clientY - r.top;
+		// Flip the tooltip when the cursor is near the right/bottom edge so the
+		// tooltip stays inside the wrap (matches what most data tools do).
+		flipX = tipX > r.width - 240;
+		flipY = tipY > r.height - 80;
 	}
 
 	function clearHover() {
@@ -130,6 +136,8 @@
 			{#if hovered}
 				<div
 					class="tooltip"
+					class:flip-x={flipX}
+					class:flip-y={flipY}
 					style="left: {tipX}px; top: {tipY}px;"
 					role="tooltip"
 				>
@@ -148,9 +156,9 @@
 
 <style>
 	.problems-by-repo {
-		padding: var(--space-xl) 0;
+		padding: 0 0 var(--space-xl);
 		background: var(--bg-primary);
-		border-top: 1px solid var(--border-primary);
+		margin-top: calc(-1 * var(--space-md));
 	}
 
 	.container {
@@ -185,7 +193,6 @@
 		background: var(--bg-secondary);
 		border: 1px solid var(--border-primary);
 		border-radius: var(--radius);
-		overflow: hidden;
 	}
 
 	.treemap-wrap :global(svg) {
@@ -228,6 +235,18 @@
 		box-shadow: var(--shadow-lg, 0 4px 16px rgba(15, 23, 42, 0.18));
 		z-index: 5;
 		white-space: nowrap;
+	}
+
+	.tooltip.flip-x {
+		transform: translate(calc(-100% - 12px), 12px);
+	}
+
+	.tooltip.flip-y {
+		transform: translate(12px, calc(-100% - 12px));
+	}
+
+	.tooltip.flip-x.flip-y {
+		transform: translate(calc(-100% - 12px), calc(-100% - 12px));
 	}
 
 	.tip-repo {
