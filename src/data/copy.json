@@ -1,1 +1,508 @@
-{"paperHeader":{"title":"FormulaCode: Evaluating Agentic Optimization on Large Codebases","authors":[{"name":"Atharva Sehgal","url":"https://atharvas.net/","superscript":"1"},{"name":"James Hou","url":"https://jamesahou.github.io/","superscript":"2"},{"name":"Akanksha Sarkar","url":"https://milstein-program.as.cornell.edu/akanksha-sarkar/","superscript":"3"},{"name":"Ishaan Mantripragada","url":"https://www.linkedin.com/in/ishaanmantri/","superscript":"2"},{"name":"Swarat Chaudhuri","url":"https://www.cs.utexas.edu/~swarat/","superscript":"1"},{"name":"Jennifer J. Sun","url":"https://jenjsun.com/","superscript":"3"},{"name":"Yisong Yue","url":"https://www.yisongyue.com/","superscript":"2"}],"affiliations":[{"superscript":"1","label":"The University of Texas at Austin"},{"superscript":"2","label":"California Institute of Technology"},{"superscript":"3","label":"Cornell University"}],"actions":[{"label":"Arxiv","icon":"file-text","href":"https://arxiv.org/abs/2603.16011"},{"label":"Code","icon":"github","href":"https://github.com/formula-code/fc-eval"},{"label":"Huggingface","icon":"database","href":"https://huggingface.co/datasets/formulacode/formulacode-all"}],"abstract":{"title":"Abstract","paragraphs":["Large language model (LLM) coding agents increasingly operate at the repository level, motivating benchmarks that evaluate their ability to optimize entire codebases under realistic constraints. Existing code benchmarks largely rely on synthetic tasks, binary correctness signals, or single-objective evaluation, limiting their ability to assess holistic optimization behavior.","We introduce FormulaCode, a benchmark for evaluating agentic optimization on large, real-world codebases with fine-grained, multi-objective performance metrics.","FormulaCode is a <em>live</em> benchmark comprises 957 performance bottlenecks mined from scientific Python repositories on GitHub, each paired with expert-authored patches and, on average, 264.6 community-maintained performance workloads per task, enabling evaluation of the full optimization lifecycle—triage, diagnosis, and resolution—under realistic correctness and performance constraints. Our evaluations reveal that repository-scale, multi-objective optimization remains a major challenge for frontier LLM agents."]},"leaderboard":{"title":"FormulaCode’s Leaderboard (Tentative)","description":"Snapshot of latest results on FormulaCode. Updated Monthly!"},"hero":{"eyebrow":"Don’t see your model on the leaderboard?","instructions":"To evaluate an agent on FormulaCode, Follow the <a href=https://github.com/formula-code/fc-eval/>installation instructions</a> and run:","command":"fceval run -d formulacode -a {your t-bench agent}","body":"The next sections dive into FormulaCode’s analysis with interactive visualizations on a representative subset of FormulaCode. For up-to-date results and insights, please read the paper!","cta":{"label":"Read the paper","href":"https://arxiv.org/abs/2603.16011"}},"disclaimer":"This is an interactive blog post that presents the core ideas of FormulaCode using a very tiny subset of our dataset. There is a high likelihood that the our findings differ from this exposition. Please read the full paper for accurate information!"},"paperFooter":{"citation":{"show":"true","title":"Citation","bibtex":"@misc{sehgal2025formulacode,\r\n    title={Evaluating Agentic Optimization on Large Codebases}, \r\n    author={Atharva Sehgal and James Hou and Akanksha Sarkar and Ishaan Mantripragada and Swarat Chaudhuri and Jennifer J. Sun and Yisong Yue},\r\n    year={2026},\r\n    eprint={2603.16011},\r\n    archivePrefix={arXiv},\r\n    primaryClass={cs.SE},\r\n    url={https://arxiv.org/abs/2603.16011}, \r\n}"},"funding":{"title":"Acknowledgements","description":"This work was supported in part by a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a>, NSF awards III-#2505097,  PPoSS-#2316161, NSF #2505096, NSF #2505098, and gifts from Point72 and OpenAI."},"relatedWork":{"show":"false","title":"Related Work","text":"This project would not be possible without the excellent work of the community. These are some relevant papers to better understand the premise of our work:\r\n<ul>\r\n<li><a href=\"https://www.nature.com/articles/s41586-023-06924-6\">FunSearch: Making new\r\n    discoveries in mathematical sciences using Large Language Models</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/2305.01582\">Interpretable Machine Learning for Science\r\n    with PySR and SymbolicRegression.jl</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/2310.19791\">LILO: Learning Interpretable Libraries by\r\n    Compressing and Documenting Code</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/1911.12247 \">LLM-SR: Scientific Equation Discovery via\r\n    Programming with Large Language Models</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/2210.05050 \">Neurosymbolic Programming for Science</a>\r\n</li>\r\n</ul>"},"acknowledgements":{"show":"true","title":"Acknowledgements","text":"The website design is based on the template developed by <a href=https://pudding.cool/author/fox-meyer/>Fox Meyer</a> and <a href=https://pudding.cool/author/jan-diehm/>Jan Diehm</a> for their interactive article in <a href='https://pudding.cool/'>Pudding.cool</a> on <a href='https://github.com/the-pudding/wine-animals'>The Pour-ing of species</a> that is distributed under an MIT license. The code itself is based on <a href='https://github.com/the-pudding/svelte-starter' target='_blank'>The Pudding's SvelteKit starter template</a>. The Visualizations use <a href='https://layercake.graphics/' target='_blank'>LayerCake</a> and <a href='https://d3js.org/' target='_blank'>D3.js</a>. The source code for this website is available <a href='https://github.com/formula-code/formula-code.github.io/'>here</a>, also under an MIT license."}},"opening":[{"text":"Your codebase isn’t as fast as it used to be and you want to use an agent to optimize the code. You’ve got no preference for a model or agent framework, but you want it to work without any intervention. Which agent model pair do you choose?","instructions":"<span class=tap-click>Tap on a Model/Agent to select.</span> <span class=random-click>Just pick a random one for me.</span>","gpt5":"You picked <span class=bold>Terminus 2 + GPT-5</span>. A conservative choice! GPT-5 often overlooks small optimizations in favor of large ones. It is best when you want to produce <em>module-level</em> optimizations. <span class=instructions>How do we know? Keep scrolling.</span>","claude":"You picked <span class=bold>Terminus 2 + Claude Sonnet 4.0</span>. A reliable choice! Claude Sonnet 4.0 performs the best in our benchmarks at finding  function-level and class-level optimizations, but fails on <em>module-level</em> optimizations. So you might need to give it a hand for large scale tasks. <span class=instructions>How do we know? Keep scrolling.</span>","oracle":"You picked a <span class=bold>Human</span>. At all levels, expert solutions consistently and repeatedly perform well; forming the basis of our comparative study.","gpt5Advantage":"<span class=bold>GPT-5</span> has slightly outperformed humans on <em>module</em> level performance, with a stratified advantage of 1.04.","claudeAdvantage":"<span class=bold>Claude</span> has outperformed humans on <em>parameter</em> level performance, with an stratified advantage of 1.04. However, on <em>module</em> level performance, its advantage reverses to -0.04 against the human expert.","oracleAdvantage":"<span class=bold>Humans</span> get an advantage score of 0 by default. This is to prevent other models from cheating.","gpt5Quad":"The <span class=selected-agent-circle-span>Terminus 2/GPT-5 pair you picked</span> falls into the superoptimization quadrant.","claudeQuad":"The <span class=selected-agent-circle-span>Terminus 2/Claude Sonnet 4.0 pair you picked</span> falls into the superoptimization quadrant.","oracleQuad":"When we compare against <span class=selected-agent-circle-span>Experts</span> on the other axis, the distribution follows the line of equal advantage and hence is in the no-optimization (over experts) zone."}],"steps":[{"type":"text","value":"Your codebase isn’t as fast as it used to be and you want to use an agent to optimize the code. You’ve got no preference for a model or agent framework, but you want it to work without any intervention. Which agent model pair do you choose?"},{"type":"text","value":"Couldn’t decide? Maybe this info will help: <span class=bold>Terminus 2 + GPT-5</span> has the highest advantage at producing <em>module-level</em> optimizations, but it often overlooks small optimizations, <span class=bold>Terminus 2 + Claude Sonnet 4.0</span> finds <em>function-level</em> optimizations pretty well, but it might not be the best for deep optimizations. <span class=instructions>How do we know? Keep scrolling.</span>"},{"type":"text","value":"We scraped 110+ GitHub repositories with crowdsourced performance workloads and identified all pull requests that <em>intended</em> to improve the performance of a specific piece of code.  Then, we measured the runtime of the repository before and after to see if the PR’s performance improvement was statistically significant."},{"type":"text","value":"After analyzing 1M+ PRs, we were able to identify 961 performance-improving tasks with over 1,472,080 total performance workloads across all tasks. For each of these problems, we asked a frontier LLM agent to optimize the code, given the same tools available to the human developers, and then measured the performance after rejecting optimizations that broke the code. <span class=instructions>Read more in the methodology.</span>"},{"type":"text","value":"Here’s a cumulative distribution function of the <em>speedup ratio</em> for each of our models. <span class=instructions>Hover over a model to see more details!</span> A CDF is essentially an integration over the histogram; the <em>slower</em> the CDF line rises, the more benchmarks live in the faster region, and the better the model."},{"type":"text","value":"On first glance, it looks like our agents are doing pretty well! For <span class=bold>GPT-5</span> and <span class=bold>Claude Sonnet 4.0</span>, there are a lot of jagged bumps, and about 3-5% of all benchmarks are outliers, where both models show extreme code optimizations. However, 75 to 80% of all benchmarks are modest improvements, with a speedup of less than 10%."},{"type":"text","value":"However, with a median of 81 benchmarks per task, good performance on a lone workload doesn’t tell us much about the <em>holistic</em> performance of such agents. What we really care about is whether models have a <em>consistent advantage</em> at optimizing code."}],"postIntro":[{"type":"text","value":"What emerges from the above analysis is that speedup alone doesn’t capture the full picture."},{"type":"text","value":"<em>Performance optimizations rarely have isolated effects</em>; an optimization in one part of the code could significantly slow down or speed up another part of the code."},{"type":"text","value":"Instead, we hypothesize that good performance optimizations produce a <span class=yellow-bold>stratified advantage</span>: an advantage that persists across various strata of a codebase (modules, classes, and functions), not just individual workloads. This requires reasoning about multiple workloads across multiple functionalities and target resources, and ensuring we <em>consistently</em> produce speedups."},{"type":"text","value":"To understand more, let’s dive deeper into the data."}],"chartScroll":[{"block":[{"type":"text","value":"Instead of looking at the expert-produced speedup and the model-produced speedup separately, let’s look at them together on a scatterplot."},{"type":"text","value":"The <span class=bold>Human Speedup</span> is on the y-axis here, so the better the human speedup, the closer it is to the top. And the <span class=bold>Model Speedup</span> is on the x-axis."}]},{"block":[{"type":"text","value":"Each data point represents a statistically significant workload captured in our benchmark."},{"type":"text","value":"The <span class=yellow-bold>highlighted workload</span> lies at position x=1.11 and y=1.38. That is, the human engineer optimized this workload to be 38% faster than the baseline while the agent’s optimization was only 11% faster."},{"type":"text","value":"The agent’s achievements are much less impressive now because the agent demonstrates no <strong>Advantage</strong> over the oracle."}]},{"block":[{"type":"text","value":"So, where do the most impressive speedups lie? Let’s load the entire dataset and demarcate some regions of interest."},{"type":"text","value":"The identify function line depicts <strong>Equal advantage</strong>. For any workload on this line, an agent-written patch is as good as a human-written patch."}]},{"block":[{"type":"text","value":"Workloads that cause <em>slowdowns</em> will have a speedup less than 1.00x."},{"type":"text","value":"The  <strong>No oracle speedup</strong> line and a <strong>No agent speedup</strong> line centered at 1.00 help visualize this."},{"type":"text","value":"Now, we have 4 regions of interest."}]},{"block":[{"type":"text","value":"The <span class=regression-span>Bottom Left</span> region characterizes Regressions; these are all the workloads where the agent and the oracle both caused a <strong>Performance Regression</strong>."},{"type":"text","value":"This could be an intentional tradeoff, or just a tricky workload  for both agents and humans."}]},{"block":[{"type":"text","value":"The <span class=sub-optimization-span>Top left</span> region shows sub-optimal benchmarks – the benchmarks where the oracle achieved a speedup but the agent caused a regression."},{"type":"text","value":"This is the worst region for an agent."}]},{"block":[{"type":"text","value":"The <span class=under-optimization-span>Top right</span> region shows under-optimized benchmarks – the agent still achieves some speedup but the expert-provided solution was much better."},{"type":"text","value":"Any workload here is a worthwhile tradeoff depending on resource prioritization."}]},{"block":[{"type":"text","value":"What we are really interested in are <span class=sweet-rect-span>Super optimizations</span> – these are the workflows where the agent produced optimizations that were better than the oracle optimizations and better than the baseline."}]},{"block":[{"type":"text","value":"This allows us to define a notion of <strong>agent advantage</strong>. Mathematically, given two dimensionless vectors depicting the oracle speedups and the agent speedups:"},{"type":"math","value":"\\text{oracle-speedup} = \\mathbf{o}_{1:N}"},{"type":"math","value":"\\text{agent-speedup} = \\mathbf{a}_{1:N}"},{"type":"text","value":"We can define a metric for the overall performance by calculating the average distance from the equal advantage line:"},{"type":"math","value":"\\text{advantage} = \\frac{1}{N} \\sum_{i=1}^{N} o_i - a_i"},{"type":"text","value":"Intuitively, the closer a point is to the equal advantage line, the lower its score."}]},{"block":[{"type":"text","value":"What if an agent tries to <span class=bold>minimic the Human</span>’s steps?"},{"type":"text","value":"Unsurprisingly, all the points lie on the equal advantage line. This means that any simply replicating a memorized solution would get an advantage of 0.0."}]},{"block":[{"type":"text","value":"Here’s the <span class=bold>Human v/s Claude</span> plot."},{"type":"text","value":"Most benchmarks are either super optimal or under optimal!"},{"type":"text","value":"Claude’s advantage score here is 0.0749, which means Claude does <em>slightly</em> better than the expert on these problems."}]},{"block":[{"type":"text","value":"The <span class=bold>Human v/s GPT-5</span> comparison, is similar."},{"type":"text","value":"We see a few superoptimizations but mostly suboptimizations."},{"type":"text","value":"GPT-5’s advantage score is -0.02. So, it’s slightly worse off than humans."}]},{"block":[{"type":"text","value":"This is surprising. Is Claude truly better than GPT-5 and humans?"},{"type":"text","value":"This is a good time to talk about our <span class=yellow-bold>grouping scheme</span>."},{"type":"text","value":"In the <span class=”highlight-grouping”>bottom left corner</span>, notice that the current data points aren’t being aggregated. So, we’re still looking at <em>singular</em> workloads."},{"type":"text","value":"To investigate the <em>holistic</em> optimization abilities, we can group workloads together based on their prefix strings (e.g: Aggregate all workloads under <code>pandas.algorithm.*</code>)."}]},{"block":[{"type":"text","value":"This is the same <span class=bold>Human v/s Claude</span> plot but aggregated on <span class=bold>Modules</span>."},{"type":"text","value":"The oracle’s performance increases significantly and most of Claude’s optimizations disappear! The new advantage score is now <span class=yellow-bold>-0.0002</span>."},{"type":"text","value":"So, Claude’s aggregate performance optimization capabilities are much weaker than its individual performance optimization capabilities."},{"type":"text","value":"With the same aggregation, GPT’s advantage score is 0.0034. <em>Their advantage flipped</em>."}]},{"block":[{"type":"text","value":"But all this is conditioned on our definition of what counts as equal advantage. What if the minimum acceptable speedup is different?"},{"type":"text","value":"<span class=instructions><span class=slider-span>Use the sliders</span> to set your own criteria for equal advantage, and keep scrolling to see a model-by-model breakdown based on your selection.</span>"}]}],"postScatter":[{"type":"text","value":"Use the nav boxes to navigate through all the model groups."}],"overview":{"benchmarkDesign":{"title":"Benchmark Design","paragraphs":["Each FormulaCode task evaluates the ability of an agent to optimize a real-world codebase under strict correctness constraints. A task begins with a baseline repository, which represents the unmodified implementation. The agent operates on the baseline and produces a modified version of the repository by making arbitrary repository-level edits.","Performance evaluation proceeds by executing the full set of workloads on both the baseline and the agent-modified code and comparing their measured outcomes. Improving performance on one workload may degrade performance on others. As a result, optimization in FormulaCode is inherently multi-objective: agents must reason about trade-offs across subsystems and deliver improvements that are broad and consistent rather than localized to a single execution path."]},"datasetConstruction":{"title":"Dataset Construction","intro":"FormulaCode consists of multi-workload real-world code optimization problems from 70 repositories. We developed an automated four-stage pipeline that extracts these problems:","steps":[{"title":"1. Repository Scraping","description":"We crawl GitHub repositories with high-quality expert-defined performance workloads."},{"title":"2. Attribute Filtering","description":"We filter out candidate pull requests where the primary intent was not performance related, using rule-based and LLM-based filters."},{"title":"3. Environment Synthesis","description":"We synthesize environment building scripts using a reflexive LLM agent so that terminal interface tools function correctly."},{"title":"4. Statistical Validation","description":"We filter all candidate PRs that do not show statistically significant improvement in performance workloads."}]},"keyFindings":{"title":"Key Findings","findings":[{"title":"Agents Improve Runtime but Underperform Experts","description":"Agents generally can improve run-time performance, but perform worse than human experts."},{"title":"Local vs. Global Optimization","description":"Agents are better at local or function-level optimization, rather than repository-level optimization."},{"title":"Optimization Strategy Strengths","description":"Agents excel at using specific optimization strategies (e.g., parallelizing or batching) and struggle with others (e.g., vectorized operations)."},{"title":"Long-Tail Repository Performance","description":"Agent performance relative to experts can vary dramatically by popularity of the repository, performing worst on the 4th quintile and best on the 2nd quintile."},{"title":"Cost Efficiency","description":"Despite being more expensive per call, agents using frontier LLMs are overall more cost effective than those using open weights models."},{"title":"Multi-Workload Tradeoffs","description":"Compared to human experts, agents make less favorable performance-cost trade-off decisions."}]},"compactLeaderboard":{"title":"Compact Leaderboard","buttonText":"View Full Leaderboard"},"submit":{"title":"Don't see your model? Submit it!","repoUrl":"https://github.com/formula-code/fc-eval","instructions":"To evaluate an agent on FormulaCode, follow the <a href=\"https://github.com/formula-code/fc-eval\">Installation instructions</a> and run:","command":"$ fceval run -d formulacode -a [your-agent-name] -m [your-model-name]"}},"leaderboardPage":{"title":"FormulaCode Leaderboard","global":{"title":"Global Leaderboard"},"stratified":{"title":"Stratified Leaderboard","description":"Performance broken down by optimization scope: <strong>L1</strong> (Params), <strong>L2</strong> (Function), <strong>L3</strong> (Class), <strong>L4</strong> (Module)."},"submit":{"title":"Submit Your Model","description":"To evaluate your own agent on FormulaCode, follow our installation guide.","buttonText":"Get Started","repoUrl":"https://github.com/formula-code/fc-eval"}},"inlineLeaderboard":{"title":"Leaderboard","description":"This leaderboard displays the agent advantage scores by aggregation level. Higher scores indicate better performance relative to the Oracle.","instructions":"Use the thresholding filters above and see how they change the leaderboard."}}
+{
+  "paperHeader": {
+    "title": "FormulaCode: Evaluating Agentic Optimization on Large Codebases",
+    "authors": [
+      {
+        "name": "Atharva Sehgal",
+        "url": "https://atharvas.net/",
+        "superscript": "1"
+      },
+      {
+        "name": "James Hou",
+        "url": "https://jamesahou.github.io/",
+        "superscript": "2"
+      },
+      {
+        "name": "Akanksha Sarkar",
+        "url": "https://milstein-program.as.cornell.edu/akanksha-sarkar/",
+        "superscript": "3"
+      },
+      {
+        "name": "Ishaan Mantripragada",
+        "url": "https://www.linkedin.com/in/ishaanmantri/",
+        "superscript": "2"
+      },
+      {
+        "name": "Swarat Chaudhuri",
+        "url": "https://www.cs.utexas.edu/~swarat/",
+        "superscript": "1"
+      },
+      {
+        "name": "Jennifer J. Sun",
+        "url": "https://jenjsun.com/",
+        "superscript": "3"
+      },
+      {
+        "name": "Yisong Yue",
+        "url": "https://www.yisongyue.com/",
+        "superscript": "2"
+      }
+    ],
+    "affiliations": [
+      {
+        "superscript": "1",
+        "label": "The University of Texas at Austin"
+      },
+      {
+        "superscript": "2",
+        "label": "California Institute of Technology"
+      },
+      {
+        "superscript": "3",
+        "label": "Cornell University"
+      }
+    ],
+    "actions": [
+      {
+        "label": "Live dashboard",
+        "icon": "activity",
+        "href": "https://data.formulacode.org/"
+      },
+      {
+        "label": "Arxiv",
+        "icon": "file-text",
+        "href": "https://arxiv.org/abs/2603.16011"
+      },
+      {
+        "label": "Code",
+        "icon": "github",
+        "href": "https://github.com/formula-code/fc-eval"
+      },
+      {
+        "label": "Huggingface",
+        "icon": "database",
+        "href": "https://huggingface.co/datasets/formulacode/formulacode-all"
+      }
+    ],
+    "abstract": {
+      "title": "Abstract",
+      "paragraphs": [
+        "Large language model (LLM) coding agents increasingly operate at the repository level, motivating benchmarks that evaluate their ability to optimize entire codebases under realistic constraints. Existing code benchmarks largely rely on synthetic tasks, binary correctness signals, or single-objective evaluation, limiting their ability to assess holistic optimization behavior.",
+        "We introduce FormulaCode, a benchmark for evaluating agentic optimization on large, real-world codebases with fine-grained, multi-objective performance metrics.",
+        "FormulaCode is a <em>live</em> benchmark comprises 957 performance bottlenecks mined from scientific Python repositories on GitHub, each paired with expert-authored patches and, on average, 264.6 community-maintained performance workloads per task, enabling evaluation of the full optimization lifecycle\u2014triage, diagnosis, and resolution\u2014under realistic correctness and performance constraints. Our evaluations reveal that repository-scale, multi-objective optimization remains a major challenge for frontier LLM agents."
+      ]
+    },
+    "leaderboard": {
+      "title": "FormulaCode\u2019s Leaderboard (Tentative)",
+      "description": "Snapshot of latest results on FormulaCode. Updated Monthly!"
+    },
+    "hero": {
+      "eyebrow": "Don\u2019t see your model on the leaderboard?",
+      "instructions": "To evaluate an agent on FormulaCode, Follow the <a href=https://github.com/formula-code/fc-eval/>installation instructions</a> and run:",
+      "command": "fceval run -d formulacode -a {your t-bench agent}",
+      "body": "The next sections dive into FormulaCode\u2019s analysis with interactive visualizations on a representative subset of FormulaCode. For up-to-date results and insights, please read the paper!",
+      "cta": {
+        "label": "Read the paper",
+        "href": "https://arxiv.org/abs/2603.16011"
+      }
+    },
+    "disclaimer": "This is an interactive blog post that presents the core ideas of FormulaCode using a very tiny subset of our dataset. There is a high likelihood that the our findings differ from this exposition. Please read the full paper for accurate information!"
+  },
+  "paperFooter": {
+    "citation": {
+      "show": "true",
+      "title": "Citation",
+      "bibtex": "@misc{sehgal2025formulacode,\r\n    title={Evaluating Agentic Optimization on Large Codebases}, \r\n    author={Atharva Sehgal and James Hou and Akanksha Sarkar and Ishaan Mantripragada and Swarat Chaudhuri and Jennifer J. Sun and Yisong Yue},\r\n    year={2026},\r\n    eprint={2603.16011},\r\n    archivePrefix={arXiv},\r\n    primaryClass={cs.SE},\r\n    url={https://arxiv.org/abs/2603.16011}, \r\n}"
+    },
+    "funding": {
+      "title": "Acknowledgements",
+      "description": "This work was supported in part by a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a>, NSF awards III-#2505097,  PPoSS-#2316161, NSF #2505096, NSF #2505098, and gifts from Point72 and OpenAI."
+    },
+    "relatedWork": {
+      "show": "false",
+      "title": "Related Work",
+      "text": "This project would not be possible without the excellent work of the community. These are some relevant papers to better understand the premise of our work:\r\n<ul>\r\n<li><a href=\"https://www.nature.com/articles/s41586-023-06924-6\">FunSearch: Making new\r\n    discoveries in mathematical sciences using Large Language Models</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/2305.01582\">Interpretable Machine Learning for Science\r\n    with PySR and SymbolicRegression.jl</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/2310.19791\">LILO: Learning Interpretable Libraries by\r\n    Compressing and Documenting Code</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/1911.12247 \">LLM-SR: Scientific Equation Discovery via\r\n    Programming with Large Language Models</a> </li>\r\n<li><a href=\"https://arxiv.org/abs/2210.05050 \">Neurosymbolic Programming for Science</a>\r\n</li>\r\n</ul>"
+    },
+    "acknowledgements": {
+      "show": "true",
+      "title": "Acknowledgements",
+      "text": "The website design is based on the template developed by <a href=https://pudding.cool/author/fox-meyer/>Fox Meyer</a> and <a href=https://pudding.cool/author/jan-diehm/>Jan Diehm</a> for their interactive article in <a href='https://pudding.cool/'>Pudding.cool</a> on <a href='https://github.com/the-pudding/wine-animals'>The Pour-ing of species</a> that is distributed under an MIT license. The code itself is based on <a href='https://github.com/the-pudding/svelte-starter' target='_blank'>The Pudding's SvelteKit starter template</a>. The Visualizations use <a href='https://layercake.graphics/' target='_blank'>LayerCake</a> and <a href='https://d3js.org/' target='_blank'>D3.js</a>. The source code for this website is available <a href='https://github.com/formula-code/formula-code.github.io/'>here</a>, also under an MIT license."
+    }
+  },
+  "opening": [
+    {
+      "text": "Your codebase isn\u2019t as fast as it used to be and you want to use an agent to optimize the code. You\u2019ve got no preference for a model or agent framework, but you want it to work without any intervention. Which agent model pair do you choose?",
+      "instructions": "<span class=tap-click>Tap on a Model/Agent to select.</span> <span class=random-click>Just pick a random one for me.</span>",
+      "gpt5": "You picked <span class=bold>Terminus 2 + GPT-5</span>. A conservative choice! GPT-5 often overlooks small optimizations in favor of large ones. It is best when you want to produce <em>module-level</em> optimizations. <span class=instructions>How do we know? Keep scrolling.</span>",
+      "claude": "You picked <span class=bold>Terminus 2 + Claude Sonnet 4.0</span>. A reliable choice! Claude Sonnet 4.0 performs the best in our benchmarks at finding  function-level and class-level optimizations, but fails on <em>module-level</em> optimizations. So you might need to give it a hand for large scale tasks. <span class=instructions>How do we know? Keep scrolling.</span>",
+      "oracle": "You picked a <span class=bold>Human</span>. At all levels, expert solutions consistently and repeatedly perform well; forming the basis of our comparative study.",
+      "gpt5Advantage": "<span class=bold>GPT-5</span> has slightly outperformed humans on <em>module</em> level performance, with a stratified advantage of 1.04.",
+      "claudeAdvantage": "<span class=bold>Claude</span> has outperformed humans on <em>parameter</em> level performance, with an stratified advantage of 1.04. However, on <em>module</em> level performance, its advantage reverses to -0.04 against the human expert.",
+      "oracleAdvantage": "<span class=bold>Humans</span> get an advantage score of 0 by default. This is to prevent other models from cheating.",
+      "gpt5Quad": "The <span class=selected-agent-circle-span>Terminus 2/GPT-5 pair you picked</span> falls into the superoptimization quadrant.",
+      "claudeQuad": "The <span class=selected-agent-circle-span>Terminus 2/Claude Sonnet 4.0 pair you picked</span> falls into the superoptimization quadrant.",
+      "oracleQuad": "When we compare against <span class=selected-agent-circle-span>Experts</span> on the other axis, the distribution follows the line of equal advantage and hence is in the no-optimization (over experts) zone."
+    }
+  ],
+  "steps": [
+    {
+      "type": "text",
+      "value": "Your codebase isn\u2019t as fast as it used to be and you want to use an agent to optimize the code. You\u2019ve got no preference for a model or agent framework, but you want it to work without any intervention. Which agent model pair do you choose?"
+    },
+    {
+      "type": "text",
+      "value": "Couldn\u2019t decide? Maybe this info will help: <span class=bold>Terminus 2 + GPT-5</span> has the highest advantage at producing <em>module-level</em> optimizations, but it often overlooks small optimizations, <span class=bold>Terminus 2 + Claude Sonnet 4.0</span> finds <em>function-level</em> optimizations pretty well, but it might not be the best for deep optimizations. <span class=instructions>How do we know? Keep scrolling.</span>"
+    },
+    {
+      "type": "text",
+      "value": "We scraped 110+ GitHub repositories with crowdsourced performance workloads and identified all pull requests that <em>intended</em> to improve the performance of a specific piece of code.  Then, we measured the runtime of the repository before and after to see if the PR\u2019s performance improvement was statistically significant."
+    },
+    {
+      "type": "text",
+      "value": "After analyzing 1M+ PRs, we were able to identify 961 performance-improving tasks with over 1,472,080 total performance workloads across all tasks. For each of these problems, we asked a frontier LLM agent to optimize the code, given the same tools available to the human developers, and then measured the performance after rejecting optimizations that broke the code. <span class=instructions>Read more in the methodology.</span>"
+    },
+    {
+      "type": "text",
+      "value": "Here\u2019s a cumulative distribution function of the <em>speedup ratio</em> for each of our models. <span class=instructions>Hover over a model to see more details!</span> A CDF is essentially an integration over the histogram; the <em>slower</em> the CDF line rises, the more benchmarks live in the faster region, and the better the model."
+    },
+    {
+      "type": "text",
+      "value": "On first glance, it looks like our agents are doing pretty well! For <span class=bold>GPT-5</span> and <span class=bold>Claude Sonnet 4.0</span>, there are a lot of jagged bumps, and about 3-5% of all benchmarks are outliers, where both models show extreme code optimizations. However, 75 to 80% of all benchmarks are modest improvements, with a speedup of less than 10%."
+    },
+    {
+      "type": "text",
+      "value": "However, with a median of 81 benchmarks per task, good performance on a lone workload doesn\u2019t tell us much about the <em>holistic</em> performance of such agents. What we really care about is whether models have a <em>consistent advantage</em> at optimizing code."
+    }
+  ],
+  "postIntro": [
+    {
+      "type": "text",
+      "value": "What emerges from the above analysis is that speedup alone doesn\u2019t capture the full picture."
+    },
+    {
+      "type": "text",
+      "value": "<em>Performance optimizations rarely have isolated effects</em>; an optimization in one part of the code could significantly slow down or speed up another part of the code."
+    },
+    {
+      "type": "text",
+      "value": "Instead, we hypothesize that good performance optimizations produce a <span class=yellow-bold>stratified advantage</span>: an advantage that persists across various strata of a codebase (modules, classes, and functions), not just individual workloads. This requires reasoning about multiple workloads across multiple functionalities and target resources, and ensuring we <em>consistently</em> produce speedups."
+    },
+    {
+      "type": "text",
+      "value": "To understand more, let\u2019s dive deeper into the data."
+    }
+  ],
+  "chartScroll": [
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "Instead of looking at the expert-produced speedup and the model-produced speedup separately, let\u2019s look at them together on a scatterplot."
+        },
+        {
+          "type": "text",
+          "value": "The <span class=bold>Human Speedup</span> is on the y-axis here, so the better the human speedup, the closer it is to the top. And the <span class=bold>Model Speedup</span> is on the x-axis."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "Each data point represents a statistically significant workload captured in our benchmark."
+        },
+        {
+          "type": "text",
+          "value": "The <span class=yellow-bold>highlighted workload</span> lies at position x=1.11 and y=1.38. That is, the human engineer optimized this workload to be 38% faster than the baseline while the agent\u2019s optimization was only 11% faster."
+        },
+        {
+          "type": "text",
+          "value": "The agent\u2019s achievements are much less impressive now because the agent demonstrates no <strong>Advantage</strong> over the oracle."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "So, where do the most impressive speedups lie? Let\u2019s load the entire dataset and demarcate some regions of interest."
+        },
+        {
+          "type": "text",
+          "value": "The identify function line depicts <strong>Equal advantage</strong>. For any workload on this line, an agent-written patch is as good as a human-written patch."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "Workloads that cause <em>slowdowns</em> will have a speedup less than 1.00x."
+        },
+        {
+          "type": "text",
+          "value": "The  <strong>No oracle speedup</strong> line and a <strong>No agent speedup</strong> line centered at 1.00 help visualize this."
+        },
+        {
+          "type": "text",
+          "value": "Now, we have 4 regions of interest."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "The <span class=regression-span>Bottom Left</span> region characterizes Regressions; these are all the workloads where the agent and the oracle both caused a <strong>Performance Regression</strong>."
+        },
+        {
+          "type": "text",
+          "value": "This could be an intentional tradeoff, or just a tricky workload  for both agents and humans."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "The <span class=sub-optimization-span>Top left</span> region shows sub-optimal benchmarks \u2013 the benchmarks where the oracle achieved a speedup but the agent caused a regression."
+        },
+        {
+          "type": "text",
+          "value": "This is the worst region for an agent."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "The <span class=under-optimization-span>Top right</span> region shows under-optimized benchmarks \u2013 the agent still achieves some speedup but the expert-provided solution was much better."
+        },
+        {
+          "type": "text",
+          "value": "Any workload here is a worthwhile tradeoff depending on resource prioritization."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "What we are really interested in are <span class=sweet-rect-span>Super optimizations</span> \u2013 these are the workflows where the agent produced optimizations that were better than the oracle optimizations and better than the baseline."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "This allows us to define a notion of <strong>agent advantage</strong>. Mathematically, given two dimensionless vectors depicting the oracle speedups and the agent speedups:"
+        },
+        {
+          "type": "math",
+          "value": "\\text{oracle-speedup} = \\mathbf{o}_{1:N}"
+        },
+        {
+          "type": "math",
+          "value": "\\text{agent-speedup} = \\mathbf{a}_{1:N}"
+        },
+        {
+          "type": "text",
+          "value": "We can define a metric for the overall performance by calculating the average distance from the equal advantage line:"
+        },
+        {
+          "type": "math",
+          "value": "\\text{advantage} = \\frac{1}{N} \\sum_{i=1}^{N} o_i - a_i"
+        },
+        {
+          "type": "text",
+          "value": "Intuitively, the closer a point is to the equal advantage line, the lower its score."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "What if an agent tries to <span class=bold>minimic the Human</span>\u2019s steps?"
+        },
+        {
+          "type": "text",
+          "value": "Unsurprisingly, all the points lie on the equal advantage line. This means that any simply replicating a memorized solution would get an advantage of 0.0."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "Here\u2019s the <span class=bold>Human v/s Claude</span> plot."
+        },
+        {
+          "type": "text",
+          "value": "Most benchmarks are either super optimal or under optimal!"
+        },
+        {
+          "type": "text",
+          "value": "Claude\u2019s advantage score here is 0.0749, which means Claude does <em>slightly</em> better than the expert on these problems."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "The <span class=bold>Human v/s GPT-5</span> comparison, is similar."
+        },
+        {
+          "type": "text",
+          "value": "We see a few superoptimizations but mostly suboptimizations."
+        },
+        {
+          "type": "text",
+          "value": "GPT-5\u2019s advantage score is -0.02. So, it\u2019s slightly worse off than humans."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "This is surprising. Is Claude truly better than GPT-5 and humans?"
+        },
+        {
+          "type": "text",
+          "value": "This is a good time to talk about our <span class=yellow-bold>grouping scheme</span>."
+        },
+        {
+          "type": "text",
+          "value": "In the <span class=\u201dhighlight-grouping\u201d>bottom left corner</span>, notice that the current data points aren\u2019t being aggregated. So, we\u2019re still looking at <em>singular</em> workloads."
+        },
+        {
+          "type": "text",
+          "value": "To investigate the <em>holistic</em> optimization abilities, we can group workloads together based on their prefix strings (e.g: Aggregate all workloads under <code>pandas.algorithm.*</code>)."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "This is the same <span class=bold>Human v/s Claude</span> plot but aggregated on <span class=bold>Modules</span>."
+        },
+        {
+          "type": "text",
+          "value": "The oracle\u2019s performance increases significantly and most of Claude\u2019s optimizations disappear! The new advantage score is now <span class=yellow-bold>-0.0002</span>."
+        },
+        {
+          "type": "text",
+          "value": "So, Claude\u2019s aggregate performance optimization capabilities are much weaker than its individual performance optimization capabilities."
+        },
+        {
+          "type": "text",
+          "value": "With the same aggregation, GPT\u2019s advantage score is 0.0034. <em>Their advantage flipped</em>."
+        }
+      ]
+    },
+    {
+      "block": [
+        {
+          "type": "text",
+          "value": "But all this is conditioned on our definition of what counts as equal advantage. What if the minimum acceptable speedup is different?"
+        },
+        {
+          "type": "text",
+          "value": "<span class=instructions><span class=slider-span>Use the sliders</span> to set your own criteria for equal advantage, and keep scrolling to see a model-by-model breakdown based on your selection.</span>"
+        }
+      ]
+    }
+  ],
+  "postScatter": [
+    {
+      "type": "text",
+      "value": "Use the nav boxes to navigate through all the model groups."
+    }
+  ],
+  "overview": {
+    "benchmarkDesign": {
+      "title": "Benchmark Design",
+      "paragraphs": [
+        "Each FormulaCode task evaluates the ability of an agent to optimize a real-world codebase under strict correctness constraints. A task begins with a baseline repository, which represents the unmodified implementation. The agent operates on the baseline and produces a modified version of the repository by making arbitrary repository-level edits.",
+        "Performance evaluation proceeds by executing the full set of workloads on both the baseline and the agent-modified code and comparing their measured outcomes. Improving performance on one workload may degrade performance on others. As a result, optimization in FormulaCode is inherently multi-objective: agents must reason about trade-offs across subsystems and deliver improvements that are broad and consistent rather than localized to a single execution path."
+      ]
+    },
+    "datasetConstruction": {
+      "title": "Dataset Construction",
+      "intro": "FormulaCode consists of multi-workload real-world code optimization problems from 70 repositories. We developed an automated four-stage pipeline that extracts these problems:",
+      "steps": [
+        {
+          "title": "1. Repository Scraping",
+          "description": "We crawl GitHub repositories with high-quality expert-defined performance workloads."
+        },
+        {
+          "title": "2. Attribute Filtering",
+          "description": "We filter out candidate pull requests where the primary intent was not performance related, using rule-based and LLM-based filters."
+        },
+        {
+          "title": "3. Environment Synthesis",
+          "description": "We synthesize environment building scripts using a reflexive LLM agent so that terminal interface tools function correctly."
+        },
+        {
+          "title": "4. Statistical Validation",
+          "description": "We filter all candidate PRs that do not show statistically significant improvement in performance workloads."
+        }
+      ]
+    },
+    "keyFindings": {
+      "title": "Key Findings",
+      "findings": [
+        {
+          "title": "Agents Improve Runtime but Underperform Experts",
+          "description": "Agents generally can improve run-time performance, but perform worse than human experts."
+        },
+        {
+          "title": "Local vs. Global Optimization",
+          "description": "Agents are better at local or function-level optimization, rather than repository-level optimization."
+        },
+        {
+          "title": "Optimization Strategy Strengths",
+          "description": "Agents excel at using specific optimization strategies (e.g., parallelizing or batching) and struggle with others (e.g., vectorized operations)."
+        },
+        {
+          "title": "Long-Tail Repository Performance",
+          "description": "Agent performance relative to experts can vary dramatically by popularity of the repository, performing worst on the 4th quintile and best on the 2nd quintile."
+        },
+        {
+          "title": "Cost Efficiency",
+          "description": "Despite being more expensive per call, agents using frontier LLMs are overall more cost effective than those using open weights models."
+        },
+        {
+          "title": "Multi-Workload Tradeoffs",
+          "description": "Compared to human experts, agents make less favorable performance-cost trade-off decisions."
+        }
+      ]
+    },
+    "compactLeaderboard": {
+      "title": "Compact Leaderboard",
+      "buttonText": "View Full Leaderboard"
+    },
+    "submit": {
+      "title": "Don't see your model? Submit it!",
+      "repoUrl": "https://github.com/formula-code/fc-eval",
+      "instructions": "To evaluate an agent on FormulaCode, follow the <a href=\"https://github.com/formula-code/fc-eval\">Installation instructions</a> and run:",
+      "command": "$ fceval run -d formulacode -a [your-agent-name] -m [your-model-name]"
+    }
+  },
+  "leaderboardPage": {
+    "title": "FormulaCode Leaderboard",
+    "global": {
+      "title": "Global Leaderboard"
+    },
+    "stratified": {
+      "title": "Stratified Leaderboard",
+      "description": "Performance broken down by optimization scope: <strong>L1</strong> (Params), <strong>L2</strong> (Function), <strong>L3</strong> (Class), <strong>L4</strong> (Module)."
+    },
+    "submit": {
+      "title": "Submit Your Model",
+      "description": "To evaluate your own agent on FormulaCode, follow our installation guide.",
+      "buttonText": "Get Started",
+      "repoUrl": "https://github.com/formula-code/fc-eval"
+    }
+  },
+  "inlineLeaderboard": {
+    "title": "Leaderboard",
+    "description": "This leaderboard displays the agent advantage scores by aggregation level. Higher scores indicate better performance relative to the Oracle.",
+    "instructions": "Use the thresholding filters above and see how they change the leaderboard."
+  }
+}

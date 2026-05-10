@@ -38,6 +38,11 @@
 	];
 
 	const defaultActions = [
+		{
+			label: "Live dashboard",
+			icon: "activity",
+			href: "https://data.formulacode.org/"
+		},
 		{ label: "arXiv", icon: "file-text", href: "https://arxiv.org/abs/2603.16011" },
 		{
 			label: "Dataset",
@@ -114,7 +119,7 @@
 	<div class="hero-ctas hero-ctas-wide">
 		<a class="btn btn-primary btn-wide" href="/explorer/">
 			<span class="cta-mark">⌕</span>
-			Browse all tasks
+			Browse workloads
 		</a>
 	</div>
 

@@ -31,6 +31,9 @@ superscript: 3
 label: Cornell University
 []
 [paperHeader.actions]
+label: Live dashboard
+icon: activity
+href: https://data.formulacode.org/
 label: Arxiv
 icon: file-text
 href: https://arxiv.org/abs/2603.16011
