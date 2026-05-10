@@ -3,7 +3,6 @@
 		{
 			path: "formula-code/fc-eval",
 			name: "fc-eval",
-			tagline: "Evaluation harness",
 			description:
 				"Run frontier LLM agents against the FormulaCode benchmark. Spins up reproducible Docker environments, replays the unit-test suite, and computes per-workload speedup, advantage, and stratified scores. Bring your own Terminus or OpenHands agent — `fceval run -d formulacode -a <your-agent>` is all it takes.",
 			docsUrl: "/docs/eval/",
@@ -14,7 +13,6 @@
 		{
 			path: "formula-code/datasmith",
 			name: "datasmith",
-			tagline: "Data curation pipeline",
 			description:
 				"The four-stage pipeline that mines FormulaCode's tasks from real GitHub repositories: scraping high-quality performance PRs, attribute-filtering them with LLM judges, synthesising reproducible build environments, and running the statistical-significance tests that admit a candidate into the benchmark.",
 			docsUrl: "/docs/data/",
@@ -75,7 +73,6 @@
 					>
 						<div class="card-header">
 							<span class="repo-path">{r.path}</span>
-							<span class="repo-tagline">{r.tagline}</span>
 						</div>
 						<div class="card-image">
 							<img src={r.image} alt={r.imageAlt} loading="lazy" />
@@ -245,15 +242,6 @@
 		font-family: var(--mono);
 		font-size: 0.78rem;
 		color: var(--text-muted);
-	}
-
-	.repo-tagline {
-		font-family: var(--sans);
-		font-size: 0.7rem;
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.08em;
-		color: var(--brand-red);
 	}
 
 	.card-image {

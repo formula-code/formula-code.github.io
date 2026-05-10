@@ -70,7 +70,7 @@ paperFooter.citation.bibtex:@misc{sehgal2025formulacode,
 }
 :end
 paperFooter.funding.title: Acknowledgements
-paperFooter.funding.description: This project was supported with a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a>.
+paperFooter.funding.description: This work was supported in part by a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a>, NSF awards III-#2505097, PPoSS-#2316161, NSF #2505096, NSF #2505098, and gifts from Point72 and OpenAI.
 
 paperFooter.relatedWork.show: false
 paperFooter.relatedWork.title: Related Work
