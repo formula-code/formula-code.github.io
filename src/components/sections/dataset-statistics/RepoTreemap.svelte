@@ -111,26 +111,22 @@
 						stroke-width="1"
 					/>
 					{#if labelVisible(c)}
-						<text
-							x={c.x0 + 8}
-							y={c.y0 + 18}
-							class="cell-label"
-							fill={c.value / totalProblems > 0.04
-								? "#fff"
-								: "var(--text-primary)"}
+						<foreignObject
+							x={c.x0 + 6}
+							y={c.y0 + 4}
+							width={Math.max(0, c.x1 - c.x0 - 12)}
+							height={Math.max(0, c.y1 - c.y0 - 8)}
 						>
-							{c.data.repository}
-						</text>
-						<text
-							x={c.x0 + 8}
-							y={c.y0 + 34}
-							class="cell-count"
-							fill={c.value / totalProblems > 0.04
-								? "rgba(255,255,255,0.85)"
-								: "var(--text-muted)"}
-						>
-							{c.data.count} task{c.data.count === 1 ? "" : "s"}
-						</text>
+							<div
+								class="cell-label-box"
+								class:dark={c.value / totalProblems > 0.04}
+							>
+								<span class="cell-label">{c.data.repository}</span>
+								<span class="cell-count"
+									>{c.data.count} task{c.data.count === 1 ? "" : "s"}</span
+								>
+							</div>
+						</foreignObject>
 					{/if}
 				</g>
 			{/each}
@@ -201,17 +197,46 @@
 		opacity: 0.55;
 	}
 
+	.cell-label-box {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		overflow: hidden;
+		pointer-events: none;
+		color: var(--text-primary);
+		line-height: 1.2;
+	}
+
+	.cell-label-box.dark {
+		color: #fff;
+	}
+
+	.cell-label-box.dark .cell-count {
+		color: rgba(255, 255, 255, 0.85);
+	}
+
 	.cell-label {
 		font-family: var(--mono);
 		font-size: 0.78rem;
 		font-weight: 600;
-		pointer-events: none;
+		overflow-wrap: anywhere;
+		word-break: break-word;
+		overflow: hidden;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
 	}
 
 	.cell-count {
 		font-family: var(--sans);
 		font-size: 0.7rem;
-		pointer-events: none;
+		color: var(--text-muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.tooltip {

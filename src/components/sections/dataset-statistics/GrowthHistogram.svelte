@@ -15,6 +15,23 @@
 
 	const peakCount = monthly.reduce((m, d) => Math.max(m, d.count), 0) || 1;
 
+	function niceStep(peak, targetTicks = 4) {
+		const rough = peak / targetTicks;
+		const magnitude = Math.pow(10, Math.floor(Math.log10(rough)));
+		const norm = rough / magnitude;
+		let step;
+		if (norm < 1.5) step = magnitude;
+		else if (norm < 3) step = 2 * magnitude;
+		else if (norm < 7) step = 5 * magnitude;
+		else step = 10 * magnitude;
+		return step;
+	}
+
+	const yStep = niceStep(peakCount);
+	const axisMax = Math.ceil(peakCount / yStep) * yStep;
+	const yTicks = [];
+	for (let v = yStep; v < axisMax; v += yStep) yTicks.push(v);
+
 	function monthLabel(yyyymm) {
 		const [y, m] = yyyymm.split("-");
 		const d = new Date(Number(y), Number(m) - 1, 1);
@@ -25,10 +42,10 @@
 		? Array.from(
 				new Set([
 					0,
-					Math.floor(monthly.length * 0.25),
-					Math.floor(monthly.length * 0.5),
-					Math.floor(monthly.length * 0.75),
-					monthly.length - 1
+					Math.floor(monthly.length * 0.2),
+					Math.floor(monthly.length * 0.4),
+					Math.floor(monthly.length * 0.6),
+					Math.floor(monthly.length * 0.8)
 				])
 			)
 		: [];
@@ -65,24 +82,47 @@
 	<div class="histogram-wrap" bind:this={histoWrap}>
 		<div class="histogram-meta">
 			<span class="histogram-title">Tasks merged per month</span>
-			<span class="histogram-axis">peak: {peakCount}</span>
 		</div>
-		<div
-			class="histogram"
-			role="img"
-			aria-label="Monthly distribution of tasks"
-			on:mouseleave={clearHover}
-		>
-			{#each monthly as m, i}
+		<div class="chart-area">
+			<div class="y-axis" aria-hidden="true">
+				{#each yTicks as t}
+					<span class="y-tick" style="bottom: {(t / axisMax) * 100}%">{t}</span>
+				{/each}
+			</div>
+			<div class="plot">
+				<div class="gridlines" aria-hidden="true">
+					{#each yTicks as t}
+						<div
+							class="gridline"
+							style="bottom: {(t / axisMax) * 100}%"
+						></div>
+					{/each}
+				</div>
 				<div
-					class="bar"
-					class:active={hovered === m}
-					style="height: {(m.count / peakCount) * 100}%; --i: {i}"
-					aria-label={`${monthLabel(m.month)}: ${m.count} task${m.count === 1 ? "" : "s"}`}
-					on:mouseenter={(e) => hoverBar(m, e)}
-					on:mousemove={(e) => hoverBar(m, e)}
-				></div>
-			{/each}
+					class="histogram"
+					role="img"
+					aria-label="Monthly distribution of tasks"
+					on:mouseleave={clearHover}
+				>
+					{#each monthly as m, i}
+						<div
+							class="bar"
+							class:active={hovered === m}
+							style="height: {(m.count / axisMax) * 100}%; --i: {i}"
+							aria-label={`${monthLabel(m.month)}: ${m.count} task${m.count === 1 ? "" : "s"}`}
+							on:mouseenter={(e) => hoverBar(m, e)}
+							on:mousemove={(e) => hoverBar(m, e)}
+						></div>
+					{/each}
+				</div>
+				<div class="histogram-axis-row">
+					{#each monthly as m, i}
+						<span class="tick" class:show={tickIdxs.includes(i)}>
+							{tickIdxs.includes(i) ? monthLabel(m.month) : ""}
+						</span>
+					{/each}
+				</div>
+			</div>
 		</div>
 
 		{#if hovered}
@@ -98,13 +138,6 @@
 				</div>
 			</div>
 		{/if}
-		<div class="histogram-axis-row">
-			{#each monthly as m, i}
-				<span class="tick" class:show={tickIdxs.includes(i)}>
-					{tickIdxs.includes(i) ? monthLabel(m.month) : ""}
-				</span>
-			{/each}
-		</div>
 	</div>
 </div>
 
@@ -183,7 +216,54 @@
 		letter-spacing: 0.05em;
 	}
 
+	.chart-area {
+		display: flex;
+		gap: 8px;
+		align-items: stretch;
+	}
+
+	.y-axis {
+		position: relative;
+		width: 22px;
+		flex-shrink: 0;
+		height: 160px;
+		font-family: var(--mono);
+		font-size: 0.65rem;
+		color: var(--text-muted);
+	}
+
+	.y-tick {
+		position: absolute;
+		right: 0;
+		transform: translateY(50%);
+		line-height: 1;
+		text-align: right;
+	}
+
+	.plot {
+		position: relative;
+		flex: 1 1 0;
+		min-width: 0;
+	}
+
+	.gridlines {
+		position: absolute;
+		inset: 0 0 auto 0;
+		height: 160px;
+		pointer-events: none;
+	}
+
+	.gridline {
+		position: absolute;
+		left: 0;
+		right: 0;
+		height: 1px;
+		background: var(--border-primary);
+		opacity: 0.5;
+	}
+
 	.histogram {
+		position: relative;
 		display: flex;
 		align-items: flex-end;
 		gap: 2px;
