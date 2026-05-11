@@ -138,9 +138,11 @@ export function eventsToLines(events) {
 					commitSegment();
 					pushLine(ev.t);
 				} else if (ch === "\r") {
-					// Carriage return: drop everything we have for this line and
-					// let the next characters overwrite from the start. Most
-					// "\r\n" pairs are handled because the \n hits first.
+					// `\r\n` is the line terminator emitted by the recorded shell —
+					// treat the pair as a single newline by letting `\n` handle it.
+					// A bare `\r` (no following `\n`) is a carriage return that
+					// overwrites the current line, e.g. progress bars.
+					if (s[i + 1] === "\n") continue;
 					commitSegment();
 					segments.length = 0;
 					curStart = ev.t;

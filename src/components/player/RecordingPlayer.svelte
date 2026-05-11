@@ -404,8 +404,8 @@
 
 	.screen {
 		position: relative;
-		background: #0f172a;
-		color: #e2e8f0;
+		background: var(--bg-secondary);
+		color: var(--text-primary);
 		border: 1px solid var(--border-primary);
 		border-radius: var(--radius);
 		padding: var(--space-md);
