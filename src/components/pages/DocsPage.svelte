@@ -3,7 +3,7 @@
 		{
 			name: "fc-eval",
 			description:
-				"Run frontier LLM agents against the FormulaCode benchmark. Spins up reproducible Docker environments, replays the unit-test suite, and computes per-workload speedup, advantage, and stratified scores. Bring your own Terminus or OpenHands agent — `fceval run -d formulacode -a <your-agent>` is all it takes.",
+				"Run frontier LLM agents against the FormulaCode benchmark. Spins up reproducible Docker environments, verifies correctness against the unit-test suite, and computes per-workload speedup, advantage, and stratified scores.",
 			docsUrl: "/docs/eval/",
 			repoUrl: "https://github.com/formula-code/fc-eval",
 			image: "/assets/og/fc-eval.png",
@@ -12,7 +12,7 @@
 		{
 			name: "datasmith",
 			description:
-				"The four-stage pipeline that mines FormulaCode's tasks from real GitHub repositories: scraping high-quality performance PRs, attribute-filtering them with LLM judges, synthesising reproducible build environments, and running the statistical-significance tests that admit a candidate into the benchmark.",
+				"The pipeline for curating FormulaCode's tasks from real GitHub repositories. The code for scraping, filtering, building, and verifying high-quality performance PRs is maintained here.",
 			docsUrl: "/docs/data/",
 			repoUrl: "https://github.com/formula-code/datasmith",
 			image: "/assets/og/datasmith.png",
@@ -53,9 +53,9 @@
 			</div>
 			<h1 class="page-title">Build, evaluate, and explore FormulaCode</h1>
 			<p class="page-desc">
-				Three open-source repositories power the benchmark. Pick the docs you
-				need — run agents against the benchmark, see how tasks are mined, or
-				query the live data behind the leaderboard.
+				FormulaCode consists of two parts: a pipeline to construct performance
+				optimization tasks, and an execution harness that connects a language
+				model to our terminal sandbox.
 			</p>
 		</div>
 	</header>
@@ -99,17 +99,22 @@
 			<div class="endpoints-head">
 				<h2 class="section-title">Live data endpoints</h2>
 				<p class="section-subtitle">
-					Two subdomains expose the live task and run database. <strong>Uptime
-					is not guaranteed</strong> — these are research endpoints, sometimes
-					rebuilt mid-week. For reproducible evaluation, prefer the static
-					CSV that ships with this site.
+					Two subdomains expose the live task and run database. <strong
+						>Uptime is not guaranteed</strong
+					> — these are research endpoints, sometimes rebuilt mid-week. For reproducible
+					evaluation, prefer the static CSV that ships with this site.
 				</p>
 			</div>
 
 			<ul class="endpoints-list">
 				{#each liveEndpoints as e}
 					<li class="endpoint">
-						<a class="endpoint-host" href={e.href} target="_blank" rel="noopener noreferrer">
+						<a
+							class="endpoint-host"
+							href={e.href}
+							target="_blank"
+							rel="noopener noreferrer"
+						>
 							{e.host} ↗
 						</a>
 						<span class="endpoint-label">{e.label}</span>

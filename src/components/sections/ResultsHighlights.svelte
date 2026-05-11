@@ -16,7 +16,6 @@
 
 	const TABS = [
 		{ key: "advantage", label: "Overall", desc: "Overall" },
-		{ key: "level1", label: "L1 — Params", desc: "Parameter level" },
 		{ key: "level2", label: "L2 — Function", desc: "Function level" },
 		{ key: "level3", label: "L3 — Class", desc: "Class level" },
 		{ key: "level4", label: "L4 — Module", desc: "Module level" }
@@ -41,25 +40,6 @@
 		const max = Math.max(...vals, 0);
 		const min = Math.min(...vals, 0);
 		return { abs: Math.max(Math.abs(max), Math.abs(min), 0.02) };
-	})();
-
-	$: leader = sortedRows[0];
-	$: laggard = sortedRows[sortedRows.length - 1];
-
-	$: takeaway = (() => {
-		if (!leader || !laggard) return "";
-		const tab = TABS.find((t) => t.key === activeTab);
-		const ctx = tab?.desc ?? "Overall";
-		const ln = `${leader.agent} · ${leader.model}`;
-		const lln = `${laggard.agent} · ${laggard.model}`;
-		const fmt = (v) => `${v >= 0 ? "+" : ""}${v.toFixed(4)}`;
-		if (leader.value > 0 && laggard.value < 0) {
-			return `${ctx}: <strong>${ln}</strong> leads at <code>${fmt(leader.value)}</code>, slightly above the human expert. <strong>${lln}</strong> trails at <code>${fmt(laggard.value)}</code>.`;
-		}
-		if (leader.value > 0) {
-			return `${ctx}: <strong>${ln}</strong> edges out the expert at <code>${fmt(leader.value)}</code>; the rest sit at or below the human baseline.`;
-		}
-		return `${ctx}: every agent underperforms the expert. <strong>${ln}</strong> is closest at <code>${fmt(leader.value)}</code>; <strong>${lln}</strong> is furthest behind at <code>${fmt(laggard.value)}</code>.`;
 	})();
 
 	function widthFor(v) {
@@ -101,13 +81,6 @@
 		</div>
 
 		<div class="results-panel">
-			<div class="results-panel-title">
-				{TABS.find((t) => t.key === activeTab)?.desc} advantage
-			</div>
-			<div class="results-kicker">
-				Ranked by Σ(oracle speedup − agent speedup) / N. Bars symmetric around 0.
-			</div>
-
 			<div class="bar-chart" class:revealed>
 				{#each sortedRows as row, i (row.agent + row.model + activeTab)}
 					<div class="bar-row" style="--i: {i}">
@@ -139,8 +112,6 @@
 					</div>
 				{/each}
 			</div>
-
-			<p class="results-caption">{@html takeaway}</p>
 		</div>
 	</div>
 </section>
@@ -198,20 +169,6 @@
 		border-radius: var(--radius);
 		padding: var(--space-lg);
 		box-shadow: var(--shadow);
-	}
-
-	.results-panel-title {
-		font-family: var(--sans);
-		font-size: 0.875rem;
-		font-weight: 700;
-		color: var(--text-primary);
-		margin-bottom: var(--space-xs);
-	}
-
-	.results-kicker {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		margin-bottom: var(--space-md);
 	}
 
 	.bar-chart {
@@ -320,29 +277,6 @@
 
 	.bar-value.neg {
 		color: var(--score-bad);
-	}
-
-	.results-caption {
-		margin-top: var(--space-md);
-		padding-top: var(--space-sm);
-		border-top: 1px dashed var(--border-primary);
-		font-size: 0.8125rem;
-		line-height: 1.65;
-		color: var(--text-muted);
-	}
-
-	.results-caption :global(strong) {
-		color: var(--text-primary);
-		font-weight: 600;
-	}
-
-	.results-caption :global(code) {
-		font-family: var(--mono);
-		font-size: 0.85em;
-		padding: 1px 5px;
-		background: var(--bg-secondary);
-		border-radius: 3px;
-		color: var(--text-primary);
 	}
 
 	@media (max-width: 720px) {

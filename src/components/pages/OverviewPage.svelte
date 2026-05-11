@@ -13,14 +13,14 @@
 <div class="overview-page">
 	<OverviewHeader />
 
-	<DatasetPipelineViz />
 	<Abstract />
+	<DatasetPipelineViz />
 	<DatasetStatistics />
 	<KeyFindingsScroll />
 
 	<ResultsHighlights
 		title="Leaderboard at a glance"
-		subtitle="The six findings above roll up into the per-agent advantage scores below. Positive bars beat the human expert; negative bars trail."
+		subtitle="The findings above roll up into the per-agent advantage scores below. Positive bars beat the human expert; negative bars trail."
 		stratified={leaderboardData.stratified}
 	/>
 
