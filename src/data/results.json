@@ -2,39 +2,51 @@
   "leaderboard": [
     {
       "id": "1",
-      "agent": "terminus-2,gpt-5",
-      "displayName": "GPT-5",
+      "agent": "openhands,anthropic-claude-sonnet-4-20250514",
+      "displayName": "OpenHands - Claude Sonnet 4",
       "levels": {
-        "param-level": 0.1500,
-        "func-level": 0.1200,
-        "class-level": 0.0800,
-        "module-level": 0.0500
+        "1-Params": 0.0305,
+        "2-Func": 0.0316,
+        "3-Class": 0.0557,
+        "4-Module": 0.1451
       },
-      "overall": 0.1000
+      "overall": 0.0437
     },
     {
       "id": "2",
-      "agent": "terminus-2,claude",
-      "displayName": "Claude Sonnet 4.0",
+      "agent": "openhands,openai-gpt-5-2025-08-07-reasoning-high",
+      "displayName": "OpenHands - GPT-5",
       "levels": {
-        "param-level": 0.1300,
-        "func-level": 0.1000,
-        "class-level": 0.0600,
-        "module-level": 0.0300
+        "1-Params": 0.0401,
+        "2-Func": 0.0087,
+        "3-Class": 0.074,
+        "4-Module": 0.0086
       },
-      "overall": 0.0800
+      "overall": 0.0337
     },
     {
       "id": "3",
-      "agent": "terminus-2,oracle",
-      "displayName": "Expert Human (Human)",
+      "agent": "terminus-2,anthropic-claude-sonnet-4-20250514",
+      "displayName": "Terminus 2 - Claude Sonnet 4",
       "levels": {
-        "param-level": 0.2500,
-        "func-level": 0.2200,
-        "class-level": 0.1800,
-        "module-level": 0.1500
+        "1-Params": 0.0104,
+        "2-Func": 0.0087,
+        "3-Class": 0.0076,
+        "4-Module": 0.003
       },
-      "overall": 0.2000
+      "overall": 0.0088
+    },
+    {
+      "id": "4",
+      "agent": "terminus-2,openai-gpt-5-2025-08-07-reasoning-high",
+      "displayName": "Terminus 2 - GPT-5",
+      "levels": {
+        "1-Params": -0.0459,
+        "2-Func": -0.0535,
+        "3-Class": -0.0482,
+        "4-Module": -0.0539
+      },
+      "overall": -0.0495
     }
   ],
   "colorThresholds": {
