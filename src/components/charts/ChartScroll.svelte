@@ -3,7 +3,8 @@
 	import {
 		agentSelected,
 		agentCopyKey,
-		chartScrollTrigger
+		chartScrollTrigger,
+		bigScatterData
 	} from "$stores/misc.js";
 	import Scrolly from "$components/helpers/ChartScrolly.svelte";
 	import ScrollScatter from "$components/charts/ScrollScatter.svelte";
@@ -11,6 +12,10 @@
 	import Icon from "$components/helpers/Icon.svelte";
 	import inView from "$actions/inView.js";
 	import MathJax from "$components/helpers/MathJax.svelte";
+	import {
+		computeAdvantageScalar,
+		substituteCopyTokens
+	} from "$utils/benchmarkData.js";
 
 	const copy = getContext("copy");
 
@@ -24,6 +29,26 @@
 	let scrollyIndex; // Raw index from Scrolly component
 	// No offset needed since chartScrollSteps is already isolated
 	$: chartScrollIndex = scrollyIndex !== undefined ? scrollyIndex : 0;
+
+	// Compute the narrative scalars from the live dataset so step copy that
+	// uses `{claudeAdv}` / `{gpt5Adv}` / `{claudeModuleAdv}` / `{gpt5ModuleAdv}`
+	// tokens always reflects the shipped CSV instead of stale hardcoded
+	// numbers. Until the gdoc is updated to reference these tokens, the
+	// substitution is a no-op on the existing copy.
+	$: narrativeTokens = {
+		claudeAdv: computeAdvantageScalar($bigScatterData, {
+			agentNeedle: "claude"
+		}),
+		gpt5Adv: computeAdvantageScalar($bigScatterData, { agentNeedle: "gpt" }),
+		claudeModuleAdv: computeAdvantageScalar($bigScatterData, {
+			agentNeedle: "claude",
+			level: "module-level"
+		}),
+		gpt5ModuleAdv: computeAdvantageScalar($bigScatterData, {
+			agentNeedle: "gpt",
+			level: "module-level"
+		})
+	};
 </script>
 
 <section
@@ -51,7 +76,7 @@
 								{#if block?.type === "math"}
 									<MathJax expression={block.value} />
 								{:else if block?.type === "text"}
-									<p>{@html block.value}</p>
+									<p>{@html substituteCopyTokens(block.value, narrativeTokens)}</p>
 								{/if}
 							{/each}
 						{/if}

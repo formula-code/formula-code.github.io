@@ -12,7 +12,7 @@ export function parseBenchmarkCodes(codesString) {
 	try {
 		return JSON.parse(codesString);
 	} catch (e) {
-		console.warn('Failed to parse benchmark_codes:', e);
+		console.warn("Failed to parse benchmark_codes:", e);
 		return {};
 	}
 }
@@ -25,7 +25,7 @@ export function parseBenchmarkCodes(codesString) {
 export function getMainCode(codesString) {
 	const codes = parseBenchmarkCodes(codesString);
 	const entries = Object.entries(codes);
-	return entries.length > 0 ? entries[0][1] : '';
+	return entries.length > 0 ? entries[0][1] : "";
 }
 
 /**
@@ -44,8 +44,8 @@ export function getCodeNames(codesString) {
  * @returns {string} Agent name
  */
 export function extractAgentName(agentId) {
-	if (!agentId) return '';
-	const parts = agentId.split(',');
+	if (!agentId) return "";
+	const parts = agentId.split(",");
 	return parts.length > 1 ? parts[1].trim() : agentId;
 }
 
@@ -58,45 +58,45 @@ export function extractAgentName(agentId) {
  * @returns {string} Formatted display name
  */
 export function formatAgentDisplayName(agentId) {
-	if (!agentId) return '';
+	if (!agentId) return "";
 
-	const parts = agentId.split(',').map(p => p.trim());
+	const parts = agentId.split(",").map((p) => p.trim());
 
 	// Format the agent part (e.g., "terminus-2" -> "Terminus 2")
 	const agentPart = parts[0]
-		.split('-')
-		.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ');
+		.split("-")
+		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+		.join(" ");
 
 	// Format the model part
-	const modelPart = parts[1] || '';
-	let formattedModel = '';
+	const modelPart = parts[1] || "";
+	let formattedModel = "";
 
 	switch (modelPart.toLowerCase()) {
-		case 'oracle':
-			formattedModel = 'Expert Human';
+		case "oracle":
+			formattedModel = "Expert Human";
 			break;
-		case 'gpt-5':
-		case 'gpt5':
-			formattedModel = 'GPT-5';
+		case "gpt-5":
+		case "gpt5":
+			formattedModel = "GPT-5";
 			break;
-		case 'gpt-4':
-		case 'gpt4':
-			formattedModel = 'GPT-4';
+		case "gpt-4":
+		case "gpt4":
+			formattedModel = "GPT-4";
 			break;
-		case 'claude':
-			formattedModel = 'Claude Sonnet 4.0';
+		case "claude":
+			formattedModel = "Claude Sonnet 4.0";
 			break;
-		case 'claude-3.5':
-		case 'claude-3-5':
-			formattedModel = 'Claude Sonnet 3.5';
+		case "claude-3.5":
+		case "claude-3-5":
+			formattedModel = "Claude Sonnet 3.5";
 			break;
 		default:
 			// Capitalize first letter of each word
 			formattedModel = modelPart
-				.split('-')
-				.map(word => word.charAt(0).toUpperCase() + word.slice(1))
-				.join(' ');
+				.split("-")
+				.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+				.join(" ");
 	}
 
 	return `${agentPart} - ${formattedModel}`;
@@ -108,7 +108,7 @@ export function formatAgentDisplayName(agentId) {
  * @returns {string} Formatted breadcrumb string (module > class > function > params)
  */
 export function formatBenchmarkBreadcrumb(decomposition) {
-	if (!decomposition) return '';
+	if (!decomposition) return "";
 	// The decomposition might be a single string or need to be parsed
 	// For now, return as-is
 	return decomposition;
@@ -126,7 +126,7 @@ export function calculateLevel(benchmark) {
 	if (benchmark.level) return benchmark.level;
 
 	// Could also derive from benchmark_decoposed if needed
-	return 'unknown';
+	return "unknown";
 }
 
 /**
@@ -136,7 +136,7 @@ export function calculateLevel(benchmark) {
  */
 export function getUniqueAgents(data) {
 	const agents = new Set();
-	data.forEach(d => {
+	data.forEach((d) => {
 		if (d.agent_id) agents.add(d.agent_id);
 	});
 	return Array.from(agents).sort();
@@ -149,7 +149,7 @@ export function getUniqueAgents(data) {
  */
 export function getUniqueLevels(data) {
 	const levels = new Set();
-	data.forEach(d => {
+	data.forEach((d) => {
 		if (d.level) levels.add(d.level);
 	});
 	return Array.from(levels).sort();
@@ -162,7 +162,7 @@ export function getUniqueLevels(data) {
  */
 export function getUniqueTypes(data) {
 	const types = new Set();
-	data.forEach(d => {
+	data.forEach((d) => {
 		if (d.benchmark_type) types.add(d.benchmark_type);
 	});
 	return Array.from(types).sort();
@@ -175,7 +175,7 @@ export function getUniqueTypes(data) {
  * @returns {Object} Statistics object with median, count, etc.
  */
 export function calculateAgentStats(data, agentId) {
-	const agentData = data.filter(d => d.agent_id === agentId);
+	const agentData = data.filter((d) => d.agent_id === agentId);
 
 	if (agentData.length === 0) {
 		return {
@@ -185,13 +185,13 @@ export function calculateAgentStats(data, agentId) {
 		};
 	}
 
-	const toNumber = value => {
-		if (typeof value === 'number') return value;
+	const toNumber = (value) => {
+		if (typeof value === "number") return value;
 		const parsed = parseFloat(value);
 		return Number.isFinite(parsed) ? parsed : undefined;
 	};
 
-	const getMedian = values => {
+	const getMedian = (values) => {
 		if (values.length === 0) return 0;
 		const mid = Math.floor(values.length / 2);
 		return values.length % 2 !== 0
@@ -201,12 +201,12 @@ export function calculateAgentStats(data, agentId) {
 
 	// Calculate medians
 	const agentNops = agentData
-		.map(d => toNumber(d['agent/nop']))
-		.filter(v => v !== undefined)
+		.map((d) => toNumber(d["agent/nop"]))
+		.filter((v) => v !== undefined)
 		.sort((a, b) => a - b);
 	const oracleNops = agentData
-		.map(d => toNumber(d['oracle/nop']))
-		.filter(v => v !== undefined)
+		.map((d) => toNumber(d["oracle/nop"]))
+		.filter((v) => v !== undefined)
 		.sort((a, b) => a - b);
 
 	const medianAgentNop = getMedian(agentNops);
@@ -217,4 +217,72 @@ export function calculateAgentStats(data, agentId) {
 		medianAgentNop,
 		medianOracleNop
 	};
+}
+
+/**
+ * Compute the mean advantage scalar for a given (agentNeedle, level) slice of
+ * the dataset. "Advantage" = oracle/nop − agent/nop, averaged across all
+ * matching rows. Used to dynamically substitute scalars that were previously
+ * hardcoded in copy.json (ScrollScatter step annotations).
+ *
+ * @param {Array} data - Array of benchmark rows (must include agent_id,
+ *   level, agent/nop, oracle/nop)
+ * @param {Object} opts
+ * @param {string} opts.agentNeedle - Substring matched against agent_id (case
+ *   insensitive). e.g. "claude", "gpt", "gemini".
+ * @param {string|null} opts.level - Optional level filter (e.g. "4-module").
+ *   If null, all levels are included (workload-level advantage).
+ * @returns {number|null} Advantage scalar, or null if the slice is empty.
+ */
+export function computeAdvantageScalar(data, { agentNeedle, level = null } = {}) {
+	if (!Array.isArray(data) || data.length === 0 || !agentNeedle) return null;
+	const needle = String(agentNeedle).toLowerCase();
+	const toNum = (v) => {
+		const n = typeof v === "number" ? v : parseFloat(v);
+		return Number.isFinite(n) ? n : null;
+	};
+	let sum = 0;
+	let n = 0;
+	for (const row of data) {
+		if (!row || !row.agent_id) continue;
+		if (!String(row.agent_id).toLowerCase().includes(needle)) continue;
+		if (level && row.level !== level) continue;
+		const a = toNum(row["agent/nop"]);
+		const o = toNum(row["oracle/nop"]);
+		if (a === null || o === null) continue;
+		sum += o - a;
+		n += 1;
+	}
+	return n > 0 ? sum / n : null;
+}
+
+/**
+ * Apply {token} substitution to copy text. Designed for narrative strings
+ * that quote dataset-derived scalars (e.g. ScrollScatter step annotations).
+ * Pass a `tokens` object whose keys correspond to `{tokenName}` placeholders
+ * in the text. Numeric values are formatted to 4 decimals with a leading
+ * sign; strings pass through unchanged. Unknown tokens are left as literal
+ * `{token}` so missing data is visible in dev.
+ *
+ * Example:
+ *   substituteCopyTokens(
+ *     "Claude's advantage is {claudeAdv}.",
+ *     { claudeAdv: 0.0749 }
+ *   ) → "Claude's advantage is +0.0749."
+ *
+ * Tokens used by the ScrollScatter narrative (see src/data/copy.json
+ * "chartScroll"): claudeAdv, gpt5Adv, claudeModuleAdv, gpt5ModuleAdv. These
+ * should map to the corresponding `computeAdvantageScalar` outputs and are
+ * passed in by the component that owns the data context.
+ */
+export function substituteCopyTokens(text, tokens = {}) {
+	if (typeof text !== "string" || text.indexOf("{") === -1) return text;
+	return text.replace(/\{(\w+)\}/g, (whole, name) => {
+		const v = tokens[name];
+		if (v === undefined || v === null) return whole; // leave placeholder visible
+		if (typeof v === "number" && Number.isFinite(v)) {
+			return `${v >= 0 ? "+" : ""}${v.toFixed(4)}`;
+		}
+		return String(v);
+	});
 }
