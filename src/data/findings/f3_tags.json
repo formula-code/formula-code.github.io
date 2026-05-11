@@ -1,0 +1,24 @@
+{
+	"_source": "_repos/fc-eval/analysis/table_8_tags.ipynb",
+	"_paper_artifact": "Table 2 (Per-Tag Advantage)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1",
+	"_needs_export": true,
+	"_notes": "Awaiting export from table_8_tags.ipynb against the full results set. Tag list mirrors the paper's optimization-strategy taxonomy. Rows array is empty until the exporter populates per agent×tag advantages; see umbrella issue on formula-code/fc-eval.",
+	"tags": [
+		{ "key": "parallelization", "label": "Parallelization" },
+		{ "key": "batching", "label": "Batching" },
+		{ "key": "io", "label": "I/O" },
+		{ "key": "caching", "label": "Caching" },
+		{ "key": "algorithmic", "label": "Algorithmic rewrites" },
+		{ "key": "data_structure", "label": "Data-structure changes" },
+		{ "key": "reduce_work", "label": "Reduce work" },
+		{ "key": "approximation", "label": "Approximation" },
+		{ "key": "scale", "label": "Scale" },
+		{ "key": "db", "label": "DB" },
+		{ "key": "higher_level", "label": "Higher-level" },
+		{ "key": "micro", "label": "Micro-optimizations" },
+		{ "key": "lower_level", "label": "Lower-level implementations" },
+		{ "key": "uncategorized", "label": "Uncategorized" }
+	],
+	"rows": []
+}

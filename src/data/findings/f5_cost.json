@@ -1,0 +1,8 @@
+{
+	"_source": "_repos/fc-eval/analysis/table_6_cost.ipynb",
+	"_paper_artifact": "Figure 4 + Table 10 (Cost-Performance tradeoff)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1",
+	"_needs_export": true,
+	"_notes": "Awaiting export from table_6_cost.ipynb. Each row will carry cost_usd_per_task (computed from total_input_tokens × pricing + total_output_tokens × pricing per model_config.json), advantage_weighted, and is_pareto (non-dominated frontier flag).",
+	"rows": []
+}

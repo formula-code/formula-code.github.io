@@ -1,0 +1,109 @@
+{
+	"_about": "Numeric inputs to the six visualizations in src/components/sections/KeyFindingsScroll.svelte. Sections with a `_sql` field are derivable from the Supabase tables at api.formulacode.org once harbor_runs is fully populated; until then values are paper-published. Sections marked `_synthetic: true` are illustrative scatter/Pareto samples — their μ/σ/n parameters seed deterministic Gaussian draws and are visualization choices, not measurements.",
+	"vis1_speedup_distribution": {
+		"_description": "KDE of speedup vs baseline, agent (red) vs expert (blue). Synthetic samples are clamped to a minimum to keep curves on-domain; means roughly track paper findings.",
+		"_sql": "SELECT agent_name='oracle' AS is_expert, AVG(geomean_speedup) AS mu, STDDEV(geomean_speedup) AS sigma FROM harbor_runs WHERE status='success' GROUP BY 1;",
+		"domain": [0.6, 4.2],
+		"xTicks": [1, 2, 3, 4],
+		"agent": {
+			"n": 90,
+			"seed": 7,
+			"mu": 1.18,
+			"sigma": 0.32,
+			"bandwidth": 0.22,
+			"clampMin": 0.7
+		},
+		"expert": {
+			"n": 90,
+			"seed": 42,
+			"mu": 2.35,
+			"sigma": 0.65,
+			"bandwidth": 0.32,
+			"clampMin": 0.9
+		}
+	},
+	"vis2_speedup_by_level": {
+		"_description": "Geomean speedup at four aggregation levels (Parameter, Function, Class, Module). Expert holds steady; agent decays with scope.",
+		"_sql": "SELECT AVG((reward_payload->>'agent_advantage_level1')::float) AS l1, AVG((reward_payload->>'agent_advantage_level2')::float) AS l2, AVG((reward_payload->>'agent_advantage_level3')::float) AS l3, AVG((reward_payload->>'agent_advantage_level4')::float) AS l4, agent_name='oracle' AS is_expert FROM harbor_runs WHERE status='success' GROUP BY is_expert;",
+		"yDomain": [0.7, 2.9],
+		"yTicks": [1, 1.5, 2, 2.5],
+		"levels": [
+			{ "key": "L1", "label": "L1 · Param", "agent": 1.34, "expert": 2.05 },
+			{ "key": "L2", "label": "L2 · Function", "agent": 1.21, "expert": 2.32 },
+			{ "key": "L3", "label": "L3 · Class", "agent": 1.06, "expert": 2.5 },
+			{ "key": "L4", "label": "L4 · Module", "agent": 0.92, "expert": 2.66 }
+		]
+	},
+	"vis3_advantage_by_strategy": {
+		"_description": "Δ speedup (agent − expert) by optimization strategy. Positive = agent wins on that strategy; negative = expert wins.",
+		"_sql": "SELECT pr.classification, AVG((hr.reward_payload->>'agent_advantage')::float) AS delta FROM harbor_runs hr JOIN pull_requests pr ON pr.owner=hr.owner AND pr.repo=hr.repo AND pr.issue_number=hr.issue_number WHERE hr.status='success' AND hr.agent_name != 'oracle' GROUP BY pr.classification;",
+		"xDomain": [-0.45, 0.5],
+		"xTicks": [-0.4, -0.2, 0.2, 0.4],
+		"strategies": [
+			{ "name": "Parallelization", "val": 0.42 },
+			{ "name": "Batching / I-O", "val": 0.31 },
+			{ "name": "Memoization", "val": 0.18 },
+			{ "name": "Algorithm swap", "val": 0.04 },
+			{ "name": "Loop fusion", "val": -0.11 },
+			{ "name": "Vectorization", "val": -0.28 }
+		]
+	},
+	"vis4_advantage_by_repo_quintile": {
+		"_description": "Agent advantage bucketed by repository popularity (GitHub stars, NTILE 5).",
+		"_sql": "WITH q AS (SELECT owner, repo, NTILE(5) OVER (ORDER BY stars) AS quintile FROM repositories WHERE stars IS NOT NULL) SELECT q.quintile, AVG((hr.reward_payload->>'agent_advantage')::float) AS advantage FROM harbor_runs hr JOIN q ON q.owner=hr.owner AND q.repo=hr.repo WHERE hr.status='success' AND hr.agent_name != 'oracle' GROUP BY q.quintile ORDER BY q.quintile;",
+		"yDomain": [-0.35, 0.32],
+		"yTicks": [-0.3, -0.15, 0, 0.15, 0.3],
+		"highlightBest": "Q2",
+		"highlightWorst": "Q4",
+		"quintiles": [
+			{ "key": "Q1", "label": "<100★", "val": -0.08 },
+			{ "key": "Q2", "label": "100–1k★", "val": 0.21 },
+			{ "key": "Q3", "label": "1k–10k★", "val": -0.04 },
+			{ "key": "Q4", "label": "10k–50k★", "val": -0.27 },
+			{ "key": "Q5", "label": ">50k★", "val": -0.12 }
+		]
+	},
+	"vis5_cost_vs_gain": {
+		"_description": "Cost-efficiency scatter (frontier vs open-weight LLMs). Synthetic samples whose cluster means reflect paper findings; variance and n are visualization choices.",
+		"_synthetic": true,
+		"_sql_means_only": "SELECT (agent_name LIKE '%gpt%' OR agent_name LIKE '%claude%' OR agent_name LIKE '%gemini%') AS is_frontier, AVG((reward_payload->>'cost_usd')::float) AS mu_cost, AVG(geomean_speedup) AS mu_gain FROM harbor_runs WHERE status='success' AND agent_name != 'oracle' GROUP BY 1;",
+		"xDomain": [0.1, 3],
+		"yDomain": [0.7, 2.4],
+		"xTicks": [0.1, 0.3, 1, 3],
+		"yTicks": [1, 1.5, 2],
+		"clampCostMin": 0.1,
+		"clampGainMin": 0.7,
+		"seed": 123,
+		"efficiencyContours": [3, 1.5, 0.8],
+		"frontier": {
+			"n": 14,
+			"cost": { "mu": 1.4, "sigma": 0.45 },
+			"gain": { "mu": 1.55, "sigma": 0.32 }
+		},
+		"openWeight": {
+			"n": 14,
+			"cost": { "mu": 0.45, "sigma": 0.15 },
+			"gain": { "mu": 1.08, "sigma": 0.22 }
+		}
+	},
+	"vis6_workload_tradeoff": {
+		"_description": "Pareto front of speedup on workload A vs workload B. Synthetic samples illustrating that agents pick points dominated by the expert Pareto front.",
+		"_synthetic": true,
+		"_sql_note": "Workload-level speedups are in harbor_runs.reward_payload.per_benchmark_speedups (JSON). Computing per-task A-vs-B pairs requires a deterministic workload ordering per task; not yet wired up.",
+		"xDomain": [0.4, 3.2],
+		"yDomain": [0.4, 3.2],
+		"axisTicks": [1, 1.5, 2, 2.5, 3],
+		"clampMin": 0.4,
+		"seed": 2024,
+		"expert": {
+			"n": 22,
+			"x": { "mu": 2.2, "sigma": 0.45 },
+			"y": { "mu": 2.05, "sigma": 0.5 }
+		},
+		"agent": {
+			"n": 22,
+			"x": { "mu": 1.45, "sigma": 0.55 },
+			"y": { "mu": 1.35, "sigma": 0.55 }
+		}
+	}
+}

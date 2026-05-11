@@ -1,0 +1,74 @@
+{
+	"_source": "_repos/fc-eval/analysis/leaderboard.ipynb",
+	"_paper_artifact": "Table 1 (Global Leaderboard on FormulaCode-V)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1",
+	"_generated_at": "ported-from-advantage-leaderboard.json",
+	"_notes": "Real values mirrored from src/data/advantage-leaderboard.json. The `rank` field is the ranked-pairs (RP) rank from the paper. `advantage_norm` is not yet wired; export pipeline will populate it.",
+	"rows": [
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"rp_rank": 1,
+			"advantage": -0.0112,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0539
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"rp_rank": 2,
+			"advantage": -0.0209,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0825
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"rp_rank": 3,
+			"advantage": -0.0301,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0346
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"rp_rank": 4,
+			"advantage": -0.041,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0987
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"rp_rank": 5,
+			"advantage": -0.0433,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0963
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"rp_rank": 6,
+			"advantage": -0.0454,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0677
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"rp_rank": 7,
+			"advantage": -0.0504,
+			"advantage_norm": null,
+			"speedup_geomean": 1.0585
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"rp_rank": 0,
+			"advantage": 0,
+			"advantage_norm": 0,
+			"speedup_geomean": null,
+			"_baseline": true
+		}
+	]
+}

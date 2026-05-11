@@ -1,0 +1,15 @@
+{
+	"_source": "_repos/fc-eval/analysis/figure_1_temporal.ipynb",
+	"_paper_artifact": "Table 4 / Figure 1 (Temporal generalization)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1",
+	"_needs_export": true,
+	"_notes": "Awaiting export from figure_1_temporal.ipynb. Bins tasks into 3-month windows relative to each model's knowledge cutoff (from model_config.json). Frontier models only: Claude 4.0 Sonnet, GPT-5, Gemini 2.5 Pro.",
+	"bins": [
+		{ "key": "pre6", "label": "−6mo+", "relative_months": -6 },
+		{ "key": "pre3", "label": "−3mo", "relative_months": -3 },
+		{ "key": "cutoff", "label": "cutoff", "relative_months": 0 },
+		{ "key": "post3", "label": "+3mo", "relative_months": 3 },
+		{ "key": "post6", "label": "+6mo+", "relative_months": 6 }
+	],
+	"rows": []
+}

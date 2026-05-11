@@ -1,0 +1,70 @@
+{
+	"_source": "_repos/fc-eval/analysis/figure_2_ladders.ipynb + table_7_aggregated.ipynb",
+	"_paper_artifact": "Figure 3 (Stratified advantage across hierarchy levels)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1",
+	"_generated_at": "ported-from-advantage-leaderboard.json",
+	"_notes": "Real values mirrored from src/data/advantage-leaderboard.json stratified rows. Website convention: level2=Function, level3=Class, level4=Module. Paper Figure 3 uses ℓ∈{1,2,3} corresponding to Module/Class/Function (inverted ordering); the slope chart presents in paper order (coarse→fine).",
+	"levels": [
+		{ "key": "level4", "label": "Module", "paper_label": "ℓ=1" },
+		{ "key": "level3", "label": "Class", "paper_label": "ℓ=2" },
+		{ "key": "level2", "label": "Function", "paper_label": "ℓ=3" }
+	],
+	"rows": [
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"overall": -0.0112,
+			"level2": -0.027,
+			"level3": 0.0156,
+			"level4": 0.2985
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"overall": -0.0209,
+			"level2": 0.028,
+			"level3": 0.0515,
+			"level4": -0.0119
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"overall": -0.0301,
+			"level2": -0.026,
+			"level3": -0.0223,
+			"level4": -0.0286
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"overall": -0.041,
+			"level2": -0.0465,
+			"level3": -0.0491,
+			"level4": -0.045
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"overall": -0.0433,
+			"level2": -0.0225,
+			"level3": -0.028,
+			"level4": -0.037
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"overall": -0.0454,
+			"level2": -0.1052,
+			"level3": -0.1103,
+			"level4": -0.058
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"overall": -0.0504,
+			"level2": -0.0676,
+			"level3": -0.0606,
+			"level4": -0.0464
+		}
+	]
+}

@@ -1,0 +1,16 @@
+{
+	"_source": "_repos/fc-eval/analysis/table_9_longtail.ipynb",
+	"_paper_artifact": "Table 3 (Performance Across Repository Popularity Quintiles)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1",
+	"_needs_export": true,
+	"_notes": "Awaiting export from table_9_longtail.ipynb. Quintile bucketing is NTILE(5) OVER (ORDER BY stars) on the repositories table; ranges are computed at export time and stamped into the `quintile_ranges` field. Until then `rows` is empty.",
+	"quintiles": [
+		{ "key": "Q1", "label": "Q1" },
+		{ "key": "Q2", "label": "Q2" },
+		{ "key": "Q3", "label": "Q3" },
+		{ "key": "Q4", "label": "Q4" },
+		{ "key": "Q5", "label": "Q5" }
+	],
+	"quintile_ranges": null,
+	"rows": []
+}
