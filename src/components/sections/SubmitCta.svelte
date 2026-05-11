@@ -4,7 +4,8 @@
 
 	const PROBLEM_WEBHOOK = import.meta.env.VITE_DISCORD_PROBLEM_WEBHOOK || "";
 	const MODEL_WEBHOOK = import.meta.env.VITE_DISCORD_MODEL_WEBHOOK || "";
-	const INVITE_URL = import.meta.env.VITE_DISCORD_INVITE_URL || "";
+	const INVITE_URL =
+		import.meta.env.VITE_DISCORD_INVITE_URL || "https://discord.gg/tsK6BCsKK";
 
 	const copy = getContext("copy") || {};
 	const cfg = copy?.overview?.landingSections?.[5] || {};
