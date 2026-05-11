@@ -10,11 +10,15 @@
 
 	let wrap;
 	let width = 0;
-	let height = 480;
+	// Reactive height keeps the SVG sized to the wrap: any time `width` crosses
+	// the mobile breakpoint the height collapses to 360px, the treemap layout
+	// re-runs, and the SVG attribute updates. Previously the height was a
+	// static 480 with a `!important` CSS override that left a 120px stub
+	// painting into the next section on phones.
+	$: height = width > 0 && width < 600 ? 360 : 480;
 
 	onMount(async () => {
 		await tick();
-		// Set initial width synchronously from layout, then keep it in sync.
 		width = wrap.getBoundingClientRect().width;
 		const ro = new ResizeObserver((entries) => {
 			for (const e of entries) width = e.contentRect.width;
@@ -52,8 +56,6 @@
 		const r = wrap.getBoundingClientRect();
 		tipX = ev.clientX - r.left;
 		tipY = ev.clientY - r.top;
-		// Flip the tooltip when the cursor is near the right/bottom edge so the
-		// tooltip stays inside the wrap (matches what most data tools do).
 		flipX = tipX > r.width - 240;
 		flipY = tipY > r.height - 80;
 	}
@@ -63,10 +65,8 @@
 	}
 
 	function colorFor(c, total) {
-		// Brand-red → muted slate gradient by share. Top contributors saturate.
 		const share = c.value / total;
-		const t = Math.min(1, share / 0.08); // 8% saturates
-		// blend brand-red (220, 36, 24) → soft (245, 230, 230)
+		const t = Math.min(1, share / 0.08);
 		const r = Math.round(245 + (220 - 245) * t);
 		const g = Math.round(230 + (36 - 230) * t);
 		const b = Math.round(230 + (24 - 230) * t);
@@ -80,112 +80,105 @@
 	}
 </script>
 
-<section class="problems-by-repo">
-	<div class="container">
-		<div class="section-head">
-			<div>
-				<h2 class="section-title">Problems by repository</h2>
-				<p class="section-subtitle">
-					Each tile is a repository; size is the number of verified tasks it contributes.
-					{fmt.format(totalProblems)} tasks across {data.length} repos.
-				</p>
-			</div>
-		</div>
-
-		<div class="treemap-wrap" bind:this={wrap} style="height: {height}px;">
-			<svg width={width} height={height} aria-label="Treemap of problems per repository">
-				{#each cells as c}
-					<g
-						role="img"
-						aria-label={`${c.data.repository}: ${c.data.count} tasks`}
-						on:mouseenter={(e) => hoverCell(c, e)}
-						on:mousemove={(e) => hoverCell(c, e)}
-						on:mouseleave={clearHover}
-					>
-						<rect
-							x={c.x0}
-							y={c.y0}
-							width={c.x1 - c.x0}
-							height={c.y1 - c.y0}
-							fill={colorFor(c, totalProblems)}
-							stroke="white"
-							stroke-width="1"
-						/>
-						{#if labelVisible(c)}
-							<text
-								x={c.x0 + 8}
-								y={c.y0 + 18}
-								class="cell-label"
-								fill={c.value / totalProblems > 0.04 ? "#fff" : "var(--text-primary)"}
-							>
-								{c.data.repository}
-							</text>
-							<text
-								x={c.x0 + 8}
-								y={c.y0 + 34}
-								class="cell-count"
-								fill={c.value / totalProblems > 0.04 ? "rgba(255,255,255,0.85)" : "var(--text-muted)"}
-							>
-								{c.data.count} task{c.data.count === 1 ? "" : "s"}
-							</text>
-						{/if}
-					</g>
-				{/each}
-			</svg>
-
-			{#if hovered}
-				<div
-					class="tooltip"
-					class:flip-x={flipX}
-					class:flip-y={flipY}
-					style="left: {tipX}px; top: {tipY}px;"
-					role="tooltip"
-				>
-					<div class="tip-repo">{hovered.data.repository}</div>
-					<div class="tip-count">
-						<strong>{hovered.data.count}</strong> task{hovered.data.count === 1 ? "" : "s"}
-						<span class="tip-pct">
-							({((hovered.value / totalProblems) * 100).toFixed(1)}%)
-						</span>
-					</div>
-				</div>
-			{/if}
-		</div>
+<div class="treemap-block">
+	<div class="treemap-meta">
+		<span class="treemap-title">Problems by repository</span>
+		<span class="treemap-meta-stat"
+			>{fmt.format(totalProblems)} tasks across {data.length} repos</span
+		>
 	</div>
-</section>
+	<div class="treemap-wrap" bind:this={wrap}>
+		<svg
+			width={width || "100%"}
+			{height}
+			aria-label="Treemap of problems per repository"
+		>
+			{#each cells as c}
+				<g
+					role="img"
+					aria-label={`${c.data.repository}: ${c.data.count} tasks`}
+					on:mouseenter={(e) => hoverCell(c, e)}
+					on:mousemove={(e) => hoverCell(c, e)}
+					on:mouseleave={clearHover}
+				>
+					<rect
+						x={c.x0}
+						y={c.y0}
+						width={c.x1 - c.x0}
+						height={c.y1 - c.y0}
+						fill={colorFor(c, totalProblems)}
+						stroke="white"
+						stroke-width="1"
+					/>
+					{#if labelVisible(c)}
+						<text
+							x={c.x0 + 8}
+							y={c.y0 + 18}
+							class="cell-label"
+							fill={c.value / totalProblems > 0.04
+								? "#fff"
+								: "var(--text-primary)"}
+						>
+							{c.data.repository}
+						</text>
+						<text
+							x={c.x0 + 8}
+							y={c.y0 + 34}
+							class="cell-count"
+							fill={c.value / totalProblems > 0.04
+								? "rgba(255,255,255,0.85)"
+								: "var(--text-muted)"}
+						>
+							{c.data.count} task{c.data.count === 1 ? "" : "s"}
+						</text>
+					{/if}
+				</g>
+			{/each}
+		</svg>
+
+		{#if hovered}
+			<div
+				class="tooltip"
+				class:flip-x={flipX}
+				class:flip-y={flipY}
+				style="left: {tipX}px; top: {tipY}px;"
+				role="tooltip"
+			>
+				<div class="tip-repo">{hovered.data.repository}</div>
+				<div class="tip-count">
+					<strong>{hovered.data.count}</strong> task{hovered.data.count === 1
+						? ""
+						: "s"}
+					<span class="tip-pct">
+						({((hovered.value / totalProblems) * 100).toFixed(1)}%)
+					</span>
+				</div>
+			</div>
+		{/if}
+	</div>
+</div>
 
 <style>
-	.problems-by-repo {
-		padding: 0 0 var(--space-xl);
-		background: var(--bg-primary);
-		margin-top: calc(-1 * var(--space-md));
+	.treemap-block {
+		display: flex;
+		flex-direction: column;
 	}
 
-	.container {
-		max-width: 1100px;
-		margin: 0 auto;
-		padding: 0 var(--space-md);
-	}
-
-	.section-head {
-		margin-bottom: var(--space-md);
-	}
-
-	.section-title {
+	.treemap-meta {
+		display: flex;
+		justify-content: space-between;
 		font-family: var(--sans);
-		font-size: clamp(1.4rem, 2.5vw, 1.75rem);
-		font-weight: 700;
-		letter-spacing: -0.015em;
-		margin: 0 0 4px;
-	}
-
-	.section-subtitle {
-		font-family: var(--sans);
-		font-size: 0.95rem;
-		line-height: 1.6;
+		font-size: 0.75rem;
 		color: var(--text-muted);
-		max-width: 65ch;
-		margin: 0;
+		margin-bottom: var(--space-sm);
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+
+	.treemap-title {
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 
 	.treemap-wrap {
@@ -259,11 +252,5 @@
 		color: rgba(255, 255, 255, 0.65);
 		font-size: 0.78rem;
 		margin-left: 4px;
-	}
-
-	@media (max-width: 600px) {
-		.treemap-wrap {
-			height: 360px !important;
-		}
 	}
 </style>

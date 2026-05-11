@@ -2,7 +2,6 @@
 	import dashboard from "$data/dashboard.json";
 
 	const { totals, monthly } = dashboard;
-
 	const fmt = new Intl.NumberFormat("en-US");
 	const fmtPct = (v) => `${(v * 100).toFixed(2)}%`;
 
@@ -22,10 +21,7 @@
 		return d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
 	}
 
-
-	$: total = monthly.reduce((s, d) => s + d.count, 0);
-	$: latest = monthly[monthly.length - 1];
-	$: tickIdxs = monthly.length
+	const tickIdxs = monthly.length
 		? Array.from(
 				new Set([
 					0,
@@ -56,150 +52,73 @@
 	}
 </script>
 
-<section class="dataset-growth">
-	<div class="container">
-		<div class="section-head">
-			<div>
-				<h2 class="section-title">Dataset growth</h2>
-				<p class="section-subtitle">
-					Live snapshot from <a
-						href="https://api.formulacode.org/"
-						target="_blank"
-						rel="noopener noreferrer">api.formulacode.org</a
-					>. {fmt.format(total)} verified tasks span {monthly.length} months of
-					real-world performance work, last refreshed {monthLabel(latest.month)}.
-				</p>
+<div class="growth">
+	<div class="stats-row">
+		{#each stats as s, i}
+			<div class="stat" style="--i: {i}">
+				<div class="stat-value">{s.value}</div>
+				<div class="stat-label">{s.label}</div>
 			</div>
-			<a class="section-link" href="https://data.formulacode.org/" target="_blank" rel="noopener noreferrer">
-				Live dashboard ↗
-			</a>
-		</div>
+		{/each}
+	</div>
 
-		<div class="stats-row">
-			{#each stats as s, i}
-				<div class="stat" style="--i: {i}">
-					<div class="stat-value">{s.value}</div>
-					<div class="stat-label">{s.label}</div>
-				</div>
+	<div class="histogram-wrap" bind:this={histoWrap}>
+		<div class="histogram-meta">
+			<span class="histogram-title">Tasks merged per month</span>
+			<span class="histogram-axis">peak: {peakCount}</span>
+		</div>
+		<div
+			class="histogram"
+			role="img"
+			aria-label="Monthly distribution of tasks"
+			on:mouseleave={clearHover}
+		>
+			{#each monthly as m, i}
+				<div
+					class="bar"
+					class:active={hovered === m}
+					style="height: {(m.count / peakCount) * 100}%; --i: {i}"
+					aria-label={`${monthLabel(m.month)}: ${m.count} task${m.count === 1 ? "" : "s"}`}
+					on:mouseenter={(e) => hoverBar(m, e)}
+					on:mousemove={(e) => hoverBar(m, e)}
+				></div>
 			{/each}
 		</div>
 
-		<div class="histogram-wrap" bind:this={histoWrap}>
-			<div class="histogram-meta">
-				<span class="histogram-title">Tasks merged per month</span>
-				<span class="histogram-axis">peak: {peakCount}</span>
-			</div>
+		{#if hovered}
 			<div
-				class="histogram"
-				role="img"
-				aria-label="Monthly distribution of tasks"
-				on:mouseleave={clearHover}
+				class="tooltip"
+				class:flip-x={flipX}
+				style="left: {tipX}px; top: {tipY}px;"
+				role="tooltip"
 			>
-				{#each monthly as m, i}
-					<div
-						class="bar"
-						class:active={hovered === m}
-						style="height: {(m.count / peakCount) * 100}%; --i: {i}"
-						aria-label={`${monthLabel(m.month)}: ${m.count} task${m.count === 1 ? "" : "s"}`}
-						on:mouseenter={(e) => hoverBar(m, e)}
-						on:mousemove={(e) => hoverBar(m, e)}
-					></div>
-				{/each}
-			</div>
-
-			{#if hovered}
-				<div
-					class="tooltip"
-					class:flip-x={flipX}
-					style="left: {tipX}px; top: {tipY}px;"
-					role="tooltip"
-				>
-					<div class="tip-month">{monthLabel(hovered.month)}</div>
-					<div class="tip-count">
-						<strong>{fmt.format(hovered.count)}</strong> task{hovered.count === 1 ? "" : "s"}
-					</div>
+				<div class="tip-month">{monthLabel(hovered.month)}</div>
+				<div class="tip-count">
+					<strong>{fmt.format(hovered.count)}</strong> task{hovered.count === 1 ? "" : "s"}
 				</div>
-			{/if}
-			<div class="histogram-axis-row">
-				{#each monthly as m, i}
-					<span class="tick" class:show={tickIdxs.includes(i)}>
-						{tickIdxs.includes(i) ? monthLabel(m.month) : ""}
-					</span>
-				{/each}
 			</div>
+		{/if}
+		<div class="histogram-axis-row">
+			{#each monthly as m, i}
+				<span class="tick" class:show={tickIdxs.includes(i)}>
+					{tickIdxs.includes(i) ? monthLabel(m.month) : ""}
+				</span>
+			{/each}
 		</div>
 	</div>
-</section>
+</div>
 
 <style>
-	.dataset-growth {
-		padding: var(--space-xl) 0;
-		background: var(--bg-primary);
-		border-top: 1px solid var(--border-primary);
-	}
-
-	.container {
-		max-width: 1100px;
-		margin: 0 auto;
-		padding: 0 var(--space-md);
-	}
-
-	.section-head {
+	.growth {
 		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
-		margin-bottom: var(--space-lg);
+		flex-direction: column;
+		gap: var(--space-lg);
 	}
 
-	.section-title {
-		font-family: var(--sans);
-		font-size: clamp(1.4rem, 2.5vw, 1.75rem);
-		font-weight: 700;
-		letter-spacing: -0.015em;
-		margin: 0 0 4px;
-	}
-
-	.section-subtitle {
-		font-family: var(--sans);
-		font-size: 0.95rem;
-		line-height: 1.6;
-		color: var(--text-muted);
-		max-width: 65ch;
-		margin: 0;
-	}
-
-	.section-subtitle a {
-		color: var(--brand-blue);
-		text-decoration: none;
-		border-bottom: 1px dashed var(--border-secondary);
-	}
-
-	.section-subtitle a:hover {
-		color: var(--brand-blue-dark);
-		border-bottom-color: var(--brand-blue);
-	}
-
-	.section-link {
-		font-family: var(--sans);
-		font-size: 0.85rem;
-		font-weight: 600;
-		color: var(--brand-red);
-		text-decoration: none;
-		white-space: nowrap;
-	}
-
-	.section-link:hover {
-		color: var(--brand-red-dark);
-	}
-
-	/* ── Stat tiles ── */
 	.stats-row {
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 		gap: var(--space-sm);
-		margin-bottom: var(--space-lg);
 	}
 
 	.stat {
@@ -208,6 +127,7 @@
 		border: 1px solid var(--border-primary);
 		border-radius: var(--radius);
 		animation: stat-rise 360ms ease both calc(var(--i) * 50ms);
+		min-width: 0;
 	}
 
 	@keyframes stat-rise {
@@ -240,7 +160,6 @@
 		margin-top: 6px;
 	}
 
-	/* ── Histogram ── */
 	.histogram-wrap {
 		position: relative;
 		padding: var(--space-md) var(--space-md) var(--space-sm);

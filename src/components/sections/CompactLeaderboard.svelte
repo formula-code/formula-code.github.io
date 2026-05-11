@@ -108,7 +108,7 @@
 	}
 
 	.container {
-		max-width: 1000px;
+		max-width: 1080px;
 		margin: 0 auto;
 		padding: 0 var(--space-md);
 	}

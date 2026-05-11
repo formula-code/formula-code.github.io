@@ -1,10 +1,18 @@
 <script>
+	import { getContext } from "svelte";
 	import inView from "$actions/inView.js";
+	import SectionShell from "$components/sections/SectionShell.svelte";
 
 	export let title = "Results";
 	export let subtitle =
 		"Agent advantage across the full benchmark and at each aggregation level. Positive bars beat the human expert; negative bars trail.";
 	export let stratified = [];
+
+	const copy = getContext("copy") || {};
+	const cfg = copy?.overview?.landingSections?.[4] || {};
+	$: sectionTitle = cfg.title || title;
+	$: sectionLinkHref = cfg.linkHref || "/leaderboard/";
+	$: sectionLinkLabel = cfg.linkLabel || "Full leaderboard ↗";
 
 	const TABS = [
 		{ key: "advantage", label: "Overall", desc: "Overall" },
@@ -71,13 +79,12 @@
 	on:enter={() => (revealed = true)}
 >
 	<div class="container">
-		<div class="section-head">
-			<div>
-				<h2 class="section-title">{title}</h2>
-				<p class="section-subtitle">{subtitle}</p>
-			</div>
-			<a class="section-link" href="/leaderboard/">View full leaderboard →</a>
-		</div>
+		<SectionShell
+			title={sectionTitle}
+			caption={subtitle}
+			linkHref={sectionLinkHref}
+			linkLabel={sectionLinkLabel}
+		/>
 
 		<div class="tabs" role="tablist">
 			{#each TABS as t}
@@ -146,22 +153,9 @@
 	}
 
 	.container {
-		max-width: 1000px;
+		max-width: 1080px;
 		margin: 0 auto;
 		padding: 0 var(--space-md);
-	}
-
-	.section-head {
-		display: flex;
-		justify-content: space-between;
-		align-items: baseline;
-		flex-wrap: wrap;
-		gap: var(--space-sm);
-		margin-bottom: var(--space-md);
-	}
-
-	.section-subtitle {
-		max-width: 60ch;
 	}
 
 	.tabs {
