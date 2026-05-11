@@ -6,7 +6,8 @@
 
 	const copy = getContext("copy") || {};
 	const cfg = copy?.overview?.landingSections?.[0] || {};
-	$: sectionTitle = cfg.title || "How does FormulaCode find code optimization tasks?";
+	$: sectionTitle =
+		cfg.title || "How does FormulaCode find code optimization tasks?";
 	$: sectionLinkHref = cfg.linkHref || "/docs/";
 	$: sectionLinkLabel = cfg.linkLabel || "Datasmith Documentation ↗";
 
@@ -23,6 +24,13 @@
 
 	const DATASMITH = "https://github.com/formula-code/datasmith/blob/main";
 
+	const PHASES = [
+		{ name: "Discover", range: [0, 2] },
+		{ name: "Judge", range: [3, 3] },
+		{ name: "Build", range: [4, 7] },
+		{ name: "Verify & deploy", range: [8, 9] }
+	];
+
 	const STEPS = [
 		{
 			phase: 1,
@@ -32,9 +40,7 @@
 			file: "datasmith/runners/scrape_repos.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/scrape_repos.py`,
 			summary:
-				"For each (owner, repo) candidate — sourced from a CommonSQL query against the GitHub Public Dataset that filters for asv.conf.json presence — fetch metadata via the GitHub REST API and upsert a row into the repositories table with stars, language, topics, and description.",
-			footnote:
-				"The discovery query runs in BigQuery in seconds and stays under $10/run. Concurrency knob: n_concurrent (default 5). Discovery is monthly and fully resumable."
+				"For each (owner, repo) candidate — sourced from a CommonSQL query against the GitHub Public Dataset that filters for asv.conf.json presence — fetch metadata via the GitHub REST API and upsert a row into the repositories table with stars, language, topics, and description."
 		},
 		{
 			phase: 1,
@@ -44,9 +50,7 @@
 			file: "datasmith/runners/scrape_commits.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/scrape_commits.py`,
 			summary:
-				"For each candidate repository, paginate every merged pull request via the GitHub REST API within an optional date window. For each PR, fetch the diff and file changes, run symbolic_compliance() to mark is_performance_commit_symbolic, and upsert into the pull_requests table.",
-			footnote:
-				"Throughput is bounded by GitHub rate limits, not our compute. Date-windowed runs (--start-date / --end-date) make monthly scraping idempotent."
+				"For each candidate repository, paginate every merged pull request via the GitHub REST API within an optional date window. For each PR, fetch the diff and file changes, run symbolic_compliance() to mark is_performance_commit_symbolic, and upsert into the pull_requests table."
 		},
 		{
 			phase: 1,
@@ -56,9 +60,7 @@
 			file: "datasmith/filters.py",
 			fileUrl: `${DATASMITH}/src/datasmith/filters.py`,
 			summary:
-				"symbolic_compliance() runs three cheap checks: a regex over the PR title (perf keywords pass, doc/version/lint/typo keywords fail), a patch-token-count gate, and a file-level check that requires at least one core (non-test/doc/benchmark/CI) file. Anything ambiguous is forwarded.",
-			footnote:
-				"Thresholds: ≤500 files, ≤40,000 total additions+deletions, patch ≤16,000 tokens (tiktoken cl100k_base). Recall-first — a passing title alone is enough; only a clearly negative title with no positive cue gets dropped pre-LLM."
+				"A cheap pre-LLM gate: drop PRs only when the title contains a clearly negative keyword (docs, typo, lint, version) and no positive cue. Ambiguous titles are kept; the LLM classifier decides next. Recall-first by design — false positives die at the speedup gate."
 		},
 		{
 			phase: 2,
@@ -68,9 +70,7 @@
 			file: "datasmith/runners/classify_prs.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/classify_prs.py`,
 			summary:
-				"Two LLM passes. ProblemClassifier first decides binary YES/NO using the PR description, patch, and file change summary. If YES, ClassifyJudge picks one of 13 optimization categories (Cache And Reuse, Use Better Algorithm, …) and a difficulty (Easy/Medium/Hard). Both labels land on pull_requests.",
-			footnote:
-				"Local openai/gpt-oss-120b via the LiteLLM proxy at model.formulacode.org. Tuned for recall — ambiguous PRs return YES; the speedup gate at the end of the pipeline is what discards false positives."
+				"Two LLM passes over the PR's title, diff, linked issues, and review comments: a classifier first decides binary YES/NO; if YES, a judge picks one of 13 optimization categories and a difficulty (Easy / Medium / Hard)."
 		},
 		{
 			phase: 3,
@@ -80,33 +80,7 @@
 			file: "datasmith/runners/resolve_packages.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/resolve_packages.py`,
 			summary:
-				"For each classified PR, analyze_commit() detects the package's pyproject.toml/setup.py/setup.cfg, infers the Python version, and pins a full transitive dependency closure with uv. Sets can_install=True/False on the packages table. PRs with can_install=False are skipped downstream.",
-			footnote:
-				"uv pins every transitive dep against the package versions that existed on the PR's merge date. Concurrency knob: n_concurrent (default 16) — this stage is the most parallelizable in the pipeline."
-		},
-		{
-			phase: 3,
-			phaseName: "Build",
-			name: "try_similar",
-			title: "Reuse a build script from a nearby commit",
-			file: "datasmith/agents/synthesizer.py",
-			fileUrl: `${DATASMITH}/src/datasmith/agents/synthesizer.py`,
-			summary:
-				"The Synthesizer state machine first hits CHECK_CACHE, then FIND_SIMILAR + TRY_SIMILAR — successful build scripts from the same repo, ordered by absolute commit-date distance from this PR. If none verify, fall through to TRY_DEFAULT (the stock template). Most PRs build before any LLM call.",
-			footnote:
-				"Cache → similar → default → LLM cascade. Per-repo guards short-circuit redundant work: once TRY_DEFAULT succeeds for a repo, later PRs go straight to TRY_SIMILAR; after max_default_failures_per_repo, the pipeline gives up on TRY_DEFAULT for that repo."
-		},
-		{
-			phase: 3,
-			phaseName: "Build",
-			name: "agent_loop",
-			title: "Spin up a reflexive agent if nothing fits",
-			file: "datasmith/agents/synthesizer.py",
-			fileUrl: `${DATASMITH}/src/datasmith/agents/synthesizer.py`,
-			summary:
-				"When the cascade fails, LLM_GENERATE hands the build to a swappable installed agent (Claude / Codex / Gemini / Qwen) running in a sandboxed container. The agent reads the repo, edits docker_build_pkg.sh, and re-runs the verifier loop until the smoke checks pass or max_attempts (default 2) is exhausted.",
-			footnote:
-				"Each agent runs through datasmith.agents.installed.{claude,codex,gemini,qwen} with a shared rate-limit handler and tamper-audit pass. Successful contexts are checkpointed into candidate_containers so future neighbors can reuse them."
+				"For each classified PR, analyze_commit() detects the package's pyproject.toml/setup.py/setup.cfg, infers the Python version, and pins a full transitive dependency closure with uv. Sets can_install=True/False on the packages table. PRs with can_install=False are skipped downstream."
 		},
 		{
 			phase: 3,
@@ -116,9 +90,27 @@
 			file: "datasmith/docker/verifiers.py",
 			fileUrl: `${DATASMITH}/src/datasmith/docker/verifiers.py`,
 			summary:
-				"MultiObjVerifier chains three checks against the built image: SmokeVerifier (`python -c 'import {package}'`), ProfileVerifier (`/profile.sh` — ASV smoke), and PytestVerifier (`/run-tests.sh`). The container survives only if all three pass.",
-			footnote:
-				"Three docker layers are baked separately: base (Ubuntu+micromamba+asv) → env (per-version conda envs) → pkg (editable install + smoke). Each layer is cached so a new PR in a known repo costs minutes, not hours."
+				"Three CLI checks decide whether a container is good: `python -c 'import {package}'`, `asv profile`, and `pytest`. If any fail, the container is dropped. Every downstream attempt (try_similar, agent_loop) is judged by this same verifier."
+		},
+		{
+			phase: 3,
+			phaseName: "Build",
+			name: "try_similar",
+			title: "Reuse a build script from a nearby commit",
+			file: "datasmith/agents/synthesizer.py",
+			fileUrl: `${DATASMITH}/src/datasmith/agents/synthesizer.py`,
+			summary:
+				"Look up successful build scripts from the same repo, sorted by absolute chronological distance from this PR — closest in either direction first. Fall through one-by-one until a script passes the verifier."
+		},
+		{
+			phase: 3,
+			phaseName: "Build",
+			name: "agent_loop",
+			title: "Spin up a reflexive agent if nothing fits",
+			file: "datasmith/agents/synthesizer.py",
+			fileUrl: `${DATASMITH}/src/datasmith/agents/synthesizer.py`,
+			summary:
+				"When the cascade fails, LLM_GENERATE hands the build to a swappable installed agent (Claude / Codex / Gemini / Qwen) running in a sandboxed container. The agent reads the repo, edits docker_build_pkg.sh, and re-runs the verifier loop until the smoke checks pass or max_attempts (default 2) is exhausted."
 		},
 		{
 			phase: 4,
@@ -128,9 +120,7 @@
 			file: "datasmith/runners/harbor_healthcheck.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/harbor_healthcheck.py`,
 			summary:
-				"Materialize each task as a Harbor trial directory (via datasmith.harbor_adapter), batch-submit to Harbor's LocalOrchestrator, and let the oracle agent apply the human expert's patch and run ASV against base + patched code in an isolated EC2 container. Per-trial speedups land in harbor_runs.",
-			footnote:
-				"Hardware: AWS EC2 c5ad.large · 2 vCPUs · 4 GiB RAM · 75 GiB SSD per trial. Concurrency is set by Harbor's OrchestratorConfig.n_concurrent_trials, not the runner."
+				"The local orchestrator ships each verified container to a clean AWS EC2 c5ad.large box, where the oracle agent applies the human expert's patch and ASV times base vs. patched code. Per-trial speedups stream back into harbor_runs."
 		},
 		{
 			phase: 4,
@@ -140,9 +130,7 @@
 			file: "datasmith/publish/pipeline.py",
 			fileUrl: `${DATASMITH}/src/datasmith/publish/pipeline.py`,
 			summary:
-				"Only PRs whose best harbor_runs row reports max_speedup ≥ MIN_SPEEDUP_GATE (1.05) survive the gate. Survivors get pushed to DockerHub (DockerHubPublisher) and HuggingFace (HuggingFacePublisher) under a monthly version tag, and stamped with published_at in Supabase.",
-			footnote:
-				"Mann–Whitney U significance is computed inside Harbor's measurement pass; harbor_healthcheck.py applies the 1.05× interestingness threshold on top. The combined gate is the only ground-truth precision filter in the entire pipeline."
+				"Records that cleared the speedup gate in step 9 land in HuggingFace + DockerHub and get a `published_at` stamp in Supabase."
 		}
 	];
 
@@ -173,16 +161,16 @@
 	const HOLD_MS = 1500;
 	// stepBeat thresholds at which each step is "fully revealed".
 	$: revealBeats = [
-		REPO_LINES.length, // ① find_repos: one beat per line
-		8, // ② scrape_prs: s2Progress hits 1 at stepBeat 8
+		REPO_LINES.length, // ① find_repos
+		8, // ② scrape_prs
 		SAMPLE_PRS.length, // ③ attribute_filter
-		3, // ④ classify: input → llm → output
+		30, // ④ classify (3 sub-stages × ~10 beats each, ~4s per stage)
 		RESOLVE_LINES.length, // ⑤ resolve_packages
-		6, // ⑥ try_similar: s6Phase hits 2 at stepBeat 6
-		AGENT_LOG.length, // ⑦ agent_loop
-		CHECKS.length, // ⑧ verify_build
-		BENCH.length, // ⑨ measure
-		3 // ⑩ validate_and_publish: s10Stage hits 3 at stepBeat 3
+		16, // ⑥ verify_build (smoke 2 + asv 10 + pytest 4 = 1:5:2 ratio)
+		9, // ⑦ try_similar (interleaved try → verdict cascade, 2 beats each)
+		AGENT_LOG.length, // ⑧ agent_loop
+		7, // ⑨ measure (boxes + handoff + 4 bars + return)
+		5 // ⑩ validate_and_publish (verified + 3 targets + final stat)
 	];
 	$: stepDur = (i) => revealBeats[i] * BEAT_MS + ANIM_TAIL_MS + HOLD_MS;
 
@@ -274,7 +262,10 @@
 
 	function onKeydown(e) {
 		if (!revealed) return;
-		if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement)
+		if (
+			e.target instanceof HTMLInputElement ||
+			e.target instanceof HTMLTextAreaElement
+		)
 			return;
 		if (e.key === "ArrowLeft") {
 			e.preventDefault();
@@ -309,7 +300,8 @@
 		{ name: "scikit-image/scikit-image", stars: "6.2k", py: "py3.10+" },
 		{ name: "astropy/astropy", stars: "4.6k", py: "py3.10+" }
 	];
-	$: s1Visible = active === 0 ? Math.min(REPO_LINES.length, stepBeat) : REPO_LINES.length;
+	$: s1Visible =
+		active === 0 ? Math.min(REPO_LINES.length, stepBeat) : REPO_LINES.length;
 
 	// Step 2
 	const REPO_TILES = [
@@ -325,7 +317,8 @@
 	];
 	$: s2Progress = active === 1 ? Math.min(1, stepBeat / 8) : 1;
 
-	// Step 3
+	// Step 3 — recall-over-precision: ambiguous titles are kept, only clearly
+	// negative ones get dropped pre-LLM.
 	const SAMPLE_PRS = [
 		{
 			id: 56847,
@@ -340,21 +333,36 @@
 			],
 			meta: "+183 / -42 · 3 files",
 			verdict: "kept",
-			reason: "perf keyword match"
+			ambiguous: false,
+			reason: "clear perf keyword"
 		},
 		{
-			id: 14922,
+			id: 49118,
 			tokens: [
-				{ t: "Cache", k: "pos" },
-				{ t: "repeated", k: "" },
-				{ t: "dtype", k: "" },
-				{ t: "lookups", k: "" },
-				{ t: "in", k: "" },
-				{ t: "DataFrame.apply", k: "" }
+				{ t: "Refactor", k: "" },
+				{ t: "DataFrame.apply", k: "" },
+				{ t: "internals", k: "" }
 			],
-			meta: "+47 / -19 · 2 files",
+			meta: "+312 / -188 · 7 files",
 			verdict: "kept",
-			reason: "perf keyword match"
+			ambiguous: true,
+			reason: "no negative cue — forwarded to LLM"
+		},
+		{
+			id: 38204,
+			tokens: [
+				{ t: "Tweak", k: "" },
+				{ t: "default", k: "" },
+				{ t: "chunk", k: "" },
+				{ t: "size", k: "" },
+				{ t: "in", k: "" },
+				{ t: "HDF5", k: "" },
+				{ t: "writer", k: "" }
+			],
+			meta: "+24 / -8 · 1 file",
+			verdict: "kept",
+			ambiguous: true,
+			reason: "no clear cue either way — forwarded"
 		},
 		{
 			id: 7710,
@@ -367,27 +375,37 @@
 			],
 			meta: "+1 / -1 · 1 file (docs/)",
 			verdict: "dropped",
-			reason: "negative keyword + docs-only"
-		},
-		{
-			id: 8845,
-			tokens: [
-				{ t: "Add", k: "" },
-				{ t: "1500", k: "" },
-				{ t: "test", k: "" },
-				{ t: "cases", k: "" },
-				{ t: "for", k: "" },
-				{ t: "ndarray", k: "" }
-			],
-			meta: "+5128 / -0 · 612 files",
-			verdict: "dropped",
-			reason: ">500 files · tests/ only"
+			ambiguous: false,
+			reason: "docs-only + negative keyword"
 		}
 	];
-	$: s3Visible = active === 2 ? Math.min(SAMPLE_PRS.length, stepBeat) : SAMPLE_PRS.length;
+	$: s3Visible =
+		active === 2 ? Math.min(SAMPLE_PRS.length, stepBeat) : SAMPLE_PRS.length;
 
-	// Step 4
-	$: s4Stage = active === 3 ? Math.min(3, stepBeat) : 3;
+	// Step 4 — staged: 4 input chips (beats 1-4) → classifier on (beat 5)
+	// → 3 output rows (beats 6-8)
+	const CLASSIFY_INPUTS = [
+		{ k: "title", v: "Speed up groupby aggregation by 8x" },
+		{ k: "diff", v: "+183 / -42 across 3 files" },
+		{ k: "issues", v: "#54234 — linked perf regression" },
+		{ k: "comments", v: "4 review threads" }
+	];
+	const CLASSIFY_OUTPUTS = [
+		{ k: "is_perf", v: "YES", highlight: "yes" },
+		{ k: "category", v: "Use Better Algorithm", highlight: "" },
+		{ k: "difficulty", v: "Medium", highlight: "" }
+	];
+	// Single-card-at-a-time stage machine, deliberately paced so each sub-stage
+	// reads as a discrete action (~4s per stage):
+	//   stage 0 (beats 0–9):   PR-context card, 4 inputs trickle in
+	//   stage 1 (beats 10–19): classifier card with a "thinking…" indicator
+	//   stage 2 (beats 20–29): output card, 3 rows trickle in
+	$: s4Stage =
+		active === 3 ? (stepBeat < 10 ? 0 : stepBeat < 20 ? 1 : 2) : 2;
+	$: s4InputsShown =
+		active === 3 ? Math.min(4, Math.floor(stepBeat / 2) + 1) : 4;
+	$: s4OutputsShown =
+		active === 3 ? Math.max(0, Math.min(3, Math.floor((stepBeat - 20) / 3) + 1)) : 3;
 
 	// Step 5
 	const RESOLVE_LINES = [
@@ -401,24 +419,85 @@
 		"  ...",
 		"✓ Resolved 47 packages in 8.4s · can_install=True"
 	];
-	$: s5Visible = active === 4 ? Math.min(RESOLVE_LINES.length, stepBeat) : RESOLVE_LINES.length;
+	$: s5Visible =
+		active === 4
+			? Math.min(RESOLVE_LINES.length, stepBeat)
+			: RESOLVE_LINES.length;
 
-	// Step 6
-	const NEIGHBORS = [
-		{ sha: "f8a2c1", days: -118, ok: true },
-		{ sha: "21db4e", days: -76, ok: true },
-		{ sha: "9c3a87", days: -47, ok: true },
-		{ sha: "a3f12c", days: -22, ok: true },
-		{ sha: "b7e019", days: -8, ok: true },
-		{ sha: "5e8d44", days: 14, ok: true },
-		{ sha: "ce6321", days: 33, ok: true },
-		{ sha: "12abf0", days: 61, ok: false },
-		{ sha: "7ef905", days: 92, ok: true },
-		{ sha: "4d18b3", days: 137, ok: true }
+	// Step 6 — verify_build: three sequential terminal panels with realistic
+	// relative timings — smoke (T=2 beats) : asv profile (5T=10 beats) :
+	// pytest (2T=4 beats). Each line has an `atBeat` offset relative to the
+	// step's stepBeat counter so the slowest stage clearly "takes longer".
+	//   smoke:   starts beat 0,  finishes beat 2  (4 lines packed in 2 beats)
+	//   asv:     starts beat 2,  finishes beat 12 (long "Profiling…" wait)
+	//   pytest:  starts beat 12, finishes beat 16
+	const VERIFY_TERMINALS = [
+		{
+			cap: "smoke import",
+			cmd: "python",
+			startBeat: 0,
+			endBeat: 2,
+			elapsedSec: 0.4,
+			lines: [
+				{ atBeat: 1, p: ">>>", body: "import pandas" },
+				{ atBeat: 1, p: ">>>", body: "pandas.__version__" },
+				{ atBeat: 1, p: "", body: "'2.1.4'" },
+				{ atBeat: 2, p: "", body: "✓ import passed", ok: true }
+			]
+		},
+		{
+			cap: "asv profile",
+			cmd: "asv profile -b 'groupby_agg'",
+			startBeat: 2,
+			endBeat: 12,
+			elapsedSec: 12.3,
+			showSpinner: true,
+			lines: [
+				{ atBeat: 3, p: "·", body: "Profiling groupby_agg…" },
+				{ atBeat: 11, p: "·", body: "cumulative 12.3s / 4 rounds" },
+				{ atBeat: 12, p: "·", body: "✓ profile passed", ok: true }
+			]
+		},
+		{
+			cap: "pytest",
+			cmd: "pytest -x",
+			startBeat: 12,
+			endBeat: 16,
+			elapsedSec: 4.2,
+			lines: [
+				{ atBeat: 13, p: "·", body: "collected 87 items" },
+				{ atBeat: 15, p: "·", body: "============= 87 passed in 4.2s ====" },
+				{ atBeat: 16, p: "·", body: "✓ tests passed", ok: true }
+			]
+		}
 	];
-	$: s6Phase = active === 5 ? Math.min(2, Math.floor(stepBeat / 3)) : 2;
+	const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧"];
+	$: s6AllPassed = active === 5 ? stepBeat >= 16 : true;
 
-	// Step 7
+	// Step 7 — try_similar: number-line timeline with cascading fails → success.
+	// Cascade visits commits in order of ABSOLUTE chronological distance from
+	// the PR, regardless of direction. tryOrder 1 = closest, 2 = next, etc.
+	//   tryOrder 1: 5e8d44 (+14d, distance 14) — closest, fails
+	//   tryOrder 2: b7e019 (−22d, distance 22) — next, fails
+	//   tryOrder 3: ce6321 (+41d, distance 41) — next, passes
+	const NEIGHBORS = [
+		{ sha: "f8a2c1", days: -82, tryOrder: null, ok: null },
+		{ sha: "21db4e", days: -68, tryOrder: null, ok: null },
+		{ sha: "9c3a87", days: -47, tryOrder: null, ok: null },
+		{ sha: "b7e019", days: -22, tryOrder: 2, ok: false },
+		{ sha: "5e8d44", days: 14, tryOrder: 1, ok: false },
+		{ sha: "ce6321", days: 41, tryOrder: 3, ok: true },
+		{ sha: "7ef905", days: 76, tryOrder: null, ok: null }
+	];
+	// Beat layout (2 beats per attempt — trying then decided):
+	//   0–1 axis + neighbors
+	//   2 try #1 trying  | 3+ decided ✗
+	//   4 try #2 trying  | 5+ decided ✗
+	//   6 try #3 trying  | 7+ decided ✓
+	//   8 caption
+	$: s7Beat = active === 6 ? stepBeat : 9;
+
+	// Step 8 — agent_loop
 	const AGENT_LOG = [
 		{
 			turn: 1,
@@ -445,17 +524,10 @@
 			tool: null
 		}
 	];
-	$: s7Visible = active === 6 ? Math.min(AGENT_LOG.length, stepBeat) : AGENT_LOG.length;
+	$: s8Visible =
+		active === 7 ? Math.min(AGENT_LOG.length, stepBeat) : AGENT_LOG.length;
 
-	// Step 8
-	const CHECKS = [
-		{ cmd: "python -c 'import pandas'", ok: true, detail: "0.4s" },
-		{ cmd: "asv_smokecheck.py", ok: true, detail: "12.3s · 4 workloads" },
-		{ cmd: "pytest -k smoke", ok: true, detail: "87 passed" }
-	];
-	$: s8Visible = active === 7 ? Math.min(CHECKS.length, stepBeat) : CHECKS.length;
-
-	// Step 9
+	// Step 9 — measure: two-machine handoff + bench bars
 	const BENCH = [
 		{ wl: "groupby_agg", base: 143.2, expert: 17.8 },
 		{ wl: "rolling_mean", base: 89.4, expert: 89.1 },
@@ -463,12 +535,35 @@
 		{ wl: "merge_asof", base: 71.0, expert: 23.4 }
 	];
 	const BENCH_MAX = Math.max(...BENCH.flatMap((r) => [r.base, r.expert]));
-	$: s9Visible = active === 8 ? Math.min(BENCH.length, stepBeat) : BENCH.length;
+	// Beat layout: 0 boxes, 1 ship arrow, 2-5 bench rows, 6 return arrow
+	$: s9Beat = active === 8 ? stepBeat : 7;
+	$: s9Visible =
+		active === 8
+			? Math.max(0, Math.min(BENCH.length, stepBeat - 1))
+			: BENCH.length;
 
-	// Step 10
-	$: s10Stage = active === 9 ? Math.min(3, stepBeat) : 3;
-	const HISTO_BASE = [2, 4, 7, 11, 14, 12, 9, 5, 2, 1];
-	const HISTO_EXPERT = [12, 18, 14, 8, 4, 2, 1, 0, 0, 0];
+	// Step 10 — validate_and_publish: simplified publish-targets layout
+	const PUBLISH_TARGETS = [
+		{
+			tag: "HF",
+			name: "HuggingFace",
+			detail: "datasets/formula-code · pushed"
+		},
+		{
+			tag: "Docker",
+			name: "DockerHub",
+			detail: "formulacode/<owner>-<repo>-<sha> · pushed"
+		},
+		{
+			tag: "DB",
+			name: "Supabase",
+			detail: "pull_requests.published_at = 2026-05-11T…Z"
+		}
+	];
+	// Beat layout: 0 verified, 1-3 targets one-by-one, 4 final stat
+	$: s10Beat = active === 9 ? stepBeat : 5;
+	$: s10TargetsShown =
+		active === 9 ? Math.max(0, Math.min(3, stepBeat - 1)) : 3;
 </script>
 
 <svelte:window on:keydown={onKeydown} />
@@ -481,83 +576,100 @@
 	on:enter={() => (revealed = true)}
 >
 	<div class="container">
-		<div class="eyebrow" aria-hidden="true">
-			<span class="eyebrow-num">01</span>
-			<span class="eyebrow-rule"></span>
-		</div>
-
 		<SectionShell
 			title={sectionTitle}
-			caption="From a GitHub repo to a benchmarked dataset row, ten substeps through the pipeline."
+			caption="Each task starts as a merged GitHub pull request and earns its way through four phases — discover, judge, build, verify — surviving only if it ships a measurable speedup."
 			linkHref={sectionLinkHref}
 			linkLabel={sectionLinkLabel}
 		/>
 
-		<!-- Stepper SVG (desktop) -->
-		<div class="stepper-wrap">
-			<svg
-				class="stepper"
-				viewBox="0 0 {SVG_W} {SVG_H}"
-				role="navigation"
-				aria-label="Dataset pipeline substeps"
-				preserveAspectRatio="xMidYMid meet"
-			>
-				{#each Array(N - 1) as _, i}
-					<line
-						x1={cx(i) + C_R + 2}
-						y1={cy}
-						x2={cx(i + 1) - C_R - 2}
-						y2={cy}
-						stroke="var(--border-primary)"
-						stroke-width="2"
-					/>
-				{/each}
-				{#each STEPS as s, i}
-					<g
-						class="stepper-node"
-						class:active={i === active}
-						class:done={i < active}
-						role="button"
-						tabindex="0"
-						aria-label={`Substep ${i + 1}: ${s.title}${i === active ? " (current)" : ""}`}
-						on:click={() => setActive(i)}
-						on:keydown={(e) => (e.key === "Enter" || e.key === " ") && setActive(i)}
-					>
-						<circle cx={cx(i)} cy={cy} r={C_R} class="circle" />
-						<text x={cx(i)} y={cy + 4} text-anchor="middle" class="circle-num">{i + 1}</text>
-						<text x={cx(i)} y={cy + C_R + 18} text-anchor="middle" class="circle-label">{s.name}</text>
-					</g>
-				{/each}
-			</svg>
-
-			<!-- Mobile chip strip -->
-			<div class="stepper-mobile" role="navigation" aria-label="Dataset pipeline substeps">
-				{#each STEPS as s, i}
+		<!-- Combined nested stepper: only the active phase expands its substeps;
+		     other phases collapse to a name pill. Clicking a collapsed phase
+		     expands it (and jumps to its first substep). Before the user starts
+		     the simulation all phases are collapsed and centered. -->
+		<nav class="phase-strip" aria-label="Dataset pipeline">
+			{#each PHASES as p, pi (p.name)}
+				{@const isPhaseActive = started && active >= p.range[0] && active <= p.range[1]}
+				{@const isPhaseDone = started && active > p.range[1]}
+				<div
+					class="phase-block"
+					class:active={isPhaseActive}
+					class:done={isPhaseDone}
+					class:collapsed={!isPhaseActive}
+				>
 					<button
-						class="chip"
-						class:active={i === active}
-						class:done={i < active}
-						aria-label={`Substep ${i + 1}: ${s.title}`}
-						on:click={() => setActive(i)}
+						type="button"
+						class="phase-head"
+						aria-label={`${p.name} phase — substeps ${pad2(p.range[0] + 1)} to ${pad2(p.range[1] + 1)}`}
+						aria-expanded={isPhaseActive}
+						on:click={() => setActive(p.range[0])}
 					>
-						<span class="chip-num">{i + 1}</span>
-						<span class="chip-name">{s.name}</span>
+						<span class="phase-name">{p.name}</span>
 					</button>
-				{/each}
-			</div>
-		</div>
+					{#if isPhaseActive}
+						<div class="phase-subs">
+							{#each STEPS.slice(p.range[0], p.range[1] + 1) as s, si}
+								{@const idx = p.range[0] + si}
+								<button
+									class="substep"
+									class:active={idx === active}
+									class:done={idx < active}
+									aria-label={`Substep ${idx + 1}: ${s.title}${idx === active ? " (current)" : ""}`}
+									on:click={() => setActive(idx)}
+								>
+									<span class="substep-n">{pad2(idx + 1)}</span>
+									<span class="substep-name">{s.name}</span>
+								</button>
+							{/each}
+						</div>
+					{/if}
+				</div>
+				{#if pi < PHASES.length - 1}
+					<svg
+						class="phase-arrow"
+						viewBox="0 0 36 16"
+						width="36"
+						height="16"
+						aria-hidden="true"
+					>
+						<line
+							x1="2"
+							y1="8"
+							x2="28"
+							y2="8"
+							stroke="currentColor"
+							stroke-width="1.4"
+							stroke-linecap="round"
+						/>
+						<path
+							d="M24 3 L33 8 L24 13"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="1.4"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				{/if}
+			{/each}
+		</nav>
 
 		<!-- Active step card -->
 		<div class="card" class:idle={!started}>
 			{#if !started}
-				<button class="overlay" on:click={startSimulation} aria-label="Start simulation">
+				<button
+					class="overlay"
+					on:click={startSimulation}
+					aria-label="Start simulation"
+				>
 					<span class="overlay-play">
 						<svg viewBox="0 0 16 16" width="22" height="22" aria-hidden="true">
 							<path d="M5 3 L12 8 L5 13 Z" fill="currentColor" />
 						</svg>
 					</span>
 					<span class="overlay-caption">
-						Watch how a FormulaCode task is built — from a GitHub repo to a benchmarked dataset row.
+						Watch how a FormulaCode task is built — from a GitHub repo to a
+						benchmarked dataset row.
 					</span>
 				</button>
 			{/if}
@@ -573,7 +685,12 @@
 							{step.title}
 						</h3>
 					</div>
-					<a class="file-pill" href={step.fileUrl} target="_blank" rel="noopener noreferrer">
+					<a
+						class="file-pill"
+						href={step.fileUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+					>
 						<svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true">
 							<path
 								fill="none"
@@ -593,7 +710,9 @@
 				<div class="canvas">
 					{#if active === 0}
 						<div class="terminal">
-							<div class="term-bar"><span class="term-dot"></span> gh search</div>
+							<div class="term-bar">
+								<span class="term-dot"></span> gh search
+							</div>
 							<div class="term-body">
 								<div class="term-cmd">
 									<span class="term-prompt">$</span>
@@ -608,7 +727,9 @@
 									</div>
 								{/each}
 								{#if s1Visible < REPO_LINES.length}
-									<div class="term-line dim"><span class="caret"></span> scanning…</div>
+									<div class="term-line dim">
+										<span class="caret"></span> scanning…
+									</div>
 								{:else}
 									<div class="term-line foot">
 										→ <strong>{fmt(N_REPOS)}</strong> repositories matched
@@ -621,7 +742,9 @@
 							{#each REPO_TILES as t, i (t.name)}
 								<div class="tile" style="--i: {i}">
 									<div class="tile-name">{t.name}</div>
-									<div class="tile-num">+{fmt(Math.floor(t.target * s2Progress))}</div>
+									<div class="tile-num">
+										+{fmt(Math.floor(t.target * s2Progress))}
+									</div>
 									<div class="tile-lbl">PRs</div>
 								</div>
 							{/each}
@@ -637,13 +760,19 @@
 					{:else if active === 2}
 						<div class="prs">
 							{#each SAMPLE_PRS.slice(0, s3Visible) as p, i (p.id)}
-								<div class="pr" class:dropped={p.verdict === "dropped"} style="--i: {i}">
+								<div
+									class="pr"
+									class:dropped={p.verdict === "dropped"}
+									style="--i: {i}"
+								>
 									<div class="pr-l">
 										<span class="pr-id">PR #{p.id}</span>
 										<span class="pr-title">
 											{#each p.tokens as tok}
-												<span class="tok" class:pos={tok.k === "pos"} class:neg={tok.k === "neg"}
-													>{tok.t}</span
+												<span
+													class="tok"
+													class:pos={tok.k === "pos"}
+													class:neg={tok.k === "neg"}>{tok.t}</span
 												>{" "}
 											{/each}
 										</span>
@@ -656,68 +785,153 @@
 											class:dropped={p.verdict === "dropped"}
 										>
 											{p.verdict === "kept" ? "✓ kept" : "✗ dropped"}
+											{#if p.ambiguous}
+												<span class="amb-chip">ambiguous</span>
+											{/if}
 										</span>
 										<span class="pr-reason">{p.reason}</span>
 									</div>
 								</div>
 							{/each}
 						</div>
-					{:else if active === 3}
-						<div class="classify">
-							<div class="cls-col cls-input" class:on={s4Stage >= 0}>
-								<div class="cls-cap">PR context</div>
-								<div class="cls-card">
-									<div class="cls-row">
-										<span class="cls-k">title</span> Speed up groupby aggregation by 8x
-									</div>
-									<div class="cls-row">
-										<span class="cls-k">diff</span> +183 / -42 across 3 files
-									</div>
-									<div class="cls-row">
-										<span class="cls-k">issue</span> #54234 — pandas-dev/pandas
-									</div>
-									<div class="cls-row">
-										<span class="cls-k">comments</span> 4 thread replies
-									</div>
-								</div>
-							</div>
-							<div class="cls-arrow" class:on={s4Stage >= 1}>→</div>
-							<div class="cls-col cls-llm" class:on={s4Stage >= 1}>
-								<div class="cls-cap">classifier</div>
-								<div class="cls-card cls-llm-card">
-									<div class="cls-llm-name">gpt-oss-120b</div>
-									<div class="cls-llm-meta">DSPy · local vLLM</div>
-									<div class="cls-llm-bias">tuned for recall</div>
-								</div>
-							</div>
-							<div class="cls-arrow" class:on={s4Stage >= 2}>→</div>
-							<div class="cls-col cls-out" class:on={s4Stage >= 2}>
-								<div class="cls-cap">output</div>
-								<div class="cls-card cls-out-card">
-									<div class="cls-row">
-										<span class="cls-k">is_perf</span> <span class="cls-yes">YES</span>
-									</div>
-									<div class="cls-row">
-										<span class="cls-k">category</span> Use Better Algorithm
-									</div>
-									<div class="cls-row">
-										<span class="cls-k">difficulty</span> Medium
-									</div>
-								</div>
-							</div>
+						<div class="canvas-stat">
+							→ recall-first: any title without a negative cue gets forwarded
+							to the LLM
 						</div>
-						<div class="cls-cats" aria-label="13 optimization categories">
-							{#each CATEGORIES as c, i}
-								<span class="cls-cat" class:active={i === 1}>{c}</span>
+					{:else if active === 3}
+						<div class="cls-breadcrumb">
+							{#each ["PR context", "classifier", "output"] as label, i}
+								<span
+									class="cls-crumb"
+									class:active={s4Stage === i}
+									class:done={s4Stage > i}
+								>
+									<span class="cls-crumb-n">0{i + 1}</span>
+									<span class="cls-crumb-lbl">{label}</span>
+								</span>
+								{#if i < 2}
+									<svg
+										class="cls-crumb-sep"
+										viewBox="0 0 12 12"
+										width="10"
+										height="10"
+										aria-hidden="true"
+									>
+										<path
+											d="M3.5 2 L8 6 L3.5 10"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.6"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+								{/if}
 							{/each}
 						</div>
-						<div class="canvas-stat">
-							→ <strong>{fmt(N_PERF)}</strong> performance PRs ·
-							{CATEGORIES.length} categories
+						<div class="classify">
+							<!-- Stage 0: PR context (always present once on this step) -->
+							<div class="cls-col cls-input">
+								<div class="cls-cap">PR context</div>
+								<div class="cls-card">
+									{#each CLASSIFY_INPUTS.slice(0, s4InputsShown) as ci, i (ci.k)}
+										<div class="cls-row cls-row-anim" style="--i: {i}">
+											<span class="cls-k">{ci.k}</span>
+											<span class="cls-v">{ci.v}</span>
+										</div>
+									{/each}
+								</div>
+							</div>
+							{#if s4Stage >= 1}
+								<div class="cls-arrow on" aria-hidden="true">
+									<svg viewBox="0 0 32 14" width="32" height="14">
+										<line
+											x1="2"
+											y1="7"
+											x2="24"
+											y2="7"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M22 3 L29 7 L22 11"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+								</div>
+								<!-- Stage 1: Classifier -->
+								<div class="cls-col cls-llm">
+									<div class="cls-cap">classifier</div>
+									<div class="cls-card cls-llm-card">
+										<div class="cls-llm-name">gpt-oss-120b</div>
+										<div class="cls-llm-meta">DSPy · local vLLM</div>
+										{#if s4Stage === 1}
+											<div class="cls-thinking" aria-label="classifier running">
+												<span class="cls-spin"
+													>{SPINNER_FRAMES[
+														stepBeat % SPINNER_FRAMES.length
+													]}</span
+												>
+												<span class="cls-thinking-lbl">thinking…</span>
+											</div>
+										{:else}
+											<div class="cls-thinking cls-done">
+												<span class="cls-thinking-lbl">✓ done</span>
+											</div>
+										{/if}
+									</div>
+								</div>
+							{/if}
+							{#if s4Stage >= 2}
+								<div class="cls-arrow on" aria-hidden="true">
+									<svg viewBox="0 0 32 14" width="32" height="14">
+										<line
+											x1="2"
+											y1="7"
+											x2="24"
+											y2="7"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M22 3 L29 7 L22 11"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+								</div>
+								<!-- Stage 2: Output -->
+								<div class="cls-col cls-out">
+									<div class="cls-cap">output</div>
+									<div class="cls-card cls-out-card">
+										{#each CLASSIFY_OUTPUTS.slice(0, s4OutputsShown) as co, i (co.k)}
+											<div class="cls-row cls-row-anim" style="--i: {i}">
+												<span class="cls-k">{co.k}</span>
+												{#if co.highlight === "yes"}
+													<span class="cls-yes">{co.v}</span>
+												{:else}
+													<span class="cls-v">{co.v}</span>
+												{/if}
+											</div>
+										{/each}
+									</div>
+								</div>
+							{/if}
 						</div>
 					{:else if active === 4}
 						<div class="terminal">
-							<div class="term-bar"><span class="term-dot"></span> uv pip compile</div>
+							<div class="term-bar">
+								<span class="term-dot"></span> uv pip compile
+							</div>
 							<div class="term-body">
 								{#each RESOLVE_LINES.slice(0, s5Visible) as line, i (i)}
 									<div class="term-line" style="--i: {i}">{line}</div>
@@ -728,32 +942,123 @@
 							</div>
 						</div>
 					{:else if active === 5}
-						<div class="timeline">
-							<div class="tl-axis"></div>
-							<div class="tl-self" style="left: 50%">
-								<div class="tl-dot"></div>
-								<div class="tl-self-lbl">PR #56847</div>
-							</div>
-							{#each NEIGHBORS as n, i (n.sha)}
+						<div class="verify-grid">
+							{#each VERIFY_TERMINALS as t, ti (t.cap)}
+								{@const started = stepBeat >= t.startBeat}
+								{@const finished = stepBeat >= t.endBeat}
+								{@const elapsed =
+									finished
+										? t.elapsedSec
+										: started
+											? Math.min(
+													t.elapsedSec,
+													((stepBeat - t.startBeat) / (t.endBeat - t.startBeat)) *
+														t.elapsedSec
+												)
+											: 0}
 								<div
-									class="tl-neighbor"
-									class:fail={!n.ok}
-									class:tried={s6Phase >= 1 && i === 4}
-									style="left: {50 + (n.days / 200) * 45}%"
+									class="verify-term"
+									class:dim={!started}
+									class:running={started && !finished}
+									style="--i: {ti}"
 								>
-									<div class="tl-neigh-dot"></div>
-									<div class="tl-neigh-lbl">
-										{n.sha}<br /><small>{n.days > 0 ? "+" : ""}{n.days}d</small>
+									<div class="term-bar">
+										<span
+											class="term-dot"
+											class:running={started && !finished}
+											class:done={finished}
+										></span>
+										{t.cap}
+										{#if started}
+											<span class="term-elapsed">{elapsed.toFixed(1)}s</span>
+										{/if}
+									</div>
+									<div class="term-body">
+										<div class="term-cmd">
+											<span class="term-prompt">$</span>
+											{t.cmd}
+										</div>
+										{#each t.lines as ln, li (li)}
+											{#if stepBeat >= ln.atBeat}
+												<div class="vt-line" class:ok={ln.ok} style="--i: {li}">
+													{#if ln.p}<span class="vt-p">{ln.p}</span>{/if}
+													{ln.body}
+												</div>
+											{/if}
+										{/each}
+										{#if t.showSpinner && started && !finished && stepBeat >= t.lines[0].atBeat}
+											<div class="vt-line vt-spin-line">
+												<span class="vt-spin"
+													>{SPINNER_FRAMES[stepBeat % SPINNER_FRAMES.length]}</span
+												>
+												<span class="vt-spin-lbl">running 4 rounds…</span>
+											</div>
+										{/if}
 									</div>
 								</div>
 							{/each}
 						</div>
-						<div class="tl-result" class:on={s6Phase >= 2}>
-							→ trying nearest neighbor <code>b7e019</code> (-8d) ·
-							<span class="ok-chip">✓ build passed</span>
-							<span class="tl-note">cache → similar → default → agent (in that order)</span>
-						</div>
+						{#if s6AllPassed}
+							<div class="canvas-stat">
+								→ all three checks passed ·
+								<strong>container kept</strong>
+							</div>
+						{/if}
 					{:else if active === 6}
+						<div class="tl-wrap">
+							<!-- 2D chart background: day labels on top, subtle dashed
+							     vertical gridlines extending through the chart -->
+							<div class="tl-grid" aria-hidden="true">
+								{#each [-90, -60, -30, 0, 30, 60] as d}
+									<div
+										class="tl-gridcol"
+										style="left: {((d + 90) / 180) * 100}%"
+									>
+										<span class="tl-day">{d > 0 ? "+" : ""}{d}d</span>
+										<span class="tl-gridline"></span>
+									</div>
+								{/each}
+							</div>
+							<div class="tl-axis-line"></div>
+							{#each NEIGHBORS as n (n.sha)}
+								{@const left = ((n.days + 90) / 180) * 100}
+								{@const tryAt =
+									n.tryOrder !== null ? n.tryOrder * 2 : null}
+								{@const trying = tryAt !== null && s7Beat === tryAt}
+								{@const decided = tryAt !== null && s7Beat > tryAt}
+								{@const verdict = decided ? n.ok : null}
+								<div
+									class="tl-node"
+									class:trying
+									class:decided
+									class:fail={verdict === false}
+									class:pass={verdict === true}
+									style="left: {left}%"
+								>
+									<div class="tl-node-dot"></div>
+									{#if decided && verdict === false}
+										<span class="tl-badge fail">✗ build failed</span>
+									{:else if decided && verdict === true}
+										<span class="tl-badge pass">✓ build verified</span>
+									{:else if trying}
+										<span class="tl-badge trying">trying…</span>
+									{/if}
+									<div class="tl-node-lbl">{n.sha}</div>
+								</div>
+							{/each}
+							<div class="tl-self-marker" style="left: 50%">
+								<div class="tl-self-dot"></div>
+								<div class="tl-self-tag">PR #56847</div>
+							</div>
+						</div>
+						{#if s7Beat >= 8}
+							<div class="canvas-stat tl-caption">
+								→ reused build script from commit
+								<code>ce6321</code> (+41d) ·
+								<span class="ok-chip">✓ verifier passed</span>
+							</div>
+						{/if}
+					{:else if active === 7}
 						<div class="agent">
 							<div class="agent-meta">
 								<span class="agent-pill">openai/gpt-oss-120b</span>
@@ -763,109 +1068,153 @@
 								<span class="agent-pill">10 turns max</span>
 							</div>
 							<div class="turns">
-								{#each AGENT_LOG.slice(0, s7Visible) as t, i (t.turn)}
+								{#each AGENT_LOG.slice(0, s8Visible) as t, i (t.turn)}
 									<div class="turn" style="--i: {i}">
 										<div class="turn-head">
 											<span class="turn-num">TURN {t.turn}</span>
-											<span class="turn-label" class:obs={t.label === "observation"}
-												>{t.label}</span
+											<span
+												class="turn-label"
+												class:obs={t.label === "observation"}>{t.label}</span
 											>
 										</div>
 										<div class="turn-body">{t.body}</div>
 										{#if t.tool}
 											<div class="turn-tool">
-												<span class="tool-arrow">→</span> tool: <code>{t.tool}</code>
+												<span class="tool-arrow">→</span> tool:
+												<code>{t.tool}</code>
 											</div>
 										{/if}
 									</div>
 								{/each}
 							</div>
 						</div>
-					{:else if active === 7}
-						<div class="checks">
-							{#each CHECKS.slice(0, s8Visible) as c, i (c.cmd)}
-								<div class="check" style="--i: {i}">
-									<div class="check-head">
-										<code class="check-cmd">{c.cmd}</code>
-										<span class="check-ok">✓</span>
-									</div>
-									<div class="check-detail">{c.detail}</div>
+					{:else if active === 8}
+						<div class="machines">
+							<div class="machine machine-local" class:on={s9Beat >= 0}>
+								<div class="m-tag">local</div>
+								<div class="m-name">datasmith</div>
+								<div class="m-sub">orchestrator</div>
+							</div>
+							<div class="m-arrows">
+								<div class="m-arrow m-arrow-fwd" class:on={s9Beat >= 1}>
+									<span class="m-arrow-lbl">container</span>
+									<svg
+										class="m-arrow-glyph"
+										viewBox="0 0 40 12"
+										width="40"
+										height="12"
+										aria-hidden="true"
+									>
+										<line
+											x1="2"
+											y1="6"
+											x2="32"
+											y2="6"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M30 2 L37 6 L30 10"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
 								</div>
-							{/each}
+								<div class="m-arrow m-arrow-back" class:on={s9Beat >= 6}>
+									<svg
+										class="m-arrow-glyph"
+										viewBox="0 0 40 12"
+										width="40"
+										height="12"
+										aria-hidden="true"
+									>
+										<line
+											x1="8"
+											y1="6"
+											x2="38"
+											y2="6"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+										/>
+										<path
+											d="M10 2 L3 6 L10 10"
+											fill="none"
+											stroke="currentColor"
+											stroke-width="1.4"
+											stroke-linecap="round"
+											stroke-linejoin="round"
+										/>
+									</svg>
+									<span class="m-arrow-lbl">speedups</span>
+								</div>
+							</div>
+							<div class="machine machine-remote" class:on={s9Beat >= 1}>
+								<div class="m-tag">remote</div>
+								<div class="m-name">AWS EC2 c5ad.large</div>
+								<div class="m-sub">pinned cores · ASV runs</div>
+							</div>
 						</div>
-						{#if s8Visible >= CHECKS.length}
-							<div class="canvas-stat">
-								→ <strong>{fmt(N_BUILD)}</strong> buildable tasks
+						{#if s9Visible > 0}
+							<div class="bench">
+								<div class="bench-head">
+									<span class="bench-c1">workload</span>
+									<span class="bench-c2">base</span>
+									<span class="bench-c3">expert</span>
+								</div>
+								{#each BENCH.slice(0, s9Visible) as r, i (r.wl)}
+									<div class="bench-row" style="--i: {i}">
+										<span class="bench-c1">{r.wl}</span>
+										<span class="bench-c2">
+											<span
+												class="bar bar-base"
+												style="width: {(r.base / BENCH_MAX) * 100}%"
+											></span>
+											<span class="bench-num">{r.base.toFixed(1)} ms</span>
+										</span>
+										<span class="bench-c3">
+											<span
+												class="bar bar-expert"
+												style="width: {(r.expert / BENCH_MAX) * 100}%"
+											></span>
+											<span class="bench-num">{r.expert.toFixed(1)} ms</span>
+										</span>
+									</div>
+								{/each}
 							</div>
 						{/if}
-					{:else if active === 8}
-						<div class="bench">
-							<div class="bench-head">
-								<span class="bench-c1">workload</span>
-								<span class="bench-c2">base</span>
-								<span class="bench-c3">expert</span>
-							</div>
-							{#each BENCH.slice(0, s9Visible) as r, i (r.wl)}
-								<div class="bench-row" style="--i: {i}">
-									<span class="bench-c1">{r.wl}</span>
-									<span class="bench-c2">
-										<span class="bar bar-base" style="width: {(r.base / BENCH_MAX) * 100}%"
-										></span>
-										<span class="bench-num">{r.base.toFixed(1)} ms</span>
-									</span>
-									<span class="bench-c3">
-										<span
-											class="bar bar-expert"
-											style="width: {(r.expert / BENCH_MAX) * 100}%"
-										></span>
-										<span class="bench-num">{r.expert.toFixed(1)} ms</span>
-									</span>
-								</div>
-							{/each}
-						</div>
-						<div class="bench-aside">
-							runner: AWS EC2 <code>c5ad.large</code> · 2 vCPU · 4 GiB · 75 GiB SSD
-						</div>
 					{:else if active === 9}
-						<div class="mwu" class:on={s10Stage >= 0}>
-							<div class="mwu-cap">Mann–Whitney U · per-workload sample distribution</div>
-							<div class="mwu-hist">
-								{#each HISTO_BASE as h, i}
-									<span
-										class="hist-bar hist-base"
-										style="--h: {h * 4}px; --i: {i}"
-									></span>
-								{/each}
-								{#each HISTO_EXPERT as h, i}
-									<span
-										class="hist-bar hist-expert"
-										style="--h: {h * 4}px; --i: {i}"
-									></span>
-								{/each}
+						<div class="publish">
+							<div class="verified-row" class:on={s10Beat >= 1}>
+								<span class="verified-badge">✓ task verified</span>
+								<span class="verified-sub"
+									>cleared the 1.05× speedup gate</span
+								>
 							</div>
-							<div class="mwu-axis">base sample · expert sample (overlay)</div>
-						</div>
-						<div class="mwu-row">
-							<div class="mwu-pval" class:on={s10Stage >= 1}>
-								<span class="mwu-eq">U test</span>
-								<span class="mwu-val">p = 0.00018</span>
-								<span class="mwu-thr">α = 0.002</span>
-								<span class="mwu-pass">✓ significant</span>
-							</div>
-							<div class="ship" class:on={s10Stage >= 2}>
-								→ publish to
-								<code>formula-code.github.io</code>
+							<div class="targets">
+								{#each PUBLISH_TARGETS.slice(0, s10TargetsShown) as t, i (t.tag)}
+									<div class="target" style="--i: {i}">
+										<span class="target-tag">{t.tag}</span>
+										<div class="target-body">
+											<div class="target-name">{t.name}</div>
+											<div class="target-detail">{t.detail}</div>
+										</div>
+										<span class="target-ok">pushed</span>
+									</div>
+								{/each}
 							</div>
 						</div>
-						{#if s10Stage >= 2}
+						{#if s10Beat >= 5}
 							<div class="canvas-stat">
 								→ <strong>{fmt(FINAL_TASKS)}</strong> tasks shipped to the dataset
 							</div>
 						{/if}
 					{/if}
 				</div>
-
-				<p class="footnote">{step.footnote}</p>
 
 				<!-- Controls -->
 				<div class="controls">
@@ -886,10 +1235,20 @@
 							/></svg
 						>
 					</button>
-					<button class="play-btn" on:click={togglePlay} aria-label={playing ? "Pause" : "Play"}>
+					<button
+						class="play-btn"
+						on:click={togglePlay}
+						aria-label={playing ? "Pause" : "Play"}
+					>
 						{#if playing}
 							<svg viewBox="0 0 16 16" width="14" height="14"
-								><rect x="4" y="3" width="3" height="10" fill="currentColor" /><rect
+								><rect
+									x="4"
+									y="3"
+									width="3"
+									height="10"
+									fill="currentColor"
+								/><rect
 									x="9"
 									y="3"
 									width="3"
@@ -928,8 +1287,10 @@
 					</span>
 					<div class="speeds" role="group" aria-label="Playback speed">
 						{#each [0.5, 1, 2] as s}
-							<button class="speed" class:active={speed === s} on:click={() => setSpeed(s)}
-								>{s}×</button
+							<button
+								class="speed"
+								class:active={speed === s}
+								on:click={() => setSpeed(s)}>{s}×</button
 							>
 						{/each}
 					</div>
@@ -953,26 +1314,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-lg);
-	}
-
-	/* Eyebrow */
-	.eyebrow {
-		display: flex;
-		align-items: center;
-		gap: var(--space-md);
-	}
-	.eyebrow-num {
-		font-family: var(--mono);
-		font-size: 0.78rem;
-		font-weight: 600;
-		letter-spacing: 0.18em;
-		text-transform: uppercase;
-		color: var(--brand-red);
-	}
-	.eyebrow-rule {
-		flex: 1;
-		height: 1px;
-		background: var(--border-primary);
 	}
 
 	/* Stepper */
@@ -1583,16 +1924,17 @@
 		color: #0a6b39;
 	}
 	.cls-arrow {
-		font-family: var(--mono);
-		color: var(--border-primary);
-		font-size: 1.2rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		color: var(--border-primary);
 		transition: color 350ms;
 	}
 	.cls-arrow.on {
 		color: var(--brand-red);
+	}
+	.cls-arrow svg {
+		display: block;
 	}
 	.cls-cats {
 		display: flex;
@@ -2098,6 +2440,741 @@
 		color: #fff;
 	}
 
+	/* Combined nested stepper: phase blocks encapsulate substeps.
+	   Active phase = low-saturation tint. Active substep = high-saturation fill. */
+	.phase-strip {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		flex-wrap: wrap;
+	}
+	.phase-block {
+		flex: 0 1 auto;
+		padding: 8px 12px;
+		background: var(--bg-primary);
+		border: 1px solid var(--border-primary);
+		border-radius: 8px;
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+		align-self: center;
+		transition:
+			background 220ms,
+			border-color 220ms,
+			padding 220ms;
+	}
+	.phase-block.collapsed {
+		flex: 0 0 auto;
+		padding: 0;
+	}
+	.phase-block.collapsed .phase-head {
+		padding: 6px 14px;
+	}
+	.phase-block.done {
+		background: rgba(220, 36, 24, 0.035);
+		border-color: rgba(220, 36, 24, 0.25);
+	}
+	/* Soft (low-saturation) wash for the currently-active phase */
+	.phase-block.active {
+		background: rgba(220, 36, 24, 0.06);
+		border-color: rgba(220, 36, 24, 0.45);
+	}
+	.phase-head {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+		padding: 0 0 2px;
+		background: transparent;
+		border: 0;
+		cursor: pointer;
+		font-family: inherit;
+		color: inherit;
+		text-align: left;
+		transition: color 160ms;
+	}
+	.phase-head:hover .phase-name {
+		color: var(--brand-red);
+	}
+	.phase-head:focus-visible {
+		outline: 2px solid var(--brand-red);
+		outline-offset: 2px;
+		border-radius: 6px;
+	}
+	.phase-name {
+		font-family: var(--sans);
+		font-size: 0.82rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--text-muted);
+		transition: color 200ms;
+	}
+	.phase-block.active .phase-name,
+	.phase-block.done .phase-name {
+		color: var(--brand-red);
+	}
+	.phase-subs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 4px;
+	}
+	.substep {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		padding: 4px 9px;
+		background: var(--bg-primary);
+		border: 1px solid var(--border-primary);
+		border-radius: 999px;
+		font-family: inherit;
+		cursor: pointer;
+		transition:
+			background 160ms,
+			border-color 160ms,
+			color 160ms,
+			box-shadow 160ms;
+	}
+	.substep:hover {
+		border-color: var(--brand-red);
+	}
+	.substep-n {
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		font-weight: 700;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+	}
+	.substep-name {
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+	}
+	.substep.done {
+		background: rgba(220, 36, 24, 0.12);
+		border-color: rgba(220, 36, 24, 0.5);
+	}
+	.substep.done .substep-n,
+	.substep.done .substep-name {
+		color: var(--brand-red);
+	}
+	/* High-saturation fill for the active substep within its phase */
+	.substep.active {
+		background: var(--brand-red);
+		border-color: var(--brand-red);
+		box-shadow: 0 0 0 3px rgba(220, 36, 24, 0.18);
+	}
+	.substep.active .substep-n,
+	.substep.active .substep-name {
+		color: #fff;
+		font-weight: 700;
+	}
+	.phase-arrow {
+		display: inline-block;
+		flex: 0 0 auto;
+		color: var(--border-primary);
+		align-self: center;
+	}
+
+	/* Step 3 — ambiguous chip */
+	.amb-chip {
+		display: inline-block;
+		margin-left: 6px;
+		padding: 1px 6px;
+		font-family: var(--mono);
+		font-size: 0.62rem;
+		font-weight: 600;
+		background: rgba(148, 163, 184, 0.18);
+		color: var(--text-muted);
+		border-radius: 3px;
+		font-style: italic;
+		letter-spacing: 0.02em;
+	}
+	.pr-verdict {
+		display: inline-flex;
+		align-items: center;
+	}
+
+	/* Step 4 — single-card-at-a-time spotlight */
+	.cls-row-anim {
+		opacity: 0;
+		transform: translateY(-2px);
+		animation: slide-in 280ms ease forwards;
+		animation-delay: calc(var(--i) * 90ms);
+	}
+	.cls-breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		padding-bottom: 8px;
+		border-bottom: 1px dashed var(--border-primary);
+		flex-wrap: wrap;
+	}
+	.cls-crumb {
+		display: inline-flex;
+		align-items: center;
+		gap: 5px;
+		padding: 3px 9px;
+		border-radius: 999px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-primary);
+		transition:
+			background 200ms,
+			border-color 200ms,
+			color 200ms;
+	}
+	.cls-crumb-n {
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+	.cls-crumb-lbl {
+		text-transform: lowercase;
+	}
+	.cls-crumb.done {
+		background: rgba(220, 36, 24, 0.08);
+		border-color: rgba(220, 36, 24, 0.35);
+		color: var(--brand-red);
+	}
+	.cls-crumb.active {
+		background: var(--brand-red);
+		border-color: var(--brand-red);
+		color: #fff;
+		box-shadow: 0 0 0 3px rgba(220, 36, 24, 0.18);
+	}
+	.cls-crumb-sep {
+		color: var(--text-muted);
+		display: inline-block;
+		vertical-align: middle;
+		flex: 0 0 auto;
+	}
+	.classify {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 10px;
+		flex: 1;
+		padding: 8px 0 4px;
+	}
+	.cls-col {
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		opacity: 0;
+		transform: translateX(-12px);
+		animation: cls-slide-in 360ms ease forwards;
+		align-self: center;
+	}
+	.cls-v {
+		color: var(--text-primary);
+	}
+	.cls-arrow.on {
+		opacity: 0;
+		animation: cls-arrow-in 360ms ease forwards;
+	}
+	.cls-done {
+		background: rgba(31, 138, 76, 0.14);
+		border-color: rgba(31, 138, 76, 0.35);
+		color: #0a6b39;
+	}
+	.cls-done .cls-thinking-lbl {
+		color: #0a6b39;
+		font-style: normal;
+		font-weight: 600;
+	}
+	@keyframes cls-slide-in {
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+	@keyframes cls-arrow-in {
+		to {
+			opacity: 1;
+		}
+	}
+
+	/* Step 6 — verify_build CLI terminals */
+	.verify-grid {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 10px;
+		flex: 1;
+	}
+	.verify-term {
+		background: #0d1117;
+		color: #c9d1d9;
+		border-radius: 6px;
+		padding: 10px 12px;
+		font-family: var(--mono);
+		font-size: 0.74rem;
+		line-height: 1.55;
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		transition:
+			opacity 280ms,
+			border-color 280ms;
+		border: 1px solid transparent;
+	}
+	.verify-term.dim {
+		opacity: 0.35;
+	}
+	.verify-term.running {
+		border-color: rgba(217, 119, 6, 0.5);
+	}
+	.verify-term .term-bar {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		margin-bottom: 4px;
+	}
+	.verify-term .term-cmd {
+		color: #d2a8ff;
+		margin-bottom: 4px;
+		font-size: 0.72rem;
+	}
+	.term-dot.running {
+		background: #d97706;
+		animation: pulse-amber-dot 0.9s ease-in-out infinite;
+	}
+	.term-dot.done {
+		background: #3fb950;
+	}
+	.term-elapsed {
+		margin-left: auto;
+		font-size: 0.66rem;
+		color: #8b949e;
+		font-variant-numeric: tabular-nums;
+	}
+	.vt-line {
+		display: flex;
+		gap: 6px;
+		color: #c9d1d9;
+		opacity: 0;
+		animation: slide-in 220ms ease forwards;
+	}
+	.vt-p {
+		color: #79c0ff;
+		flex-shrink: 0;
+	}
+	.vt-line.ok {
+		color: #3fb950;
+		font-weight: 600;
+	}
+	.vt-spin-line {
+		color: #d97706;
+	}
+	.vt-spin {
+		display: inline-block;
+		width: 1ch;
+		color: #d97706;
+		font-weight: 700;
+	}
+	.vt-spin-lbl {
+		color: #8b949e;
+		font-style: italic;
+	}
+	@keyframes pulse-amber-dot {
+		0%,
+		100% {
+			box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.35);
+		}
+		50% {
+			box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.18);
+		}
+	}
+
+	/* Step 4 — thinking indicator on classifier card */
+	.cls-thinking {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		margin-top: 8px;
+		padding: 4px 10px;
+		background: rgba(220, 36, 24, 0.06);
+		border: 1px solid rgba(220, 36, 24, 0.25);
+		border-radius: 999px;
+		font-family: var(--mono);
+		font-size: 0.74rem;
+		color: var(--brand-red);
+	}
+	.cls-spin {
+		display: inline-block;
+		width: 1ch;
+		font-weight: 700;
+	}
+	.cls-thinking-lbl {
+		color: var(--text-muted);
+		font-style: italic;
+	}
+
+	/* Step 7 — try_similar as a 2D chart: day labels at the top with subtle
+	   dashed vertical gridlines, dots on the axis, sha labels below the dots,
+	   verdict badges below the sha row, PR # tag at the very bottom. */
+	.tl-wrap {
+		position: relative;
+		height: 220px;
+		padding: 0 var(--space-md);
+		margin-top: 8px;
+		flex: 1;
+	}
+	.tl-grid {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+	.tl-gridcol {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		transform: translateX(-50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+	}
+	.tl-day {
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+		padding: 1px 6px;
+		background: var(--bg-primary);
+		position: relative;
+		z-index: 2;
+		flex: 0 0 auto;
+	}
+	.tl-gridline {
+		flex: 1;
+		width: 0;
+		border-left: 1px dashed rgba(0, 0, 0, 0.07);
+	}
+	.tl-axis-line {
+		position: absolute;
+		top: 50%;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: var(--border-primary);
+		z-index: 1;
+	}
+	.tl-node {
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		z-index: 2;
+	}
+	.tl-node-dot {
+		width: 9px;
+		height: 9px;
+		border-radius: 999px;
+		background: var(--text-muted);
+		opacity: 0.55;
+		transition:
+			background 220ms,
+			box-shadow 220ms,
+			transform 220ms,
+			opacity 220ms;
+	}
+	.tl-node-lbl {
+		position: absolute;
+		top: 14px;
+		font-family: var(--mono);
+		font-size: 0.62rem;
+		color: var(--text-muted);
+		line-height: 1.1;
+		white-space: nowrap;
+		padding: 0 4px;
+		background: var(--bg-primary);
+	}
+	.tl-node.trying .tl-node-dot {
+		background: #d97706;
+		opacity: 1;
+		box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.22);
+		animation: pulse-amber 0.8s ease-in-out infinite;
+	}
+	.tl-node.decided.fail .tl-node-dot {
+		background: var(--brand-red);
+		opacity: 1;
+		box-shadow: 0 0 0 3px rgba(220, 36, 24, 0.18);
+		transform: scale(1.15);
+	}
+	.tl-node.decided.pass .tl-node-dot {
+		background: #0a6b39;
+		opacity: 1;
+		box-shadow: 0 0 0 4px rgba(31, 138, 76, 0.22);
+		transform: scale(1.3);
+	}
+	.tl-badge {
+		position: absolute;
+		top: 36px;
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		font-weight: 700;
+		padding: 2px 7px;
+		border-radius: 3px;
+		white-space: nowrap;
+		letter-spacing: 0.02em;
+		z-index: 3;
+	}
+	.tl-badge.trying {
+		background: rgba(217, 119, 6, 0.14);
+		color: #b35d04;
+		border: 1px solid rgba(217, 119, 6, 0.35);
+	}
+	.tl-badge.fail {
+		background: rgba(220, 36, 24, 0.14);
+		color: var(--brand-red);
+		border: 1px solid rgba(220, 36, 24, 0.35);
+	}
+	.tl-badge.pass {
+		background: rgba(31, 138, 76, 0.16);
+		color: #0a6b39;
+		border: 1px solid rgba(31, 138, 76, 0.4);
+	}
+	.tl-self-marker {
+		position: absolute;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		z-index: 2;
+	}
+	.tl-self-dot {
+		width: 16px;
+		height: 16px;
+		border-radius: 999px;
+		background: var(--brand-red);
+		box-shadow: 0 0 0 5px rgba(220, 36, 24, 0.18);
+		animation: pulse-dot 1.4s ease-in-out infinite;
+	}
+	.tl-self-tag {
+		position: absolute;
+		top: 70px;
+		font-family: var(--mono);
+		font-size: 0.74rem;
+		font-weight: 700;
+		color: var(--brand-red);
+		white-space: nowrap;
+		padding: 2px 6px;
+		background: var(--bg-primary);
+		z-index: 3;
+	}
+	@keyframes pulse-amber {
+		0%,
+		100% {
+			box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.22);
+		}
+		50% {
+			box-shadow: 0 0 0 8px rgba(217, 119, 6, 0.1);
+		}
+	}
+	.tl-caption code {
+		color: var(--brand-red);
+		font-weight: 600;
+	}
+	@keyframes pulse-dot {
+		0%,
+		100% {
+			box-shadow: 0 0 0 5px rgba(220, 36, 24, 0.18);
+		}
+		50% {
+			box-shadow: 0 0 0 9px rgba(220, 36, 24, 0.1);
+		}
+	}
+
+	/* Step 9 — measure two-machine handoff */
+	.machines {
+		display: grid;
+		grid-template-columns: 1fr 1.2fr 1fr;
+		gap: 8px;
+		align-items: stretch;
+	}
+	.machine {
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		padding: 10px 12px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-primary);
+		border-radius: 6px;
+		opacity: 0.4;
+		transition:
+			opacity 300ms,
+			border-color 300ms;
+	}
+	.machine.on {
+		opacity: 1;
+		border-color: var(--brand-red);
+		background: var(--brand-red-soft);
+	}
+	.m-tag {
+		font-family: var(--mono);
+		font-size: 0.62rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-muted);
+	}
+	.m-name {
+		font-family: var(--mono);
+		font-size: 0.86rem;
+		font-weight: 700;
+		color: var(--text-primary);
+	}
+	.m-sub {
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		line-height: 1.35;
+	}
+	.m-arrows {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		gap: 8px;
+	}
+	.m-arrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		font-family: var(--mono);
+		font-size: 0.7rem;
+		color: var(--brand-red);
+		opacity: 0;
+		transform: translateX(-4px);
+		transition:
+			opacity 300ms,
+			transform 300ms;
+	}
+	.m-arrow.on {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	.m-arrow-back {
+		transform: translateX(4px);
+	}
+	.m-arrow-back.on {
+		transform: translateX(0);
+	}
+	.m-arrow-lbl {
+		color: var(--text-muted);
+	}
+	.m-arrow-glyph {
+		display: block;
+		flex: 0 0 auto;
+	}
+
+	/* Step 10 — publish targets */
+	.publish {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		flex: 1;
+	}
+	.verified-row {
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+		padding-bottom: 8px;
+		border-bottom: 1px dashed var(--border-primary);
+		opacity: 0;
+		transition: opacity 320ms;
+	}
+	.verified-row.on {
+		opacity: 1;
+	}
+	.verified-badge {
+		display: inline-block;
+		padding: 3px 10px;
+		background: rgba(31, 138, 76, 0.14);
+		color: #0a6b39;
+		border-radius: 4px;
+		font-family: var(--mono);
+		font-size: 0.82rem;
+		font-weight: 700;
+	}
+	.verified-sub {
+		font-family: var(--sans);
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+	.targets {
+		display: flex;
+		flex-direction: column;
+		gap: 6px;
+	}
+	.target {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 8px 12px;
+		background: var(--bg-secondary);
+		border: 1px solid var(--border-primary);
+		border-radius: 6px;
+		opacity: 0;
+		transform: translateX(-6px);
+		animation: slide-in-x 360ms ease forwards;
+		animation-delay: calc(var(--i) * 160ms);
+	}
+	.target-tag {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 56px;
+		height: 24px;
+		padding: 0 8px;
+		border-radius: 4px;
+		background: var(--brand-red);
+		color: #fff;
+		font-family: var(--mono);
+		font-size: 0.66rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+	.target-body {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+		min-width: 0;
+	}
+	.target-name {
+		font-family: var(--sans);
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--text-primary);
+	}
+	.target-detail {
+		font-family: var(--mono);
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+	.target-ok {
+		font-family: var(--mono);
+		font-size: 0.74rem;
+		color: #0a6b39;
+		font-weight: 700;
+	}
+	@keyframes slide-in-x {
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
 	/* Responsive */
 	@media (max-width: 820px) {
 		.stepper {
@@ -2116,8 +3193,15 @@
 			transform: rotate(90deg);
 			justify-self: center;
 		}
-		.checks {
+		.verify-grid {
 			grid-template-columns: 1fr;
+		}
+		.machines {
+			grid-template-columns: 1fr;
+		}
+		.m-arrows {
+			flex-direction: row;
+			justify-content: space-around;
 		}
 		.bench-head,
 		.bench-row {
@@ -2134,6 +3218,16 @@
 		.term-name {
 			min-width: 0;
 		}
+		.phase-strip {
+			gap: 2px;
+		}
+		.phase-block {
+			min-width: 100px;
+			padding: 6px 10px;
+		}
+		.phase-sub {
+			display: none;
+		}
 	}
 
 	@media (max-width: 520px) {
@@ -2146,10 +3240,13 @@
 		.speeds {
 			margin-left: 0;
 		}
-		.tl-neigh-lbl {
-			display: none;
+		.tl-node-lbl {
+			font-size: 0.55rem;
 		}
 		.cls-cats {
+			display: none;
+		}
+		.phase-arrow {
 			display: none;
 		}
 	}

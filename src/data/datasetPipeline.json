@@ -1,0 +1,10 @@
+{
+	"_about": "Numeric inputs for visualizations in src/components/sections/DatasetPipelineViz.svelte. The `validatedSpeedupHistogram` section is derivable from harbor_runs once that table is populated; the demo arrays used elsewhere in the pipeline animation (sample PRs, neighbor SHAs, agent log) are intentionally inline since they are illustrative narrative content rather than measurements.",
+	"validatedSpeedupHistogram": {
+		"_description": "Step 10 (validate_and_publish) — histogram comparing base-only speedups against expert-patch speedups across 10 bins spanning ~1× to ~6×. Used to visualize the speedup gate at MIN_SPEEDUP_GATE=1.05×.",
+		"_sql": "WITH bins AS (SELECT generate_series(0, 9) AS bin), runs AS (SELECT max_speedup, agent_name='oracle' AS is_expert FROM harbor_runs WHERE status='success') SELECT b.bin, COUNT(*) FILTER (WHERE NOT r.is_expert) AS base_count, COUNT(*) FILTER (WHERE r.is_expert) AS expert_count FROM bins b LEFT JOIN runs r ON r.max_speedup >= 1 + b.bin*0.5 AND r.max_speedup < 1 + (b.bin+1)*0.5 GROUP BY b.bin ORDER BY b.bin;",
+		"binEdges": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0],
+		"base": [2, 4, 7, 11, 14, 12, 9, 5, 2, 1],
+		"expert": [12, 18, 14, 8, 4, 2, 1, 0, 0, 0]
+	}
+}
