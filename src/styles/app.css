@@ -141,9 +141,44 @@ h6 { font-size: var(--16px); }
 }
 
 .btn-primary:hover {
-	background: var(--link-hover);
+	background: var(--brand-red-dark);
+	border-color: var(--brand-red-dark);
 	box-shadow: var(--shadow-lg);
 	color: #fff;
+}
+
+.btn-primary-blue {
+	background: var(--brand-blue);
+	color: #fff;
+	border-color: var(--brand-blue);
+}
+
+.btn-primary-blue:hover {
+	background: var(--brand-blue-dark);
+	border-color: var(--brand-blue-dark);
+	box-shadow: var(--shadow-lg);
+	color: #fff;
+}
+
+.btn-primary-blue-dotted {
+	background: transparent;
+	color: var(--brand-blue);
+	border: 2px dotted var(--brand-blue);
+}
+
+.btn-primary-blue-dotted:hover {
+	background: var(--brand-blue-soft);
+	color: var(--brand-blue-dark);
+	border-color: var(--brand-blue-dark);
+}
+
+.btn-primary-blue-dotted.is-disabled {
+	color: var(--text-muted);
+	border-color: var(--border-secondary);
+	background: var(--bg-secondary);
+	cursor: not-allowed;
+	pointer-events: none;
+	box-shadow: none;
 }
 
 .btn-secondary {
@@ -247,15 +282,22 @@ h6 { font-size: var(--16px); }
 	gap: var(--space-sm);
 }
 
+/* Unified small "more →" link used as a top-right tail in section heads.
+   Same color (brand-red), weight, and arrow treatment everywhere. */
 .section-link {
-	font-size: 0.875rem;
+	font-family: var(--sans);
+	font-size: 0.85rem;
 	font-weight: 600;
-	color: var(--link-color);
+	color: var(--brand-red);
 	text-decoration: none;
+	white-space: nowrap;
+	border-bottom: 1px solid transparent;
+	transition: color 140ms, border-color 140ms;
 }
 
 .section-link:hover {
-	text-decoration: underline;
+	color: var(--brand-red-dark);
+	border-bottom-color: var(--brand-red);
 }
 
 /* ── Card surface (panels, abstract box, etc.) ── */

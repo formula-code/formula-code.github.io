@@ -51,7 +51,7 @@
 		{ name: "Blog", href: "/blog/" }
 	];
 
-	const ctaLink = { name: "Open Explorer →", href: "/explorer/" };
+	const ctaLink = { name: "Browse Workloads", href: "/explorer/" };
 </script>
 
 <svelte:window bind:innerWidth />
@@ -200,17 +200,18 @@
 		border-color: var(--border-primary);
 	}
 
+	/* Mirror the hero's primary CTA so the two reds match exactly. */
 	.nav-cta {
-		background: var(--accent-primary) !important;
+		background: var(--brand-red) !important;
 		color: #fff !important;
-		border-color: var(--accent-primary) !important;
+		border-color: var(--brand-red) !important;
 		font-weight: 600 !important;
 	}
 
 	.nav-cta:hover {
-		background: var(--link-hover) !important;
+		background: var(--brand-red-dark) !important;
 		color: #fff !important;
-		border-color: var(--link-hover) !important;
+		border-color: var(--brand-red-dark) !important;
 		box-shadow: var(--shadow);
 	}
 
