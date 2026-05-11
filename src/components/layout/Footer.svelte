@@ -1,6 +1,32 @@
 <script>
 	import { getContext } from "svelte";
 	import copyData from "$data/copy.json";
+	import Icon from "$components/helpers/Icon.svelte";
+
+	const socialLinks = [
+		{
+			label: "GitHub",
+			href: "https://github.com/formula-code/fc-eval",
+			kind: "lucide",
+			icon: "github"
+		},
+		{
+			label: "X (Twitter)",
+			href: "https://x.com/atharva_sehgal",
+			kind: "x"
+		},
+		{
+			label: "Bluesky",
+			href: "https://bsky.app/profile/aseg.bsky.social",
+			kind: "bluesky"
+		},
+		{
+			label: "arXiv paper",
+			href: "https://arxiv.org/abs/2603.16011",
+			kind: "lucide",
+			icon: "file-text"
+		}
+	];
 
 	const copy = getContext("copy") || copyData || {};
 	const paperFooter = copy.paperFooter || {};
@@ -83,15 +109,42 @@
 			{#if showAcknowledgements && acknowledgementsText}
 				<div class="footer-credit">{@html acknowledgementsText}</div>
 			{/if}
-			<div class="footer-links">
-				<a href="/">Overview</a>
-				<a href="/explorer/">Explorer</a>
-				<a href="/leaderboard/">Leaderboard</a>
-				<a
-					href="https://github.com/formula-code/fc-eval"
-					target="_blank"
-					rel="noopener noreferrer">GitHub</a
-				>
+			<div class="footer-meta">
+				<div class="footer-links">
+					<a href="/">Overview</a>
+					<a href="/explorer/">Explorer</a>
+					<a href="/leaderboard/">Leaderboard</a>
+				</div>
+				<div class="footer-social" aria-label="Project links">
+					{#each socialLinks as link}
+						<a
+							class="social-icon"
+							href={link.href}
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label={link.label}
+							title={link.label}
+						>
+							{#if link.kind === "lucide"}
+								<Icon name={link.icon} size="18px" strokeWidth={1.8} />
+							{:else if link.kind === "x"}
+								<svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+									<path
+										fill="currentColor"
+										d="M13.6823 10.6218 20.2391 3H18.6854L12.9921 9.61788 8.44486 3H3.2002l6.8763 10.0074L3.2002 21h1.55384l6.01226-6.9887L15.5685 21h5.2446L13.6819 10.6218ZM11.5541 13.0956 10.8574 12.0991 5.31391 4.16971h2.38662l4.47368 6.39922.6967.99654 5.81504 8.31802h-2.3866l-4.74536-6.7872Z"
+									/>
+								</svg>
+							{:else if link.kind === "bluesky"}
+								<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+									<path
+										fill="currentColor"
+										d="M5.585 4.404c2.93 2.142 6.075 6.487 7.222 8.821.114.232.176.353.213.353.037 0 .099-.121.213-.353 1.147-2.334 4.292-6.679 7.222-8.821 2.114-1.546 5.539-2.742 5.539 1.066 0 .76-.453 6.382-.72 7.298-.926 3.18-4.235 3.99-7.176 3.498 5.143.864 6.45 3.687 3.625 6.51-5.366 5.359-7.71-1.346-8.31-3.063-.109-.314-.16-.461-.16-.337 0-.124-.05.022-.16.337-.6 1.717-2.943 8.422-8.31 3.063-2.825-2.823-1.518-5.646 3.625-6.51-2.94.492-6.25-.318-7.176-3.498C.495 10.86.04 5.236.04 4.476c0-3.808 3.426-2.612 5.54-1.066"
+									/>
+								</svg>
+							{/if}
+						</a>
+					{/each}
+				</div>
 			</div>
 		</div>
 	</div>
@@ -188,7 +241,6 @@
 		font-size: 0.92rem;
 		line-height: 1.7;
 		color: var(--text-muted);
-		max-width: 70ch;
 		margin: 0;
 	}
 
@@ -235,6 +287,44 @@
 		color: var(--text-primary);
 	}
 
+	.footer-meta {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-end;
+		gap: 10px;
+	}
+
+	.footer-social {
+		display: flex;
+		gap: 10px;
+		align-items: center;
+	}
+
+	.social-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		border-radius: var(--radius-sm, 6px);
+		border: 0;
+		color: var(--text-muted);
+		text-decoration: none;
+		transition:
+			color 120ms,
+			background 120ms;
+	}
+
+	.social-icon :global(svg) {
+		display: block;
+	}
+
+	.social-icon:hover {
+		color: var(--brand-blue);
+		background: var(--bg-secondary);
+		text-decoration: none;
+	}
+
 	.footer-links {
 		display: flex;
 		gap: var(--space-md);
@@ -243,11 +333,17 @@
 
 	.footer-links a {
 		color: var(--text-muted);
-		text-decoration: underline;
-		text-decoration-color: var(--border-secondary);
+		text-decoration: none;
+		border: 0;
 	}
 
 	.footer-links a:hover {
 		color: var(--text-primary);
+	}
+
+	@media (max-width: 600px) {
+		.footer-meta {
+			align-items: flex-start;
+		}
 	}
 </style>
