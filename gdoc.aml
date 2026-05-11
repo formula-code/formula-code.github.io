@@ -31,13 +31,10 @@ superscript: 3
 label: Cornell University
 []
 [paperHeader.actions]
-label: Live dashboard
-icon: activity
-href: https://data.formulacode.org/
 label: Arxiv
 icon: file-text
 href: https://arxiv.org/abs/2603.16011
-label: GitHub
+label: Code
 icon: github
 href: https://github.com/formula-code/fc-eval
 label: Huggingface
@@ -63,17 +60,19 @@ paperHeader.disclaimer: This is an interactive blog post that presents the core 
 paperFooter.citation.show: true
 paperFooter.citation.title: Citation
 paperFooter.citation.bibtex:@misc{sehgal2025formulacode,
-	title={Evaluating Agentic Optimization on Large Codebases}, 
-	author={Atharva Sehgal and James Hou and Akanksha Sarkar and Ishaan Mantripragada and Swarat Chaudhuri and Jennifer J. Sun and Yisong Yue},
-	year={2026},
-	eprint={2603.16011},
-	archivePrefix={arXiv},
-	primaryClass={cs.SE},
-	url={https://arxiv.org/abs/2603.16011}, 
+    title={Evaluating Agentic Optimization on Large Codebases}, 
+    author={Atharva Sehgal and James Hou and Akanksha Sarkar and Ishaan Mantripragada and Swarat Chaudhuri and Jennifer J. Sun and Yisong Yue},
+    year={2026},
+    eprint={2603.16011},
+    archivePrefix={arXiv},
+    primaryClass={cs.SE},
+    url={https://arxiv.org/abs/2603.16011}, 
 }
 :end
 paperFooter.funding.title: Acknowledgements
-paperFooter.funding.description: This work was supported in part by a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a>, NSF awards III-#2505097, PPoSS-#2316161, NSF #2505096, NSF #2505098, and gifts from Point72 and OpenAI.
+  paperFooter.funding.description: This work was supported in part by a Slingshot Award from the <a href=https://www.laude.org/>Laude Institute</a>, NSF awards III-#2505097,  PPoSS-#2316161, NSF #2505096, NSF #2505098, and gifts from Point72 and OpenAI.
+
+
 
 paperFooter.relatedWork.show: false
 paperFooter.relatedWork.title: Related Work
@@ -301,31 +300,6 @@ title: Multi-Workload Tradeoffs
 description: Compared to human experts, agents make less favorable performance-cost trade-off decisions.
 []
 
-[overview.landingSections]
-title: How does FormulaCode find code optimization tasks?
-linkHref: /docs/
-linkLabel: Datasmith Documentation ↗
-
-title: Abstract
-linkLabel: Read the paper ↗
-
-title: Dataset Statistics
-linkHref: https://data.formulacode.org/
-linkLabel: Data explorer ↗
-captionTemplate: FormulaCode is updated monthly. Last refreshed on {date}. For the latest statistics, visit <a href="https://data.formulacode.org/">data.formulacode.org</a>.
-
-title: Key Findings
-linkLabel: Read the paper ↗
-
-title: Leaderboard at a glance
-linkHref: /leaderboard/
-linkLabel: Full leaderboard ↗
-
-title: Contribute
-linkLabel: Join the FormulaCode Discord ↗
-caption: FormulaCode is a living code optimization benchmark. Help us cover the long tail by opening a request for a particular data source or a particular model.
-[]
-
 overview.compactLeaderboard.title: Compact Leaderboard
 overview.compactLeaderboard.buttonText: View Full Leaderboard
 overview.submit.title: Don't see your model? Submit it!
@@ -345,3 +319,6 @@ leaderboardPage.submit.repoUrl: https://github.com/formula-code/fc-eval
 inlineLeaderboard.title: Leaderboard
 inlineLeaderboard.description: This leaderboard displays the agent advantage scores by aggregation level. Higher scores indicate better performance relative to the Oracle.
 inlineLeaderboard.instructions: Use the thresholding filters above and see how they change the leaderboard.
+
+
+
