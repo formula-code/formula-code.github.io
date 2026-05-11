@@ -8,7 +8,12 @@ export default readable("none", (set) => {
 
 	const updateScrollDirection = () => {
 		const currentScrollY = window.scrollY;
-		const direction = currentScrollY > lastScrollY ? "down" : currentScrollY < lastScrollY ? "up" : lastDirection;
+		const direction =
+			currentScrollY > lastScrollY
+				? "down"
+				: currentScrollY < lastScrollY
+					? "up"
+					: lastDirection;
 
 		if (direction !== lastDirection) {
 			set(direction);

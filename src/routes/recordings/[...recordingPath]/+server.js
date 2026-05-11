@@ -13,7 +13,10 @@ export async function GET({ params }) {
 	}
 
 	// Prevent directory traversal
-	const safePath = recordingPath.split("/").map(segment => segment.trim()).filter(Boolean);
+	const safePath = recordingPath
+		.split("/")
+		.map((segment) => segment.trim())
+		.filter(Boolean);
 	const absolutePath = path.join(recordingsRoot, ...safePath);
 
 	if (!absolutePath.startsWith(recordingsRoot)) {

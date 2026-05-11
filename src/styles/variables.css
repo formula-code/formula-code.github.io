@@ -33,8 +33,12 @@
 	--brand-blue-dark: #162a66; /* hover */
 	--brand-blue-soft: #e8edf9; /* tinted bg */
 
-	--accent-primary: var(--brand-red); /* dominant accent — CTAs, glyphs, badges */
-	--accent-secondary: var(--brand-blue); /* secondary — links, subtler highlights */
+	--accent-primary: var(
+		--brand-red
+	); /* dominant accent — CTAs, glyphs, badges */
+	--accent-secondary: var(
+		--brand-blue
+	); /* secondary — links, subtler highlights */
 	--accent-terminal: #30631b; /* used for "good" gradients */
 
 	/* Links stay blue for legibility — independent of accent-primary */
@@ -113,12 +117,13 @@
 	--128px: 8rem;
 
 	/* Font families — Lexend everywhere, Roboto Mono for code/numerics. */
-	--sans: "Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
+	--sans:
+		"Lexend", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui,
 		sans-serif;
-	--serif: "Lexend Deca", "Lexend", -apple-system, BlinkMacSystemFont,
-		sans-serif;
-	--mono: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
-		monospace;
+	--serif:
+		"Lexend Deca", "Lexend", -apple-system, BlinkMacSystemFont, sans-serif;
+	--mono:
+		"Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
 	/* Spacing scale (matches MathNet) */
 	--space-xs: 0.25rem;

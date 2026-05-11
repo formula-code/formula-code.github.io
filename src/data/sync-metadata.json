@@ -1,17 +1,17 @@
 {
-  "last_refreshed": "2026-05-11T09:57:02.827Z",
-  "source": "https://api.formulacode.org/rest/v1",
-  "components": {
-    "dashboard": {
-      "path": "src/data/dashboard.json",
-      "refreshed_at": "2026-05-11T09:57:02.827Z",
-      "from_api": true
-    },
-    "website_data": {
-      "path": "src/data/website_data.csv",
-      "refreshed_at": null,
-      "from_api": false,
-      "note": "Re-derived locally from the committed remote CSV."
-    }
-  }
+	"last_refreshed": "2026-05-11T09:57:02.827Z",
+	"source": "https://api.formulacode.org/rest/v1",
+	"components": {
+		"dashboard": {
+			"path": "src/data/dashboard.json",
+			"refreshed_at": "2026-05-11T09:57:02.827Z",
+			"from_api": true
+		},
+		"website_data": {
+			"path": "src/data/website_data.csv",
+			"refreshed_at": null,
+			"from_api": false,
+			"note": "Re-derived locally from the committed remote CSV."
+		}
+	}
 }

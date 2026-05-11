@@ -71,18 +71,38 @@ h6 {
 	font-weight: 600;
 }
 
-h1 { font-size: var(--40px); }
-h2 { font-size: var(--32px); }
-h3 { font-size: var(--24px); }
-h4 { font-size: var(--20px); }
-h5 { font-size: var(--18px); }
-h6 { font-size: var(--16px); }
+h1 {
+	font-size: var(--40px);
+}
+h2 {
+	font-size: var(--32px);
+}
+h3 {
+	font-size: var(--24px);
+}
+h4 {
+	font-size: var(--20px);
+}
+h5 {
+	font-size: var(--18px);
+}
+h6 {
+	font-size: var(--16px);
+}
 
 @media (max-width: 600px) {
-	h1 { font-size: var(--32px); }
-	h2 { font-size: var(--28px); }
-	h3 { font-size: var(--22px); }
-	h4 { font-size: var(--18px); }
+	h1 {
+		font-size: var(--32px);
+	}
+	h2 {
+		font-size: var(--28px);
+	}
+	h3 {
+		font-size: var(--22px);
+	}
+	h4 {
+		font-size: var(--18px);
+	}
 }
 
 /* ── Section title (Lexend 700, sentence-case) ── */
@@ -292,7 +312,9 @@ h6 { font-size: var(--16px); }
 	text-decoration: none;
 	white-space: nowrap;
 	border-bottom: 1px solid transparent;
-	transition: color 140ms, border-color 140ms;
+	transition:
+		color 140ms,
+		border-color 140ms;
 }
 
 .section-link:hover {

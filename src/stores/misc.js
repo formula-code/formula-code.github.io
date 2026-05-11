@@ -4,21 +4,28 @@ import medianStatsRaw from "$data/median_data.csv";
 
 // EXPLORE DATA
 // Normalize numeric fields once so downstream components can assume numbers
-const parsedData = allBenchmarkData.map(d => {
-	const agentSpeed = typeof d['agent/nop'] === "number" ? d['agent/nop'] : parseFloat(d['agent/nop']);
-	const oracleSpeed = typeof d['oracle/nop'] === "number" ? d['oracle/nop'] : parseFloat(d['oracle/nop']);
+const parsedData = allBenchmarkData.map((d) => {
+	const agentSpeed =
+		typeof d["agent/nop"] === "number"
+			? d["agent/nop"]
+			: parseFloat(d["agent/nop"]);
+	const oracleSpeed =
+		typeof d["oracle/nop"] === "number"
+			? d["oracle/nop"]
+			: parseFloat(d["oracle/nop"]);
 
 	return {
 		...d,
-		'agent/nop': Number.isFinite(agentSpeed) ? agentSpeed : undefined,
-		'oracle/nop': Number.isFinite(oracleSpeed) ? oracleSpeed : undefined
+		"agent/nop": Number.isFinite(agentSpeed) ? agentSpeed : undefined,
+		"oracle/nop": Number.isFinite(oracleSpeed) ? oracleSpeed : undefined
 	};
 });
 
 // Filter out any invalid data (keep all for now, can add filters later)
-const filteredData = parsedData.filter(d => {
+const filteredData = parsedData.filter((d) => {
 	// Basic validation - ensure required fields exist
-	if (d['agent/nop'] === undefined || d['oracle/nop'] === undefined) return false;
+	if (d["agent/nop"] === undefined || d["oracle/nop"] === undefined)
+		return false;
 
 	// // Skip ultra-high-level aggregates that add thousands of marks
 	// const levelValue = d.level ?? "";
@@ -28,7 +35,6 @@ const filteredData = parsedData.filter(d => {
 	// 	normalizedLevel === "0" ||
 	// 	normalizedLevel === 0
 	// ) return false;
-
 
 	// if (d.agent_id !== "terminus-2,oracle") return false;
 
@@ -49,7 +55,7 @@ export const agentSelected = writable(null);
 export const benchmarkSelected = writable(false);
 
 // PERFORMANCE THRESHOLDS
-export const thresholdAgentNum = writable(1.0);  // Agent speedup threshold
+export const thresholdAgentNum = writable(1.0); // Agent speedup threshold
 export const thresholdOracleNum = writable(1.0); // Expert Human speedup threshold
 
 // AGENT CARDS
@@ -70,11 +76,21 @@ export const activeSection = writable("Finding the Deals");
 export const chartScrollTrigger = writable(false);
 
 // DERIVED STORES - Per-agent statistics
-import { getUniqueAgents, getUniqueLevels, getUniqueTypes } from "$utils/benchmarkData.js";
+import {
+	getUniqueAgents,
+	getUniqueLevels,
+	getUniqueTypes
+} from "$utils/benchmarkData.js";
 
-export const uniqueAgents = derived(bigScatterData, $data => getUniqueAgents($data));
-export const uniqueLevels = derived(bigScatterData, $data => getUniqueLevels($data));
-export const uniqueTypes = derived(bigScatterData, $data => getUniqueTypes($data));
+export const uniqueAgents = derived(bigScatterData, ($data) =>
+	getUniqueAgents($data)
+);
+export const uniqueLevels = derived(bigScatterData, ($data) =>
+	getUniqueLevels($data)
+);
+export const uniqueTypes = derived(bigScatterData, ($data) =>
+	getUniqueTypes($data)
+);
 
 // Calculate median statistics for each agent
 const agentStatsMap = medianStatsRaw.reduce((acc, row) => {
@@ -139,30 +155,32 @@ export const selectedAgentReason = derived(
 */
 
 // Map agent IDs to copy.json keys for narrative access
-export const agentCopyKey = derived(
-	agentSelected,
-	($agentSelected) => {
-		if (!$agentSelected) return null;
+export const agentCopyKey = derived(agentSelected, ($agentSelected) => {
+	if (!$agentSelected) return null;
 
-		// Extract the model/agent part from "terminus-2,gpt-5" format
-		const parts = $agentSelected.split(',');
-		if (parts.length < 2) return null;
+	// Extract the model/agent part from "terminus-2,gpt-5" format
+	const parts = $agentSelected.split(",");
+	if (parts.length < 2) return null;
 
-		const agent = parts[1].trim().toLowerCase();
+	const agent = parts[1].trim().toLowerCase();
 
-		// Map to copy.json keys
-		if (agent === 'gpt-5') return 'gpt5';
-		if (agent === 'claude') return 'claude';
-		if (agent === 'oracle') return 'oracle';
+	// Map to copy.json keys
+	if (agent === "gpt-5") return "gpt5";
+	if (agent === "claude") return "claude";
+	if (agent === "oracle") return "oracle";
 
-		return null;
-	}
-);
+	return null;
+});
 
-function calculateDistance(agentSpeedup, oracleSpeedup, agentThresh, oracleThresh) {
+function calculateDistance(
+	agentSpeedup,
+	oracleSpeedup,
+	agentThresh,
+	oracleThresh
+) {
 	if (agentSpeedup === undefined || oracleSpeedup === undefined) return null;
 
-	const numerator = (oracleThresh * agentSpeedup) - (agentThresh * oracleSpeedup);
+	const numerator = oracleThresh * agentSpeedup - agentThresh * oracleSpeedup;
 	const denominator = Math.sqrt(agentThresh ** 2 + oracleThresh ** 2);
 
 	return numerator / denominator;
@@ -175,8 +193,15 @@ export const agentAdvantage = derived(
 		if (!$data || $data.length === 0) return 0;
 
 		const distances = $data
-			.map(d => calculateDistance(d['agent/nop'], d['oracle/nop'], $agentThresh, $oracleThresh))
-			.filter(d => d !== null);
+			.map((d) =>
+				calculateDistance(
+					d["agent/nop"],
+					d["oracle/nop"],
+					$agentThresh,
+					$oracleThresh
+				)
+			)
+			.filter((d) => d !== null);
 
 		if (distances.length === 0) return 0;
 
@@ -194,7 +219,7 @@ export const agentAdvantageByAgent = derived(
 		// Group by agent
 		const byAgent = {};
 
-		$data.forEach(d => {
+		$data.forEach((d) => {
 			const agent = d.agent_id;
 			if (!agent) return;
 
@@ -202,7 +227,12 @@ export const agentAdvantageByAgent = derived(
 				byAgent[agent] = [];
 			}
 
-			const distance = calculateDistance(d['agent/nop'], d['oracle/nop'], $agentThresh, $oracleThresh);
+			const distance = calculateDistance(
+				d["agent/nop"],
+				d["oracle/nop"],
+				$agentThresh,
+				$oracleThresh
+			);
 			if (distance !== null) {
 				byAgent[agent].push(distance);
 			}
@@ -210,7 +240,7 @@ export const agentAdvantageByAgent = derived(
 
 		// Calculate average for each agent
 		const result = {};
-		Object.keys(byAgent).forEach(agent => {
+		Object.keys(byAgent).forEach((agent) => {
 			const distances = byAgent[agent];
 			const sum = distances.reduce((acc, val) => acc + val, 0);
 			result[agent] = sum / distances.length;
@@ -229,7 +259,7 @@ export const agentAdvantageByAgentAndLevel = derived(
 		// Group by agent, then by level
 		const byAgentAndLevel = {};
 
-		$data.forEach(d => {
+		$data.forEach((d) => {
 			const agent = d.agent_id;
 			const level = d.level;
 			if (!agent || !level) return;
@@ -242,7 +272,12 @@ export const agentAdvantageByAgentAndLevel = derived(
 				byAgentAndLevel[agent][level] = [];
 			}
 
-			const distance = calculateDistance(d['agent/nop'], d['oracle/nop'], $agentThresh, $oracleThresh);
+			const distance = calculateDistance(
+				d["agent/nop"],
+				d["oracle/nop"],
+				$agentThresh,
+				$oracleThresh
+			);
 			if (distance !== null) {
 				byAgentAndLevel[agent][level].push(distance);
 			}
@@ -250,9 +285,9 @@ export const agentAdvantageByAgentAndLevel = derived(
 
 		// Calculate average for each agent-level combination
 		const result = {};
-		Object.keys(byAgentAndLevel).forEach(agent => {
+		Object.keys(byAgentAndLevel).forEach((agent) => {
 			result[agent] = {};
-			Object.keys(byAgentAndLevel[agent]).forEach(level => {
+			Object.keys(byAgentAndLevel[agent]).forEach((level) => {
 				const distances = byAgentAndLevel[agent][level];
 				const sum = distances.reduce((acc, val) => acc + val, 0);
 				result[agent][level] = sum / distances.length;
@@ -272,7 +307,7 @@ export const overallAgentAdvantage = derived(
 		// Group by agent
 		const byAgent = {};
 
-		$data.forEach(d => {
+		$data.forEach((d) => {
 			const agent = d.agent_id;
 			if (!agent) return;
 
@@ -280,7 +315,12 @@ export const overallAgentAdvantage = derived(
 				byAgent[agent] = [];
 			}
 
-			const distance = calculateDistance(d['agent/nop'], d['oracle/nop'], $agentThresh, $oracleThresh);
+			const distance = calculateDistance(
+				d["agent/nop"],
+				d["oracle/nop"],
+				$agentThresh,
+				$oracleThresh
+			);
 			if (distance !== null) {
 				byAgent[agent].push(distance);
 			}
@@ -288,7 +328,7 @@ export const overallAgentAdvantage = derived(
 
 		// Calculate average for each agent
 		const result = {};
-		Object.keys(byAgent).forEach(agent => {
+		Object.keys(byAgent).forEach((agent) => {
 			const distances = byAgent[agent];
 			const sum = distances.reduce((acc, val) => acc + val, 0);
 			result[agent] = sum / distances.length;

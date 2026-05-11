@@ -75,8 +75,7 @@ export function eventsToLines(events) {
 		const text = runs.map((r) => r.text).join("") + cur;
 		if (cur && activeColor !== (runs[runs.length - 1]?.color ?? null))
 			runs.push({ text: cur, color: activeColor });
-		else if (cur && runs.length)
-			runs[runs.length - 1].text += cur;
+		else if (cur && runs.length) runs[runs.length - 1].text += cur;
 		else if (cur) runs.push({ text: cur, color: activeColor });
 		lines.push({ text, runs, time: t, startTime: curStart });
 		cur = "";
@@ -99,9 +98,7 @@ export function eventsToLines(events) {
 			const code = match[2];
 			if (code === "m") {
 				// SGR — apply or reset color
-				const nums = params
-					.split(";")
-					.map((s) => Number(s) || 0);
+				const nums = params.split(";").map((s) => Number(s) || 0);
 				for (const n of nums) {
 					if (n === 0 || n === 39) {
 						commitSegment();

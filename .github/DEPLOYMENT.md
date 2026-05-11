@@ -66,6 +66,7 @@ https://<username>.github.io/<repository-name>/
 ```
 
 For example:
+
 - `https://yourusername.github.io/www/`
 
 ## Troubleshooting
@@ -96,11 +97,13 @@ For example:
 ## Workflow File Location
 
 The workflow configuration is located at:
+
 ```
 .github/workflows/deploy.yml
 ```
 
 You can modify this file to:
+
 - Change the trigger branch
 - Add additional build steps
 - Modify deployment behavior
@@ -116,6 +119,7 @@ If your build requires environment variables:
 4. Reference them in the workflow using `${{ secrets.SECRET_NAME }}`
 
 Example:
+
 ```yaml
 - name: Build static site
   run: npm run build
@@ -132,6 +136,7 @@ If you want to disable automatic deployment:
 3. Click the **⋮** menu and select **Disable workflow**
 
 Or delete the workflow file:
+
 ```bash
 rm .github/workflows/deploy.yml
 git add .github/workflows/deploy.yml

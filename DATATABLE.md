@@ -1,153 +1,161 @@
 # DataTable Migration Plan
 
 ## Overview
+
 Migrate the PaperHeader leaderboard from a basic HTML table to a shadcn-svelte DataTable component using svelte-headless-table (Svelte 4 compatible). This will provide better mobile responsiveness, sorting, filtering, and a more professional appearance.
 
 ## Phase 1: Installation & Setup
 
 ### 1.1 Install Dependencies
+
 ```bash
 npx shadcn-svelte@latest add table
 npm install svelte-headless-table
 ```
 
 ### 1.2 Create Data File
+
 Create `src/data/results.json` with structure:
+
 ```json
 {
-  "leaderboard": [
-    {
-      "id": "1",
-      "agent": "terminus-2,gpt-5",
-      "displayName": "GPT-5",
-      "levels": {
-        "param-level": 0.1500,
-        "func-level": 0.1200,
-        "class-level": 0.0800,
-        "module-level": 0.0500
-      },
-      "overall": 0.1000
-    },
-    {
-      "id": "2",
-      "agent": "terminus-2,claude",
-      "displayName": "Claude Sonnet 4.0",
-      "levels": {
-        "param-level": 0.1300,
-        "func-level": 0.1000,
-        "class-level": 0.0600,
-        "module-level": 0.0300
-      },
-      "overall": 0.0800
-    },
-    {
-      "id": "3",
-      "agent": "terminus-2,oracle",
-      "displayName": "Expert Human (Human)",
-      "levels": {
-        "param-level": 0.2500,
-        "func-level": 0.2200,
-        "class-level": 0.1800,
-        "module-level": 0.1500
-      },
-      "overall": 0.2000
-    }
-  ],
-  "colorThresholds": {
-    "high": 0.1,
-    "medium": 0
-  }
+	"leaderboard": [
+		{
+			"id": "1",
+			"agent": "terminus-2,gpt-5",
+			"displayName": "GPT-5",
+			"levels": {
+				"param-level": 0.15,
+				"func-level": 0.12,
+				"class-level": 0.08,
+				"module-level": 0.05
+			},
+			"overall": 0.1
+		},
+		{
+			"id": "2",
+			"agent": "terminus-2,claude",
+			"displayName": "Claude Sonnet 4.0",
+			"levels": {
+				"param-level": 0.13,
+				"func-level": 0.1,
+				"class-level": 0.06,
+				"module-level": 0.03
+			},
+			"overall": 0.08
+		},
+		{
+			"id": "3",
+			"agent": "terminus-2,oracle",
+			"displayName": "Expert Human (Human)",
+			"levels": {
+				"param-level": 0.25,
+				"func-level": 0.22,
+				"class-level": 0.18,
+				"module-level": 0.15
+			},
+			"overall": 0.2
+		}
+	],
+	"colorThresholds": {
+		"high": 0.1,
+		"medium": 0
+	}
 }
 ```
 
 ## Phase 2: Create Component Structure
 
 ### 2.1 Component Files
+
 Create in `src/components/api-leaderboard/`:
+
 - `APILeaderboard.svelte` - Main component
 - `api-leaderboard-columns.ts` - Column definitions
 - `api-leaderboard.css` - Custom styling
 
 ### 2.2 Column Definitions (`api-leaderboard-columns.ts`)
+
 ```typescript
 import { createRender } from "svelte-headless-table";
 import type { Payment } from "./types";
 
 // Helper functions
 function formatAdvantage(value: number | null | undefined): string {
-  if (value === null || value === undefined) return "—";
-  return value.toFixed(4);
+	if (value === null || value === undefined) return "—";
+	return value.toFixed(4);
 }
 
 function getCellClass(value: number | null | undefined): string {
-  if (value === null || value === undefined) return "";
-  if (value >= 0.1) return "high";
-  if (value >= 0) return "medium";
-  return "low";
+	if (value === null || value === undefined) return "";
+	if (value >= 0.1) return "high";
+	if (value >= 0) return "medium";
+	return "low";
 }
 
 // Column definitions using svelte-headless-table
 export const columns = table.createColumns([
-  table.column({
-    accessor: "displayName",
-    header: "Agent",
-    plugins: {
-      sort: { disable: false },
-      filter: { exclude: false }
-    }
-  }),
-  table.column({
-    accessor: (row) => row.levels["param-level"],
-    header: "L1: Parameter",
-    cell: ({ value }) => {
-      const formatted = formatAdvantage(value);
-      const colorClass = getCellClass(value);
-      return `<span class="score-cell ${colorClass}">${formatted}</span>`;
-    },
-    plugins: {
-      sort: { disable: false }
-    }
-  }),
-  table.column({
-    accessor: (row) => row.levels["func-level"],
-    header: "L2: Function",
-    cell: ({ value }) => {
-      const formatted = formatAdvantage(value);
-      const colorClass = getCellClass(value);
-      return `<span class="score-cell ${colorClass}">${formatted}</span>`;
-    }
-  }),
-  table.column({
-    accessor: (row) => row.levels["class-level"],
-    header: "L3: Class",
-    cell: ({ value }) => {
-      const formatted = formatAdvantage(value);
-      const colorClass = getCellClass(value);
-      return `<span class="score-cell ${colorClass}">${formatted}</span>`;
-    }
-  }),
-  table.column({
-    accessor: (row) => row.levels["module-level"],
-    header: "L4: Module",
-    cell: ({ value }) => {
-      const formatted = formatAdvantage(value);
-      const colorClass = getCellClass(value);
-      return `<span class="score-cell ${colorClass}">${formatted}</span>`;
-    }
-  }),
-  table.column({
-    accessor: "overall",
-    header: "Overall",
-    cell: ({ value }) => {
-      const formatted = formatAdvantage(value);
-      const colorClass = getCellClass(value);
-      return `<span class="score-cell overall-cell ${colorClass}">${formatted}</span>`;
-    }
-  })
+	table.column({
+		accessor: "displayName",
+		header: "Agent",
+		plugins: {
+			sort: { disable: false },
+			filter: { exclude: false }
+		}
+	}),
+	table.column({
+		accessor: (row) => row.levels["param-level"],
+		header: "L1: Parameter",
+		cell: ({ value }) => {
+			const formatted = formatAdvantage(value);
+			const colorClass = getCellClass(value);
+			return `<span class="score-cell ${colorClass}">${formatted}</span>`;
+		},
+		plugins: {
+			sort: { disable: false }
+		}
+	}),
+	table.column({
+		accessor: (row) => row.levels["func-level"],
+		header: "L2: Function",
+		cell: ({ value }) => {
+			const formatted = formatAdvantage(value);
+			const colorClass = getCellClass(value);
+			return `<span class="score-cell ${colorClass}">${formatted}</span>`;
+		}
+	}),
+	table.column({
+		accessor: (row) => row.levels["class-level"],
+		header: "L3: Class",
+		cell: ({ value }) => {
+			const formatted = formatAdvantage(value);
+			const colorClass = getCellClass(value);
+			return `<span class="score-cell ${colorClass}">${formatted}</span>`;
+		}
+	}),
+	table.column({
+		accessor: (row) => row.levels["module-level"],
+		header: "L4: Module",
+		cell: ({ value }) => {
+			const formatted = formatAdvantage(value);
+			const colorClass = getCellClass(value);
+			return `<span class="score-cell ${colorClass}">${formatted}</span>`;
+		}
+	}),
+	table.column({
+		accessor: "overall",
+		header: "Overall",
+		cell: ({ value }) => {
+			const formatted = formatAdvantage(value);
+			const colorClass = getCellClass(value);
+			return `<span class="score-cell overall-cell ${colorClass}">${formatted}</span>`;
+		}
+	})
 ]);
 ```
 
 ### 2.3 Main Component (`APILeaderboard.svelte`)
+
 ```svelte
 <script lang="ts">
   import { readable } from "svelte/store";
@@ -268,81 +276,85 @@ export const columns = table.createColumns([
 ## Phase 3: Custom Styling
 
 ### 3.1 Create `api-leaderboard.css`
+
 Match existing Leaderboard.svelte styles:
+
 ```css
 .api-leaderboard {
-  width: 100%;
-  padding: 4rem 0;
-  background: var(--wine-black);
+	width: 100%;
+	padding: 4rem 0;
+	background: var(--wine-black);
 }
 
 .leaderboard-header h3 {
-  color: var(--wine-tan);
-  font-size: var(--36px);
-  font-weight: 700;
-  margin: 0 0 1rem 0;
-  text-align: center;
+	color: var(--wine-tan);
+	font-size: var(--36px);
+	font-weight: 700;
+	margin: 0 0 1rem 0;
+	text-align: center;
 }
 
 .description {
-  color: var(--wine-dark-tan);
-  font-size: var(--16px);
-  text-align: center;
-  margin: 0 0 2rem 0;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
+	color: var(--wine-dark-tan);
+	font-size: var(--16px);
+	text-align: center;
+	margin: 0 0 2rem 0;
+	max-width: 700px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .table-wrapper {
-  overflow-x: auto;
-  border-radius: 3px;
-  border: 1px solid var(--wine-dark-gray);
+	overflow-x: auto;
+	border-radius: 3px;
+	border: 1px solid var(--wine-dark-gray);
 }
 
 /* Score cell color coding */
 :global(.score-cell.high) {
-  color: #0f9d58;
+	color: #0f9d58;
 }
 
 :global(.score-cell.medium) {
-  color: #d8d8d8;
+	color: #d8d8d8;
 }
 
 :global(.score-cell.low) {
-  color: #e84545;
+	color: #e84545;
 }
 
 :global(.overall-cell) {
-  font-weight: 700;
-  font-size: var(--16px);
-  background: rgba(207, 202, 191, 0.05);
+	font-weight: 700;
+	font-size: var(--16px);
+	background: rgba(207, 202, 191, 0.05);
 }
 
 /* Responsive breakpoints */
 @media (max-width: 900px) {
-  .leaderboard-header h3 {
-    font-size: var(--28px);
-  }
+	.leaderboard-header h3 {
+		font-size: var(--28px);
+	}
 }
 
 @media (max-width: 700px) {
-  .leaderboard-header h3 {
-    font-size: var(--24px);
-  }
+	.leaderboard-header h3 {
+		font-size: var(--24px);
+	}
 }
 
 @media (max-width: 480px) {
-  .leaderboard-header h3 {
-    font-size: var(--20px);
-  }
+	.leaderboard-header h3 {
+		font-size: var(--20px);
+	}
 }
 ```
 
 ## Phase 4: Integration
 
 ### 4.1 Update PaperHeader.svelte
+
 Replace the hardcoded table section with:
+
 ```svelte
 <script>
   import APILeaderboard from "$components/api-leaderboard/APILeaderboard.svelte";
@@ -353,6 +365,7 @@ Replace the hardcoded table section with:
 ```
 
 ### 4.2 Remove Old Code
+
 - Remove hardcoded `tableData`, `levels`, `LEVEL_DISPLAY_LABELS` from PaperHeader.svelte
 - Remove old table HTML structure (lines 188-223)
 - Remove old table CSS (lines 382-487)
@@ -361,6 +374,7 @@ Replace the hardcoded table section with:
 ## Phase 5: Enhanced Features (Optional)
 
 ### 5.1 Add Column Visibility Toggle
+
 ```svelte
 <DropdownMenu.Root>
   <DropdownMenu.Trigger asChild let:builder>
@@ -379,6 +393,7 @@ Replace the hardcoded table section with:
 ```
 
 ### 5.2 Add Export to CSV
+
 ```typescript
 function exportToCSV() {
   const csv = /* generate CSV from tableData */;
@@ -403,6 +418,7 @@ function exportToCSV() {
 ✅ Component is reusable and importable
 
 ## Files to Create
+
 1. `src/data/results.json` - Leaderboard data
 2. `src/components/api-leaderboard/APILeaderboard.svelte` - Main component
 3. `src/components/api-leaderboard/api-leaderboard-columns.ts` - Column definitions
@@ -410,10 +426,12 @@ function exportToCSV() {
 5. `DATATABLE.md` - This implementation plan
 
 ## Files to Modify
+
 1. `src/components/PaperHeader.svelte` - Replace table with APILeaderboard component
 2. `package.json` - Add svelte-headless-table dependency
 
 ## Notes
+
 - Uses **svelte-headless-table** (Svelte 4 compatible) instead of TanStack Table
 - Maintains exact color scheme: green (#0f9d58), gray (#d8d8d8), red (#e84545)
 - Preserves 4 decimal place formatting

@@ -2,8 +2,8 @@
 
 This document is the long-form companion to **Variation B** in `FLOWCHART.md`
 (reproduced below). It exists to answer, for someone who has never seen the
-codebase: *why is this pipeline structured the way it is, and not some other
-way?* Most of the rationale is not in the code — it's in the FormulaCode
+codebase: _why is this pipeline structured the way it is, and not some other
+way?_ Most of the rationale is not in the code — it's in the FormulaCode
 paper (`formulacode-paper/analysis/paper/sections/dataset/construction.tex`
 and `appendix/dataset.tex`) and in operational decisions made over the
 project's lifetime. We pull both together here.
@@ -73,9 +73,9 @@ flowchart LR
 
 ## 0. Top-level rationale: why phases at all?
 
-The eight CLI stages are an *operational* decomposition (each is a
+The eight CLI stages are an _operational_ decomposition (each is a
 resumable, separately-scheduled `fc-data --stage N` job). The four phases
-are a *conceptual* decomposition that maps onto how the paper itself
+are a _conceptual_ decomposition that maps onto how the paper itself
 narrates dataset construction. The paper (§3.1, `construction.tex`) groups
 the work into exactly four stages:
 
@@ -89,22 +89,22 @@ the work into exactly four stages:
 > performance workloads.
 
 Variation B mirrors that grouping 1:1, then exposes the implementation
-substages inside each phase. The split between *paper stage* and *code
-stage* matters because:
+substages inside each phase. The split between _paper stage_ and _code
+stage_ matters because:
 
 - **Paper stage = "what is this for?"** Each phase corresponds to one
-  *kind of evidence* about a PR (does it exist, is it perf, can it be
+  _kind of evidence_ about a PR (does it exist, is it perf, can it be
   built, does it actually speed things up).
 - **Code stage = "what is this run as?"** Each stage is a unit of resumable
   work with its own concurrency knob, table writes, and failure logging.
   Splitting `resolve_packages`, `render_problems`, and `synthesize_images`
   apart (instead of bundling them as the paper's "stage 3") is a
-  *practical* decision: each one can fail or be re-run independently,
+  _practical_ decision: each one can fail or be re-run independently,
   each touches a different external service, and each has different
   per-item cost (uv compile is seconds; LLM synthesis is dollars).
 
 The two gates on the diagram (the diamonds) are the only two places where
-the pipeline genuinely *throws PRs away* on quality grounds. Everything
+the pipeline genuinely _throws PRs away_ on quality grounds. Everything
 else either drops on hard errors (couldn't fetch, couldn't build) or
 defers (rate-limited, retry later). Calling the gates out visually is the
 single most important thing the diagram does.
@@ -119,14 +119,15 @@ suite, then scrape every PR they've merged in the target window.
 **Stages.** `scrape_repos` (1) and `scrape_commits` (2).
 
 **Why a separate phase.** Discovery is the only phase that operates on
-*the public GitHub population* rather than on rows in our own DB. It is
+_the public GitHub population_ rather than on rows in our own DB. It is
 therefore the only phase whose throughput is bounded by GitHub's rate
 limits rather than by our compute. Operationally we run it monthly to
 pick up new PRs (`fc-data --start-date 2026-01-01 --end-date 2026-01-31`);
 it should be cheap and idempotent.
 
 **How.**
-- *Stage 1:* the production discovery path is a CommonSQL query against
+
+- _Stage 1:_ the production discovery path is a CommonSQL query against
   the [GitHub Public Dataset on BigQuery](https://console.cloud.google.com/marketplace/product/github/github-repos)
   that filters for `asv.conf.json` presence, ≥ `min_stars` (paper:
   `\minStars{}`; code default 500), non-fork, recent activity, Python
@@ -134,7 +135,7 @@ it should be cheap and idempotent.
   The code also supports a fallback path through the GitHub Search API
   (slower, rate-limited, same result set). Outputs land in
   `repositories`.
-- *Stage 2:* for each row in `repositories`, paginate merged PRs via the
+- _Stage 2:_ for each row in `repositories`, paginate merged PRs via the
   GitHub GraphQL API (`paginate_merged_prs`), fetch per-PR file changes
   and the unified diff via REST, and run a regex/heuristic
   `symbolic_compliance()` that flags PRs whose commit message contains
@@ -148,9 +149,9 @@ it should be cheap and idempotent.
 **Why the symbolic gate is here, not later.** The paper is explicit that
 this is a cost-control measure: the LLM classifier in phase ② is
 expensive, so we do the cheap regex pre-filter first and only spend
-LLM tokens on PRs that have at least a *prima facie* perf signal. The
-paper also notes the gate is intentionally lossy on the *negative* side
-(filters away non-perf), and intentionally permissive on the *positive*
+LLM tokens on PRs that have at least a _prima facie_ perf signal. The
+paper also notes the gate is intentionally lossy on the _negative_ side
+(filters away non-perf), and intentionally permissive on the _positive_
 side (anything ambiguous is kept and forwarded to the LLM). This recall-
 over-precision bias is repeated in stage 3.
 
@@ -167,26 +168,27 @@ monthly run picks up what was missed.
 
 ## 2. Phase ② — Judge
 
-**What.** For each symbolically-flagged PR, decide whether it is *bona
-fide* a performance optimization, and if so, label it with an
+**What.** For each symbolically-flagged PR, decide whether it is _bona
+fide_ a performance optimization, and if so, label it with an
 optimization category and an estimated difficulty.
 
 **Stages.** `classify_prs` (3) only.
 
 **Why a separate phase.** This is the first phase that costs LLM tokens
-per item, and it is the first phase whose decisions are *semantic*
-rather than *structural*. Splitting it from discovery means we can
+per item, and it is the first phase whose decisions are _semantic_
+rather than _structural_. Splitting it from discovery means we can
 re-run classification (e.g. when we swap LLMs or refine prompts) without
 re-scraping GitHub.
 
 **How.**
+
 - Reads PRs where `is_performance_commit_symbolic=True` and either
   `is_performance_commit IS NULL` or `--force` was passed.
 - Runs DSPy's `ProblemClassifier.classify(description, patch,
-  file_change_summary)` to get a yes/no on perf.
+file_change_summary)` to get a yes/no on perf.
 - If yes, runs a second DSPy pass (`ClassifyJudge.classify`) for
-  category (13-class taxonomy from the paper: *Cache and Reuse*, *Use
-  Better Algorithm*, *Micro Optimizations*, *Use Lower Level System*,
+  category (13-class taxonomy from the paper: _Cache and Reuse_, _Use
+  Better Algorithm_, _Micro Optimizations_, _Use Lower Level System_,
   …) and difficulty (Easy / Medium / Hard).
 - Updates `pull_requests` with `is_performance_commit`,
   `classification`, `difficulty`. Concurrent fan-out at N=5.
@@ -201,7 +203,7 @@ re-scraping GitHub.
 > yield no measurable speedup.
 
 This is the load-bearing design decision for the entire pipeline. The
-final speedup gate in phase ④ is *the* arbiter of truth, so every
+final speedup gate in phase ④ is _the_ arbiter of truth, so every
 upstream filter is allowed to be loose. It is much cheaper to over-include
 here and have a PR discarded after Harbor measures no speedup than it is
 to under-include and miss a real optimization that will never surface
@@ -224,7 +226,7 @@ table — the classification is small enough to inline.
 
 ## 3. Phase ③ — Build a runnable artifact
 
-This phase transforms a *labelled PR* into a *thing we can actually run*.
+This phase transforms a _labelled PR_ into a _thing we can actually run_.
 It is the longest phase, the most expensive, and the only one whose
 internal substages have a strict ordering: env → context → container.
 
@@ -275,8 +277,8 @@ performance accuracy, but the build environment must be deterministic).
 
 **What.** Build a self-contained problem statement for the PR by
 aggregating the PR body + linked issues, then asking an LLM to extract
-the *initial observation*, *triage attempts*, *solution overview*, and
-*solution observations* from the PR body. Render the result through a
+the _initial observation_, _triage attempts_, _solution overview_, and
+_solution observations_ from the PR body. Render the result through a
 Jinja2 template. This is the text a downstream agent (Harbor's oracle,
 or a benchmark contestant) will actually read.
 
@@ -290,13 +292,13 @@ or a benchmark contestant) will actually read.
 > ambiguous task (an agent may optimize a different aspect than the
 > original change).
 
-So we can't just dump the issue body — we need the LLM to *narrow* the
+So we can't just dump the issue body — we need the LLM to _narrow_ the
 problem to the specific direction the PR took. The extracted sentences
 are symbolically verified for fidelity (high LCS ratio with the original
 PR body) so the agent can't drift into hallucinated requirements.
 
 **Hard prerequisite gate.** Stage 5 requires `packages.can_install=True`
-*and* the PR must have at least one linked issue plus a non-empty body
+_and_ the PR must have at least one linked issue plus a non-empty body
 (paper §A.2.4 "Context Filtering"). PRs without both are dropped — they
 literally lack the raw material for a problem statement.
 
@@ -306,7 +308,7 @@ update to `pull_requests.rendered_problem` and `problem_description`.
 ### 3c. `synthesize_images` (stage 6) — "produce a Docker image that builds"
 
 **What.** Generate the shell scripts (`docker_build_pkg.sh`,
-`docker_build_run.sh`) that build an *editable* install of the package
+`docker_build_run.sh`) that build an _editable_ install of the package
 inside a Docker container at the PR's merge commit, such that ASV,
 pytest, and our snapshot-testing tool all run.
 
@@ -315,13 +317,13 @@ contribution of the paper's stage 3 ("Synthesizing Reproducible
 Environments"). The state machine in code mirrors the paper's
 "chronological retrieval + reflexive agent" design exactly:
 
-| State | Maps to paper section |
-|---|---|
-| `CHECK_CACHE` | reuse-of-prior-builds (cost amortization) |
+| State                          | Maps to paper section                                                               |
+| ------------------------------ | ----------------------------------------------------------------------------------- |
+| `CHECK_CACHE`                  | reuse-of-prior-builds (cost amortization)                                           |
 | `FIND_SIMILAR` / `TRY_SIMILAR` | "Chronological Retrieval" (10 nearest neighbours by commit date from the same repo) |
-| `TRY_DEFAULT` | template-based fallback |
-| `LLM_GENERATE` | "Agentic Synthesis" (10 reflexion turns max) |
-| `FAIL` | drop and log |
+| `TRY_DEFAULT`                  | template-based fallback                                                             |
+| `LLM_GENERATE`                 | "Agentic Synthesis" (10 reflexion turns max)                                        |
+| `FAIL`                         | drop and log                                                                        |
 
 **Why the cache → similar → default → LLM cascade.** Paper §A.2.5,
 "Chronological Retrieval":
@@ -375,7 +377,7 @@ PRs that pass the speedup threshold.
 
 **Stages.** `harbor_healthcheck` (7), `publish` (8).
 
-**Why a separate phase.** This is the *only* phase that produces ground
+**Why a separate phase.** This is the _only_ phase that produces ground
 truth. Everything upstream is suggestive — only Harbor on Daytona
 actually times the code. Splitting verify from ship means we can
 re-measure (e.g. if hardware changes invalidate prior measurements,
@@ -385,7 +387,7 @@ or if we want fresh trials) without re-publishing.
 
 **What.** For each PR with a built container, hand off to Harbor (the
 benchmark orchestrator) which materializes a task directory, launches
-the *oracle* agent (a no-op agent that simply applies the human
+the _oracle_ agent (a no-op agent that simply applies the human
 expert's patch), runs ASV, and produces a `reward.json` with per-
 benchmark speedups. We record one `harbor_runs` row per trial.
 
@@ -423,15 +425,15 @@ HuggingFace, re-push their Docker images to DockerHub, mark
 `pull_requests.published_at`.
 
 **Why the 1.05× threshold.** The paper's stage 4 statistical test
-(Mann–Whitney U at p<0.002) is the *correctness* test — does the
-speedup exist statistically? The 1.05× threshold is an *interestingness*
+(Mann–Whitney U at p<0.002) is the _correctness_ test — does the
+speedup exist statistically? The 1.05× threshold is an _interestingness_
 filter — the paper's premise is that LLMs should be evaluated on
-*meaningful* optimizations, not noise-floor improvements. A PR that
+_meaningful_ optimizations, not noise-floor improvements. A PR that
 passes Mann–Whitney with a 1.001× speedup is real but uninteresting;
 including it would inflate dataset size while diluting the benchmark.
 
 **Why publish is fail-closed.** If Harbor never ran successfully on
-Daytona, the PR is *not* published — even if every upstream stage
+Daytona, the PR is _not_ published — even if every upstream stage
 labelled it as a great optimization. This is the design choice that
 makes the FormulaCode dataset trustworthy: you cannot get into the
 release without a measured speedup. The paper calls this out as the
@@ -450,16 +452,16 @@ whole pipeline.
 There is no inter-stage messaging system. Stages communicate by writing
 columns/rows that other stages read. This is by design:
 
-- *Resumability.* A stage that crashes leaves the DB in a valid state;
+- _Resumability._ A stage that crashes leaves the DB in a valid state;
   the next run picks up where the previous one left off via
   `--resume` or stage-specific filters.
-- *Observability.* The dashboard (`analysis/dashboard`) reads the same
+- _Observability._ The dashboard (`analysis/dashboard`) reads the same
   tables the pipeline writes. Anyone can see the funnel narrowing in
   real time.
-- *Independence.* Stages can be re-run, re-ordered (within phases), or
+- _Independence._ Stages can be re-run, re-ordered (within phases), or
   swapped out entirely. The contract is a table schema, not a Python
   function signature.
-- *Public read.* The `anon` role can read `repositories`,
+- _Public read._ The `anon` role can read `repositories`,
   `pull_requests`, `candidate_containers`, `harbor_runs`,
   `benchmark_information` over `https://api.formulacode.org`. The
   pipeline is in effect a public dataset that happens to update itself.
@@ -489,7 +491,7 @@ architectural choice:
 - Symbolic filter (stage 2): drop only on negative signal.
 - LLM classifier (stage 3): bias toward YES on ambiguity.
 - Build / synth (stages 4–6): try every fallback before giving up.
-- Speedup gate (stage 7→8): the *only* hard precision filter in the
+- Speedup gate (stage 7→8): the _only_ hard precision filter in the
   pipeline.
 
 Inverting this — putting precision early — would either lose real
@@ -518,7 +520,7 @@ amortized per-month cost is small.
 
 ---
 
-## 6. Where the diagram is *not* faithful
+## 6. Where the diagram is _not_ faithful
 
 Important caveats so a reader doesn't take the diagram too literally:
 
@@ -526,17 +528,17 @@ Important caveats so a reader doesn't take the diagram too literally:
   doesn't roll back the phase. Each stage commits per-item.
 - **The "external services" arrows are shared.** GitHub touches stages
   1, 2, and 5; the LLM proxy touches 3, 5, and 6. The diagram dots
-  these in to show *which* stage uses *which* service, but in
+  these in to show _which_ stage uses _which_ service, but in
   production a single LiteLLM instance fields all three.
 - **Stage 6 is the only stage that pushes Docker images during the
-  pipeline.** Stage 8 *re-pushes* to ensure availability, but the
+  pipeline.** Stage 8 _re-pushes_ to ensure availability, but the
   initial push happens in stage 6. The diagram simplifies this.
 - **Harbor is itself a multi-component system.** "Stage 7 → Daytona"
   hides that Harbor materializes task directories, runs the oracle
   agent, parses ASV output, and aggregates trials. The diagram treats
   it as one node because the externally visible behavior — submit
   containers, get speedups — is one operation.
-- **The paper's "stage 4" (statistical validation) is *inside* our
+- **The paper's "stage 4" (statistical validation) is _inside_ our
   stage 7, not our stage 8.** Mann–Whitney U is what Harbor's reward
   computation is doing under the hood; the 1.05× filter in publish is
   on top of that statistical test, not in place of it.
@@ -544,4 +546,3 @@ Important caveats so a reader doesn't take the diagram too literally:
 If you need any of those details, fall back to Variation C
 (database-as-bus) in `FLOWCHART.md` or read the per-stage modules
 listed in `CLAUDE.md`.
-

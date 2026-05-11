@@ -14,11 +14,13 @@ export async function load({ params, url }) {
 	let benchmark;
 	if (benchmarkId !== null) {
 		const idNum = Number(benchmarkId);
-		benchmark = allBenchmarkData.find(d => Number(d.id) === idNum);
+		benchmark = allBenchmarkData.find((d) => Number(d.id) === idNum);
 	}
 
 	if (!benchmark && normalizedRecording) {
-		benchmark = allBenchmarkData.find(d => d.agent_recording === normalizedRecording);
+		benchmark = allBenchmarkData.find(
+			(d) => d.agent_recording === normalizedRecording
+		);
 	}
 
 	// Lazy load the heavy code data

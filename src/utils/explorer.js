@@ -18,8 +18,7 @@ const REPO_LABELS = {
 const REPO_URLS = {
 	astropy_astropy: "https://github.com/astropy/astropy",
 	"pandas_dev-pandas": "https://github.com/pandas-dev/pandas",
-	"scikit-learn_scikit-learn":
-		"https://github.com/scikit-learn/scikit-learn",
+	"scikit-learn_scikit-learn": "https://github.com/scikit-learn/scikit-learn",
 	numpy_numpy: "https://github.com/numpy/numpy",
 	scipy_scipy: "https://github.com/scipy/scipy"
 };
@@ -172,14 +171,12 @@ export function summarizeFacets(workloads) {
 		.map(([id, n]) => ({ id, label: id, count: n }))
 		.sort((a, b) => a.label.localeCompare(b.label));
 
-	const levelOptions = LEVEL_ORDER
-		.filter((l) => levels.has(l))
-		.map((l) => ({
-			id: l,
-			label: levelLabel(l),
-			short: levelShort(l),
-			count: levels.get(l)
-		}));
+	const levelOptions = LEVEL_ORDER.filter((l) => levels.has(l)).map((l) => ({
+		id: l,
+		label: levelLabel(l),
+		short: levelShort(l),
+		count: levels.get(l)
+	}));
 
 	return {
 		repoOptions,
@@ -191,11 +188,7 @@ export function summarizeFacets(workloads) {
 			beatsOracleCount,
 			repoCount: repos.size,
 			taskCount: tasks.size,
-			agents: [
-				AGENT_IDS.CLAUDE,
-				AGENT_IDS.GPT5,
-				AGENT_IDS.HUMAN
-			]
+			agents: [AGENT_IDS.CLAUDE, AGENT_IDS.GPT5, AGENT_IDS.HUMAN]
 				.filter((id) => workloads.some((w) => w.agents[id] !== undefined))
 				.map((id) => ({ id, label: AGENT_NAMES_SHORT[id] ?? id }))
 		}
@@ -217,7 +210,8 @@ export function filterAndSort(
 		if (taskSet.size > 0 && !taskSet.has(w.task_id)) return false;
 		if (agentFilter === "beats-oracle" && !w.beatsOracle) return false;
 		if (q) {
-			const hay = `${w.benchmark_name} ${w.task_id} ${w.repo_name}`.toLowerCase();
+			const hay =
+				`${w.benchmark_name} ${w.task_id} ${w.repo_name}`.toLowerCase();
 			if (!hay.includes(q)) return false;
 		}
 		return true;
@@ -234,9 +228,13 @@ export function filterAndSort(
 			case "oracle-asc":
 				return (a.oracle ?? Infinity) - (b.oracle ?? Infinity);
 			case "agent-desc":
-				return (b.bestAgentSpeedup ?? -Infinity) - (a.bestAgentSpeedup ?? -Infinity);
+				return (
+					(b.bestAgentSpeedup ?? -Infinity) - (a.bestAgentSpeedup ?? -Infinity)
+				);
 			case "agent-asc":
-				return (a.bestAgentSpeedup ?? Infinity) - (b.bestAgentSpeedup ?? Infinity);
+				return (
+					(a.bestAgentSpeedup ?? Infinity) - (b.bestAgentSpeedup ?? Infinity)
+				);
 			default:
 				return a.benchmark_name.localeCompare(b.benchmark_name);
 		}

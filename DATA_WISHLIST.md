@@ -15,13 +15,13 @@ biggest wishlist item.
 
 - **Used by:** `/explorer/`, scrollytelling chart, leaderboard recompute.
 - **Ideal shape:** the existing CSV schema (`id, level, agent_id, agent/nop,
-  oracle/nop, task_id, agent_recording, repo_name, benchmark_name`) with all
+oracle/nop, task_id, agent_recording, repo_name, benchmark_name`) with all
   ~1.4M workloads spanning all 957 tasks.
 - **Acceptable interim:** a representative slice of one task per repo (≈70
   rows of `(repo, task_id)` pairs), enough that filter chips on the explorer
   feel populated.
 - **Without it:** the explorer reads as a "tiny preview slice." The `Browse
-  N performance workloads` headline is honest but underwhelming.
+N performance workloads` headline is honest but underwhelming.
 
 ## 2. `merged_at` dates per task
 
@@ -37,7 +37,7 @@ ranking engine (`src/utils/rankingEngine.js`) auto-activates once present.
 ## 3. Per-task gold patch and best-agent patch (diffs)
 
 MathNet's explorer shows the problem statement. FormulaCode's explorer
-currently shows the *benchmark harness* (the `time_*` function being
+currently shows the _benchmark harness_ (the `time_*` function being
 measured). What the audience actually wants to see is the **optimization
 patch** — what the human expert did, and what the agent did, side by side.
 
@@ -47,12 +47,12 @@ patch** — what the human expert did, and what the agent did, side by side.
   - `oracle_patch` — the merged human PR's patch
   - `agent_patches[<agent_id>]` — the patch the agent produced (per agent we
     ran)
-  Plus optionally the full pre/post file contents for syntax-highlighted
-  side-by-side rendering.
+    Plus optionally the full pre/post file contents for syntax-highlighted
+    side-by-side rendering.
 - **Acceptable interim:** even just `oracle_patch` per task gets us 80% of
   the way there.
 - **Without it:** the drawer's value is capped at "here's the harness and
-  here are the speedups." No insight into *why* the agent won/lost.
+  here are the speedups." No insight into _why_ the agent won/lost.
 
 ## 4. Task descriptions and PR URLs
 
@@ -63,20 +63,20 @@ deeper.
 - **Ideal shape:** a `tasks.json` keyed by `task_id`:
   ```json
   {
-    "astropy_astropy_21": {
-      "pr_url": "https://github.com/astropy/astropy/pull/12345",
-      "pr_title": "Speed up Time initialization with units",
-      "merged_at": "2024-03-15T12:34:56Z",
-      "summary": "Caches unit conversion in Time constructor to avoid …",
-      "optimization_strategy": "caching",
-      "files_changed": 3,
-      "lines_added": 42,
-      "lines_removed": 18
-    }
+  	"astropy_astropy_21": {
+  		"pr_url": "https://github.com/astropy/astropy/pull/12345",
+  		"pr_title": "Speed up Time initialization with units",
+  		"merged_at": "2024-03-15T12:34:56Z",
+  		"summary": "Caches unit conversion in Time constructor to avoid …",
+  		"optimization_strategy": "caching",
+  		"files_changed": 3,
+  		"lines_added": 42,
+  		"lines_removed": 18
+  	}
   }
   ```
 - **Without it:** the explorer can identify a task by ID but can't say what
-  the task *is* in plain English.
+  the task _is_ in plain English.
 
 ## 5. Repository metadata
 
@@ -88,15 +88,15 @@ metadata.
 - **Ideal shape:** `repos.json`:
   ```json
   {
-    "astropy_astropy": {
-      "owner": "astropy",
-      "repo": "astropy",
-      "stars": 4400,
-      "language": "Python",
-      "description": "Astronomy and astrophysics core library",
-      "n_tasks": 21,
-      "topic": "scientific-computing"
-    }
+  	"astropy_astropy": {
+  		"owner": "astropy",
+  		"repo": "astropy",
+  		"stars": 4400,
+  		"language": "Python",
+  		"description": "Astronomy and astrophysics core library",
+  		"n_tasks": 21,
+  		"topic": "scientific-computing"
+  	}
   }
   ```
 - **Without it:** repos render as `astropy/astropy` slug-only — fine, but the
@@ -130,7 +130,7 @@ strategy.
   `data-structure`.
 - **Pairs well with:** wishlist #3 (per-task patches). The Strategy Explorer
   becomes far more interesting if clicking a cell opens a drawer with the
-  *representative diff hunk* for that (strategy, agent) cell — even one
+  _representative diff hunk_ for that (strategy, agent) cell — even one
   ~10-line snippet per cell is enough to read as "this is what vectorization
   looks like in pandas."
 - **Without it:** strategy taxonomy lives only in the paper, not the site.
@@ -147,21 +147,21 @@ slash-command catalog, we need to group them by family.
 - **Ideal shape:** an `agents.json` keyed by agent_id:
   ```json
   {
-    "terminus-2,gpt-5": {
-      "agent_family": "Terminus 2",
-      "model_family": "GPT",
-      "model": "gpt-5",
-      "provider": "OpenAI",
-      "cost_tier": "frontier",
-      "open_weights": false,
-      "signature_strength": "module-level optimization",
-      "color_category": "frontier-closed"
-    }
+  	"terminus-2,gpt-5": {
+  		"agent_family": "Terminus 2",
+  		"model_family": "GPT",
+  		"model": "gpt-5",
+  		"provider": "OpenAI",
+  		"cost_tier": "frontier",
+  		"open_weights": false,
+  		"signature_strength": "module-level optimization",
+  		"color_category": "frontier-closed"
+  	}
   }
   ```
 - **Pairs well with:** wishlist #6 (per-task cost). Cost tier in the taxonomy
-  + per-task cost in the CSV unlocks the paper's "frontier vs. open-weights
-  cost-effectiveness" finding as a visual.
+  - per-task cost in the CSV unlocks the paper's "frontier vs. open-weights
+    cost-effectiveness" finding as a visual.
 - **Without it:** agents stay as opaque IDs; we can't surface the
   family-level story (Terminus + frontier-LLM vs. Aider + open-weights, etc.).
 
@@ -172,19 +172,19 @@ strategy strengths, long-tail repository performance, cost efficiency, …).
 `copy.json` already stores these as `{title, description}` pairs, but that's
 just prose. To render them as a **Findings cards grid** (the
 `HiddenFeatures` pattern from ccunpacked), each finding needs a category, a
-headline metric, and a link to where in the site that finding is *visually
-demonstrated*.
+headline metric, and a link to where in the site that finding is _visually
+demonstrated_.
 
 - **Used by:** new **Findings** section — tinted cards with category color,
   one-line description, headline metric chip, "View analysis ↗" link.
 - **Ideal shape:** extend `copy.json` `overview.keyFindings.findings[]`:
   ```json
   {
-    "title": "Local vs. Global Optimization",
-    "description": "Agents are better at local or function-level …",
-    "category": "scope",
-    "metric": { "label": "L4 advantage", "value": -0.04 },
-    "link": "/leaderboard/?level=L4"
+  	"title": "Local vs. Global Optimization",
+  	"description": "Agents are better at local or function-level …",
+  	"category": "scope",
+  	"metric": { "label": "L4 advantage", "value": -0.04 },
+  	"link": "/leaderboard/?level=L4"
   }
   ```
 - **Without it:** findings stay as plain prose cards — readable but inert,

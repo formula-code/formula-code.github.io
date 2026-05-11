@@ -3,7 +3,10 @@ body {
 	color: var(--text-primary);
 	line-height: 1.4;
 	font-family: var(--font-body, serif);
-	font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+	font-feature-settings:
+		"kern" 1,
+		"liga" 1,
+		"calt" 1;
 	text-rendering: optimizeLegibility;
 	word-wrap: break-word;
 	-webkit-tap-highlight-color: transparent;
@@ -31,7 +34,6 @@ a {
 	text-decoration: none;
 	border-bottom: 1px solid currentColor;
 }
-
 
 img,
 video {
@@ -231,7 +233,9 @@ ul {
 .text-outline {
 	--stroke-width: 1px;
 	--stroke-width-n: calc(var(--stroke-width) * -1);
-	text-shadow: var(--stroke-width-n) var(--stroke-width-n) 0 var(--color-text-outline, #fff),
+	text-shadow:
+		var(--stroke-width-n) var(--stroke-width-n) 0
+			var(--color-text-outline, #fff),
 		0 var(--stroke-width-n) 0 var(--color-text-outline, #fff),
 		var(--stroke-width) var(--stroke-width-n) 0 var(--color-text-outline, #fff),
 		var(--stroke-width) 0 0 var(--color-text-outline, #fff),
@@ -243,7 +247,6 @@ ul {
 
 /* desktop (mouse-enabled device) */
 @media (hover: hover) and (pointer: fine) {
-
 	button:hover,
 	a[role="button"]:hover,
 	input[type="button"]:hover,

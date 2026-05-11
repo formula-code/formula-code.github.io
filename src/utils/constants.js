@@ -9,14 +9,19 @@ export const LEVEL_DISPLAY_LABELS = {
 	"module-level": "L4: Module"
 };
 
-export const LEVEL_ORDER = ["param-level", "func-level", "class-level", "module-level"];
+export const LEVEL_ORDER = [
+	"param-level",
+	"func-level",
+	"class-level",
+	"module-level"
+];
 
 // Advantage/performance thresholds
 // Used for determining cell styling in advantage tables
 
 export const ADVANTAGE_THRESHOLDS = {
-	HIGH: 0.1,    // Values >= 0.1 are considered "high" advantage
-	MEDIUM: 0     // Values >= 0 but < 0.1 are "medium" advantage
+	HIGH: 0.1, // Values >= 0.1 are considered "high" advantage
+	MEDIUM: 0 // Values >= 0 but < 0.1 are "medium" advantage
 	// Values < 0 are implicitly "low" advantage
 };
 
