@@ -120,10 +120,76 @@ The paper finds agents excel at parallelization/batching and struggle with
 vectorization. Surfacing these tags would let users filter the explorer by
 strategy.
 
-- **Used by:** `/explorer/` optional "Strategy" filter chip.
+- **Used by:** `/explorer/` optional "Strategy" filter chip; **Strategy
+  Explorer** section on the landing page (a `ToolGrid`-style 6–8 column grid,
+  one column per category, tasks listed inside each cell with ✓/✗ for whether
+  the agent matched the human's strategy).
 - **Ideal shape:** per-task labels (`["caching", "vectorization", "io"]`) on
-  the human PR.
+  the human PR. Categories from the paper: `caching`, `vectorization`,
+  `parallelization`, `batching`, `memory`, `io`, `algorithm`,
+  `data-structure`.
+- **Pairs well with:** wishlist #3 (per-task patches). The Strategy Explorer
+  becomes far more interesting if clicking a cell opens a drawer with the
+  *representative diff hunk* for that (strategy, agent) cell — even one
+  ~10-line snippet per cell is enough to read as "this is what vectorization
+  looks like in pandas."
 - **Without it:** strategy taxonomy lives only in the paper, not the site.
+
+## 8. Agent family / model / cost taxonomy
+
+The leaderboard currently lists agents as flat IDs (e.g.
+`terminus-2,gpt-5`). For an **Agent Explorer** patterned on ccunpacked.dev's
+slash-command catalog, we need to group them by family.
+
+- **Used by:** new **Agent Explorer** section on the landing page (pill grid
+  grouped by agent family, each pill showing the agent's signature strength
+  and a cost-tier badge); future `/agents/` per-agent page.
+- **Ideal shape:** an `agents.json` keyed by agent_id:
+  ```json
+  {
+    "terminus-2,gpt-5": {
+      "agent_family": "Terminus 2",
+      "model_family": "GPT",
+      "model": "gpt-5",
+      "provider": "OpenAI",
+      "cost_tier": "frontier",
+      "open_weights": false,
+      "signature_strength": "module-level optimization",
+      "color_category": "frontier-closed"
+    }
+  }
+  ```
+- **Pairs well with:** wishlist #6 (per-task cost). Cost tier in the taxonomy
+  + per-task cost in the CSV unlocks the paper's "frontier vs. open-weights
+  cost-effectiveness" finding as a visual.
+- **Without it:** agents stay as opaque IDs; we can't surface the
+  family-level story (Terminus + frontier-LLM vs. Aider + open-weights, etc.).
+
+## 9. Structured findings catalog
+
+The paper has ~6 sharply phrased findings (local vs. global optimization,
+strategy strengths, long-tail repository performance, cost efficiency, …).
+`copy.json` already stores these as `{title, description}` pairs, but that's
+just prose. To render them as a **Findings cards grid** (the
+`HiddenFeatures` pattern from ccunpacked), each finding needs a category, a
+headline metric, and a link to where in the site that finding is *visually
+demonstrated*.
+
+- **Used by:** new **Findings** section — tinted cards with category color,
+  one-line description, headline metric chip, "View analysis ↗" link.
+- **Ideal shape:** extend `copy.json` `overview.keyFindings.findings[]`:
+  ```json
+  {
+    "title": "Local vs. Global Optimization",
+    "description": "Agents are better at local or function-level …",
+    "category": "scope",
+    "metric": { "label": "L4 advantage", "value": -0.04 },
+    "link": "/leaderboard/?level=L4"
+  }
+  ```
+- **Without it:** findings stay as plain prose cards — readable but inert,
+  with no visual emphasis on the actual numbers and no path from "claim" to
+  "evidence."
 
 ---
 
