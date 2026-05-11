@@ -5,12 +5,15 @@ node_modules
 build
 functions
 .env
+.env.*
+!.env.example
 local/
 tasks/
 remote/
 HELP.md
 AGENTS.md
 CLAUDE.md
+.claude/
 
 # Vendor docs: cloned working trees and the local mkdocs build venv. The
 # *built* output under static/docs/{eval,data}/ is checked in so that the
