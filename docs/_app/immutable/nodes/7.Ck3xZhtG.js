@@ -1,4 +1,90 @@
-import{s as q,n as $,d as p,l as V,i as E,b as m,m as k,c as f,e as _,q as I,u as C,g as b,v as S,F as R,C as j,f as U,t as Q}from"../chunks/BEinvJTW.js";import{S as N,i as W,d as T,a as F,t as P,m as z,e as D,b as H}from"../chunks/DuBysls-.js";import{M as J}from"../chunks/Deiux9lq.js";import{e as B}from"../chunks/Cyq3z6cx.js";function G(i,e,t){const a=i.slice();return a[4]=e[t],a}function O(i){let e,t,a=i[4].label+"",c,s,v,d;function u(){return i[3](i[4])}return{c(){e=b("li"),t=b("button"),c=Q(a),s=S(),this.h()},l(h){e=f(h,"LI",{});var n=_(e);t=f(n,"BUTTON",{class:!0});var A=_(t);c=U(A,a),A.forEach(p),s=C(n),n.forEach(p),this.h()},h(){k(t,"class","svelte-s2t5c8"),R(t,"active",i[0]===i[4].id)},m(h,n){E(h,e,n),m(e,t),m(t,c),m(e,s),v||(d=j(t,"click",u),v=!0)},p(h,n){i=h,n&3&&R(t,"active",i[0]===i[4].id)},d(h){h&&p(e),v=!1,d()}}}function K(i){let e,t,a,c,s="Documentation",v,d,u,h,n,A=`<article id="motivation" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Motivation</h1> <p class="svelte-s2t5c8">Existing code benchmarks often rely on synthetic or LLM-generated tasks,
+import {
+	s as q,
+	n as $,
+	d as p,
+	l as V,
+	i as E,
+	b as m,
+	m as k,
+	c as f,
+	e as _,
+	q as I,
+	u as C,
+	g as b,
+	v as S,
+	F as R,
+	C as j,
+	f as U,
+	t as Q
+} from "../chunks/BEinvJTW.js";
+import {
+	S as N,
+	i as W,
+	d as T,
+	a as F,
+	t as P,
+	m as z,
+	e as D,
+	b as H
+} from "../chunks/DuBysls-.js";
+import { M as J } from "../chunks/Deiux9lq.js";
+import { e as B } from "../chunks/Cyq3z6cx.js";
+function G(i, e, t) {
+	const a = i.slice();
+	return ((a[4] = e[t]), a);
+}
+function O(i) {
+	let e,
+		t,
+		a = i[4].label + "",
+		c,
+		s,
+		v,
+		d;
+	function u() {
+		return i[3](i[4]);
+	}
+	return {
+		c() {
+			((e = b("li")), (t = b("button")), (c = Q(a)), (s = S()), this.h());
+		},
+		l(h) {
+			e = f(h, "LI", {});
+			var n = _(e);
+			t = f(n, "BUTTON", { class: !0 });
+			var A = _(t);
+			((c = U(A, a)), A.forEach(p), (s = C(n)), n.forEach(p), this.h());
+		},
+		h() {
+			(k(t, "class", "svelte-s2t5c8"), R(t, "active", i[0] === i[4].id));
+		},
+		m(h, n) {
+			(E(h, e, n),
+				m(e, t),
+				m(t, c),
+				m(e, s),
+				v || ((d = j(t, "click", u)), (v = !0)));
+		},
+		p(h, n) {
+			((i = h), n & 3 && R(t, "active", i[0] === i[4].id));
+		},
+		d(h) {
+			(h && p(e), (v = !1), d());
+		}
+	};
+}
+function K(i) {
+	let e,
+		t,
+		a,
+		c,
+		s = "Documentation",
+		v,
+		d,
+		u,
+		h,
+		n,
+		A = `<article id="motivation" class="doc-section svelte-s2t5c8"><h1 class="svelte-s2t5c8">Motivation</h1> <p class="svelte-s2t5c8">Existing code benchmarks often rely on synthetic or LLM-generated tasks,
 				single-objective workloads, or binary pass/fail outcomes—all of which
 				offer a constrained evaluation landscape compared to the emerging
 				capabilities of LLM coding agents.</p> <p class="svelte-s2t5c8">Real-world performance optimization is rarely isolated: improving one
@@ -46,4 +132,140 @@ Level 2 (Function):  algorithms.Sorting.time_sort_int.*</code></pre></div></arti
 					configuration details.</li> <li class="svelte-s2t5c8"><strong class="svelte-s2t5c8">We&#39;ll review and publish</strong> your results on the leaderboard
 					within one update cycle (monthly).</li></ol> <div class="info-box svelte-s2t5c8"><strong class="svelte-s2t5c8">Questions?</strong> Open an issue on
 				<a href="https://github.com/formula-code/" target="_blank" rel="noopener" class="svelte-s2t5c8">GitHub</a>
-				or reach out to the authors listed on the <a href="/" class="svelte-s2t5c8">overview page</a>.</div></article>`,w=B(i[1]),r=[];for(let o=0;o<w.length;o+=1)r[o]=O(G(i,w,o));return{c(){e=b("section"),t=b("aside"),a=b("div"),c=b("h3"),c.textContent=s,v=S(),d=b("nav"),u=b("ul");for(let o=0;o<r.length;o+=1)r[o].c();h=S(),n=b("main"),n.innerHTML=A,this.h()},l(o){e=f(o,"SECTION",{class:!0});var g=_(e);t=f(g,"ASIDE",{class:!0});var l=_(t);a=f(l,"DIV",{class:!0});var y=_(a);c=f(y,"H3",{class:!0,"data-svelte-h":!0}),I(c)!=="svelte-1lrhy0k"&&(c.textContent=s),v=C(y),d=f(y,"NAV",{});var L=_(d);u=f(L,"UL",{class:!0});var M=_(u);for(let x=0;x<r.length;x+=1)r[x].l(M);M.forEach(p),L.forEach(p),y.forEach(p),l.forEach(p),h=C(g),n=f(g,"MAIN",{class:!0,"data-svelte-h":!0}),I(n)!=="svelte-sln6zs"&&(n.innerHTML=A),g.forEach(p),this.h()},h(){k(c,"class","sidebar-title svelte-s2t5c8"),k(u,"class","svelte-s2t5c8"),k(a,"class","sidebar-inner svelte-s2t5c8"),k(t,"class","sidebar svelte-s2t5c8"),k(n,"class","docs-content svelte-s2t5c8"),k(e,"class","docs-page svelte-s2t5c8")},m(o,g){E(o,e,g),m(e,t),m(t,a),m(a,c),m(a,v),m(a,d),m(d,u);for(let l=0;l<r.length;l+=1)r[l]&&r[l].m(u,null);m(e,h),m(e,n)},p(o,[g]){if(g&7){w=B(o[1]);let l;for(l=0;l<w.length;l+=1){const y=G(o,w,l);r[l]?r[l].p(y,g):(r[l]=O(y),r[l].c(),r[l].m(u,null))}for(;l<r.length;l+=1)r[l].d(1);r.length=w.length}},i:$,o:$,d(o){o&&p(e),V(r,o)}}}function X(i,e,t){let a="motivation";const c=[{id:"motivation",label:"Motivation"},{id:"installation",label:"Installation"},{id:"running",label:"Running an Evaluation"},{id:"structure",label:"Benchmark Structure"},{id:"metrics",label:"Metrics Reference"},{id:"submitting",label:"Submitting Results"}];function s(d){t(0,a=d);const u=document.getElementById(d);u&&u.scrollIntoView({behavior:"smooth",block:"start"})}return[a,c,s,d=>s(d.id)]}class Y extends N{constructor(e){super(),W(this,e,X,K,q,{})}}function Z(i){let e,t,a,c;return e=new J({props:{title:ee,description:se,url:te,keywords:ae}}),a=new Y({}),{c(){H(e.$$.fragment),t=S(),H(a.$$.fragment)},l(s){D(e.$$.fragment,s),t=C(s),D(a.$$.fragment,s)},m(s,v){z(e,s,v),E(s,t,v),z(a,s,v),c=!0},p:$,i(s){c||(P(e.$$.fragment,s),P(a.$$.fragment,s),c=!0)},o(s){F(e.$$.fragment,s),F(a.$$.fragment,s),c=!1},d(s){s&&p(t),T(e,s),T(a,s)}}}const ee="Getting Started — FormulaCode",se="Learn how to install, run, and submit results to the FormulaCode benchmark.",te="https://formula-code.github.io/docs",ae="FormulaCode, documentation, getting started, benchmark, installation";class re extends N{constructor(e){super(),W(this,e,null,Z,q,{})}}export{re as component};
+				or reach out to the authors listed on the <a href="/" class="svelte-s2t5c8">overview page</a>.</div></article>`,
+		w = B(i[1]),
+		r = [];
+	for (let o = 0; o < w.length; o += 1) r[o] = O(G(i, w, o));
+	return {
+		c() {
+			((e = b("section")),
+				(t = b("aside")),
+				(a = b("div")),
+				(c = b("h3")),
+				(c.textContent = s),
+				(v = S()),
+				(d = b("nav")),
+				(u = b("ul")));
+			for (let o = 0; o < r.length; o += 1) r[o].c();
+			((h = S()), (n = b("main")), (n.innerHTML = A), this.h());
+		},
+		l(o) {
+			e = f(o, "SECTION", { class: !0 });
+			var g = _(e);
+			t = f(g, "ASIDE", { class: !0 });
+			var l = _(t);
+			a = f(l, "DIV", { class: !0 });
+			var y = _(a);
+			((c = f(y, "H3", { class: !0, "data-svelte-h": !0 })),
+				I(c) !== "svelte-1lrhy0k" && (c.textContent = s),
+				(v = C(y)),
+				(d = f(y, "NAV", {})));
+			var L = _(d);
+			u = f(L, "UL", { class: !0 });
+			var M = _(u);
+			for (let x = 0; x < r.length; x += 1) r[x].l(M);
+			(M.forEach(p),
+				L.forEach(p),
+				y.forEach(p),
+				l.forEach(p),
+				(h = C(g)),
+				(n = f(g, "MAIN", { class: !0, "data-svelte-h": !0 })),
+				I(n) !== "svelte-sln6zs" && (n.innerHTML = A),
+				g.forEach(p),
+				this.h());
+		},
+		h() {
+			(k(c, "class", "sidebar-title svelte-s2t5c8"),
+				k(u, "class", "svelte-s2t5c8"),
+				k(a, "class", "sidebar-inner svelte-s2t5c8"),
+				k(t, "class", "sidebar svelte-s2t5c8"),
+				k(n, "class", "docs-content svelte-s2t5c8"),
+				k(e, "class", "docs-page svelte-s2t5c8"));
+		},
+		m(o, g) {
+			(E(o, e, g), m(e, t), m(t, a), m(a, c), m(a, v), m(a, d), m(d, u));
+			for (let l = 0; l < r.length; l += 1) r[l] && r[l].m(u, null);
+			(m(e, h), m(e, n));
+		},
+		p(o, [g]) {
+			if (g & 7) {
+				w = B(o[1]);
+				let l;
+				for (l = 0; l < w.length; l += 1) {
+					const y = G(o, w, l);
+					r[l] ? r[l].p(y, g) : ((r[l] = O(y)), r[l].c(), r[l].m(u, null));
+				}
+				for (; l < r.length; l += 1) r[l].d(1);
+				r.length = w.length;
+			}
+		},
+		i: $,
+		o: $,
+		d(o) {
+			(o && p(e), V(r, o));
+		}
+	};
+}
+function X(i, e, t) {
+	let a = "motivation";
+	const c = [
+		{ id: "motivation", label: "Motivation" },
+		{ id: "installation", label: "Installation" },
+		{ id: "running", label: "Running an Evaluation" },
+		{ id: "structure", label: "Benchmark Structure" },
+		{ id: "metrics", label: "Metrics Reference" },
+		{ id: "submitting", label: "Submitting Results" }
+	];
+	function s(d) {
+		t(0, (a = d));
+		const u = document.getElementById(d);
+		u && u.scrollIntoView({ behavior: "smooth", block: "start" });
+	}
+	return [a, c, s, (d) => s(d.id)];
+}
+class Y extends N {
+	constructor(e) {
+		(super(), W(this, e, X, K, q, {}));
+	}
+}
+function Z(i) {
+	let e, t, a, c;
+	return (
+		(e = new J({
+			props: { title: ee, description: se, url: te, keywords: ae }
+		})),
+		(a = new Y({})),
+		{
+			c() {
+				(H(e.$$.fragment), (t = S()), H(a.$$.fragment));
+			},
+			l(s) {
+				(D(e.$$.fragment, s), (t = C(s)), D(a.$$.fragment, s));
+			},
+			m(s, v) {
+				(z(e, s, v), E(s, t, v), z(a, s, v), (c = !0));
+			},
+			p: $,
+			i(s) {
+				c || (P(e.$$.fragment, s), P(a.$$.fragment, s), (c = !0));
+			},
+			o(s) {
+				(F(e.$$.fragment, s), F(a.$$.fragment, s), (c = !1));
+			},
+			d(s) {
+				(s && p(t), T(e, s), T(a, s));
+			}
+		}
+	);
+}
+const ee = "Getting Started — FormulaCode",
+	se =
+		"Learn how to install, run, and submit results to the FormulaCode benchmark.",
+	te = "https://formula-code.github.io/docs",
+	ae = "FormulaCode, documentation, getting started, benchmark, installation";
+class re extends N {
+	constructor(e) {
+		(super(), W(this, e, null, Z, q, {}));
+	}
+}
+export { re as component };

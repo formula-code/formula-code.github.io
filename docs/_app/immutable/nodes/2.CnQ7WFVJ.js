@@ -1,4 +1,476 @@
-import{s as rs,n as ee,d as h,l as Re,a as cs,i as J,b as s,C as hs,m as o,c as i,e as v,f as T,u as m,q as G,g as c,t as x,v as p,D as ds,E as vs,H as us,F as Ge,G as Ot}from"../chunks/BEinvJTW.js";import{S as os,i as is,d as qt,a as Gt,t as Nt,m as Bt,e as Wt,b as Ut}from"../chunks/DuBysls-.js";import{M as ms}from"../chunks/Deiux9lq.js";import{e as j}from"../chunks/Cyq3z6cx.js";import{c as ps}from"../chunks/DMHOg7Eb.js";function jt(n,e,a){const r=n.slice();return r[12]=e[a],r}function Qt(n,e,a){const r=n.slice();return r[15]=e[a],r}function Kt(n,e,a){const r=n.slice();return r[18]=e[a],r}function Xt(n,e,a){const r=n.slice();return r[21]=e[a],r}function Yt(n,e,a){const r=n.slice();return r[24]=e[a],r[26]=a,r}function Jt(n,e,a){const r=n.slice();return r[27]=e[a],r[26]=a,r}function fs(n){let e;return{c(){e=x(", ")},l(a){e=T(a,", ")},m(a,r){J(a,e,r)},d(a){a&&h(e)}}}function Zt(n){let e,a,r=n[27].name+"",u,d,k=n[27].superscript+"",b,y,g=n[26]<n[3].length-1&&fs();return{c(){e=c("span"),a=c("a"),u=x(r),d=c("sup"),b=x(k),g&&g.c(),y=p(),this.h()},l(_){e=i(_,"SPAN",{class:!0});var C=v(e);a=i(C,"A",{href:!0,target:!0,rel:!0,class:!0});var D=v(a);u=T(D,r),D.forEach(h),d=i(C,"SUP",{class:!0});var H=v(d);b=T(H,k),H.forEach(h),g&&g.l(C),y=m(C),C.forEach(h),this.h()},h(){o(a,"href",n[27].url),o(a,"target","_blank"),o(a,"rel","noopener"),o(a,"class","svelte-1mh8h07"),o(d,"class","svelte-1mh8h07"),o(e,"class","author")},m(_,C){J(_,e,C),s(e,a),s(a,u),s(e,d),s(d,b),g&&g.m(e,null),s(e,y)},p:ee,d(_){_&&h(e),g&&g.d()}}}function gs(n){let e;return{c(){e=x("  ")},l(a){e=T(a,"  ")},m(a,r){J(a,e,r)},d(a){a&&h(e)}}}function es(n){let e,a,r=n[24].superscript+"",u,d=n[24].label+"",k,b=n[26]<n[4].length-1&&gs();return{c(){e=c("span"),a=c("sup"),u=x(r),k=x(d),b&&b.c(),this.h()},l(y){e=i(y,"SPAN",{class:!0});var g=v(e);a=i(g,"SUP",{class:!0});var _=v(a);u=T(_,r),_.forEach(h),k=T(g,d),b&&b.l(g),g.forEach(h),this.h()},h(){o(a,"class","svelte-1mh8h07"),o(e,"class","affiliation")},m(y,g){J(y,e,g),s(e,a),s(a,u),s(e,k),b&&b.m(e,null)},p:ee,d(y){y&&h(e),b&&b.d()}}}function ts(n){let e,a=n[21].label+"",r;return{c(){e=c("a"),r=x(a),this.h()},l(u){e=i(u,"A",{class:!0,href:!0,target:!0,rel:!0});var d=v(e);r=T(d,a),d.forEach(h),this.h()},h(){o(e,"class","action-btn svelte-1mh8h07"),o(e,"href",n[21].href),o(e,"target","_blank"),o(e,"rel","noopener")},m(u,d){J(u,e,d),s(e,r)},p:ee,d(u){u&&h(e)}}}function ss(n){let e,a,r=n[18]+"";return{c(){e=c("p"),a=new us(!1),this.h()},l(u){e=i(u,"P",{class:!0});var d=v(e);a=vs(d,!1),d.forEach(h),this.h()},h(){a.a=null,o(e,"class","svelte-1mh8h07")},m(u,d){J(u,e,d),a.m(r,e)},p:ee,d(u){u&&h(e)}}}function as(n){let e,a,r,u=n[15].title+"",d,k,b,y=n[15].section+"",g,_,C,D=n[15].body+"",H,A;return{c(){e=c("div"),a=c("div"),r=c("h3"),d=x(u),k=p(),b=c("span"),g=x(y),_=p(),C=c("p"),H=x(D),A=p(),this.h()},l(L){e=i(L,"DIV",{class:!0});var F=v(e);a=i(F,"DIV",{class:!0});var I=v(a);r=i(I,"H3",{class:!0});var O=v(r);d=T(O,u),O.forEach(h),k=m(I),b=i(I,"SPAN",{class:!0});var Z=v(b);g=T(Z,y),Z.forEach(h),I.forEach(h),_=m(F),C=i(F,"P",{class:!0});var N=v(C);H=T(N,D),N.forEach(h),A=m(F),F.forEach(h),this.h()},h(){o(r,"class","svelte-1mh8h07"),o(b,"class","finding-ref svelte-1mh8h07"),o(a,"class","finding-header svelte-1mh8h07"),o(C,"class","svelte-1mh8h07"),o(e,"class","finding-card svelte-1mh8h07")},m(L,F){J(L,e,F),s(e,a),s(a,r),s(r,d),s(a,k),s(a,b),s(b,g),s(e,_),s(e,C),s(C,H),s(e,A)},p:ee,d(L){L&&h(e)}}}function ls(n){let e,a,r=n[12].agent+"",u,d,k,b=n[12].model+"",y,g,_,C=(n[12].rpRank??"—")+"",D,H,A,L=ns(n[12].adv)+"",F,I,O,Z=ns(n[12].normAdv)+"",N,B,q,$e=n[12].speedup.toFixed(4)+"",ne,re;return{c(){e=c("tr"),a=c("td"),u=x(r),d=p(),k=c("td"),y=x(b),g=p(),_=c("td"),D=x(C),H=p(),A=c("td"),F=x(L),I=p(),O=c("td"),N=x(Z),B=p(),q=c("td"),ne=x($e),re=p(),this.h()},l(W){e=i(W,"TR",{class:!0});var P=v(e);a=i(P,"TD",{class:!0});var _e=v(a);u=T(_e,r),_e.forEach(h),d=m(P),k=i(P,"TD",{class:!0});var Q=v(k);y=T(Q,b),Q.forEach(h),g=m(P),_=i(P,"TD",{class:!0});var Fe=v(_);D=T(Fe,C),Fe.forEach(h),H=m(P),A=i(P,"TD",{class:!0});var be=v(A);F=T(be,L),be.forEach(h),I=m(P),O=i(P,"TD",{class:!0});var K=v(O);N=T(K,Z),K.forEach(h),B=m(P),q=i(P,"TD",{class:!0});var Oe=v(q);ne=T(Oe,$e),Oe.forEach(h),re=m(P),P.forEach(h),this.h()},h(){o(a,"class","agent-cell svelte-1mh8h07"),o(k,"class","svelte-1mh8h07"),o(_,"class","rank-cell svelte-1mh8h07"),o(A,"class","num-cell svelte-1mh8h07"),Ge(A,"positive",n[12].adv>0),Ge(A,"negative",n[12].adv<0),o(O,"class","num-cell svelte-1mh8h07"),Ge(O,"positive",n[12].normAdv>0),Ge(O,"negative",n[12].normAdv<0),o(q,"class","num-cell svelte-1mh8h07"),o(e,"class","svelte-1mh8h07"),Ge(e,"human-row",n[12].agent==="Human Expert")},m(W,P){J(W,e,P),s(e,a),s(a,u),s(e,d),s(e,k),s(k,y),s(e,g),s(e,_),s(_,D),s(e,H),s(e,A),s(A,F),s(e,I),s(e,O),s(O,N),s(e,B),s(e,q),s(q,ne),s(e,re)},p:ee,d(W){W&&h(e)}}}function _s(n){let e,a,r,u,d=n[1].title+"",k,b,y,g,_,C,D,H,A,L,F,I,O="Leaderboard",Z,N,B,q,$e="Abstract",ne,re,W,P=`<div class="container narrow svelte-1mh8h07"><h2 class="svelte-1mh8h07">Introduction</h2> <p class="svelte-1mh8h07">Large Language Models for code are rapidly evolving from isolated
+import {
+	s as rs,
+	n as ee,
+	d as h,
+	l as Re,
+	a as cs,
+	i as J,
+	b as s,
+	C as hs,
+	m as o,
+	c as i,
+	e as v,
+	f as T,
+	u as m,
+	q as G,
+	g as c,
+	t as x,
+	v as p,
+	D as ds,
+	E as vs,
+	H as us,
+	F as Ge,
+	G as Ot
+} from "../chunks/BEinvJTW.js";
+import {
+	S as os,
+	i as is,
+	d as qt,
+	a as Gt,
+	t as Nt,
+	m as Bt,
+	e as Wt,
+	b as Ut
+} from "../chunks/DuBysls-.js";
+import { M as ms } from "../chunks/Deiux9lq.js";
+import { e as j } from "../chunks/Cyq3z6cx.js";
+import { c as ps } from "../chunks/DMHOg7Eb.js";
+function jt(n, e, a) {
+	const r = n.slice();
+	return ((r[12] = e[a]), r);
+}
+function Qt(n, e, a) {
+	const r = n.slice();
+	return ((r[15] = e[a]), r);
+}
+function Kt(n, e, a) {
+	const r = n.slice();
+	return ((r[18] = e[a]), r);
+}
+function Xt(n, e, a) {
+	const r = n.slice();
+	return ((r[21] = e[a]), r);
+}
+function Yt(n, e, a) {
+	const r = n.slice();
+	return ((r[24] = e[a]), (r[26] = a), r);
+}
+function Jt(n, e, a) {
+	const r = n.slice();
+	return ((r[27] = e[a]), (r[26] = a), r);
+}
+function fs(n) {
+	let e;
+	return {
+		c() {
+			e = x(", ");
+		},
+		l(a) {
+			e = T(a, ", ");
+		},
+		m(a, r) {
+			J(a, e, r);
+		},
+		d(a) {
+			a && h(e);
+		}
+	};
+}
+function Zt(n) {
+	let e,
+		a,
+		r = n[27].name + "",
+		u,
+		d,
+		k = n[27].superscript + "",
+		b,
+		y,
+		g = n[26] < n[3].length - 1 && fs();
+	return {
+		c() {
+			((e = c("span")),
+				(a = c("a")),
+				(u = x(r)),
+				(d = c("sup")),
+				(b = x(k)),
+				g && g.c(),
+				(y = p()),
+				this.h());
+		},
+		l(_) {
+			e = i(_, "SPAN", { class: !0 });
+			var C = v(e);
+			a = i(C, "A", { href: !0, target: !0, rel: !0, class: !0 });
+			var D = v(a);
+			((u = T(D, r)), D.forEach(h), (d = i(C, "SUP", { class: !0 })));
+			var H = v(d);
+			((b = T(H, k)),
+				H.forEach(h),
+				g && g.l(C),
+				(y = m(C)),
+				C.forEach(h),
+				this.h());
+		},
+		h() {
+			(o(a, "href", n[27].url),
+				o(a, "target", "_blank"),
+				o(a, "rel", "noopener"),
+				o(a, "class", "svelte-1mh8h07"),
+				o(d, "class", "svelte-1mh8h07"),
+				o(e, "class", "author"));
+		},
+		m(_, C) {
+			(J(_, e, C),
+				s(e, a),
+				s(a, u),
+				s(e, d),
+				s(d, b),
+				g && g.m(e, null),
+				s(e, y));
+		},
+		p: ee,
+		d(_) {
+			(_ && h(e), g && g.d());
+		}
+	};
+}
+function gs(n) {
+	let e;
+	return {
+		c() {
+			e = x("  ");
+		},
+		l(a) {
+			e = T(a, "  ");
+		},
+		m(a, r) {
+			J(a, e, r);
+		},
+		d(a) {
+			a && h(e);
+		}
+	};
+}
+function es(n) {
+	let e,
+		a,
+		r = n[24].superscript + "",
+		u,
+		d = n[24].label + "",
+		k,
+		b = n[26] < n[4].length - 1 && gs();
+	return {
+		c() {
+			((e = c("span")),
+				(a = c("sup")),
+				(u = x(r)),
+				(k = x(d)),
+				b && b.c(),
+				this.h());
+		},
+		l(y) {
+			e = i(y, "SPAN", { class: !0 });
+			var g = v(e);
+			a = i(g, "SUP", { class: !0 });
+			var _ = v(a);
+			((u = T(_, r)),
+				_.forEach(h),
+				(k = T(g, d)),
+				b && b.l(g),
+				g.forEach(h),
+				this.h());
+		},
+		h() {
+			(o(a, "class", "svelte-1mh8h07"), o(e, "class", "affiliation"));
+		},
+		m(y, g) {
+			(J(y, e, g), s(e, a), s(a, u), s(e, k), b && b.m(e, null));
+		},
+		p: ee,
+		d(y) {
+			(y && h(e), b && b.d());
+		}
+	};
+}
+function ts(n) {
+	let e,
+		a = n[21].label + "",
+		r;
+	return {
+		c() {
+			((e = c("a")), (r = x(a)), this.h());
+		},
+		l(u) {
+			e = i(u, "A", { class: !0, href: !0, target: !0, rel: !0 });
+			var d = v(e);
+			((r = T(d, a)), d.forEach(h), this.h());
+		},
+		h() {
+			(o(e, "class", "action-btn svelte-1mh8h07"),
+				o(e, "href", n[21].href),
+				o(e, "target", "_blank"),
+				o(e, "rel", "noopener"));
+		},
+		m(u, d) {
+			(J(u, e, d), s(e, r));
+		},
+		p: ee,
+		d(u) {
+			u && h(e);
+		}
+	};
+}
+function ss(n) {
+	let e,
+		a,
+		r = n[18] + "";
+	return {
+		c() {
+			((e = c("p")), (a = new us(!1)), this.h());
+		},
+		l(u) {
+			e = i(u, "P", { class: !0 });
+			var d = v(e);
+			((a = vs(d, !1)), d.forEach(h), this.h());
+		},
+		h() {
+			((a.a = null), o(e, "class", "svelte-1mh8h07"));
+		},
+		m(u, d) {
+			(J(u, e, d), a.m(r, e));
+		},
+		p: ee,
+		d(u) {
+			u && h(e);
+		}
+	};
+}
+function as(n) {
+	let e,
+		a,
+		r,
+		u = n[15].title + "",
+		d,
+		k,
+		b,
+		y = n[15].section + "",
+		g,
+		_,
+		C,
+		D = n[15].body + "",
+		H,
+		A;
+	return {
+		c() {
+			((e = c("div")),
+				(a = c("div")),
+				(r = c("h3")),
+				(d = x(u)),
+				(k = p()),
+				(b = c("span")),
+				(g = x(y)),
+				(_ = p()),
+				(C = c("p")),
+				(H = x(D)),
+				(A = p()),
+				this.h());
+		},
+		l(L) {
+			e = i(L, "DIV", { class: !0 });
+			var F = v(e);
+			a = i(F, "DIV", { class: !0 });
+			var I = v(a);
+			r = i(I, "H3", { class: !0 });
+			var O = v(r);
+			((d = T(O, u)),
+				O.forEach(h),
+				(k = m(I)),
+				(b = i(I, "SPAN", { class: !0 })));
+			var Z = v(b);
+			((g = T(Z, y)),
+				Z.forEach(h),
+				I.forEach(h),
+				(_ = m(F)),
+				(C = i(F, "P", { class: !0 })));
+			var N = v(C);
+			((H = T(N, D)), N.forEach(h), (A = m(F)), F.forEach(h), this.h());
+		},
+		h() {
+			(o(r, "class", "svelte-1mh8h07"),
+				o(b, "class", "finding-ref svelte-1mh8h07"),
+				o(a, "class", "finding-header svelte-1mh8h07"),
+				o(C, "class", "svelte-1mh8h07"),
+				o(e, "class", "finding-card svelte-1mh8h07"));
+		},
+		m(L, F) {
+			(J(L, e, F),
+				s(e, a),
+				s(a, r),
+				s(r, d),
+				s(a, k),
+				s(a, b),
+				s(b, g),
+				s(e, _),
+				s(e, C),
+				s(C, H),
+				s(e, A));
+		},
+		p: ee,
+		d(L) {
+			L && h(e);
+		}
+	};
+}
+function ls(n) {
+	let e,
+		a,
+		r = n[12].agent + "",
+		u,
+		d,
+		k,
+		b = n[12].model + "",
+		y,
+		g,
+		_,
+		C = (n[12].rpRank ?? "—") + "",
+		D,
+		H,
+		A,
+		L = ns(n[12].adv) + "",
+		F,
+		I,
+		O,
+		Z = ns(n[12].normAdv) + "",
+		N,
+		B,
+		q,
+		$e = n[12].speedup.toFixed(4) + "",
+		ne,
+		re;
+	return {
+		c() {
+			((e = c("tr")),
+				(a = c("td")),
+				(u = x(r)),
+				(d = p()),
+				(k = c("td")),
+				(y = x(b)),
+				(g = p()),
+				(_ = c("td")),
+				(D = x(C)),
+				(H = p()),
+				(A = c("td")),
+				(F = x(L)),
+				(I = p()),
+				(O = c("td")),
+				(N = x(Z)),
+				(B = p()),
+				(q = c("td")),
+				(ne = x($e)),
+				(re = p()),
+				this.h());
+		},
+		l(W) {
+			e = i(W, "TR", { class: !0 });
+			var P = v(e);
+			a = i(P, "TD", { class: !0 });
+			var _e = v(a);
+			((u = T(_e, r)),
+				_e.forEach(h),
+				(d = m(P)),
+				(k = i(P, "TD", { class: !0 })));
+			var Q = v(k);
+			((y = T(Q, b)),
+				Q.forEach(h),
+				(g = m(P)),
+				(_ = i(P, "TD", { class: !0 })));
+			var Fe = v(_);
+			((D = T(Fe, C)),
+				Fe.forEach(h),
+				(H = m(P)),
+				(A = i(P, "TD", { class: !0 })));
+			var be = v(A);
+			((F = T(be, L)),
+				be.forEach(h),
+				(I = m(P)),
+				(O = i(P, "TD", { class: !0 })));
+			var K = v(O);
+			((N = T(K, Z)),
+				K.forEach(h),
+				(B = m(P)),
+				(q = i(P, "TD", { class: !0 })));
+			var Oe = v(q);
+			((ne = T(Oe, $e)), Oe.forEach(h), (re = m(P)), P.forEach(h), this.h());
+		},
+		h() {
+			(o(a, "class", "agent-cell svelte-1mh8h07"),
+				o(k, "class", "svelte-1mh8h07"),
+				o(_, "class", "rank-cell svelte-1mh8h07"),
+				o(A, "class", "num-cell svelte-1mh8h07"),
+				Ge(A, "positive", n[12].adv > 0),
+				Ge(A, "negative", n[12].adv < 0),
+				o(O, "class", "num-cell svelte-1mh8h07"),
+				Ge(O, "positive", n[12].normAdv > 0),
+				Ge(O, "negative", n[12].normAdv < 0),
+				o(q, "class", "num-cell svelte-1mh8h07"),
+				o(e, "class", "svelte-1mh8h07"),
+				Ge(e, "human-row", n[12].agent === "Human Expert"));
+		},
+		m(W, P) {
+			(J(W, e, P),
+				s(e, a),
+				s(a, u),
+				s(e, d),
+				s(e, k),
+				s(k, y),
+				s(e, g),
+				s(e, _),
+				s(_, D),
+				s(e, H),
+				s(e, A),
+				s(A, F),
+				s(e, I),
+				s(e, O),
+				s(O, N),
+				s(e, B),
+				s(e, q),
+				s(q, ne),
+				s(e, re));
+		},
+		p: ee,
+		d(W) {
+			W && h(e);
+		}
+	};
+}
+function _s(n) {
+	let e,
+		a,
+		r,
+		u,
+		d = n[1].title + "",
+		k,
+		b,
+		y,
+		g,
+		_,
+		C,
+		D,
+		H,
+		A,
+		L,
+		F,
+		I,
+		O = "Leaderboard",
+		Z,
+		N,
+		B,
+		q,
+		$e = "Abstract",
+		ne,
+		re,
+		W,
+		P = `<div class="container narrow svelte-1mh8h07"><h2 class="svelte-1mh8h07">Introduction</h2> <p class="svelte-1mh8h07">Large Language Models for code are rapidly evolving from isolated
 				function-level synthesis to file-level editing, and now, to
 				repository-level optimization. These models are transitioning from
 				assistants into autonomous coding agents, increasingly tasked with
@@ -16,7 +488,10 @@ import{s as rs,n as ee,d as h,l as Re,a as cs,i as J,b as s,C as hs,m as o,c as 
 				including Pandas, Scikit-Learn, and SciPy. Each task is paired with an
 				average of
 				<strong>1,532 community-maintained performance workloads</strong> alongside
-				expert-authored patches.</p></div>`,_e,Q,Fe=`<div class="container narrow svelte-1mh8h07"><h2 class="svelte-1mh8h07">Benchmark Design</h2> <p class="svelte-1mh8h07">FormulaCode draws inspiration from Formula 1, where constructors must
+				expert-authored patches.</p></div>`,
+		_e,
+		Q,
+		Fe = `<div class="container narrow svelte-1mh8h07"><h2 class="svelte-1mh8h07">Benchmark Design</h2> <p class="svelte-1mh8h07">FormulaCode draws inspiration from Formula 1, where constructors must
 				optimize entire systems—not just individual components—to achieve peak
 				performance. Similarly, FormulaCode challenges code agents to perform
 				holistic, codebase-level optimizations, reflecting the complexity and
@@ -25,12 +500,685 @@ import{s as rs,n as ee,d as h,l as Re,a as cs,i as J,b as s,C as hs,m as o,c as 
 						performance relative to human experts. Positive means better than
 						human.</p></div> <div class="metric-card svelte-1mh8h07"><h4 class="svelte-1mh8h07">Normalized Advantage</h4> <p class="svelte-1mh8h07">Signal-to-noise ratio of the agent advantage, accounting for
 						variance across workloads. Rewards consistency.</p></div> <div class="metric-card svelte-1mh8h07"><h4 class="svelte-1mh8h07">Stratified Advantage</h4> <p class="svelte-1mh8h07">Advantage computed at different code hierarchy levels (module,
-						class, function), revealing multi-scale optimization profiles.</p></div></div></div>`,be,K,Oe=`<div class="container narrow svelte-1mh8h07"><h2 class="svelte-1mh8h07">Dataset Construction</h2> <p class="svelte-1mh8h07">FormulaCode uses an automated four-stage pipeline to extract tasks from
+						class, function), revealing multi-scale optimization profiles.</p></div></div></div>`,
+		be,
+		K,
+		Oe = `<div class="container narrow svelte-1mh8h07"><h2 class="svelte-1mh8h07">Dataset Construction</h2> <p class="svelte-1mh8h07">FormulaCode uses an automated four-stage pipeline to extract tasks from
 				GitHub:</p> <div class="pipeline svelte-1mh8h07"><div class="pipe-step svelte-1mh8h07"><div class="pipe-num svelte-1mh8h07">1</div> <div class="pipe-content svelte-1mh8h07"><strong class="svelte-1mh8h07">Repository Scraping</strong> <p class="svelte-1mh8h07">Crawl GitHub for repositories with high-quality, developer-defined
 							performance workloads using the airspeed-velocity (asv) framework.</p></div></div> <div class="pipe-step svelte-1mh8h07"><div class="pipe-num svelte-1mh8h07">2</div> <div class="pipe-content svelte-1mh8h07"><strong class="svelte-1mh8h07">Attribute Filtering</strong> <p class="svelte-1mh8h07">Filter candidate pull requests using rule-based and LLM-based
 							attribute filters, keeping only those where the primary intent is
 							performance optimization.</p></div></div> <div class="pipe-step svelte-1mh8h07"><div class="pipe-num svelte-1mh8h07">3</div> <div class="pipe-content svelte-1mh8h07"><strong class="svelte-1mh8h07">Environment Synthesis</strong> <p class="svelte-1mh8h07">Automatically synthesize reproducible Docker containers using a
 							reflexive LLM agent that iteratively refines build scripts.</p></div></div> <div class="pipe-step svelte-1mh8h07"><div class="pipe-num svelte-1mh8h07">4</div> <div class="pipe-content svelte-1mh8h07"><strong class="svelte-1mh8h07">Statistical Validation</strong> <p class="svelte-1mh8h07">Verify that expert patches produce statistically significant
 							performance improvements, using both unit tests and snapshot
-							tests.</p></div></div></div></div>`,Ke,we,X,oe,vt="Key Findings",Xe,ie,ut=`We evaluate four frontier LLMs—GPT-5, Claude 4.0 Sonnet, Gemini 2.5 Pro,
-				and Qwen 3 Coder—under two agentic frameworks: Terminus 2 and OpenHands.`,Ye,ce,Je,ke,Y,he,mt="Leaderboard Preview",Ze,de,pt='Ranked by Ranked Pairs ordering on Advantage. <a href="/leaderboard/" class="inline-link svelte-1mh8h07">View full leaderboard →</a>',et,ye,te,ve,ft='<tr><th class="svelte-1mh8h07">Agent</th> <th class="svelte-1mh8h07">Model</th> <th class="svelte-1mh8h07">RP Rank ↓</th> <th class="svelte-1mh8h07">Adv ↑</th> <th class="svelte-1mh8h07">Ã ↑</th> <th class="svelte-1mh8h07">Speedup ↑</th></tr>',tt,Ce,st,Ee,U,ue,gt="Submitting Custom Models",at,me,_t='To evaluate your own agent on FormulaCode, follow the <a href="https://github.com/formula-code/terminal-bench/" target="_blank" rel="noopener">installation instructions</a> and run:',lt,Te,xe,bt=n[1].hero.command+"",nt,rt,pe,wt='For detailed instructions, see our <a href="/docs/" class="inline-link svelte-1mh8h07">Getting Started guide →</a>',ot,De,se,fe,kt="BibTeX",it,ae,He,yt=n[2].citation.bibtex+"",ct,ht,ge,qe=n[0]?"Copied!":"Copy",Ne,dt,Ct,Ae=j(n[3]),S=[];for(let l=0;l<Ae.length;l+=1)S[l]=Zt(Jt(n,Ae,l));let Le=j(n[4]),M=[];for(let l=0;l<Le.length;l+=1)M[l]=es(Yt(n,Le,l));let Pe=j(n[6]),V=[];for(let l=0;l<Pe.length;l+=1)V[l]=ts(Xt(n,Pe,l));let Ie=j(n[7].paragraphs),z=[];for(let l=0;l<Ie.length;l+=1)z[l]=ss(Kt(n,Ie,l));let Se=j(n[9]),R=[];for(let l=0;l<Se.length;l+=1)R[l]=as(Qt(n,Se,l));let Me=j(n[8]),$=[];for(let l=0;l<Me.length;l+=1)$[l]=ls(jt(n,Me,l));return{c(){e=c("section"),a=c("div"),r=c("div"),u=c("h1"),k=x(d),b=p(),y=c("div");for(let l=0;l<S.length;l+=1)S[l].c();g=p(),_=c("div");for(let l=0;l<M.length;l+=1)M[l].c();C=p(),D=c("p"),H=x(n[5]),A=p(),L=c("div");for(let l=0;l<V.length;l+=1)V[l].c();F=p(),I=c("a"),I.textContent=O,Z=p(),N=c("div"),B=c("div"),q=c("h2"),q.textContent=$e,ne=p();for(let l=0;l<z.length;l+=1)z[l].c();re=p(),W=c("div"),W.innerHTML=P,_e=p(),Q=c("div"),Q.innerHTML=Fe,be=p(),K=c("div"),K.innerHTML=Oe,Ke=p(),we=c("div"),X=c("div"),oe=c("h2"),oe.textContent=vt,Xe=p(),ie=c("p"),ie.textContent=ut,Ye=p(),ce=c("div");for(let l=0;l<R.length;l+=1)R[l].c();Je=p(),ke=c("div"),Y=c("div"),he=c("h2"),he.textContent=mt,Ze=p(),de=c("p"),de.innerHTML=pt,et=p(),ye=c("div"),te=c("table"),ve=c("thead"),ve.innerHTML=ft,tt=p(),Ce=c("tbody");for(let l=0;l<$.length;l+=1)$[l].c();st=p(),Ee=c("div"),U=c("div"),ue=c("h2"),ue.textContent=gt,at=p(),me=c("p"),me.innerHTML=_t,lt=p(),Te=c("div"),xe=c("code"),nt=x(bt),rt=p(),pe=c("p"),pe.innerHTML=wt,ot=p(),De=c("div"),se=c("div"),fe=c("h2"),fe.textContent=kt,it=p(),ae=c("div"),He=c("pre"),ct=x(yt),ht=p(),ge=c("button"),Ne=x(qe),this.h()},l(l){e=i(l,"SECTION",{class:!0});var f=v(e);a=i(f,"DIV",{class:!0});var t=v(a);r=i(t,"DIV",{class:!0});var w=v(r);u=i(w,"H1",{class:!0});var Et=v(u);k=T(Et,d),Et.forEach(h),b=m(w),y=i(w,"DIV",{class:!0});var Tt=v(y);for(let E=0;E<S.length;E+=1)S[E].l(Tt);Tt.forEach(h),g=m(w),_=i(w,"DIV",{class:!0});var xt=v(_);for(let E=0;E<M.length;E+=1)M[E].l(xt);xt.forEach(h),C=m(w),D=i(w,"P",{class:!0});var Dt=v(D);H=T(Dt,n[5]),Dt.forEach(h),A=m(w),L=i(w,"DIV",{class:!0});var Be=v(L);for(let E=0;E<V.length;E+=1)V[E].l(Be);F=m(Be),I=i(Be,"A",{class:!0,href:!0,"data-svelte-h":!0}),G(I)!=="svelte-1qzyd9s"&&(I.textContent=O),Be.forEach(h),w.forEach(h),t.forEach(h),Z=m(f),N=i(f,"DIV",{class:!0});var Ht=v(N);B=i(Ht,"DIV",{class:!0});var We=v(B);q=i(We,"H2",{class:!0,"data-svelte-h":!0}),G(q)!=="svelte-9to72w"&&(q.textContent=$e),ne=m(We);for(let E=0;E<z.length;E+=1)z[E].l(We);We.forEach(h),Ht.forEach(h),re=m(f),W=i(f,"DIV",{class:!0,"data-svelte-h":!0}),G(W)!=="svelte-12gl3ig"&&(W.innerHTML=P),_e=m(f),Q=i(f,"DIV",{class:!0,"data-svelte-h":!0}),G(Q)!=="svelte-1sdqr9z"&&(Q.innerHTML=Fe),be=m(f),K=i(f,"DIV",{class:!0,"data-svelte-h":!0}),G(K)!=="svelte-1spe71b"&&(K.innerHTML=Oe),Ke=m(f),we=i(f,"DIV",{class:!0});var At=v(we);X=i(At,"DIV",{class:!0});var Ve=v(X);oe=i(Ve,"H2",{class:!0,"data-svelte-h":!0}),G(oe)!=="svelte-1xgvrqx"&&(oe.textContent=vt),Xe=m(Ve),ie=i(Ve,"P",{class:!0,"data-svelte-h":!0}),G(ie)!=="svelte-qwty62"&&(ie.textContent=ut),Ye=m(Ve),ce=i(Ve,"DIV",{class:!0});var Lt=v(ce);for(let E=0;E<R.length;E+=1)R[E].l(Lt);Lt.forEach(h),Ve.forEach(h),At.forEach(h),Je=m(f),ke=i(f,"DIV",{class:!0});var Pt=v(ke);Y=i(Pt,"DIV",{class:!0});var ze=v(Y);he=i(ze,"H2",{class:!0,"data-svelte-h":!0}),G(he)!=="svelte-kqn7vz"&&(he.textContent=mt),Ze=m(ze),de=i(ze,"P",{class:!0,"data-svelte-h":!0}),G(de)!=="svelte-1ty8ydo"&&(de.innerHTML=pt),et=m(ze),ye=i(ze,"DIV",{class:!0});var It=v(ye);te=i(It,"TABLE",{class:!0});var Ue=v(te);ve=i(Ue,"THEAD",{class:!0,"data-svelte-h":!0}),G(ve)!=="svelte-5bwgxe"&&(ve.innerHTML=ft),tt=m(Ue),Ce=i(Ue,"TBODY",{});var St=v(Ce);for(let E=0;E<$.length;E+=1)$[E].l(St);St.forEach(h),Ue.forEach(h),It.forEach(h),ze.forEach(h),Pt.forEach(h),st=m(f),Ee=i(f,"DIV",{class:!0});var Mt=v(Ee);U=i(Mt,"DIV",{class:!0});var le=v(U);ue=i(le,"H2",{class:!0,"data-svelte-h":!0}),G(ue)!=="svelte-1ipia1p"&&(ue.textContent=gt),at=m(le),me=i(le,"P",{class:!0,"data-svelte-h":!0}),G(me)!=="svelte-1t4jfeg"&&(me.innerHTML=_t),lt=m(le),Te=i(le,"DIV",{class:!0});var Vt=v(Te);xe=i(Vt,"CODE",{class:!0});var zt=v(xe);nt=T(zt,bt),zt.forEach(h),Vt.forEach(h),rt=m(le),pe=i(le,"P",{class:!0,"data-svelte-h":!0}),G(pe)!=="svelte-1vslyur"&&(pe.innerHTML=wt),le.forEach(h),Mt.forEach(h),ot=m(f),De=i(f,"DIV",{class:!0});var Rt=v(De);se=i(Rt,"DIV",{class:!0});var je=v(se);fe=i(je,"H2",{class:!0,"data-svelte-h":!0}),G(fe)!=="svelte-1nteguo"&&(fe.textContent=kt),it=m(je),ae=i(je,"DIV",{class:!0});var Qe=v(ae);He=i(Qe,"PRE",{class:!0});var $t=v(He);ct=T($t,yt),$t.forEach(h),ht=m(Qe),ge=i(Qe,"BUTTON",{class:!0});var Ft=v(ge);Ne=T(Ft,qe),Ft.forEach(h),Qe.forEach(h),je.forEach(h),Rt.forEach(h),f.forEach(h),this.h()},h(){o(u,"class","title svelte-1mh8h07"),o(y,"class","authors svelte-1mh8h07"),o(_,"class","affiliations svelte-1mh8h07"),o(D,"class","equal-note svelte-1mh8h07"),o(I,"class","action-btn svelte-1mh8h07"),o(I,"href","/leaderboard/"),o(L,"class","action-buttons svelte-1mh8h07"),o(r,"class","container svelte-1mh8h07"),o(a,"class","hero svelte-1mh8h07"),o(q,"class","svelte-1mh8h07"),o(B,"class","container narrow svelte-1mh8h07"),o(N,"class","section svelte-1mh8h07"),o(W,"class","section alt svelte-1mh8h07"),o(Q,"class","section svelte-1mh8h07"),o(K,"class","section alt svelte-1mh8h07"),o(oe,"class","svelte-1mh8h07"),o(ie,"class","svelte-1mh8h07"),o(ce,"class","findings-grid svelte-1mh8h07"),o(X,"class","container narrow svelte-1mh8h07"),o(we,"class","section svelte-1mh8h07"),o(he,"class","svelte-1mh8h07"),o(de,"class","section-subtitle svelte-1mh8h07"),o(ve,"class","svelte-1mh8h07"),o(te,"class","leaderboard-table svelte-1mh8h07"),o(ye,"class","table-wrapper svelte-1mh8h07"),o(Y,"class","container narrow svelte-1mh8h07"),o(ke,"class","section alt svelte-1mh8h07"),o(ue,"class","svelte-1mh8h07"),o(me,"class","svelte-1mh8h07"),o(xe,"class","svelte-1mh8h07"),o(Te,"class","code-block svelte-1mh8h07"),o(pe,"class","svelte-1mh8h07"),o(U,"class","container narrow svelte-1mh8h07"),o(Ee,"class","section svelte-1mh8h07"),o(fe,"class","svelte-1mh8h07"),o(He,"class","bibtex svelte-1mh8h07"),o(ge,"class","copy-btn svelte-1mh8h07"),o(ae,"class","bibtex-wrapper svelte-1mh8h07"),o(se,"class","container narrow svelte-1mh8h07"),o(De,"class","section alt svelte-1mh8h07"),o(e,"class","overview svelte-1mh8h07")},m(l,f){J(l,e,f),s(e,a),s(a,r),s(r,u),s(u,k),s(r,b),s(r,y);for(let t=0;t<S.length;t+=1)S[t]&&S[t].m(y,null);s(r,g),s(r,_);for(let t=0;t<M.length;t+=1)M[t]&&M[t].m(_,null);s(r,C),s(r,D),s(D,H),s(r,A),s(r,L);for(let t=0;t<V.length;t+=1)V[t]&&V[t].m(L,null);s(L,F),s(L,I),s(e,Z),s(e,N),s(N,B),s(B,q),s(B,ne);for(let t=0;t<z.length;t+=1)z[t]&&z[t].m(B,null);s(e,re),s(e,W),s(e,_e),s(e,Q),s(e,be),s(e,K),s(e,Ke),s(e,we),s(we,X),s(X,oe),s(X,Xe),s(X,ie),s(X,Ye),s(X,ce);for(let t=0;t<R.length;t+=1)R[t]&&R[t].m(ce,null);s(e,Je),s(e,ke),s(ke,Y),s(Y,he),s(Y,Ze),s(Y,de),s(Y,et),s(Y,ye),s(ye,te),s(te,ve),s(te,tt),s(te,Ce);for(let t=0;t<$.length;t+=1)$[t]&&$[t].m(Ce,null);s(e,st),s(e,Ee),s(Ee,U),s(U,ue),s(U,at),s(U,me),s(U,lt),s(U,Te),s(Te,xe),s(xe,nt),s(U,rt),s(U,pe),s(e,ot),s(e,De),s(De,se),s(se,fe),s(se,it),s(se,ae),s(ae,He),s(He,ct),s(ae,ht),s(ae,ge),s(ge,Ne),dt||(Ct=hs(ge,"click",n[10]),dt=!0)},p(l,[f]){if(f&8){Ae=j(l[3]);let t;for(t=0;t<Ae.length;t+=1){const w=Jt(l,Ae,t);S[t]?S[t].p(w,f):(S[t]=Zt(w),S[t].c(),S[t].m(y,null))}for(;t<S.length;t+=1)S[t].d(1);S.length=Ae.length}if(f&16){Le=j(l[4]);let t;for(t=0;t<Le.length;t+=1){const w=Yt(l,Le,t);M[t]?M[t].p(w,f):(M[t]=es(w),M[t].c(),M[t].m(_,null))}for(;t<M.length;t+=1)M[t].d(1);M.length=Le.length}if(f&64){Pe=j(l[6]);let t;for(t=0;t<Pe.length;t+=1){const w=Xt(l,Pe,t);V[t]?V[t].p(w,f):(V[t]=ts(w),V[t].c(),V[t].m(L,F))}for(;t<V.length;t+=1)V[t].d(1);V.length=Pe.length}if(f&128){Ie=j(l[7].paragraphs);let t;for(t=0;t<Ie.length;t+=1){const w=Kt(l,Ie,t);z[t]?z[t].p(w,f):(z[t]=ss(w),z[t].c(),z[t].m(B,null))}for(;t<z.length;t+=1)z[t].d(1);z.length=Ie.length}if(f&512){Se=j(l[9]);let t;for(t=0;t<Se.length;t+=1){const w=Qt(l,Se,t);R[t]?R[t].p(w,f):(R[t]=as(w),R[t].c(),R[t].m(ce,null))}for(;t<R.length;t+=1)R[t].d(1);R.length=Se.length}if(f&256){Me=j(l[8]);let t;for(t=0;t<Me.length;t+=1){const w=jt(l,Me,t);$[t]?$[t].p(w,f):($[t]=ls(w),$[t].c(),$[t].m(Ce,null))}for(;t<$.length;t+=1)$[t].d(1);$.length=Me.length}f&1&&qe!==(qe=l[0]?"Copied!":"Copy")&&cs(Ne,qe)},i:ee,o:ee,d(l){l&&h(e),Re(S,l),Re(M,l),Re(V,l),Re(z,l),Re(R,l),Re($,l),dt=!1,Ct()}}}function ns(n){return n==null?"—":n.toFixed(4)}function bs(n,e,a){const r=ds("copy"),{paperHeader:u,paperFooter:d}=r,{authors:k,affiliations:b,equalContributionNote:y,actions:g,abstract:_}=u,C=[{agent:"OpenHands",model:"Claude 4.0 Sonnet",rpRank:1,adv:-.0112,normAdv:-.0483,speedup:1.0539},{agent:"OpenHands",model:"Qwen 3 Coder",rpRank:2,adv:-.0301,normAdv:-.1529,speedup:1.0346},{agent:"OpenHands",model:"GPT-5",rpRank:3,adv:-.0209,normAdv:-.0702,speedup:1.0825},{agent:"Terminus 2",model:"Claude 4.0 Sonnet",rpRank:4,adv:-.041,normAdv:-.1065,speedup:1.0987},{agent:"Terminus 2",model:"Qwen 3 Coder",rpRank:5,adv:-.0454,normAdv:-.1257,speedup:1.0677},{agent:"Terminus 2",model:"Gemini 2.5 Pro",rpRank:6,adv:-.0433,normAdv:-.1138,speedup:1.0963},{agent:"Terminus 2",model:"GPT-5",rpRank:7,adv:-.0504,normAdv:-.1387,speedup:1.0585},{agent:"Human Expert",model:"—",rpRank:null,adv:0,normAdv:0,speedup:1.104}],D=[{title:"Agents Improve Runtime but Underperform Experts",body:"All agents achieve meaningful speedups over the baseline codebase—current frontier agents can successfully diagnose and resolve performance bottlenecks given a descriptive problem statement. However, for all agents the overall advantage is negative, indicating a fundamental performance gap relative to human experts. Large performance gains on certain 'easier' tasks can have a disproportionate influence on the global speedup score, but the advantage metric, which is referenced to expert solutions, reveals more nuanced differences.",section:"§5.1"},{title:"Local vs. Global Optimization",body:"When we break down agent performance using our stratified advantage metric across module-level, class-level, and function-level aggregation, models exhibit diverse performance profiles. With a few exceptions (Claude 4.0 Sonnet + OpenHands), agents perform well on individual function-level optimizations but struggle to outperform experts at module-level edits. This suggests that current agents are better at localized fixes than at holistic architectural improvements.",section:"§5.2"},{title:"Optimization Strategy Strengths",body:"By labeling the optimization type attempted by each human expert patch, we find that agents generally outperform experts on tasks involving parallelization or batching-based solutions. Conversely, all agents struggle when the human solutions require delegating to lower-level system implementations such as C extensions or vectorized operations.",section:"§5.3"},{title:"Long-Tail Repository Performance",body:"Agent performance varies substantially with repository popularity. Agents perform weakest on tail repositories (bottom 20% by GitHub stars) and on widely popular repositories (60th–80th percentile), but tend to outperform experts on moderately popular repositories (20th–60th percentile). This suggests a 'middle ground' where tasks remain sufficiently in-distribution for agents to be effective.",section:"§5.4"},{title:"Cost Efficiency",body:"Despite being more expensive per API call, agents using frontier LLMs achieve the strongest cost-weighted performance. This is largely because weaker LLMs produce much longer reasoning chains without proportional gains, making expensive models paradoxically more cost-effective for optimization tasks.",section:"§5.5"},{title:"Multi-Workload Tradeoffs",body:"Performance optimization necessitates a holistic understanding of competing workloads. When comparing overall speedup against worst-case regression, human experts negotiate significantly better tradeoffs—achieving better overall speedup while maintaining comparable worst-case performance. This suggests that agents do not yet reason effectively about multi-objective performance tradeoffs.",section:"§5.6"}];let H=!1;function A(){navigator.clipboard.writeText(d.citation.bibtex),a(0,H=!0),setTimeout(()=>a(0,H=!1),2e3)}return[H,u,d,k,b,y,g,_,C,D,A]}class ws extends os{constructor(e){super(),is(this,e,bs,_s,rs,{})}}function ks(n){let e,a,r,u;return e=new ms({props:{title:ys,description:Cs,url:Es,keywords:Ts}}),r=new ws({}),{c(){Ut(e.$$.fragment),a=p(),Ut(r.$$.fragment)},l(d){Wt(e.$$.fragment,d),a=m(d),Wt(r.$$.fragment,d)},m(d,k){Bt(e,d,k),J(d,a,k),Bt(r,d,k),u=!0},p:ee,i(d){u||(Nt(e.$$.fragment,d),Nt(r.$$.fragment,d),u=!0)},o(d){Gt(e.$$.fragment,d),Gt(r.$$.fragment,d),u=!1},d(d){d&&h(a),qt(e,d),qt(r,d)}}}const ys="FormulaCode: Evaluating Agentic Optimization on Large Codebases",Cs="A benchmark for evaluating agentic optimization on large codebases, with 961 real-world tasks from 70 scientific repositories.",Es="https://formula-code.github.io",Ts="benchmark, code optimization, LLM agents, performance, FormulaCode";function xs(n,e,a){let{data:r}=e;return Ot("copy",ps),Ot("data",r.data),n.$$set=u=>{"data"in u&&a(0,r=u.data)},[r]}class Is extends os{constructor(e){super(),is(this,e,xs,ks,rs,{data:0})}}export{Is as component};
+							tests.</p></div></div></div></div>`,
+		Ke,
+		we,
+		X,
+		oe,
+		vt = "Key Findings",
+		Xe,
+		ie,
+		ut = `We evaluate four frontier LLMs—GPT-5, Claude 4.0 Sonnet, Gemini 2.5 Pro,
+				and Qwen 3 Coder—under two agentic frameworks: Terminus 2 and OpenHands.`,
+		Ye,
+		ce,
+		Je,
+		ke,
+		Y,
+		he,
+		mt = "Leaderboard Preview",
+		Ze,
+		de,
+		pt =
+			'Ranked by Ranked Pairs ordering on Advantage. <a href="/leaderboard/" class="inline-link svelte-1mh8h07">View full leaderboard →</a>',
+		et,
+		ye,
+		te,
+		ve,
+		ft =
+			'<tr><th class="svelte-1mh8h07">Agent</th> <th class="svelte-1mh8h07">Model</th> <th class="svelte-1mh8h07">RP Rank ↓</th> <th class="svelte-1mh8h07">Adv ↑</th> <th class="svelte-1mh8h07">Ã ↑</th> <th class="svelte-1mh8h07">Speedup ↑</th></tr>',
+		tt,
+		Ce,
+		st,
+		Ee,
+		U,
+		ue,
+		gt = "Submitting Custom Models",
+		at,
+		me,
+		_t =
+			'To evaluate your own agent on FormulaCode, follow the <a href="https://github.com/formula-code/terminal-bench/" target="_blank" rel="noopener">installation instructions</a> and run:',
+		lt,
+		Te,
+		xe,
+		bt = n[1].hero.command + "",
+		nt,
+		rt,
+		pe,
+		wt =
+			'For detailed instructions, see our <a href="/docs/" class="inline-link svelte-1mh8h07">Getting Started guide →</a>',
+		ot,
+		De,
+		se,
+		fe,
+		kt = "BibTeX",
+		it,
+		ae,
+		He,
+		yt = n[2].citation.bibtex + "",
+		ct,
+		ht,
+		ge,
+		qe = n[0] ? "Copied!" : "Copy",
+		Ne,
+		dt,
+		Ct,
+		Ae = j(n[3]),
+		S = [];
+	for (let l = 0; l < Ae.length; l += 1) S[l] = Zt(Jt(n, Ae, l));
+	let Le = j(n[4]),
+		M = [];
+	for (let l = 0; l < Le.length; l += 1) M[l] = es(Yt(n, Le, l));
+	let Pe = j(n[6]),
+		V = [];
+	for (let l = 0; l < Pe.length; l += 1) V[l] = ts(Xt(n, Pe, l));
+	let Ie = j(n[7].paragraphs),
+		z = [];
+	for (let l = 0; l < Ie.length; l += 1) z[l] = ss(Kt(n, Ie, l));
+	let Se = j(n[9]),
+		R = [];
+	for (let l = 0; l < Se.length; l += 1) R[l] = as(Qt(n, Se, l));
+	let Me = j(n[8]),
+		$ = [];
+	for (let l = 0; l < Me.length; l += 1) $[l] = ls(jt(n, Me, l));
+	return {
+		c() {
+			((e = c("section")),
+				(a = c("div")),
+				(r = c("div")),
+				(u = c("h1")),
+				(k = x(d)),
+				(b = p()),
+				(y = c("div")));
+			for (let l = 0; l < S.length; l += 1) S[l].c();
+			((g = p()), (_ = c("div")));
+			for (let l = 0; l < M.length; l += 1) M[l].c();
+			((C = p()), (D = c("p")), (H = x(n[5])), (A = p()), (L = c("div")));
+			for (let l = 0; l < V.length; l += 1) V[l].c();
+			((F = p()),
+				(I = c("a")),
+				(I.textContent = O),
+				(Z = p()),
+				(N = c("div")),
+				(B = c("div")),
+				(q = c("h2")),
+				(q.textContent = $e),
+				(ne = p()));
+			for (let l = 0; l < z.length; l += 1) z[l].c();
+			((re = p()),
+				(W = c("div")),
+				(W.innerHTML = P),
+				(_e = p()),
+				(Q = c("div")),
+				(Q.innerHTML = Fe),
+				(be = p()),
+				(K = c("div")),
+				(K.innerHTML = Oe),
+				(Ke = p()),
+				(we = c("div")),
+				(X = c("div")),
+				(oe = c("h2")),
+				(oe.textContent = vt),
+				(Xe = p()),
+				(ie = c("p")),
+				(ie.textContent = ut),
+				(Ye = p()),
+				(ce = c("div")));
+			for (let l = 0; l < R.length; l += 1) R[l].c();
+			((Je = p()),
+				(ke = c("div")),
+				(Y = c("div")),
+				(he = c("h2")),
+				(he.textContent = mt),
+				(Ze = p()),
+				(de = c("p")),
+				(de.innerHTML = pt),
+				(et = p()),
+				(ye = c("div")),
+				(te = c("table")),
+				(ve = c("thead")),
+				(ve.innerHTML = ft),
+				(tt = p()),
+				(Ce = c("tbody")));
+			for (let l = 0; l < $.length; l += 1) $[l].c();
+			((st = p()),
+				(Ee = c("div")),
+				(U = c("div")),
+				(ue = c("h2")),
+				(ue.textContent = gt),
+				(at = p()),
+				(me = c("p")),
+				(me.innerHTML = _t),
+				(lt = p()),
+				(Te = c("div")),
+				(xe = c("code")),
+				(nt = x(bt)),
+				(rt = p()),
+				(pe = c("p")),
+				(pe.innerHTML = wt),
+				(ot = p()),
+				(De = c("div")),
+				(se = c("div")),
+				(fe = c("h2")),
+				(fe.textContent = kt),
+				(it = p()),
+				(ae = c("div")),
+				(He = c("pre")),
+				(ct = x(yt)),
+				(ht = p()),
+				(ge = c("button")),
+				(Ne = x(qe)),
+				this.h());
+		},
+		l(l) {
+			e = i(l, "SECTION", { class: !0 });
+			var f = v(e);
+			a = i(f, "DIV", { class: !0 });
+			var t = v(a);
+			r = i(t, "DIV", { class: !0 });
+			var w = v(r);
+			u = i(w, "H1", { class: !0 });
+			var Et = v(u);
+			((k = T(Et, d)),
+				Et.forEach(h),
+				(b = m(w)),
+				(y = i(w, "DIV", { class: !0 })));
+			var Tt = v(y);
+			for (let E = 0; E < S.length; E += 1) S[E].l(Tt);
+			(Tt.forEach(h), (g = m(w)), (_ = i(w, "DIV", { class: !0 })));
+			var xt = v(_);
+			for (let E = 0; E < M.length; E += 1) M[E].l(xt);
+			(xt.forEach(h), (C = m(w)), (D = i(w, "P", { class: !0 })));
+			var Dt = v(D);
+			((H = T(Dt, n[5])),
+				Dt.forEach(h),
+				(A = m(w)),
+				(L = i(w, "DIV", { class: !0 })));
+			var Be = v(L);
+			for (let E = 0; E < V.length; E += 1) V[E].l(Be);
+			((F = m(Be)),
+				(I = i(Be, "A", { class: !0, href: !0, "data-svelte-h": !0 })),
+				G(I) !== "svelte-1qzyd9s" && (I.textContent = O),
+				Be.forEach(h),
+				w.forEach(h),
+				t.forEach(h),
+				(Z = m(f)),
+				(N = i(f, "DIV", { class: !0 })));
+			var Ht = v(N);
+			B = i(Ht, "DIV", { class: !0 });
+			var We = v(B);
+			((q = i(We, "H2", { class: !0, "data-svelte-h": !0 })),
+				G(q) !== "svelte-9to72w" && (q.textContent = $e),
+				(ne = m(We)));
+			for (let E = 0; E < z.length; E += 1) z[E].l(We);
+			(We.forEach(h),
+				Ht.forEach(h),
+				(re = m(f)),
+				(W = i(f, "DIV", { class: !0, "data-svelte-h": !0 })),
+				G(W) !== "svelte-12gl3ig" && (W.innerHTML = P),
+				(_e = m(f)),
+				(Q = i(f, "DIV", { class: !0, "data-svelte-h": !0 })),
+				G(Q) !== "svelte-1sdqr9z" && (Q.innerHTML = Fe),
+				(be = m(f)),
+				(K = i(f, "DIV", { class: !0, "data-svelte-h": !0 })),
+				G(K) !== "svelte-1spe71b" && (K.innerHTML = Oe),
+				(Ke = m(f)),
+				(we = i(f, "DIV", { class: !0 })));
+			var At = v(we);
+			X = i(At, "DIV", { class: !0 });
+			var Ve = v(X);
+			((oe = i(Ve, "H2", { class: !0, "data-svelte-h": !0 })),
+				G(oe) !== "svelte-1xgvrqx" && (oe.textContent = vt),
+				(Xe = m(Ve)),
+				(ie = i(Ve, "P", { class: !0, "data-svelte-h": !0 })),
+				G(ie) !== "svelte-qwty62" && (ie.textContent = ut),
+				(Ye = m(Ve)),
+				(ce = i(Ve, "DIV", { class: !0 })));
+			var Lt = v(ce);
+			for (let E = 0; E < R.length; E += 1) R[E].l(Lt);
+			(Lt.forEach(h),
+				Ve.forEach(h),
+				At.forEach(h),
+				(Je = m(f)),
+				(ke = i(f, "DIV", { class: !0 })));
+			var Pt = v(ke);
+			Y = i(Pt, "DIV", { class: !0 });
+			var ze = v(Y);
+			((he = i(ze, "H2", { class: !0, "data-svelte-h": !0 })),
+				G(he) !== "svelte-kqn7vz" && (he.textContent = mt),
+				(Ze = m(ze)),
+				(de = i(ze, "P", { class: !0, "data-svelte-h": !0 })),
+				G(de) !== "svelte-1ty8ydo" && (de.innerHTML = pt),
+				(et = m(ze)),
+				(ye = i(ze, "DIV", { class: !0 })));
+			var It = v(ye);
+			te = i(It, "TABLE", { class: !0 });
+			var Ue = v(te);
+			((ve = i(Ue, "THEAD", { class: !0, "data-svelte-h": !0 })),
+				G(ve) !== "svelte-5bwgxe" && (ve.innerHTML = ft),
+				(tt = m(Ue)),
+				(Ce = i(Ue, "TBODY", {})));
+			var St = v(Ce);
+			for (let E = 0; E < $.length; E += 1) $[E].l(St);
+			(St.forEach(h),
+				Ue.forEach(h),
+				It.forEach(h),
+				ze.forEach(h),
+				Pt.forEach(h),
+				(st = m(f)),
+				(Ee = i(f, "DIV", { class: !0 })));
+			var Mt = v(Ee);
+			U = i(Mt, "DIV", { class: !0 });
+			var le = v(U);
+			((ue = i(le, "H2", { class: !0, "data-svelte-h": !0 })),
+				G(ue) !== "svelte-1ipia1p" && (ue.textContent = gt),
+				(at = m(le)),
+				(me = i(le, "P", { class: !0, "data-svelte-h": !0 })),
+				G(me) !== "svelte-1t4jfeg" && (me.innerHTML = _t),
+				(lt = m(le)),
+				(Te = i(le, "DIV", { class: !0 })));
+			var Vt = v(Te);
+			xe = i(Vt, "CODE", { class: !0 });
+			var zt = v(xe);
+			((nt = T(zt, bt)),
+				zt.forEach(h),
+				Vt.forEach(h),
+				(rt = m(le)),
+				(pe = i(le, "P", { class: !0, "data-svelte-h": !0 })),
+				G(pe) !== "svelte-1vslyur" && (pe.innerHTML = wt),
+				le.forEach(h),
+				Mt.forEach(h),
+				(ot = m(f)),
+				(De = i(f, "DIV", { class: !0 })));
+			var Rt = v(De);
+			se = i(Rt, "DIV", { class: !0 });
+			var je = v(se);
+			((fe = i(je, "H2", { class: !0, "data-svelte-h": !0 })),
+				G(fe) !== "svelte-1nteguo" && (fe.textContent = kt),
+				(it = m(je)),
+				(ae = i(je, "DIV", { class: !0 })));
+			var Qe = v(ae);
+			He = i(Qe, "PRE", { class: !0 });
+			var $t = v(He);
+			((ct = T($t, yt)),
+				$t.forEach(h),
+				(ht = m(Qe)),
+				(ge = i(Qe, "BUTTON", { class: !0 })));
+			var Ft = v(ge);
+			((Ne = T(Ft, qe)),
+				Ft.forEach(h),
+				Qe.forEach(h),
+				je.forEach(h),
+				Rt.forEach(h),
+				f.forEach(h),
+				this.h());
+		},
+		h() {
+			(o(u, "class", "title svelte-1mh8h07"),
+				o(y, "class", "authors svelte-1mh8h07"),
+				o(_, "class", "affiliations svelte-1mh8h07"),
+				o(D, "class", "equal-note svelte-1mh8h07"),
+				o(I, "class", "action-btn svelte-1mh8h07"),
+				o(I, "href", "/leaderboard/"),
+				o(L, "class", "action-buttons svelte-1mh8h07"),
+				o(r, "class", "container svelte-1mh8h07"),
+				o(a, "class", "hero svelte-1mh8h07"),
+				o(q, "class", "svelte-1mh8h07"),
+				o(B, "class", "container narrow svelte-1mh8h07"),
+				o(N, "class", "section svelte-1mh8h07"),
+				o(W, "class", "section alt svelte-1mh8h07"),
+				o(Q, "class", "section svelte-1mh8h07"),
+				o(K, "class", "section alt svelte-1mh8h07"),
+				o(oe, "class", "svelte-1mh8h07"),
+				o(ie, "class", "svelte-1mh8h07"),
+				o(ce, "class", "findings-grid svelte-1mh8h07"),
+				o(X, "class", "container narrow svelte-1mh8h07"),
+				o(we, "class", "section svelte-1mh8h07"),
+				o(he, "class", "svelte-1mh8h07"),
+				o(de, "class", "section-subtitle svelte-1mh8h07"),
+				o(ve, "class", "svelte-1mh8h07"),
+				o(te, "class", "leaderboard-table svelte-1mh8h07"),
+				o(ye, "class", "table-wrapper svelte-1mh8h07"),
+				o(Y, "class", "container narrow svelte-1mh8h07"),
+				o(ke, "class", "section alt svelte-1mh8h07"),
+				o(ue, "class", "svelte-1mh8h07"),
+				o(me, "class", "svelte-1mh8h07"),
+				o(xe, "class", "svelte-1mh8h07"),
+				o(Te, "class", "code-block svelte-1mh8h07"),
+				o(pe, "class", "svelte-1mh8h07"),
+				o(U, "class", "container narrow svelte-1mh8h07"),
+				o(Ee, "class", "section svelte-1mh8h07"),
+				o(fe, "class", "svelte-1mh8h07"),
+				o(He, "class", "bibtex svelte-1mh8h07"),
+				o(ge, "class", "copy-btn svelte-1mh8h07"),
+				o(ae, "class", "bibtex-wrapper svelte-1mh8h07"),
+				o(se, "class", "container narrow svelte-1mh8h07"),
+				o(De, "class", "section alt svelte-1mh8h07"),
+				o(e, "class", "overview svelte-1mh8h07"));
+		},
+		m(l, f) {
+			(J(l, e, f), s(e, a), s(a, r), s(r, u), s(u, k), s(r, b), s(r, y));
+			for (let t = 0; t < S.length; t += 1) S[t] && S[t].m(y, null);
+			(s(r, g), s(r, _));
+			for (let t = 0; t < M.length; t += 1) M[t] && M[t].m(_, null);
+			(s(r, C), s(r, D), s(D, H), s(r, A), s(r, L));
+			for (let t = 0; t < V.length; t += 1) V[t] && V[t].m(L, null);
+			(s(L, F), s(L, I), s(e, Z), s(e, N), s(N, B), s(B, q), s(B, ne));
+			for (let t = 0; t < z.length; t += 1) z[t] && z[t].m(B, null);
+			(s(e, re),
+				s(e, W),
+				s(e, _e),
+				s(e, Q),
+				s(e, be),
+				s(e, K),
+				s(e, Ke),
+				s(e, we),
+				s(we, X),
+				s(X, oe),
+				s(X, Xe),
+				s(X, ie),
+				s(X, Ye),
+				s(X, ce));
+			for (let t = 0; t < R.length; t += 1) R[t] && R[t].m(ce, null);
+			(s(e, Je),
+				s(e, ke),
+				s(ke, Y),
+				s(Y, he),
+				s(Y, Ze),
+				s(Y, de),
+				s(Y, et),
+				s(Y, ye),
+				s(ye, te),
+				s(te, ve),
+				s(te, tt),
+				s(te, Ce));
+			for (let t = 0; t < $.length; t += 1) $[t] && $[t].m(Ce, null);
+			(s(e, st),
+				s(e, Ee),
+				s(Ee, U),
+				s(U, ue),
+				s(U, at),
+				s(U, me),
+				s(U, lt),
+				s(U, Te),
+				s(Te, xe),
+				s(xe, nt),
+				s(U, rt),
+				s(U, pe),
+				s(e, ot),
+				s(e, De),
+				s(De, se),
+				s(se, fe),
+				s(se, it),
+				s(se, ae),
+				s(ae, He),
+				s(He, ct),
+				s(ae, ht),
+				s(ae, ge),
+				s(ge, Ne),
+				dt || ((Ct = hs(ge, "click", n[10])), (dt = !0)));
+		},
+		p(l, [f]) {
+			if (f & 8) {
+				Ae = j(l[3]);
+				let t;
+				for (t = 0; t < Ae.length; t += 1) {
+					const w = Jt(l, Ae, t);
+					S[t] ? S[t].p(w, f) : ((S[t] = Zt(w)), S[t].c(), S[t].m(y, null));
+				}
+				for (; t < S.length; t += 1) S[t].d(1);
+				S.length = Ae.length;
+			}
+			if (f & 16) {
+				Le = j(l[4]);
+				let t;
+				for (t = 0; t < Le.length; t += 1) {
+					const w = Yt(l, Le, t);
+					M[t] ? M[t].p(w, f) : ((M[t] = es(w)), M[t].c(), M[t].m(_, null));
+				}
+				for (; t < M.length; t += 1) M[t].d(1);
+				M.length = Le.length;
+			}
+			if (f & 64) {
+				Pe = j(l[6]);
+				let t;
+				for (t = 0; t < Pe.length; t += 1) {
+					const w = Xt(l, Pe, t);
+					V[t] ? V[t].p(w, f) : ((V[t] = ts(w)), V[t].c(), V[t].m(L, F));
+				}
+				for (; t < V.length; t += 1) V[t].d(1);
+				V.length = Pe.length;
+			}
+			if (f & 128) {
+				Ie = j(l[7].paragraphs);
+				let t;
+				for (t = 0; t < Ie.length; t += 1) {
+					const w = Kt(l, Ie, t);
+					z[t] ? z[t].p(w, f) : ((z[t] = ss(w)), z[t].c(), z[t].m(B, null));
+				}
+				for (; t < z.length; t += 1) z[t].d(1);
+				z.length = Ie.length;
+			}
+			if (f & 512) {
+				Se = j(l[9]);
+				let t;
+				for (t = 0; t < Se.length; t += 1) {
+					const w = Qt(l, Se, t);
+					R[t] ? R[t].p(w, f) : ((R[t] = as(w)), R[t].c(), R[t].m(ce, null));
+				}
+				for (; t < R.length; t += 1) R[t].d(1);
+				R.length = Se.length;
+			}
+			if (f & 256) {
+				Me = j(l[8]);
+				let t;
+				for (t = 0; t < Me.length; t += 1) {
+					const w = jt(l, Me, t);
+					$[t] ? $[t].p(w, f) : (($[t] = ls(w)), $[t].c(), $[t].m(Ce, null));
+				}
+				for (; t < $.length; t += 1) $[t].d(1);
+				$.length = Me.length;
+			}
+			f & 1 && qe !== (qe = l[0] ? "Copied!" : "Copy") && cs(Ne, qe);
+		},
+		i: ee,
+		o: ee,
+		d(l) {
+			(l && h(e),
+				Re(S, l),
+				Re(M, l),
+				Re(V, l),
+				Re(z, l),
+				Re(R, l),
+				Re($, l),
+				(dt = !1),
+				Ct());
+		}
+	};
+}
+function ns(n) {
+	return n == null ? "—" : n.toFixed(4);
+}
+function bs(n, e, a) {
+	const r = ds("copy"),
+		{ paperHeader: u, paperFooter: d } = r,
+		{
+			authors: k,
+			affiliations: b,
+			equalContributionNote: y,
+			actions: g,
+			abstract: _
+		} = u,
+		C = [
+			{
+				agent: "OpenHands",
+				model: "Claude 4.0 Sonnet",
+				rpRank: 1,
+				adv: -0.0112,
+				normAdv: -0.0483,
+				speedup: 1.0539
+			},
+			{
+				agent: "OpenHands",
+				model: "Qwen 3 Coder",
+				rpRank: 2,
+				adv: -0.0301,
+				normAdv: -0.1529,
+				speedup: 1.0346
+			},
+			{
+				agent: "OpenHands",
+				model: "GPT-5",
+				rpRank: 3,
+				adv: -0.0209,
+				normAdv: -0.0702,
+				speedup: 1.0825
+			},
+			{
+				agent: "Terminus 2",
+				model: "Claude 4.0 Sonnet",
+				rpRank: 4,
+				adv: -0.041,
+				normAdv: -0.1065,
+				speedup: 1.0987
+			},
+			{
+				agent: "Terminus 2",
+				model: "Qwen 3 Coder",
+				rpRank: 5,
+				adv: -0.0454,
+				normAdv: -0.1257,
+				speedup: 1.0677
+			},
+			{
+				agent: "Terminus 2",
+				model: "Gemini 2.5 Pro",
+				rpRank: 6,
+				adv: -0.0433,
+				normAdv: -0.1138,
+				speedup: 1.0963
+			},
+			{
+				agent: "Terminus 2",
+				model: "GPT-5",
+				rpRank: 7,
+				adv: -0.0504,
+				normAdv: -0.1387,
+				speedup: 1.0585
+			},
+			{
+				agent: "Human Expert",
+				model: "—",
+				rpRank: null,
+				adv: 0,
+				normAdv: 0,
+				speedup: 1.104
+			}
+		],
+		D = [
+			{
+				title: "Agents Improve Runtime but Underperform Experts",
+				body: "All agents achieve meaningful speedups over the baseline codebase—current frontier agents can successfully diagnose and resolve performance bottlenecks given a descriptive problem statement. However, for all agents the overall advantage is negative, indicating a fundamental performance gap relative to human experts. Large performance gains on certain 'easier' tasks can have a disproportionate influence on the global speedup score, but the advantage metric, which is referenced to expert solutions, reveals more nuanced differences.",
+				section: "§5.1"
+			},
+			{
+				title: "Local vs. Global Optimization",
+				body: "When we break down agent performance using our stratified advantage metric across module-level, class-level, and function-level aggregation, models exhibit diverse performance profiles. With a few exceptions (Claude 4.0 Sonnet + OpenHands), agents perform well on individual function-level optimizations but struggle to outperform experts at module-level edits. This suggests that current agents are better at localized fixes than at holistic architectural improvements.",
+				section: "§5.2"
+			},
+			{
+				title: "Optimization Strategy Strengths",
+				body: "By labeling the optimization type attempted by each human expert patch, we find that agents generally outperform experts on tasks involving parallelization or batching-based solutions. Conversely, all agents struggle when the human solutions require delegating to lower-level system implementations such as C extensions or vectorized operations.",
+				section: "§5.3"
+			},
+			{
+				title: "Long-Tail Repository Performance",
+				body: "Agent performance varies substantially with repository popularity. Agents perform weakest on tail repositories (bottom 20% by GitHub stars) and on widely popular repositories (60th–80th percentile), but tend to outperform experts on moderately popular repositories (20th–60th percentile). This suggests a 'middle ground' where tasks remain sufficiently in-distribution for agents to be effective.",
+				section: "§5.4"
+			},
+			{
+				title: "Cost Efficiency",
+				body: "Despite being more expensive per API call, agents using frontier LLMs achieve the strongest cost-weighted performance. This is largely because weaker LLMs produce much longer reasoning chains without proportional gains, making expensive models paradoxically more cost-effective for optimization tasks.",
+				section: "§5.5"
+			},
+			{
+				title: "Multi-Workload Tradeoffs",
+				body: "Performance optimization necessitates a holistic understanding of competing workloads. When comparing overall speedup against worst-case regression, human experts negotiate significantly better tradeoffs—achieving better overall speedup while maintaining comparable worst-case performance. This suggests that agents do not yet reason effectively about multi-objective performance tradeoffs.",
+				section: "§5.6"
+			}
+		];
+	let H = !1;
+	function A() {
+		(navigator.clipboard.writeText(d.citation.bibtex),
+			a(0, (H = !0)),
+			setTimeout(() => a(0, (H = !1)), 2e3));
+	}
+	return [H, u, d, k, b, y, g, _, C, D, A];
+}
+class ws extends os {
+	constructor(e) {
+		(super(), is(this, e, bs, _s, rs, {}));
+	}
+}
+function ks(n) {
+	let e, a, r, u;
+	return (
+		(e = new ms({
+			props: { title: ys, description: Cs, url: Es, keywords: Ts }
+		})),
+		(r = new ws({})),
+		{
+			c() {
+				(Ut(e.$$.fragment), (a = p()), Ut(r.$$.fragment));
+			},
+			l(d) {
+				(Wt(e.$$.fragment, d), (a = m(d)), Wt(r.$$.fragment, d));
+			},
+			m(d, k) {
+				(Bt(e, d, k), J(d, a, k), Bt(r, d, k), (u = !0));
+			},
+			p: ee,
+			i(d) {
+				u || (Nt(e.$$.fragment, d), Nt(r.$$.fragment, d), (u = !0));
+			},
+			o(d) {
+				(Gt(e.$$.fragment, d), Gt(r.$$.fragment, d), (u = !1));
+			},
+			d(d) {
+				(d && h(a), qt(e, d), qt(r, d));
+			}
+		}
+	);
+}
+const ys = "FormulaCode: Evaluating Agentic Optimization on Large Codebases",
+	Cs =
+		"A benchmark for evaluating agentic optimization on large codebases, with 961 real-world tasks from 70 scientific repositories.",
+	Es = "https://formula-code.github.io",
+	Ts = "benchmark, code optimization, LLM agents, performance, FormulaCode";
+function xs(n, e, a) {
+	let { data: r } = e;
+	return (
+		Ot("copy", ps),
+		Ot("data", r.data),
+		(n.$$set = (u) => {
+			"data" in u && a(0, (r = u.data));
+		}),
+		[r]
+	);
+}
+class Is extends os {
+	constructor(e) {
+		(super(), is(this, e, xs, ks, rs, { data: 0 }));
+	}
+}
+export { Is as component };
