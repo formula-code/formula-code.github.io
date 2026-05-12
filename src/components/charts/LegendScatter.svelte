@@ -202,7 +202,7 @@
 				{/if}
 			</text>
 			<text
-				class="axis-title"
+				class="axis-title axis-title-y"
 				transform="translate({-54},{ih / 2}) rotate(-90)"
 				text-anchor="middle"
 			>
@@ -369,6 +369,27 @@
 		letter-spacing: 0;
 		font-weight: 600;
 		opacity: 0.9;
+	}
+
+	/* viewBox is 760×420; on a ~440px-wide mobile card the SVG shrinks
+	   ~0.58×, so the desktop sizes above render below the 80%-of-caption
+	   legibility floor (~11.5px). Bump them in SVG units to compensate.
+	   The rotated y-axis title would collide with the bigger y-tick labels
+	   in the cramped left margin, so we hide it on mobile — the chart
+	   description above already names the y dimension. */
+	@media (max-width: 820px) {
+		.tick {
+			font-size: 18px;
+		}
+		.axis-title {
+			font-size: 20px;
+		}
+		.axis-better {
+			font-size: 22px;
+		}
+		.axis-title-y {
+			display: none;
+		}
 	}
 
 	.backdrop-line {

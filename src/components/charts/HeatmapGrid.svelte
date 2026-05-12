@@ -177,6 +177,8 @@
 <div class="hg-wrap" bind:this={containerEl}>
 	<svg
 		class="hg-svg"
+		width={W}
+		height={H}
 		viewBox="0 0 {W} {H}"
 		preserveAspectRatio="xMidYMid meet"
 		role="img"
@@ -398,9 +400,14 @@
 		font-family: var(--sans);
 	}
 
-	@media (max-width: 520px) {
+	/* On narrow viewports we stop shrinking the SVG and let it scroll
+	   horizontally inside .hg-wrap. This keeps the in-chart text at its
+	   native ~12px instead of dropping to 7–9px after viewBox scaling,
+	   without risking row-label overlap from a font bump. */
+	@media (max-width: 820px) {
 		.hg-svg {
-			min-width: 480px;
+			width: auto;
+			min-width: 100%;
 		}
 	}
 
