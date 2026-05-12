@@ -12,11 +12,7 @@
 	const bins = data.bins || [];
 	const rawRows = data.rows || [];
 
-	$: rowLabels = rawRows.map((r) => {
-		const c = r.knowledge_cutoff;
-		const stamp = c ? ` · cutoff ${c.slice(0, 7)}` : "";
-		return `${r.model}${stamp}`;
-	});
+	$: rowLabels = rawRows.map((r) => r.model);
 	$: colLabels = bins.map((b) => b.label);
 	$: values = rawRows.map((r) =>
 		(r.speedups || []).slice(0, bins.length)
