@@ -2,10 +2,10 @@ paperHeader.title: FormulaCode: Evaluating Agentic Optimization on Large Codebas
 [paperHeader.authors]
 name: Atharva Sehgal
 url: https://atharvas.net/
-superscript: 1
+superscript: 1,*
 name: James Hou
 url: https://jamesahou.github.io/
-superscript: 2
+superscript: 2,*
 name: Akanksha Sarkar
 url: https://milstein-program.as.cornell.edu/akanksha-sarkar/
 superscript: 3
@@ -29,6 +29,8 @@ superscript: 2
 label: California Institute of Technology
 superscript: 3
 label: Cornell University
+superscript: *
+label: Equal contribution
 []
 [paperHeader.actions]
 label: Live dashboard
