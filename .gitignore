@@ -21,3 +21,6 @@ CLAUDE.md
 # Python toolchain in CI. Refresh with `make docs` (see Makefile).
 _repos/
 .venv-docs/
+
+# Local fc-eval run output (created by `fc-eval run` from this directory).
+runs/
