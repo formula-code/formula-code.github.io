@@ -20,7 +20,7 @@
 
 	<ResultsHighlights
 		title="Leaderboard at a glance"
-		subtitle="The findings above roll up into the per-agent advantage scores below. Positive bars beat the human expert; negative bars trail."
+		subtitle="The findings above roll up into the per-agent advantage scores below. We weren't able to find an agent overall better than human experts — every overall bar trails. Positive bars beat the human expert on a given level; negative bars trail."
 		stratified={leaderboardData.stratified}
 	/>
 

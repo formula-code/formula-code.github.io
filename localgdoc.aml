@@ -55,7 +55,7 @@ paperHeader.leaderboard.title: FormulaCode’s Leaderboard (Tentative)
 paperHeader.leaderboard.description: Snapshot of latest results on FormulaCode. Updated Monthly!
 paperHeader.hero.eyebrow: Don’t see your model on the leaderboard?
 paperHeader.hero.instructions: To evaluate an agent on FormulaCode, Follow the <a href=https://github.com/formula-code/fc-eval/>installation instructions</a> and run:
-paperHeader.hero.command: fceval run -d formulacode -a {your t-bench agent}
+paperHeader.hero.command: fc-eval run --dataset formulacode --config {your-config.json}
 paperHeader.hero.body: The next sections dive into FormulaCode’s analysis with interactive visualizations on a representative subset of FormulaCode. For up-to-date results and insights, please read the paper!
 paperHeader.hero.cta.label: Read the paper
 paperHeader.hero.cta.href: https://arxiv.org/abs/2603.16011
@@ -331,12 +331,12 @@ overview.compactLeaderboard.buttonText: View Full Leaderboard
 overview.submit.title: Don't see your model? Submit it!
 overview.submit.repoUrl: https://github.com/formula-code/fc-eval
 overview.submit.instructions: To evaluate an agent on FormulaCode, follow the <a href="https://github.com/formula-code/fc-eval">Installation instructions</a> and run:
-overview.submit.command: $ fceval run -d formulacode -a [your-agent-name] -m [your-model-name]
+overview.submit.command: $ fc-eval run --dataset formulacode --config [your-config.json]
 
 leaderboardPage.title: FormulaCode Leaderboard
 leaderboardPage.global.title: Global Leaderboard
 leaderboardPage.stratified.title: Stratified Leaderboard
-leaderboardPage.stratified.description: Performance broken down by optimization scope: <strong>L1</strong> (Params), <strong>L2</strong> (Function), <strong>L3</strong> (Class), <strong>L4</strong> (Module).
+leaderboardPage.stratified.description: Performance broken down by optimization scope: <strong>L1</strong> (Function), <strong>L2</strong> (Class), <strong>L3</strong> (Module).
 leaderboardPage.submit.title: Submit Your Model
 leaderboardPage.submit.description: To evaluate your own agent on FormulaCode, follow our installation guide.
 leaderboardPage.submit.buttonText: Get Started

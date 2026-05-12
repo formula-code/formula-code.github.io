@@ -2,8 +2,7 @@
 	import { getContext } from "svelte";
 	import Icon from "$components/helpers/Icon.svelte";
 	import SortableTable from "$components/helpers/SortableTable.svelte";
-	import leaderboardData from "$data/leaderboard.json";
-	import { LEVEL_DISPLAY_LABELS, LEVEL_ORDER } from "$utils/constants.js";
+	import { paperLeaderboard } from "$utils/findings.js";
 
 	const copy = getContext("copy") || {};
 	const headerCopy = copy.paperHeader || {};
@@ -92,39 +91,22 @@
 	const leaderboardTitle = headerCopy.leaderboard.title;
 	const leaderboardDescription = headerCopy.leaderboard.description;
 
-	// Use centralized level order
-	const levels = LEVEL_ORDER;
-
-	// Build SortableTable columns from levels
+	// Paper convention: L1=Function, L2=Class, L3=Module (no Params level).
 	const headerTableColumns = [
 		{ key: "displayName", label: "Agent", numeric: false },
-		...levels.map((level) => ({
-			key: level,
-			label: LEVEL_DISPLAY_LABELS[level] || level,
-			numeric: true,
-			colorCode: true,
-			colorThreshold: 0
-		})),
-		{
-			key: "overall",
-			label: "Overall",
-			numeric: true,
-			colorCode: true,
-			colorThreshold: 0
-		}
+		{ key: "level1", label: "L1: Function", numeric: true, colorCode: true, colorThreshold: 0 },
+		{ key: "level2", label: "L2: Class", numeric: true, colorCode: true, colorThreshold: 0 },
+		{ key: "level3", label: "L3: Module", numeric: true, colorCode: true, colorThreshold: 0 },
+		{ key: "overall", label: "Overall", numeric: true, colorCode: true, colorThreshold: 0 }
 	];
 
-	// Flatten nested levels into flat row objects for SortableTable
-	const rawTableData = Array.isArray(leaderboardData?.tableData)
-		? leaderboardData.tableData
-		: [];
-	const headerTableRows = rawTableData.map((row) => {
-		const flat = { displayName: row.displayName, overall: row.overall };
-		levels.forEach((level) => {
-			flat[level] = row.levels?.[level] ?? null;
-		});
-		return flat;
-	});
+	const headerTableRows = paperLeaderboard.stratified.map((row) => ({
+		displayName: `${row.agent} — ${row.model}`,
+		level1: row.level1,
+		level2: row.level2,
+		level3: row.level3,
+		overall: row.advantage
+	}));
 
 	const hero = headerCopy.hero || {};
 	const heroCommand =

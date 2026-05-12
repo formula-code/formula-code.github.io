@@ -19,7 +19,7 @@
 	const stratTitle = lp.stratified?.title ?? "Stratified Leaderboard";
 	const stratDesc =
 		lp.stratified?.description ??
-		'Performance broken down by optimization scope: <strong>L1</strong> (Params), <strong>L2</strong> (Function), <strong>L3</strong> (Class), <strong>L4</strong> (Module).';
+		'Performance broken down by optimization scope: <strong>L1</strong> (Function), <strong>L2</strong> (Class), <strong>L3</strong> (Module).';
 	const submitTitle = lp.submit?.title ?? "Submit Your Model";
 	const submitDesc =
 		lp.submit?.description ??
@@ -72,10 +72,9 @@
 			colorCode: true,
 			colorThreshold: 0
 		},
-		{ key: "level1", label: "L1 · Params", numeric: true, colorCode: true, colorThreshold: 0 },
-		{ key: "level2", label: "L2 · Function", numeric: true, colorCode: true, colorThreshold: 0 },
-		{ key: "level3", label: "L3 · Class", numeric: true, colorCode: true, colorThreshold: 0 },
-		{ key: "level4", label: "L4 · Module", numeric: true, colorCode: true, colorThreshold: 0 }
+		{ key: "level1", label: "L1 · Function", numeric: true, colorCode: true, colorThreshold: 0 },
+		{ key: "level2", label: "L2 · Class", numeric: true, colorCode: true, colorThreshold: 0 },
+		{ key: "level3", label: "L3 · Module", numeric: true, colorCode: true, colorThreshold: 0 }
 	];
 
 	function handleDateChange(e) {

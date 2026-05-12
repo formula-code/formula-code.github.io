@@ -5,6 +5,7 @@
 
 	const fmt = (n) => new Intl.NumberFormat("en-US").format(n);
 	const FINAL_TASKS = 957;
+	const INITIAL_REPOS = 70;
 	const totals = dashboard.totals;
 
 	// Live dashboard probe: a no-cors GET tells us the host responded at all.
@@ -201,10 +202,10 @@
 			<p>
 				FormulaCode is a <em>continually updating</em> benchmark for evaluating
 				the <em>holistic</em> ability of LLM agents to optimize codebases. Our
-				current dataset consists of <strong>{fmt(FINAL_TASKS)}</strong> tasks scraped
-				from <strong>{fmt(totals.pull_requests)}</strong> pull requests in
-				<strong>{fmt(totals.repositories)}</strong> compliant repositories. Try out
-				a formulacode task with:
+				current dataset consists of <strong>{fmt(FINAL_TASKS)}</strong> tasks
+				scraped from <strong>{fmt(totals.pull_requests)}</strong> pull requests
+				in
+				<strong>{fmt(INITIAL_REPOS)}+</strong> compliant repositories.
 			</p>
 		</div>
 
@@ -222,7 +223,11 @@
 					aria-label="{liveDashboard.label} (live)"
 				>
 					<span class="action-icon">
-						<Icon name={liveDashboard.icon || "activity"} size="15px" strokeWidth={2} />
+						<Icon
+							name={liveDashboard.icon || "activity"}
+							size="15px"
+							strokeWidth={2}
+						/>
 					</span>
 					{liveDashboard.label}
 				</a>
@@ -233,7 +238,11 @@
 					title="Dashboard is unreachable from your network"
 				>
 					<span class="action-icon">
-						<Icon name={liveDashboard.icon || "activity"} size="15px" strokeWidth={2} />
+						<Icon
+							name={liveDashboard.icon || "activity"}
+							size="15px"
+							strokeWidth={2}
+						/>
 					</span>
 					{liveDashboard.label} (offline)
 				</span>
@@ -256,12 +265,16 @@
 			{/each}
 		</div>
 
+		<p class="hero-terminal-lead">Try out a formulacode task with:</p>
 		<div class="hero-terminal" aria-label="Install and run fc-eval">
-			<pre class="terminal-line"><span class="prompt">$</span> <span
-					class="cmd">uv tool install fc-eval</span></pre>
-			<pre class="terminal-line"><span class="prompt">$</span> <span
-					class="cmd">fceval run --dataset formulacode --config <span
-						class="placeholder">[your-agent-here]</span></span></pre>
+			<pre class="terminal-line"><span class="prompt">$</span> <span class="cmd"
+					>uv tool install fc-eval</span
+				></pre>
+			<pre class="terminal-line"><span class="prompt">$</span> <span class="cmd"
+					>fc-eval run --dataset formulacode --task-id shapely_shapely_2032 --config <span
+						class="placeholder">[your-config.json]</span
+					></span
+				></pre>
 		</div>
 	</div>
 </section>
@@ -440,10 +453,21 @@
 		font-weight: 700;
 	}
 
+	.hero-terminal-lead {
+		width: 100%;
+		max-width: 820px;
+		margin: var(--space-md) auto 6px;
+		padding: 0;
+		text-align: left;
+		font-family: var(--sans);
+		font-size: 0.9rem;
+		color: var(--text-muted);
+	}
+
 	.hero-terminal {
 		width: 100%;
-		max-width: 640px;
-		margin: var(--space-xs) auto 0;
+		max-width: 820px;
+		margin: 0 auto;
 		background: var(--bg-secondary);
 		border: 0;
 		border-radius: var(--radius);
@@ -452,6 +476,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 6px;
+		overflow-x: auto;
 	}
 
 	.terminal-line {
@@ -460,9 +485,7 @@
 		line-height: 1.55;
 		color: var(--text-primary);
 		margin: 0;
-		white-space: pre-wrap;
-		word-break: break-word;
-		overflow-wrap: anywhere;
+		white-space: pre;
 	}
 
 	.terminal-line .prompt {

@@ -1,10 +1,10 @@
-import advantageData from "$data/advantage-leaderboard.json";
 import rawRows from "$data/website_data_lite.csv";
+import { paperLeaderboard } from "$utils/findings.js";
 
 export async function load() {
 	return {
 		data: [],
-		leaderboard: advantageData,
+		leaderboard: paperLeaderboard,
 		rows: rawRows
 	};
 }

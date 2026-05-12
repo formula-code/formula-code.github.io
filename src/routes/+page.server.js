@@ -1,9 +1,9 @@
-import advantageData from "$data/advantage-leaderboard.json";
+import { paperLeaderboard } from "$utils/findings.js";
 
 export async function load() {
 	const data = ["a", "b", "c"];
 	return {
 		data,
-		leaderboard: advantageData
+		leaderboard: paperLeaderboard
 	};
 }

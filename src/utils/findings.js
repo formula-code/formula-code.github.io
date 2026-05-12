@@ -24,5 +24,40 @@ export function needsExport(finding) {
 	return Boolean(finding && finding._needs_export);
 }
 
-// Issue tracking the live-API exposure of these summary endpoints.
-export const FC_EVAL_ISSUE_URL = "https://github.com/formula-code/fc-eval/issues/19";
+// Paper-aligned leaderboard derived from f1_leaderboard.json (global, ranked-pairs)
+// and f2_stratified.json (per-level advantage). This is the single source of truth
+// for every surface that claims to render "the FormulaCode leaderboard":
+//   - / (Leaderboard at a glance)
+//   - /leaderboard/ (global + stratified)
+//   - /blog/ PaperHeader
+// The toy 4-agent scrollytelling data in website_data_lite.csv stays separate.
+//
+// f2_stratified uses paper's L1=Function, L2=Class, L3=Module convention (no
+// Params level — the paper dropped it). Keys passed through unchanged so the
+// JSON matches the paper exactly.
+export const paperLeaderboard = (() => {
+	const f1Rows = Array.isArray(f1.rows) ? f1.rows : [];
+	const f2Rows = Array.isArray(f2.rows) ? f2.rows : [];
+
+	const global = f1Rows
+		.filter((r) => !r._baseline)
+		.map((r) => ({
+			agent: r.agent,
+			model: r.model,
+			rank: r.rp_rank,
+			advantage: r.advantage,
+			speedup: r.speedup_geomean
+		}))
+		.sort((a, b) => a.rank - b.rank);
+
+	const stratified = f2Rows.map((r) => ({
+		agent: r.agent,
+		model: r.model,
+		advantage: r.overall,
+		level1: r.level1,
+		level2: r.level2,
+		level3: r.level3
+	}));
+
+	return { global, stratified };
+})();

@@ -13,7 +13,7 @@ const MODEL_DISPLAY_NAMES = {
 	"gpt-5": "GPT-5",
 	oracle: "Expert Human",
 	"gemini-2.5-pro": "Gemini 2.5 Pro",
-	"qwen3-coder": "Qwen 3 Coder"
+	"qwen3-coder": "Qwen3 Coder 480B"
 };
 
 // Level string → stratified bucket key. Accepts both the raw CSV value
@@ -102,7 +102,12 @@ export function mergedAtRange(rows) {
 }
 
 // Core ranking: consumes raw per-row CSV data and returns
-// { global: [...], stratified: [...] } in the same shape as advantage-leaderboard.json.
+// { global: [...], stratified: [...] } in the same shape as `paperLeaderboard`
+// in $utils/findings.js. NOTE: this code path is dormant — it only fires when
+// the toy CSV grows a `merged_at` column. The level bucket keys here still
+// follow the legacy L1=Params/L2=Function/L3=Class/L4=Module mapping; the
+// paper-aligned static leaderboard uses L1=Function/L2=Class/L3=Module. When
+// merged_at lands, reconcile this and the LeaderboardPage stratified columns.
 // opts:
 //   maxDate  — JS Date. Rows with merged_at > maxDate are excluded. If null, no filter.
 //   minCount — minimum # of rows an agent needs to appear. Default 1.

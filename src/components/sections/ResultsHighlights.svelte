@@ -16,9 +16,9 @@
 
 	const TABS = [
 		{ key: "advantage", label: "Overall", desc: "Overall" },
-		{ key: "level2", label: "L2 — Function", desc: "Function level" },
-		{ key: "level3", label: "L3 — Class", desc: "Class level" },
-		{ key: "level4", label: "L4 — Module", desc: "Module level" }
+		{ key: "level1", label: "L1 — Function", desc: "Function level" },
+		{ key: "level2", label: "L2 — Class", desc: "Class level" },
+		{ key: "level3", label: "L3 — Module", desc: "Module level" }
 	];
 
 	let activeTab = "advantage";
@@ -178,7 +178,7 @@
 
 	.bar-row {
 		display: grid;
-		grid-template-columns: minmax(150px, 210px) minmax(0, 1fr) 90px;
+		grid-template-columns: minmax(150px, 210px) minmax(0, 1fr) 120px;
 		gap: 12px;
 		align-items: center;
 		opacity: 0;
@@ -265,10 +265,12 @@
 
 	.bar-value {
 		font-family: var(--mono);
-		font-size: 0.78rem;
+		font-size: 1rem;
+		font-weight: 600;
 		text-align: right;
 		color: var(--text-muted);
 		font-variant-numeric: tabular-nums;
+		letter-spacing: -0.01em;
 	}
 
 	.bar-value.pos {
