@@ -55,9 +55,6 @@
 {#if months.length > 1}
 	<div class="tts">
 		<div class="head">
-			<div class="eyebrow">
-				<span class="slash">//</span> TIME TRAVEL
-			</div>
 			<div class="readout">
 				<span class="muted">merged on or before</span>
 				<span class="value mono">{formatLabel(months[index])}</span>
@@ -83,13 +80,6 @@
 			<span>{formatLabel(months[months.length - 1])}</span>
 		</div>
 	</div>
-{:else}
-	<div class="tts placeholder">
-		<span class="eyebrow mono">// TIME TRAVEL</span>
-		<span class="muted">
-			coming soon — waiting on <code class="mono">merged_at</code> in the dataset.
-		</span>
-	</div>
 {/if}
 
 <style>
@@ -108,18 +98,6 @@
 		gap: 1rem;
 		margin-bottom: 0.9rem;
 		flex-wrap: wrap;
-	}
-
-	.eyebrow {
-		font-family: var(--mono);
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.12em;
-		color: var(--text-secondary);
-	}
-
-	.eyebrow .slash {
-		color: var(--accent-secondary);
 	}
 
 	.readout {
@@ -193,19 +171,4 @@
 		letter-spacing: 0.05em;
 	}
 
-	.placeholder {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		padding: 0.9rem 1.1rem;
-		font-size: 0.85rem;
-		color: var(--text-secondary);
-	}
-
-	.placeholder code {
-		color: var(--text-primary);
-		background: var(--bg-tertiary);
-		padding: 0.1rem 0.35rem;
-		border-radius: 3px;
-	}
 </style>
