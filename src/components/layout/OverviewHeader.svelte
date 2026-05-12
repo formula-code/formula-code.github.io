@@ -210,13 +210,9 @@
 		</div>
 
 		<div class="hero-ctas hero-ctas-wide">
-			<a class="btn btn-primary btn-wide" href="/explorer/">
-				<span class="cta-mark">→</span>
-				Browse Workloads
-			</a>
 			{#if dashboardAvailable}
 				<a
-					class="btn btn-primary-blue-dotted btn-wide"
+					class="btn btn-primary btn-wide"
 					href={liveDashboard.href}
 					target="_blank"
 					rel="noopener noreferrer"
@@ -233,7 +229,7 @@
 				</a>
 			{:else}
 				<span
-					class="btn btn-primary-blue-dotted btn-wide is-disabled"
+					class="btn btn-primary btn-wide is-disabled"
 					aria-disabled="true"
 					title="Dashboard is unreachable from your network"
 				>
@@ -247,6 +243,10 @@
 					{liveDashboard.label} (offline)
 				</span>
 			{/if}
+			<a class="btn btn-primary-blue-dotted btn-wide" href="/explorer/">
+				<span class="cta-mark">→</span>
+				Browse Workloads
+			</a>
 		</div>
 
 		<div class="hero-ctas">

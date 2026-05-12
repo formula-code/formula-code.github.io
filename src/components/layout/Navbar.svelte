@@ -48,10 +48,13 @@
 		{ name: "Overview", href: "/" },
 		{ name: "Leaderboard", href: "/leaderboard/" },
 		{ name: "Documentation", href: "/docs/" },
-		{ name: "Blog", href: "/blog/" }
 	];
 
-	const ctaLink = { name: "Browse Workloads", href: "/explorer/" };
+	const ctaLink = {
+		name: "Live Dashboard",
+		href: "https://data.formulacode.org/",
+		external: true,
+	};
 </script>
 
 <svelte:window bind:innerWidth />
@@ -82,7 +85,10 @@
 			<a
 				href={ctaLink.href}
 				class="nav-cta"
-				class:active={$page.url.pathname.startsWith(ctaLink.href)}
+				class:active={!ctaLink.external &&
+					$page.url.pathname.startsWith(ctaLink.href)}
+				target={ctaLink.external ? "_blank" : undefined}
+				rel={ctaLink.external ? "noopener noreferrer" : undefined}
 			>
 				{ctaLink.name}
 			</a>
@@ -116,6 +122,8 @@
 			<a
 				href={ctaLink.href}
 				class="cta"
+				target={ctaLink.external ? "_blank" : undefined}
+				rel={ctaLink.external ? "noopener noreferrer" : undefined}
 				on:click={toggleMenu}
 			>
 				{ctaLink.name}
