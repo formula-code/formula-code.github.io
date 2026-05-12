@@ -121,10 +121,8 @@
 				Browse {facets.stats.total.toLocaleString()} performance workloads
 			</h1>
 			<p class="page-desc">
-				Every workload in this preview slice of FormulaCode, indexed by
-				repository, optimization level, and task. Click a card to see the
-				benchmark code, per-agent speedups, and a link to the agent's
-				terminal session recording.
+				This is a preview slice of the FormulaCode workload dataset, while we work
+				on <a href="https://api.formulacode.org/"><code>api.formulacode.org</code></a>. Every workload is indexed by repository, optimization level, and task. Click a card to see the benchmark code, per-agent speedups, and a link to the agent's terminal session recording.
 			</p>
 
 			<div class="stats-strip mini">

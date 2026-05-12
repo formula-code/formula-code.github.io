@@ -1,7 +1,13 @@
-import allBenchmarkData from "$data/website_data_lite.csv";
+import mainBenchmarkData from "$data/website_data_lite.csv";
+import explorerBenchmarkData from "$data/website_data_lite.explorer.csv";
 
 export const ssr = false;
 export const prerender = false;
+
+// Search both the main scrollytelling CSV and the explorer's curated slice.
+// The two cover different experiment runs; the explorer CSV is what carries
+// the agent_recording paths that actually resolve to files on disk.
+const allBenchmarkData = [...mainBenchmarkData, ...explorerBenchmarkData];
 
 export async function load({ params, url }) {
 	const rawRecordingPath = params.recordingPath || "";
@@ -23,12 +29,16 @@ export async function load({ params, url }) {
 		);
 	}
 
-	// Lazy load the heavy code data
+	// Lazy load the heavy code data — try both the main and explorer maps
+	// since the benchmark may have come from either CSV.
 	if (benchmark) {
 		try {
-			const module = await import("$data/website_data_codes.json");
-			const heavyData = module.default;
-			const extra = heavyData[benchmark.id];
+			const [mainMod, explorerMod] = await Promise.all([
+				import("$data/website_data_codes.json"),
+				import("$data/website_data_codes.explorer.json")
+			]);
+			const extra =
+				mainMod.default[benchmark.id] ?? explorerMod.default[benchmark.id];
 			if (extra) {
 				benchmark = { ...benchmark, ...extra };
 			}

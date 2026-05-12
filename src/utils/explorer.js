@@ -50,10 +50,15 @@ export function levelShort(level) {
  * (task_id, level, benchmark_name) with per-agent stats.
  *
  * The CSV structure has each benchmark replicated across the three agents
- * (oracle, claude, gpt-5). Oracle's `agent/nop` ≡ `oracle/nop`. The agent
- * rows additionally carry a recording path; oracle rows do not.
+ * (oracle, claude, gpt-5). Oracle's `agent/nop` ≡ `oracle/nop`.
+ *
+ * `recordingManifest` is an optional `{task_id: {agent_id: url}}` map built
+ * from what's actually on disk. When provided, workloads whose task_id has
+ * no on-disk recording are dropped entirely, and the per-agent recording
+ * URLs come from the manifest rather than the CSV (the CSV's paths point
+ * to a now-stale filename scheme).
  */
-export function buildWorkloads(rows, codeMap) {
+export function buildWorkloads(rows, codeMap, recordingManifest = null) {
 	const groups = new Map();
 
 	for (const r of rows) {
@@ -61,6 +66,8 @@ export function buildWorkloads(rows, codeMap) {
 		const level = r.level;
 		const name = r.benchmark_name;
 		if (!taskId || !level || !name) continue;
+
+		if (recordingManifest && !recordingManifest[taskId]) continue;
 
 		const key = `${taskId}::${level}::${name}`;
 		let wl = groups.get(key);
@@ -74,7 +81,9 @@ export function buildWorkloads(rows, codeMap) {
 				id: r.id,
 				oracle: null,
 				agents: {},
-				recordings: {}
+				recordings: recordingManifest
+					? { ...(recordingManifest[taskId] ?? {}) }
+					: {}
 			};
 			groups.set(key, wl);
 		}
@@ -88,7 +97,7 @@ export function buildWorkloads(rows, codeMap) {
 		if (agentId && agentNop !== null) {
 			wl.agents[agentId] = agentNop;
 		}
-		if (agentId && r.agent_recording) {
+		if (!recordingManifest && agentId && r.agent_recording) {
 			wl.recordings[agentId] = r.agent_recording;
 		}
 	}
