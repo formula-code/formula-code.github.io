@@ -1,24 +1,166 @@
 {
-	"_source": "_repos/fc-eval/analysis/table_8_tags.ipynb",
-	"_paper_artifact": "Table 2 (Per-Tag Advantage)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_needs_export": true,
-	"_notes": "Awaiting export from table_8_tags.ipynb against the full results set. Tag list mirrors the paper's optimization-strategy taxonomy. Rows array is empty until the exporter populates per agent×tag advantages; see umbrella issue on formula-code/fc-eval.",
 	"tags": [
-		{ "key": "parallelization", "label": "Parallelization" },
-		{ "key": "batching", "label": "Batching" },
-		{ "key": "io", "label": "I/O" },
-		{ "key": "caching", "label": "Caching" },
-		{ "key": "algorithmic", "label": "Algorithmic rewrites" },
-		{ "key": "data_structure", "label": "Data-structure changes" },
-		{ "key": "reduce_work", "label": "Reduce work" },
-		{ "key": "approximation", "label": "Approximation" },
-		{ "key": "scale", "label": "Scale" },
-		{ "key": "db", "label": "DB" },
-		{ "key": "higher_level", "label": "Higher-level" },
-		{ "key": "micro", "label": "Micro-optimizations" },
-		{ "key": "lower_level", "label": "Lower-level implementations" },
-		{ "key": "uncategorized", "label": "Uncategorized" }
+		{
+			"key": "parallelization",
+			"label": "Parallelization"
+		},
+		{
+			"key": "batching",
+			"label": "Batching"
+		},
+		{
+			"key": "caching",
+			"label": "Caching"
+		},
+		{
+			"key": "algorithmic",
+			"label": "Algorithmic rewrites"
+		},
+		{
+			"key": "data_structure",
+			"label": "Data-structure changes"
+		},
+		{
+			"key": "reduce_work",
+			"label": "Reduce work"
+		},
+		{
+			"key": "higher_level",
+			"label": "Higher-level"
+		},
+		{
+			"key": "micro",
+			"label": "Micro-optimizations"
+		},
+		{
+			"key": "lower_level",
+			"label": "Lower-level implementations"
+		}
 	],
-	"rows": []
+	"rows": [
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"advantages": [
+				0.00735858343805385,
+				0.0468628579518227,
+				-0.0168267645058733,
+				-0.0491141541370085,
+				0.0228921345754083,
+				-0.0379010752719757,
+				-0.00569801649890916,
+				0.170445322210415,
+				-0.180009278509453
+			]
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"advantages": [
+				0.0149010280547779,
+				0.040200751063632,
+				-0.017794696566265,
+				-0.000672848686348379,
+				-0.0523483891867056,
+				-0.0382558732029245,
+				-0.0105702691436317,
+				0.0142726592095557,
+				-0.211265228406703
+			]
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"advantages": [
+				0.00735858343805385,
+				null,
+				-0.0168267645058733,
+				-0.075843338254674,
+				0.0339223010506867,
+				-0.0578541056763793,
+				-0.000656956703198985,
+				-0.0434396652580134,
+				null
+			]
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"advantages": [
+				0.0119500009395439,
+				0.0508932809170919,
+				-0.0190901411512072,
+				-0.0429670339118497,
+				-0.00443042908663634,
+				-0.0127976742760095,
+				0.02016877534344,
+				-0.0153763148317836,
+				-0.20320026958258
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"advantages": [
+				0.0134776895269448,
+				0.0408202690273354,
+				-0.0478643750141231,
+				-0.0440261938460509,
+				0.0114092699712733,
+				-0.020436501380422,
+				-0.0129089580686048,
+				0.0132382052600937,
+				-0.719948117876415
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"advantages": [
+				0.00966659356784838,
+				0.0280105033020777,
+				-0.0536579010728061,
+				-0.0675271211187436,
+				-0.111751755912275,
+				-0.00148485149548145,
+				-0.00105652713476967,
+				0.00696425871234189,
+				-0.233091738036364
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"advantages": [
+				0.0134776895269448,
+				0.0408202690273354,
+				-0.0478643750141231,
+				-0.0539024055983771,
+				0.0114092699712733,
+				-0.020436501380422,
+				-0.00908589331894721,
+				0.013501316293214,
+				-0.676357644654096
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"advantages": [
+				0.00730436750318209,
+				0.042284755346651,
+				-0.0274023271403981,
+				-0.0539776441878977,
+				0.00708933747931295,
+				-0.0510654403804153,
+				0.00953685861871928,
+				-0.016401295910257,
+				-0.45479093151287
+			]
+		}
+	],
+	"_source": "api.formulacode.org \u00b7 findings_tag_advantage (upstream: fc-eval/analysis/table_8_tags.ipynb)",
+	"_paper_artifact": "Table 2 (Per-Tag Advantage)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.T2",
+	"_generated_at": "2026-05-12T06:25:10Z"
 }

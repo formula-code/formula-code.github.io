@@ -1,70 +1,86 @@
 {
-	"_source": "_repos/fc-eval/analysis/figure_2_ladders.ipynb + table_7_aggregated.ipynb",
-	"_paper_artifact": "Figure 3 (Stratified advantage across hierarchy levels)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_generated_at": "ported-from-advantage-leaderboard.json",
-	"_notes": "Real values mirrored from src/data/advantage-leaderboard.json stratified rows. Website convention: level2=Function, level3=Class, level4=Module. Paper Figure 3 uses ℓ∈{1,2,3} corresponding to Module/Class/Function (inverted ordering); the slope chart presents in paper order (coarse→fine).",
 	"levels": [
-		{ "key": "level4", "label": "Module", "paper_label": "ℓ=1" },
-		{ "key": "level3", "label": "Class", "paper_label": "ℓ=2" },
-		{ "key": "level2", "label": "Function", "paper_label": "ℓ=3" }
+		{
+			"key": "level3",
+			"label": "Module"
+		},
+		{
+			"key": "level2",
+			"label": "Class"
+		},
+		{
+			"key": "level1",
+			"label": "Function"
+		}
 	],
 	"rows": [
 		{
 			"agent": "OpenHands",
 			"model": "Claude 4.0 Sonnet",
-			"overall": -0.0112,
-			"level2": -0.027,
-			"level3": 0.0156,
-			"level4": 0.2985
-		},
-		{
-			"agent": "OpenHands",
-			"model": "GPT-5",
-			"overall": -0.0209,
-			"level2": 0.028,
-			"level3": 0.0515,
-			"level4": -0.0119
+			"overall": -0.00960638085088834,
+			"level1": -0.00383496489351878,
+			"level2": 0.0216600383793753,
+			"level3": 0.295725939698064
 		},
 		{
 			"agent": "OpenHands",
 			"model": "Qwen 3 Coder",
-			"overall": -0.0301,
-			"level2": -0.026,
-			"level3": -0.0223,
-			"level4": -0.0286
+			"overall": -0.0299253693304188,
+			"level1": -0.0301737886292468,
+			"level2": -0.0289877925295229,
+			"level3": -0.028567779390264
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"overall": -0.0462080638015593,
+			"level1": -0.0537989084047874,
+			"level2": -0.0418214147619845,
+			"level3": -0.0384652519688056
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"overall": -0.0185969577537639,
+			"level1": 0.048876128155537,
+			"level2": 0.0582749649917876,
+			"level3": -0.00954119463255852
 		},
 		{
 			"agent": "Terminus 2",
 			"model": "Claude 4.0 Sonnet",
-			"overall": -0.041,
-			"level2": -0.0465,
-			"level3": -0.0491,
-			"level4": -0.045
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Gemini 2.5 Pro",
-			"overall": -0.0433,
-			"level2": -0.0225,
-			"level3": -0.028,
-			"level4": -0.037
+			"overall": -0.0421813500096763,
+			"level1": -0.0506460375282734,
+			"level2": -0.0510800401245873,
+			"level3": -0.0533083367536025
 		},
 		{
 			"agent": "Terminus 2",
 			"model": "Qwen 3 Coder",
-			"overall": -0.0454,
-			"level2": -0.1052,
-			"level3": -0.1103,
-			"level4": -0.058
+			"overall": -0.045371371612693,
+			"level1": -0.0560094040254792,
+			"level2": -0.063135053174003,
+			"level3": -0.0625670969462901
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"overall": -0.0847442360865581,
+			"level1": -0.063901607852724,
+			"level2": -0.0693509082518062,
+			"level3": -0.0783788202050645
 		},
 		{
 			"agent": "Terminus 2",
 			"model": "GPT-5",
-			"overall": -0.0504,
-			"level2": -0.0676,
-			"level3": -0.0606,
-			"level4": -0.0464
+			"overall": -0.0490123717182562,
+			"level1": -0.0476569548657744,
+			"level2": -0.0535587028286032,
+			"level3": -0.0514835657629989
 		}
-	]
+	],
+	"_source": "api.formulacode.org \u00b7 findings_stratified_advantage (upstream: fc-eval/analysis/figure_2_ladders.ipynb \u00b7 paper/figures/assets/agg_ladders.pdf)",
+	"_paper_artifact": "Figure 3 (Stratified advantage across hierarchy levels)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.F3",
+	"_generated_at": "2026-05-12T06:25:10Z"
 }

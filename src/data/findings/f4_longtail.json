@@ -1,16 +1,119 @@
 {
-	"_source": "_repos/fc-eval/analysis/table_9_longtail.ipynb",
-	"_paper_artifact": "Table 3 (Performance Across Repository Popularity Quintiles)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_needs_export": true,
-	"_notes": "Awaiting export from table_9_longtail.ipynb. Quintile bucketing is NTILE(5) OVER (ORDER BY stars) on the repositories table; ranges are computed at export time and stamped into the `quintile_ranges` field. Until then `rows` is empty.",
 	"quintiles": [
-		{ "key": "Q1", "label": "Q1" },
-		{ "key": "Q2", "label": "Q2" },
-		{ "key": "Q3", "label": "Q3" },
-		{ "key": "Q4", "label": "Q4" },
-		{ "key": "Q5", "label": "Q5" }
+		{
+			"key": "Q1",
+			"label": "Q1"
+		},
+		{
+			"key": "Q2",
+			"label": "Q2"
+		},
+		{
+			"key": "Q3",
+			"label": "Q3"
+		},
+		{
+			"key": "Q4",
+			"label": "Q4"
+		},
+		{
+			"key": "Q5",
+			"label": "Q5"
+		}
 	],
 	"quintile_ranges": null,
-	"rows": []
+	"rows": [
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"advantages": [
+				-0.0855596884781132,
+				0.0270220846404562,
+				-0.0196141071722912,
+				0.0644715191442272,
+				-0.0342618376638741
+			]
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"advantages": [
+				-0.0297991778437816,
+				0.0321167895148068,
+				0.000509189826793247,
+				-0.0606871778288285,
+				-0.011976130861901
+			]
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"advantages": [
+				-0.0528763409903406,
+				0.0339223010506867,
+				-0.18611368861923,
+				null,
+				-0.0439660845897737
+			]
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"advantages": [
+				-0.0112627296643123,
+				0.0111985517971305,
+				0.0154297140192872,
+				-0.0893526920715307,
+				-0.0242726119796584
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"advantages": [
+				-0.0352491962662205,
+				-0.0162121482587227,
+				0.00720589281897679,
+				-0.171865996361245,
+				-0.0261890446219045
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"advantages": [
+				-0.0145704189357398,
+				0.0406302491124333,
+				-0.00673526920112544,
+				-0.184081618005467,
+				-0.0144265226836254
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"advantages": [
+				0.00868099882582087,
+				-0.0162121482587227,
+				0.00713725536040788,
+				-0.160968378055665,
+				-0.0516872164752496
+			]
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"advantages": [
+				-0.0563493360800835,
+				-0.00231697244538243,
+				-0.0185991022793068,
+				-0.133394138488007,
+				-0.0261049897308761
+			]
+		}
+	],
+	"_source": "api.formulacode.org \u00b7 findings_repo_quintiles (upstream: fc-eval/analysis/table_9_longtail.ipynb)",
+	"_paper_artifact": "Table 3 (Performance Across Repository Popularity Quintiles)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.T3",
+	"_generated_at": "2026-05-12T06:25:10Z"
 }

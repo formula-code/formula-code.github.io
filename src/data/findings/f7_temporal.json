@@ -1,15 +1,76 @@
 {
-	"_source": "_repos/fc-eval/analysis/figure_1_temporal.ipynb",
-	"_paper_artifact": "Table 4 / Figure 1 (Temporal generalization)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_needs_export": true,
-	"_notes": "Awaiting export from figure_1_temporal.ipynb. Bins tasks into 3-month windows relative to each model's knowledge cutoff (from model_config.json). Frontier models only: Claude 4.0 Sonnet, GPT-5, Gemini 2.5 Pro.",
 	"bins": [
-		{ "key": "pre6", "label": "−6mo+", "relative_months": -6 },
-		{ "key": "pre3", "label": "−3mo", "relative_months": -3 },
-		{ "key": "cutoff", "label": "cutoff", "relative_months": 0 },
-		{ "key": "post3", "label": "+3mo", "relative_months": 3 },
-		{ "key": "post6", "label": "+6mo+", "relative_months": 6 }
+		{
+			"key": "pre6plus",
+			"label": "6+ mo before",
+			"relative_months": -6
+		},
+		{
+			"key": "pre3to6",
+			"label": "3\u20136 mo before",
+			"relative_months": -4.5
+		},
+		{
+			"key": "pre0to3",
+			"label": "0\u20133 mo before",
+			"relative_months": -1.5
+		},
+		{
+			"key": "post0to3",
+			"label": "0\u20133 mo after",
+			"relative_months": 1.5
+		},
+		{
+			"key": "post3to6",
+			"label": "3\u20136 mo after",
+			"relative_months": 4.5
+		},
+		{
+			"key": "post6plus",
+			"label": "6+ mo after",
+			"relative_months": 6
+		}
 	],
-	"rows": []
+	"rows": [
+		{
+			"model": "Claude 4.0 Sonnet",
+			"knowledge_cutoff": "2025-04-01",
+			"speedups": [
+				1.08917984476075,
+				1.05642821617183,
+				0.996623659895519,
+				1.09144966016378,
+				1.09508905426388,
+				1.05193329047511
+			]
+		},
+		{
+			"model": "GPT-5",
+			"knowledge_cutoff": "2024-09-01",
+			"speedups": [
+				1.17078594630163,
+				1.04544339042732,
+				0.987144353244098,
+				1.0378447144049,
+				1.06788127411763,
+				1.04999133295202
+			]
+		},
+		{
+			"model": "Gemini 2.5 Pro",
+			"knowledge_cutoff": "2025-01-01",
+			"speedups": [
+				1.10711266210984,
+				0.998868632674244,
+				1.02188926390294,
+				1.05233575015011,
+				1.10624720831571,
+				1.02514170610832
+			]
+		}
+	],
+	"_source": "api.formulacode.org \u00b7 findings_temporal_generalization (canonical upstream: fc-eval/analysis/figure_1_temporal.ipynb \u00b7 paper/figures/assets/temporal_ood.pdf)",
+	"_paper_artifact": "Table 4 (Temporal generalization across knowledge-cutoff bins)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.T4",
+	"_generated_at": "2026-05-12T06:25:11Z"
 }

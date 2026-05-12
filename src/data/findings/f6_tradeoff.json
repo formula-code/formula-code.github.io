@@ -1,8 +1,2248 @@
 {
-	"_source": "_repos/fc-eval/analysis/multi_objective_analysis_corrected.ipynb",
+	"rows": [
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.03678027060909,
+			"worst_workload_speedup": 0.804928851481762,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 0.98873832393862,
+			"worst_workload_speedup": 0.705551554658399,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.50461497984503,
+			"worst_workload_speedup": 1.14339427590994,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 0.98873832393862,
+			"worst_workload_speedup": 0.705551554658399,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.06429397793786,
+			"worst_workload_speedup": 0.860757872989445,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.00025096757892,
+			"worst_workload_speedup": 0.756429715547906,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.36138122296902,
+			"worst_workload_speedup": 1.07620194296012,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.50461497984503,
+			"worst_workload_speedup": 1.14339427590994,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.01767736106248,
+			"worst_workload_speedup": 0.962658256632916,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.02955711090775,
+			"worst_workload_speedup": 0.976627424466241,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.02033513760004,
+			"worst_workload_speedup": 0.953099881490182,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.02955711090775,
+			"worst_workload_speedup": 0.976627424466241,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.02566464939923,
+			"worst_workload_speedup": 0.978973454321174,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.01667140257109,
+			"worst_workload_speedup": 0.962758369600099,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.01667140257109,
+			"worst_workload_speedup": 0.962758369600099,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.02142023685613,
+			"worst_workload_speedup": 0.978936351490194,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.02798990336,
+			"worst_workload_speedup": 0.997389253693854,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.33562395359052,
+			"worst_workload_speedup": 0.999894550211548,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.00608399399268,
+			"worst_workload_speedup": 0.983777250488857,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.15893314959254,
+			"worst_workload_speedup": 0.99199839802583,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.02798990336,
+			"worst_workload_speedup": 0.997389253693854,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.03460470349288,
+			"worst_workload_speedup": 0.999970502746584,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.03460470349288,
+			"worst_workload_speedup": 0.999970502746584,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.02319271391438,
+			"worst_workload_speedup": 0.999978317857764,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 3672,
+			"global_speedup": 2.30889704661756,
+			"worst_workload_speedup": 2.29450614814758,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 3672,
+			"global_speedup": 2.32463236503885,
+			"worst_workload_speedup": 2.32281179174862,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 3672,
+			"global_speedup": 1.53780653715338,
+			"worst_workload_speedup": 1.01234249710493,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 3672,
+			"global_speedup": 1.74497246384033,
+			"worst_workload_speedup": 0.98892907875153,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 3672,
+			"global_speedup": 1.57069314922219,
+			"worst_workload_speedup": 1.0234678626935,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.932244583963644,
+			"worst_workload_speedup": 0.849132531913293,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 1.00946244147243,
+			"worst_workload_speedup": 0.950787195598019,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.99360982712252,
+			"worst_workload_speedup": 0.880158058441183,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 1.00946244147243,
+			"worst_workload_speedup": 0.950787195598019,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.988274823876061,
+			"worst_workload_speedup": 0.896469494569802,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.980678879365676,
+			"worst_workload_speedup": 0.899658067750203,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.988274823876061,
+			"worst_workload_speedup": 0.896469494569802,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.985211188814801,
+			"worst_workload_speedup": 0.918587139256391,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7181,
+			"global_speedup": 1.03916132343955,
+			"worst_workload_speedup": 0.835624798783576,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7181,
+			"global_speedup": 1.04190083836914,
+			"worst_workload_speedup": 0.922168412717319,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7181,
+			"global_speedup": 1.04184039508417,
+			"worst_workload_speedup": 0.934385533657392,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.985729064583518,
+			"worst_workload_speedup": 0.953273542836263,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.979974333009852,
+			"worst_workload_speedup": 0.943979154732621,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.979974333009852,
+			"worst_workload_speedup": 0.943979154732621,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 1.01038178773406,
+			"worst_workload_speedup": 0.968519127263148,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 1.00145717591628,
+			"worst_workload_speedup": 0.960655410803946,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.992596875949155,
+			"worst_workload_speedup": 0.933860756014245,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.992596875949155,
+			"worst_workload_speedup": 0.933860756014245,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.988199618698957,
+			"worst_workload_speedup": 0.945569558221296,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 1.02965925543782,
+			"worst_workload_speedup": 0.951148579109242,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 0.900026305793947,
+			"worst_workload_speedup": 0.0767683158520122,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 0.998421333801279,
+			"worst_workload_speedup": 0.809796128275084,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 1.04077227811802,
+			"worst_workload_speedup": 0.964378182087423,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 1.02231274284349,
+			"worst_workload_speedup": 0.928723117207183,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 1.02156039807357,
+			"worst_workload_speedup": 0.887516408077074,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 1.01797682060214,
+			"worst_workload_speedup": 0.942662064783287,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 0.978481522385389,
+			"worst_workload_speedup": 0.906672665338098,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 0.978481522385389,
+			"worst_workload_speedup": 0.906672665338098,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 1.01076921028477,
+			"worst_workload_speedup": 0.817941177923728,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 0.993161742595571,
+			"worst_workload_speedup": 0.925791428835792,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 1.00969223611699,
+			"worst_workload_speedup": 0.965567189075475,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 1.00672340109308,
+			"worst_workload_speedup": 0.954872053041087,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7249,
+			"global_speedup": 0.997138343077082,
+			"worst_workload_speedup": 0.958933424497684,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7249,
+			"global_speedup": 1.00263778571197,
+			"worst_workload_speedup": 0.942793326455238,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.02353836107625,
+			"worst_workload_speedup": 0.925659074810681,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.04255275332211,
+			"worst_workload_speedup": 0.970737128942436,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.06457693497444,
+			"worst_workload_speedup": 0.988883548836772,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.00664550107525,
+			"worst_workload_speedup": 0.953124952547443,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.04255275332211,
+			"worst_workload_speedup": 0.970737128942436,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.04489283944946,
+			"worst_workload_speedup": 0.923801530823101,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.04489283944946,
+			"worst_workload_speedup": 0.923801530823101,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.02631914891762,
+			"worst_workload_speedup": 0.91753110970786,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.01618840751501,
+			"worst_workload_speedup": 0.997525626703985,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.05985003554098,
+			"worst_workload_speedup": 0.986330773511571,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.03646307300071,
+			"worst_workload_speedup": 0.999178553256945,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.02298618464825,
+			"worst_workload_speedup": 0.849142496197128,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.02298618464825,
+			"worst_workload_speedup": 0.849142496197128,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 0.995830992736283,
+			"worst_workload_speedup": 0.591897031514467,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.01618840751501,
+			"worst_workload_speedup": 0.997525626703985,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.04418102710354,
+			"worst_workload_speedup": 1.00996908006164,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.08356206849416,
+			"worst_workload_speedup": 1.00535105195353,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.0366968308785,
+			"worst_workload_speedup": 1.00891090555503,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.04452936290978,
+			"worst_workload_speedup": 1.00645429563354,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.02320178498019,
+			"worst_workload_speedup": 1.00644563127917,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.08356206849416,
+			"worst_workload_speedup": 1.00535105195353,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 1.0366968308785,
+			"worst_workload_speedup": 1.00891090555503,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 0.996264955916359,
+			"worst_workload_speedup": 0.956971102600304,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.00018805458356,
+			"worst_workload_speedup": 0.927039291092762,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.02932791761431,
+			"worst_workload_speedup": 0.999410277546793,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.00018805458356,
+			"worst_workload_speedup": 0.927039291092762,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.02821830361988,
+			"worst_workload_speedup": 0.999858867316755,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.01443326032731,
+			"worst_workload_speedup": 0.964838210954157,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 0.99876447068372,
+			"worst_workload_speedup": 0.849376491972412,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.02021539397449,
+			"worst_workload_speedup": 0.881720109925244,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "xarray-contrib",
+			"repo": "flox",
+			"issue_number": 360,
+			"global_speedup": 1.04707581805042,
+			"worst_workload_speedup": 0.946757076824045,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "xarray-contrib",
+			"repo": "flox",
+			"issue_number": 415,
+			"global_speedup": 1.28595400301811,
+			"worst_workload_speedup": 0.984703855618603,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "xarray-contrib",
+			"repo": "flox",
+			"issue_number": 415,
+			"global_speedup": 1.2768191062025,
+			"worst_workload_speedup": 0.986272066570883,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "xarray-contrib",
+			"repo": "flox",
+			"issue_number": 300,
+			"global_speedup": 0.998765805887408,
+			"worst_workload_speedup": 0.0603247356289243,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.02798023319264,
+			"worst_workload_speedup": 1.02004859830939,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.03742265432419,
+			"worst_workload_speedup": 1.0276099980961,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.03742265432419,
+			"worst_workload_speedup": 1.0276099980961,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.08648683112697,
+			"worst_workload_speedup": 1.04000580097908,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.16562369039952,
+			"worst_workload_speedup": 1.02591396186822,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.88654601192414,
+			"worst_workload_speedup": 1.88654601192414,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10866,
+			"global_speedup": 0.992079320666409,
+			"worst_workload_speedup": 0.823206733731754,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10866,
+			"global_speedup": 1.0212688990907,
+			"worst_workload_speedup": 0.950116915479881,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10866,
+			"global_speedup": 1.05603014985958,
+			"worst_workload_speedup": 0.960273173797987,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10866,
+			"global_speedup": 0.999581857452234,
+			"worst_workload_speedup": 0.946622162461884,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 9986,
+			"global_speedup": 1.01396269410874,
+			"worst_workload_speedup": 0.713092693703877,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.0527858658905,
+			"worst_workload_speedup": 1.0249893898109,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.06160515432156,
+			"worst_workload_speedup": 1.04213609684156,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.22676033942004,
+			"worst_workload_speedup": 1.01932049577111,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.05653964698104,
+			"worst_workload_speedup": 1.03579942146022,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.04529589904976,
+			"worst_workload_speedup": 1.04529589904976,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.04359047322232,
+			"worst_workload_speedup": 1.03544137443629,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.07606770437236,
+			"worst_workload_speedup": 0.952845320928623,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.05103392147914,
+			"worst_workload_speedup": 0.980473560652387,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.07309224922392,
+			"worst_workload_speedup": 1.00680071930629,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.07650315895642,
+			"worst_workload_speedup": 0.978532310995714,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.07606770437236,
+			"worst_workload_speedup": 0.952845320928623,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.07784362861859,
+			"worst_workload_speedup": 1.00689093575337,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10629,
+			"global_speedup": 1.07563530766849,
+			"worst_workload_speedup": 1.00794843128115,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7464,
+			"global_speedup": 1.00454895666056,
+			"worst_workload_speedup": 0.591778388463617,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7464,
+			"global_speedup": 1.03427234765471,
+			"worst_workload_speedup": 0.0291100972937231,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7464,
+			"global_speedup": 1.01053799498371,
+			"worst_workload_speedup": 0.360278372221168,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7464,
+			"global_speedup": 1.02476290428163,
+			"worst_workload_speedup": 0.0276689115025163,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14857,
+			"global_speedup": 1.03449962933977,
+			"worst_workload_speedup": 0.886176561661719,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14857,
+			"global_speedup": 1.05638061677627,
+			"worst_workload_speedup": 0.92820080497527,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14857,
+			"global_speedup": 0.710930221910528,
+			"worst_workload_speedup": 0.431872143333442,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14857,
+			"global_speedup": 1.04346173725632,
+			"worst_workload_speedup": 0.935527374490506,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14296,
+			"global_speedup": 0.939519993025558,
+			"worst_workload_speedup": 0.0128339388744593,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14296,
+			"global_speedup": 0.970977223201316,
+			"worst_workload_speedup": 0.830521412496094,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14296,
+			"global_speedup": 0.97973734426312,
+			"worst_workload_speedup": 0.886322511281674,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14296,
+			"global_speedup": 0.992165504295969,
+			"worst_workload_speedup": 0.713590721736152,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 0.985252441935275,
+			"worst_workload_speedup": 0.907741966456382,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 1.04793115385515,
+			"worst_workload_speedup": 0.906594769639728,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 0.98043129190703,
+			"worst_workload_speedup": 0.86936660495169,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 2.00520207377744,
+			"worst_workload_speedup": 0.89628650423151,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 1.04106333414925,
+			"worst_workload_speedup": 0.856403592338571,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 0.98043129190703,
+			"worst_workload_speedup": 0.86936660495169,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7666,
+			"global_speedup": 1.05819047602485,
+			"worst_workload_speedup": 0.958962117987342,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 1.21976237925372,
+			"worst_workload_speedup": 0.978579108232287,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 0.960619701808773,
+			"worst_workload_speedup": 0.904281468505988,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 1.21695692956875,
+			"worst_workload_speedup": 1.01208017818864,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 1.03718247509811,
+			"worst_workload_speedup": 0.949617109911372,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 1.00279400569216,
+			"worst_workload_speedup": 0.926963082649285,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 1.21949142736549,
+			"worst_workload_speedup": 0.967562003188253,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7637,
+			"global_speedup": 1.21695692956875,
+			"worst_workload_speedup": 1.01208017818864,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14001,
+			"global_speedup": 0.112925194693665,
+			"worst_workload_speedup": 0.000455584355720901,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14001,
+			"global_speedup": 0.980627280454481,
+			"worst_workload_speedup": 0.929834621314063,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14001,
+			"global_speedup": 0.991077204775384,
+			"worst_workload_speedup": 0.934475700881235,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 0.997373064893625,
+			"worst_workload_speedup": 0.857163717665329,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 0.9769110170199,
+			"worst_workload_speedup": 0.84494403251928,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 1.00698069546776,
+			"worst_workload_speedup": 0.690826622862992,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 0.971117490961217,
+			"worst_workload_speedup": 0.926135940086928,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 0.9769110170199,
+			"worst_workload_speedup": 0.84494403251928,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 1.00794862752815,
+			"worst_workload_speedup": 0.830246302810538,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 1.00794862752815,
+			"worst_workload_speedup": 0.830246302810538,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 1.00568525088282,
+			"worst_workload_speedup": 0.769375728814848,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 0.962288114691202,
+			"worst_workload_speedup": 0.90338466872549,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 1.43576646047836,
+			"worst_workload_speedup": 0.982163459828946,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 1.00672076698801,
+			"worst_workload_speedup": 1.00672076698801,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 1.00296731470746,
+			"worst_workload_speedup": 0.996417044561671,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 0.980415220646183,
+			"worst_workload_speedup": 0.96237523045636,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 0.980415220646183,
+			"worst_workload_speedup": 0.96237523045636,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 0.994801657709187,
+			"worst_workload_speedup": 0.994801657709187,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.43534153762218,
+			"worst_workload_speedup": 1.00310659873345,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 2.07744092146504,
+			"worst_workload_speedup": 1.00940332353429,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.54759826289236,
+			"worst_workload_speedup": 1.00553037382032,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.39431406953037,
+			"worst_workload_speedup": 0.995184030625919,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.39431406953037,
+			"worst_workload_speedup": 0.995184030625919,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.52376416093193,
+			"worst_workload_speedup": 0.981161192034374,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.66855434968346,
+			"worst_workload_speedup": 1.00998017462074,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 1.43534153762218,
+			"worst_workload_speedup": 1.00310659873345,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 0.995571627581594,
+			"worst_workload_speedup": 0.939534840009349,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 0.991749080287035,
+			"worst_workload_speedup": 0.891511296116991,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 1.00107609065869,
+			"worst_workload_speedup": 0.938239718942484,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 0.991749080287035,
+			"worst_workload_speedup": 0.891511296116991,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 1.01708106455633,
+			"worst_workload_speedup": 0.974883626095817,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 1.01708106455633,
+			"worst_workload_speedup": 0.974883626095817,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 1.01477559776127,
+			"worst_workload_speedup": 0.955773328623405,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 0.99488993034614,
+			"worst_workload_speedup": 0.908913257982776,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 0.99239805784008,
+			"worst_workload_speedup": 0.805115187623535,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 0.955840690406112,
+			"worst_workload_speedup": 0.661382601258864,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 1.09670308803712,
+			"worst_workload_speedup": 0.502330032520373,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 0.955840690406112,
+			"worst_workload_speedup": 0.661382601258864,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 1.03958977029627,
+			"worst_workload_speedup": 0.224997505786325,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 1.06036967718262,
+			"worst_workload_speedup": 0.794353972797898,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 0.993291521434077,
+			"worst_workload_speedup": 0.764563113674099,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 0.985329792960411,
+			"worst_workload_speedup": 0.970847926484602,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 1.01208798496269,
+			"worst_workload_speedup": 0.98125089510461,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 0.985329792960411,
+			"worst_workload_speedup": 0.970847926484602,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 0.988869197686198,
+			"worst_workload_speedup": 0.950415228742218,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 1.01681721058972,
+			"worst_workload_speedup": 1.00502906882194,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 1.01318671306907,
+			"worst_workload_speedup": 0.988209989868333,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 1.01260860330766,
+			"worst_workload_speedup": 0.98763843847303,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pybop-team",
+			"repo": "PyBOP",
+			"issue_number": 301,
+			"global_speedup": 1.01323793565025,
+			"worst_workload_speedup": 0.929827943938704,
+			"is_expert": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"owner": "pybop-team",
+			"repo": "PyBOP",
+			"issue_number": 301,
+			"global_speedup": 1.02832029629482,
+			"worst_workload_speedup": 0.916985791652239,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"owner": "pybop-team",
+			"repo": "PyBOP",
+			"issue_number": 301,
+			"global_speedup": 0.943344183941032,
+			"worst_workload_speedup": 0.840743701119326,
+			"is_expert": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"owner": "pybop-team",
+			"repo": "PyBOP",
+			"issue_number": 301,
+			"global_speedup": 0.93028913711122,
+			"worst_workload_speedup": 0.834962628075933,
+			"is_expert": false
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "TileDB-Inc",
+			"repo": "TileDB-Py",
+			"issue_number": 2206,
+			"global_speedup": 1.38267398208715,
+			"worst_workload_speedup": 1.08659204272668,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "UXARRAY",
+			"repo": "uxarray",
+			"issue_number": 1249,
+			"global_speedup": 1.0255493268718,
+			"worst_workload_speedup": 0.967292296603615,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5302,
+			"global_speedup": 1.37191826837529,
+			"worst_workload_speedup": 0.980339912550452,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7595,
+			"global_speedup": 0.988594008570703,
+			"worst_workload_speedup": 0.919022100772816,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7181,
+			"global_speedup": 1.04565736729979,
+			"worst_workload_speedup": 0.930010408119916,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 6879,
+			"global_speedup": 0.970338297299584,
+			"worst_workload_speedup": 0.939329749623836,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7971,
+			"global_speedup": 1.01807956412084,
+			"worst_workload_speedup": 0.886514543534485,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 8077,
+			"global_speedup": 0.984782623609825,
+			"worst_workload_speedup": 0.959307997262962,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "networkx",
+			"repo": "networkx",
+			"issue_number": 7249,
+			"global_speedup": 0.966792670229634,
+			"worst_workload_speedup": 0.93119384215624,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6079,
+			"global_speedup": 1.0163957557727,
+			"worst_workload_speedup": 0.821945589206685,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 6112,
+			"global_speedup": 1.09949432671081,
+			"worst_workload_speedup": 0.998444935436215,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5160,
+			"global_speedup": 0.778848491427074,
+			"worst_workload_speedup": 0.518204812362878,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5709,
+			"global_speedup": 1.01654903944285,
+			"worst_workload_speedup": 0.999914629421867,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 6711,
+			"global_speedup": 1.21817050355947,
+			"worst_workload_speedup": 1.01642107143823,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "pydata",
+			"repo": "xarray",
+			"issue_number": 10866,
+			"global_speedup": 1.00921866449459,
+			"worst_workload_speedup": 0.938752285588823,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "pymc-devs",
+			"repo": "pymc",
+			"issue_number": 7578,
+			"global_speedup": 1.50529053215239,
+			"worst_workload_speedup": 0.902770692071683,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "modin-project",
+			"repo": "modin",
+			"issue_number": 7464,
+			"global_speedup": 1.01467290556644,
+			"worst_workload_speedup": 0.706730742517546,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "Qiskit",
+			"repo": "qiskit",
+			"issue_number": 14296,
+			"global_speedup": 1.02414858788349,
+			"worst_workload_speedup": 0.764382052211594,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5993,
+			"global_speedup": 1.02477539203402,
+			"worst_workload_speedup": 0.808305470326389,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "optuna",
+			"repo": "optuna",
+			"issue_number": 5017,
+			"global_speedup": 1.39959473850687,
+			"worst_workload_speedup": 1.01123558073794,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "shapely",
+			"repo": "shapely",
+			"issue_number": 2283,
+			"global_speedup": 2.12472354639085,
+			"worst_workload_speedup": 0.99665257030863,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "xdslproject",
+			"repo": "xdsl",
+			"issue_number": 4909,
+			"global_speedup": 0.983158763505641,
+			"worst_workload_speedup": 0.671358514414741,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "pydata",
+			"repo": "bottleneck",
+			"issue_number": 329,
+			"global_speedup": 0.991874092226026,
+			"worst_workload_speedup": 0.767692027488991,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "pybamm-team",
+			"repo": "PyBaMM",
+			"issue_number": 5000,
+			"global_speedup": 1.00180284987707,
+			"worst_workload_speedup": 0.588542234674318,
+			"is_expert": true
+		},
+		{
+			"agent": "Human Expert",
+			"model": "(oracle)",
+			"owner": "pybop-team",
+			"repo": "PyBOP",
+			"issue_number": 301,
+			"global_speedup": 1.02030182550728,
+			"worst_workload_speedup": 0.940399646671657,
+			"is_expert": true
+		}
+	],
+	"_source": "api.formulacode.org \u00b7 findings_workload_tradeoff (canonical upstream: fc-eval/analysis/multi_objective_analysis.ipynb \u00b7 paper/figures/assets/tradeoff.pdf)",
 	"_paper_artifact": "Figure 5 (Multi-workload tradeoff)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_needs_export": true,
-	"_notes": "Awaiting export. Each row is one agent–model task instance with global_speedup (geomean across workloads) and worst_workload_speedup (min across workloads). The expert (oracle) cluster should be flagged with is_expert: true.",
-	"rows": []
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.F5",
+	"_generated_at": "2026-05-12T06:25:10Z"
 }

@@ -1,8 +1,72 @@
 {
-	"_source": "_repos/fc-eval/analysis/table_6_cost.ipynb",
+	"rows": [
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"cost_usd_per_task": 0.484116397058824,
+			"advantage": -0.0462080638015593,
+			"advantage_weighted": -0.095448251871429,
+			"is_pareto": true
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"cost_usd_per_task": 1.20604775265957,
+			"advantage": -0.045371371612693,
+			"advantage_weighted": -0.0376198799032958,
+			"is_pareto": true
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Gemini 2.5 Pro",
+			"cost_usd_per_task": 1.54546010638298,
+			"advantage": -0.0847442360865581,
+			"advantage_weighted": -0.0548343083956369,
+			"is_pareto": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "GPT-5",
+			"cost_usd_per_task": 1.83634165625,
+			"advantage": -0.0185969577537639,
+			"advantage_weighted": -0.0101271774184662,
+			"is_pareto": true
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"cost_usd_per_task": 1.89106917119565,
+			"advantage": -0.0490123717182562,
+			"advantage_weighted": -0.0259178101281549,
+			"is_pareto": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Qwen 3 Coder",
+			"cost_usd_per_task": 2.57895365625,
+			"advantage": -0.0299253693304188,
+			"advantage_weighted": -0.0116036863469399,
+			"is_pareto": false
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Claude 4.0 Sonnet",
+			"cost_usd_per_task": 3.77215867021276,
+			"advantage": -0.0421813500096763,
+			"advantage_weighted": -0.0111822841236148,
+			"is_pareto": false
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Claude 4.0 Sonnet",
+			"cost_usd_per_task": 7.590425325,
+			"advantage": -0.00960638085088834,
+			"advantage_weighted": -0.00126559190553506,
+			"is_pareto": true
+		}
+	],
+	"_source": "api.formulacode.org \u00b7 findings_cost_pareto (upstream: fc-eval/analysis/table_6_cost.ipynb \u00b7 paper/figures/assets/cost_vs_performance.pdf)",
 	"_paper_artifact": "Figure 4 + Table 10 (Cost-Performance tradeoff)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_needs_export": true,
-	"_notes": "Awaiting export from table_6_cost.ipynb. Each row will carry cost_usd_per_task (computed from total_input_tokens × pricing + total_output_tokens × pricing per model_config.json), advantage_weighted, and is_pareto (non-dominated frontier flag).",
-	"rows": []
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.F4",
+	"_generated_at": "2026-05-12T06:25:10Z"
 }

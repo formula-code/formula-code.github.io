@@ -1,65 +1,68 @@
 {
-	"_source": "_repos/fc-eval/analysis/leaderboard.ipynb",
-	"_paper_artifact": "Table 1 (Global Leaderboard on FormulaCode-V)",
-	"_arxiv": "https://arxiv.org/html/2603.16011v1",
-	"_generated_at": "ported-from-advantage-leaderboard.json",
-	"_notes": "Real values mirrored from src/data/advantage-leaderboard.json. The `rank` field is the ranked-pairs (RP) rank from the paper. `advantage_norm` is not yet wired; export pipeline will populate it.",
 	"rows": [
 		{
 			"agent": "OpenHands",
-			"model": "Claude 4.0 Sonnet",
-			"rp_rank": 1,
-			"advantage": -0.0112,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0539
-		},
-		{
-			"agent": "OpenHands",
 			"model": "GPT-5",
-			"rp_rank": 2,
-			"advantage": -0.0209,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0825
+			"rp_rank": 1,
+			"advantage": -0.0185969577537639,
+			"advantage_norm": -0.0396387351427042,
+			"speedup_geomean": 1.08479465523279
 		},
 		{
 			"agent": "OpenHands",
 			"model": "Qwen 3 Coder",
-			"rp_rank": 3,
-			"advantage": -0.0301,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0346
+			"rp_rank": 2,
+			"advantage": -0.0299253693304188,
+			"advantage_norm": -0.0383374851814021,
+			"speedup_geomean": 1.03478771081713
 		},
 		{
 			"agent": "Terminus 2",
+			"model": "GPT-5",
+			"rp_rank": 3,
+			"advantage": -0.0490123717182562,
+			"advantage_norm": -0.0459873051301203,
+			"speedup_geomean": 1.05861795048223
+		},
+		{
+			"agent": "OpenHands",
 			"model": "Claude 4.0 Sonnet",
 			"rp_rank": 4,
-			"advantage": -0.041,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0987
+			"advantage": -0.00960638085088834,
+			"advantage_norm": -0.00738282408264986,
+			"speedup_geomean": 1.05530024985711
+		},
+		{
+			"agent": "Terminus 2",
+			"model": "Qwen 3 Coder",
+			"rp_rank": 5,
+			"advantage": -0.045371371612693,
+			"advantage_norm": -0.0334953425716432,
+			"speedup_geomean": 1.06771655345846
+		},
+		{
+			"agent": "OpenHands",
+			"model": "Gemini 2.5 Pro",
+			"rp_rank": 7,
+			"advantage": -0.0462080638015593,
+			"advantage_norm": -0.106221051764481,
+			"speedup_geomean": 1.02523304970277
 		},
 		{
 			"agent": "Terminus 2",
 			"model": "Gemini 2.5 Pro",
-			"rp_rank": 5,
-			"advantage": -0.0433,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0963
+			"rp_rank": 8,
+			"advantage": -0.0847442360865581,
+			"advantage_norm": -0.182322240233399,
+			"speedup_geomean": 1.05491640108011
 		},
 		{
 			"agent": "Terminus 2",
-			"model": "Qwen 3 Coder",
-			"rp_rank": 6,
-			"advantage": -0.0454,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0677
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "GPT-5",
-			"rp_rank": 7,
-			"advantage": -0.0504,
-			"advantage_norm": null,
-			"speedup_geomean": 1.0585
+			"model": "Claude 4.0 Sonnet",
+			"rp_rank": 9,
+			"advantage": -0.0421813500096763,
+			"advantage_norm": -0.106679642669778,
+			"speedup_geomean": 1.09747928715699
 		},
 		{
 			"agent": "Human Expert",
@@ -67,8 +70,12 @@
 			"rp_rank": 0,
 			"advantage": 0,
 			"advantage_norm": 0,
-			"speedup_geomean": null,
+			"speedup_geomean": 1.11933624494089,
 			"_baseline": true
 		}
-	]
+	],
+	"_source": "api.formulacode.org \u00b7 findings_global_leaderboard (upstream: fc-eval/analysis/leaderboard.ipynb)",
+	"_paper_artifact": "Table 1 (Global Leaderboard on FormulaCode-V)",
+	"_arxiv": "https://arxiv.org/html/2603.16011v1#S3.T1",
+	"_generated_at": "2026-05-12T06:25:10Z"
 }

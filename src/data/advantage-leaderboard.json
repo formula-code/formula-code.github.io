@@ -1,111 +1,70 @@
 {
-	"global": [
-		{
-			"agent": "OpenHands",
-			"model": "Claude 4.0 Sonnet",
-			"advantage": -0.0112,
-			"speedup": 1.0539,
-			"rank": 1
-		},
-		{
-			"agent": "OpenHands",
-			"model": "GPT-5",
-			"advantage": -0.0209,
-			"speedup": 1.0825,
-			"rank": 2
-		},
-		{
-			"agent": "OpenHands",
-			"model": "Qwen 3 Coder",
-			"advantage": -0.0301,
-			"speedup": 1.0346,
-			"rank": 3
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Claude 4.0 Sonnet",
-			"advantage": -0.041,
-			"speedup": 1.0987,
-			"rank": 4
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Gemini 2.5 Pro",
-			"advantage": -0.0433,
-			"speedup": 1.0963,
-			"rank": 5
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Qwen 3 Coder",
-			"advantage": -0.0454,
-			"speedup": 1.0677,
-			"rank": 6
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "GPT-5",
-			"advantage": -0.0504,
-			"speedup": 1.0585,
-			"rank": 7
-		}
-	],
-	"stratified": [
-		{
-			"agent": "OpenHands",
-			"model": "Claude 4.0 Sonnet",
-			"advantage": -0.0112,
-			"level2": -0.027,
-			"level3": 0.0156,
-			"level4": 0.2985
-		},
-		{
-			"agent": "OpenHands",
-			"model": "GPT-5",
-			"advantage": -0.0209,
-			"level2": 0.028,
-			"level3": 0.0515,
-			"level4": -0.0119
-		},
-		{
-			"agent": "OpenHands",
-			"model": "Qwen 3 Coder",
-			"advantage": -0.0301,
-			"level2": -0.026,
-			"level3": -0.0223,
-			"level4": -0.0286
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Claude 4.0 Sonnet",
-			"advantage": -0.041,
-			"level2": -0.0465,
-			"level3": -0.0491,
-			"level4": -0.045
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Gemini 2.5 Pro",
-			"advantage": -0.0433,
-			"level2": -0.0225,
-			"level3": -0.028,
-			"level4": -0.037
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "Qwen 3 Coder",
-			"advantage": -0.0454,
-			"level2": -0.1052,
-			"level3": -0.1103,
-			"level4": -0.058
-		},
-		{
-			"agent": "Terminus 2",
-			"model": "GPT-5",
-			"advantage": -0.0504,
-			"level2": -0.0676,
-			"level3": -0.0606,
-			"level4": -0.0464
-		}
-	]
+    "global": [
+        {
+            "agent": "OpenHands",
+            "model": "Claude Sonnet 4",
+            "advantage": 0.0437,
+            "speedup": 1.0385,
+            "rank": 1
+        },
+        {
+            "agent": "OpenHands",
+            "model": "GPT-5",
+            "advantage": 0.0337,
+            "speedup": 1.0578,
+            "rank": 2
+        },
+        {
+            "agent": "Terminus 2",
+            "model": "Claude Sonnet 4",
+            "advantage": 0.0088,
+            "speedup": 1.0619,
+            "rank": 3
+        },
+        {
+            "agent": "Terminus 2",
+            "model": "GPT-5",
+            "advantage": -0.0495,
+            "speedup": 0.8246,
+            "rank": 4
+        }
+    ],
+    "stratified": [
+        {
+            "agent": "OpenHands",
+            "model": "Claude Sonnet 4",
+            "advantage": 0.0437,
+            "level1": 0.0305,
+            "level2": 0.0316,
+            "level3": 0.0557,
+            "level4": 0.1451
+        },
+        {
+            "agent": "OpenHands",
+            "model": "GPT-5",
+            "advantage": 0.0337,
+            "level1": 0.0401,
+            "level2": 0.0087,
+            "level3": 0.074,
+            "level4": 0.0086
+        },
+        {
+            "agent": "Terminus 2",
+            "model": "Claude Sonnet 4",
+            "advantage": 0.0088,
+            "level1": 0.0104,
+            "level2": 0.0087,
+            "level3": 0.0076,
+            "level4": 0.003
+        },
+        {
+            "agent": "Terminus 2",
+            "model": "GPT-5",
+            "advantage": -0.0495,
+            "level1": -0.0459,
+            "level2": -0.0535,
+            "level3": -0.0482,
+            "level4": -0.0539
+        }
+    ]
 }
