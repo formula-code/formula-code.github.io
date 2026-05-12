@@ -23,22 +23,38 @@
 	export let stickyFirstColumn = true;
 	export let rowLabelCols = 1;
 
-	$: divergingCols = columns.filter((c) => c.color === "diverging");
 	$: sequentialCols = columns.filter((c) => c.color === "sequential");
 
-	$: derivedAbsMax = (() => {
-		if (typeof absMax === "number" && absMax > 0) return absMax;
-		let m = 0;
-		for (const c of divergingCols) {
-			for (const r of rows) {
-				const v = r[c.key];
-				if (typeof v === "number" && Number.isFinite(v)) {
-					m = Math.max(m, Math.abs(v));
+	// Each diverging column gets its own scale around its own `center` (default
+	// 0). This lets one table mix e.g. an "advantage" column centered at 0 with
+	// a "speedup" column centered at 1× — both rendered in the same RdBu
+	// palette, so values above center always read blue and values below center
+	// always read red, regardless of absolute magnitude.
+	$: divScalesByKey = (() => {
+		const out = {};
+		for (const c of columns) {
+			if (c.color !== "diverging") continue;
+			const center = typeof c.center === "number" ? c.center : 0;
+			let m = 0;
+			if (typeof absMax === "number" && absMax > 0) {
+				m = absMax;
+			} else if (typeof c.absMax === "number" && c.absMax > 0) {
+				m = c.absMax;
+			} else {
+				for (const r of rows) {
+					const v = r[c.key];
+					if (typeof v === "number" && Number.isFinite(v)) {
+						m = Math.max(m, Math.abs(v - center));
+					}
 				}
+				if (m === 0) m = 0.05;
 			}
+			out[c.key] = scaleLinear()
+				.domain([center - m, center, center + m])
+				.range([0, 0.5, 1])
+				.clamp(true);
 		}
-		// Keep a sensible minimum so a near-flat table still has some contrast.
-		return m > 0 ? m : 0.05;
+		return out;
 	})();
 
 	$: derivedSeqDomain = (() => {
@@ -61,11 +77,6 @@
 		return [lo, hi];
 	})();
 
-	$: divScale = scaleLinear()
-		.domain([-derivedAbsMax, 0, derivedAbsMax])
-		.range([0, 0.5, 1])
-		.clamp(true);
-
 	$: seqScale = scaleLinear()
 		.domain(derivedSeqDomain)
 		.range([0, 1])
@@ -76,9 +87,12 @@
 			return null;
 		}
 		if (col.color === "diverging") {
-			// d3's RdBu is reversed for our convention (red = bad/negative,
-			// blue = good/positive), so invert the scale before lookup.
-			return interpolateRdBu(1 - divScale(value));
+			const s = divScalesByKey[col.key];
+			if (!s) return null;
+			// d3's RdBu: 0 → red, 1 → blue. We want below-center = red (bad)
+			// and above-center = blue (good), which is the same direction, so
+			// no inversion is needed.
+			return interpolateRdBu(s(value));
 		}
 		if (col.color === "sequential") {
 			return interpolateBlues(seqScale(value));
@@ -192,8 +206,12 @@
 		color: var(--text-muted);
 		background: var(--bg-tertiary);
 		border-bottom: 1px solid var(--border-secondary);
-		white-space: nowrap;
 		text-align: left;
+		line-height: 1.25;
+	}
+
+	thead th.label-col {
+		white-space: nowrap;
 	}
 
 	thead th.numeric {

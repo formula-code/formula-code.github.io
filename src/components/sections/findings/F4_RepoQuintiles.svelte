@@ -1,37 +1,54 @@
 <script>
-	import HeatmapTable from "./HeatmapTable.svelte";
+	import HeatmapGrid from "$components/charts/HeatmapGrid.svelte";
 	import PaperFigureCaption from "./PaperFigureCaption.svelte";
 	import NeedsExportNotice from "./NeedsExportNotice.svelte";
 	import { findings, needsExport } from "$utils/findings.js";
 
 	export let title = "Long-tail repository performance";
 	export let description =
-		"Agent advantage bucketed by repository popularity (GitHub stars, quintiles). Agents are weakest on Q1 (rarely-seen repos) and most competitive on Q2–Q3; performance dips again in Q4 where headroom is scarce.";
+		"Agents are weakest on Q1 — the least-popular repos, where experts still extract sizeable wins, hinting at both distribution shift and untouched headroom. They close the gap on mid-popularity Q2–Q3, then dip again on Q4, where even the expert struggles to find anything left to optimise.";
 
 	const data = findings.f4_longtail;
 	const quintiles = data.quintiles || [];
+	const rawRows = data.rows || [];
 
-	$: rows = (data.rows || []).map((r, i) => {
-		const flat = { _key: `${r.agent}-${r.model}-${i}`, agent: r.agent, model: r.model };
-		(r.advantages || []).forEach((v, j) => {
-			const key = quintiles[j]?.key;
-			if (key) flat[key] = v;
-		});
-		return flat;
-	});
+	$: rowLabels = rawRows.map((r) => `${r.agent} · ${r.model}`);
+	$: colLabels = quintiles.map((q) => q.label);
+	$: values = rawRows.map((r) =>
+		(r.advantages || []).slice(0, quintiles.length)
+	);
 
-	$: columns = [
-		{ key: "agent", label: "Agent" },
-		{ key: "model", label: "Model" },
-		...quintiles.map((q) => ({
-			key: q.key,
-			label: q.label,
-			numeric: true,
-			decimals: 3,
-			signed: true,
-			color: "diverging"
-		}))
+	// Three observations split across top/bottom so the braces don't crowd
+	// each other: blue (positive) brace above the cells, red (negative)
+	// braces below. Q5 stays unannotated.
+	const annotations = [
+		{
+			type: "bracket",
+			range: [1, 2], // Q2–Q3
+			label: "Most competitive",
+			tone: "positive",
+			side: "top"
+		},
+		{
+			type: "bracket",
+			range: [0, 0], // Q1
+			label: "Weakest on rare repos",
+			tone: "negative",
+			side: "bottom"
+		},
+		{
+			type: "bracket",
+			range: [3, 3], // Q4
+			label: "Headroom-limited dip",
+			tone: "negative",
+			side: "bottom"
+		}
 	];
+
+	function fmt(v) {
+		if (!Number.isFinite(v)) return "—";
+		return `${v >= 0 ? "+" : ""}${v.toFixed(3)}`;
+	}
 </script>
 
 <section class="f4">
@@ -40,16 +57,23 @@
 		<p class="f4-desc">{description}</p>
 	</header>
 
-	{#if needsExport(data) || rows.length === 0}
+	{#if needsExport(data) || rawRows.length === 0}
 		<NeedsExportNotice
 			summary="Repository-popularity quintile breakdown is not yet exported."
 		/>
 	{:else}
-		<HeatmapTable
-			{columns}
-			{rows}
-			caption="Agent × popularity quintile. Q1 = least popular, Q5 = most popular."
-			rowLabelCols={2}
+		<HeatmapGrid
+			{rowLabels}
+			{colLabels}
+			{values}
+			{annotations}
+			colorMode="diverging"
+			scaling="shared"
+			legendCaps={["Expert wins", "Agent wins"]}
+			valueFormat={fmt}
+			rowLabelWidth={230}
+			colWidth={84}
+			colDimensionLabel="Popularity quintile"
 		/>
 	{/if}
 

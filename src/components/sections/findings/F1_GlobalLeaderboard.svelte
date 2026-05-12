@@ -5,7 +5,7 @@
 
 	export let title = "Agents improve runtime but underperform experts";
 	export let description =
-		"Every evaluated agent–model achieves geomean speedup > 1× on FormulaCode-V, but all configurations finish behind the human expert (negative advantage).";
+		"Every configuration is faster than the original code (geomean speedup > 1×), yet all finish behind the human expert on advantage. The two metrics also disagree — a few easy tasks lift raw speedup, while advantage normalises against the matching expert patch and gives a more honest read.";
 
 	const data = findings.f1_leaderboard;
 	const rows = (data.rows || []).map((r, i) => ({
@@ -23,7 +23,8 @@
 			numeric: true,
 			decimals: 4,
 			signed: true,
-			color: "diverging"
+			color: "diverging",
+			center: 0
 		},
 		{
 			key: "speedup_geomean",
@@ -31,7 +32,8 @@
 			numeric: true,
 			decimals: 4,
 			suffix: "×",
-			color: "sequential"
+			color: "diverging",
+			center: 1
 		}
 	];
 </script>

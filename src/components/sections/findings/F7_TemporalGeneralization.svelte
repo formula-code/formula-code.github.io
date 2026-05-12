@@ -1,36 +1,43 @@
 <script>
-	import HeatmapTable from "./HeatmapTable.svelte";
+	import HeatmapGrid from "$components/charts/HeatmapGrid.svelte";
 	import PaperFigureCaption from "./PaperFigureCaption.svelte";
 	import NeedsExportNotice from "./NeedsExportNotice.svelte";
 	import { findings, needsExport } from "$utils/findings.js";
 
 	export let title = "Temporal generalization";
 	export let description =
-		"Geomean speedup for frontier models in three-month windows around each model's knowledge cutoff. No consistent drop crossing the cutoff — the agent–expert gap appears capability-based rather than contamination-based.";
+		"Mean speedup in three-month windows around each model's knowledge cutoff. Performance does not consistently dip on tasks created after the cutoff, so the gap to the expert looks capability-bound rather than the result of seeing the answer at training time.";
 
 	const data = findings.f7_temporal;
 	const bins = data.bins || [];
+	const rawRows = data.rows || [];
 
-	$: rows = (data.rows || []).map((r, i) => {
-		const flat = { _key: `${r.model}-${i}`, model: r.model };
-		(r.speedups || []).forEach((v, j) => {
-			const key = bins[j]?.key;
-			if (key) flat[key] = v;
-		});
-		return flat;
+	$: rowLabels = rawRows.map((r) => {
+		const c = r.knowledge_cutoff;
+		const stamp = c ? ` · cutoff ${c.slice(0, 7)}` : "";
+		return `${r.model}${stamp}`;
 	});
+	$: colLabels = bins.map((b) => b.label);
+	$: values = rawRows.map((r) =>
+		(r.speedups || []).slice(0, bins.length)
+	);
 
-	$: columns = [
-		{ key: "model", label: "Model" },
-		...bins.map((b) => ({
-			key: b.key,
-			label: b.label,
-			numeric: true,
-			decimals: 3,
-			suffix: "×",
-			color: "sequential"
-		}))
+	// The two trailing bins (post0to3, post3to6, post6plus = indices 3, 4, 5)
+	// sit AFTER each model's knowledge cutoff. Drawing a divider between the
+	// pre/post halves makes the "no consistent drop" story visible at a
+	// glance: bins 0–2 on the left mirror bins 3–5 on the right.
+	const annotations = [
+		{
+			type: "divider",
+			after: 2, // between "0–3 mo before" and "0–3 mo after"
+			label: "Knowledge cutoff"
+		}
 	];
+
+	function fmt(v) {
+		if (!Number.isFinite(v)) return "—";
+		return `${v.toFixed(3)}×`;
+	}
 </script>
 
 <section class="f7">
@@ -39,21 +46,29 @@
 		<p class="f7-desc">{description}</p>
 	</header>
 
-	{#if needsExport(data) || rows.length === 0}
+	{#if needsExport(data) || rawRows.length === 0}
 		<NeedsExportNotice
 			summary="Per-model temporal bin speedups are not yet exported."
 		/>
 	{:else}
-		<HeatmapTable
-			{columns}
-			{rows}
-			caption="Geomean speedup in each three-month window relative to the model's knowledge cutoff. Deeper blue = higher speedup."
-			rowLabelCols={1}
+		<HeatmapGrid
+			{rowLabels}
+			{colLabels}
+			{values}
+			{annotations}
+			colorMode="sequential"
+			scaling="shared"
+			legendCaps={["Lower speedup", "Higher speedup"]}
+			valueFormat={fmt}
+			rowLabelWidth={250}
+			colWidth={88}
+			topLabelHeight={140}
+			colDimensionLabel="Time relative to cutoff"
 		/>
 	{/if}
 
 	<PaperFigureCaption
-		artifact="Table 4 / Figure 1 (Temporal OOD)"
+		artifact="Table 4 (Temporal generalization)"
 		arxivUrl={data._arxiv}
 		needsExport={needsExport(data)}
 	/>

@@ -1,44 +1,33 @@
 <script>
-	import { scaleLog, scaleLinear } from "d3-scale";
-	import { extent } from "d3-array";
+	import LegendScatter from "$components/charts/LegendScatter.svelte";
 	import PaperFigureCaption from "./PaperFigureCaption.svelte";
 	import NeedsExportNotice from "./NeedsExportNotice.svelte";
 	import { findings, needsExport } from "$utils/findings.js";
 
 	export let title = "Cost efficiency";
 	export let description =
-		"Per-task USD cost vs. cost-weighted advantage. The Pareto frontier is dominated by the most expensive frontier models — cheaper models often consume more tokens in the agent loop, eroding their per-token price advantage.";
+		"Per-task cost vs. advantage over the expert. The Pareto frontier is dominated by the priciest model (Claude 4.0 Sonnet) — cheaper models tend to burn more tokens inside the agent loop, eroding their per-token savings, and may simply lack the capability to reason about performance edits.";
 
 	const data = findings.f5_cost;
 	$: rows = data.rows || [];
-
-	// Layout
-	const W = 720;
-	const H = 420;
-	const M = { top: 24, right: 24, bottom: 56, left: 64 };
-	const iw = W - M.left - M.right;
-	const ih = H - M.top - M.bottom;
-
 	$: hasData = rows.length > 0;
 
-	$: x = hasData
-		? scaleLinear()
-				.domain(extent(rows, (r) => r.advantage_weighted ?? 0))
-				.nice()
-				.range([0, iw])
-		: scaleLinear().domain([-0.1, 0.1]).range([0, iw]);
-
-	$: y = hasData
-		? scaleLog()
-				.domain(extent(rows, (r) => r.cost_usd_per_task ?? 0.01))
-				.nice()
-				.range([ih, 0])
-		: scaleLog().domain([0.01, 10]).range([ih, 0]);
+	// Paper Figure 4 (cost_vs_performance.pdf): x = cost/task, y = mean
+	// advantage. The dashed Pareto backdrop is a website-only addition.
+	$: paretoFrontier = rows
+		.filter((r) => r.is_pareto)
+		.slice()
+		.sort((a, b) => a.cost_usd_per_task - b.cost_usd_per_task);
 
 	function fmtCost(v) {
 		if (!Number.isFinite(v)) return "—";
 		if (v < 1) return `$${v.toFixed(2)}`;
-		return `$${v.toFixed(1)}`;
+		return `$${v.toFixed(2)}`;
+	}
+
+	function fmtAdv(v) {
+		if (!Number.isFinite(v)) return "—";
+		return `${v >= 0 ? "+" : ""}${v.toFixed(3)}`;
 	}
 </script>
 
@@ -53,42 +42,31 @@
 			summary="Per-config cost and advantage are not yet exported; the Pareto frontier needs the full results set."
 		/>
 	{:else}
-		<div class="chart-wrap">
-			<svg viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid meet">
-				<g transform="translate({M.left},{M.top})">
-					<!-- axes -->
-					<line class="axis" x1="0" x2={iw} y1={ih} y2={ih}></line>
-					<line class="axis" x1="0" x2="0" y1="0" y2={ih}></line>
-
-					<!-- Pareto frontier connector (drawn first so dots stack on top) -->
-					{#each rows.filter((r) => r.is_pareto) as p, i (i)}
-						<!-- the export should pre-sort frontier points by x;
-						     drawing as connected dots leaves the implementation simple -->
-						<circle class="pareto-halo" cx={x(p.advantage_weighted)} cy={y(p.cost_usd_per_task)} r="12"></circle>
-					{/each}
-
-					<!-- points -->
-					{#each rows as r, i (`${r.agent}-${r.model}-${i}`)}
-						<circle
-							class="pt"
-							class:pareto={r.is_pareto}
-							cx={x(r.advantage_weighted)}
-							cy={y(r.cost_usd_per_task)}
-							r={r.is_pareto ? 7 : 5}
-						>
-							<title>{r.agent} · {r.model} — adv {r.advantage_weighted?.toFixed(3)} @ {fmtCost(r.cost_usd_per_task)}</title>
-						</circle>
-					{/each}
-
-					<text class="axis-title" x={iw / 2} y={ih + 38} text-anchor="middle">
-						Cost-weighted advantage
-					</text>
-					<text class="axis-title" transform="translate({-44},{ih / 2}) rotate(-90)" text-anchor="middle">
-						Cost (USD / task, log)
-					</text>
-				</g>
-			</svg>
-		</div>
+		<LegendScatter
+			{rows}
+			xAccessor={(r) => r.cost_usd_per_task}
+			yAccessor={(r) => r.advantage}
+			xLabel="Mean cost (USD / task)"
+			yLabel="Mean advantage"
+			xFormat={fmtCost}
+			yFormat={fmtAdv}
+			xDomain={[0, 8]}
+			yDomain={[-0.1, 0]}
+			xTickCount={5}
+			yTickCount={6}
+			xBetterDir="lower"
+			yBetterDir="higher"
+			backdropLine={paretoFrontier}
+		>
+			<svelte:fragment slot="tooltip-extra" let:row>
+				{#if row.is_pareto}
+					<div class="tt-row tt-pareto">
+						<dt>Pareto</dt>
+						<dd>frontier</dd>
+					</div>
+				{/if}
+			</svelte:fragment>
+		</LegendScatter>
 	{/if}
 
 	<PaperFigureCaption
@@ -126,42 +104,24 @@
 		line-height: 1.55;
 	}
 
-	.chart-wrap {
-		width: 100%;
+	.tt-row {
+		display: flex;
+		justify-content: space-between;
+		gap: 16px;
 	}
 
-	svg {
-		width: 100%;
-		height: auto;
-		display: block;
-	}
-
-	.axis {
-		stroke: var(--border-secondary);
-		stroke-width: 1;
-	}
-
-	.axis-title {
-		font-family: var(--sans);
-		font-size: 11px;
-		fill: var(--text-muted);
+	.tt-row.tt-pareto dt {
+		color: var(--text-muted);
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
+		font-size: 0.68rem;
+		letter-spacing: 0.05em;
 	}
 
-	.pt {
-		fill: var(--accent-primary);
-		opacity: 0.85;
-		stroke: var(--bg-primary);
-		stroke-width: 1.5;
-	}
-
-	.pt.pareto {
-		fill: var(--brand-blue, var(--accent-primary));
-	}
-
-	.pareto-halo {
-		fill: var(--brand-blue, var(--accent-primary));
-		opacity: 0.12;
+	.tt-row.tt-pareto dd {
+		margin: 0;
+		font-family: var(--sans);
+		font-size: 0.78rem;
+		color: var(--brand-blue, var(--accent-primary));
+		font-weight: 600;
 	}
 </style>

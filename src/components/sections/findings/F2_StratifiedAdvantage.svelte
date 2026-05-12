@@ -7,7 +7,7 @@
 
 	export let title = "Local vs global optimization";
 	export let description =
-		"Stratified advantage across hierarchy levels. Most agents are stronger at function-level (fine-grained) edits than module-level (coarse) refactors — OpenHands + Claude 4.0 Sonnet is the notable exception, dominating at the module level.";
+		"Each agent–model has a characteristic profile across module → class → function edits. Most are strongest at fine-grained, function-level changes; OpenHands + Claude 4.0 Sonnet inverts the pattern, leading at the module level while ceding ground on smaller-scale edits.";
 
 	const data = findings.f2_stratified;
 	const levels = data.levels; // [{key, label}, ...]
@@ -24,7 +24,7 @@
 	// (OpenHands → dashed, Terminus → solid). One color per model so the eye
 	// groups by "what LLM is driving this," not by configuration index.
 	const MODEL_COLORS = scaleOrdinal()
-		.domain(["Claude 4.0 Sonnet", "GPT-5", "Qwen 3 Coder", "Gemini 2.5 Pro"])
+		.domain(["Claude 4.0 Sonnet", "GPT-5", "Qwen3 Coder 480B", "Gemini 2.5 Pro"])
 		.range(["#c47e2e", "#0ea36b", "#7c3aed", "#2563eb"]);
 
 	const AGENT_DASH = {
@@ -57,6 +57,10 @@
 
 	// Highlight handling — hover/focus a series to bring it forward.
 	let hoveredKey = null;
+	let hoveredRow = null;
+	let tooltipX = 0;
+	let tooltipY = 0;
+	let chartWrap;
 
 	function rowKey(r) {
 		return `${r.agent}|${r.model}`;
@@ -64,6 +68,24 @@
 
 	function dashFor(r) {
 		return AGENT_DASH[r.agent] ?? "";
+	}
+
+	function onRowEnter(event, r) {
+		hoveredKey = rowKey(r);
+		hoveredRow = r;
+		updateTooltipPos(event);
+	}
+
+	function updateTooltipPos(event) {
+		const rect = chartWrap?.getBoundingClientRect();
+		if (!rect) return;
+		tooltipX = event.clientX - rect.left;
+		tooltipY = event.clientY - rect.top;
+	}
+
+	function onRowLeave() {
+		hoveredKey = null;
+		hoveredRow = null;
 	}
 
 	$: yTicks = (() => {
@@ -84,7 +106,7 @@
 		<p class="f2-desc">{description}</p>
 	</header>
 
-	<div class="chart-wrap">
+	<div class="chart-wrap" bind:this={chartWrap}>
 		<svg viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Stratified advantage by hierarchy level for each agent–model configuration">
 			<g transform="translate({M.left},{M.top})">
 				<!-- y grid + axis -->
@@ -114,11 +136,22 @@
 					Stratified advantage
 				</text>
 
-				<!-- series paths — straight segments between level points so the
-				     line carries no hidden interpolation. -->
+				<!-- series paths — straight segments between level points. Each
+				     series renders twice: a wide invisible "hit target" path that
+				     captures hover even off the visible stroke, and the visible
+				     colored path on top. -->
 				{#each rows as r (rowKey(r))}
 					{@const k = rowKey(r)}
 					{@const dimmed = hoveredKey && hoveredKey !== k}
+					<path
+						class="series-hit"
+						d={linePath(seriesFor(r))}
+						on:mouseenter={(e) => onRowEnter(e, r)}
+						on:mousemove={updateTooltipPos}
+						on:mouseleave={onRowLeave}
+						role="img"
+						aria-label={`${r.agent} ${r.model}: ${levels.map((l) => `${l.label} ${fmtAdv(r[l.key])}`).join(", ")}`}
+					></path>
 					<path
 						class="series-line"
 						class:dimmed
@@ -127,10 +160,7 @@
 						stroke={MODEL_COLORS(r.model)}
 						stroke-dasharray={dashFor(r)}
 						fill="none"
-						on:mouseenter={() => (hoveredKey = k)}
-						on:mouseleave={() => (hoveredKey = null)}
-						role="img"
-						aria-label={`${r.agent} ${r.model}: module ${fmtAdv(r.level4)}, class ${fmtAdv(r.level3)}, function ${fmtAdv(r.level2)}`}
+						pointer-events="none"
 					></path>
 					{#each seriesFor(r) as pt}
 						<circle
@@ -138,15 +168,44 @@
 							class:dimmed
 							cx={x(pt.key)}
 							cy={y(pt.value)}
-							r={hoveredKey === k ? 5 : 3.5}
+							r={hoveredKey === k ? 6 : 4.5}
 							fill={MODEL_COLORS(r.model)}
-						>
-							<title>{r.agent} · {r.model} — {fmtAdv(pt.value)}</title>
-						</circle>
+							role="img"
+							aria-label={`${r.agent} ${r.model} at ${pt.key}: ${fmtAdv(pt.value)}`}
+							on:mouseenter={(e) => onRowEnter(e, r)}
+							on:mousemove={updateTooltipPos}
+							on:mouseleave={onRowLeave}
+						></circle>
 					{/each}
 				{/each}
 			</g>
 		</svg>
+
+		{#if hoveredRow}
+			<div
+				class="f2-tooltip"
+				style="left:{tooltipX + 14}px; top:{tooltipY + 14}px;"
+				role="tooltip"
+			>
+				<div class="tt-head">
+					<span
+						class="tt-swatch"
+						style="background:{MODEL_COLORS(hoveredRow.model)}"
+						aria-hidden="true"
+					></span>
+					<strong>{hoveredRow.agent}</strong>
+					<span class="tt-model">{hoveredRow.model}</span>
+				</div>
+				<dl class="tt-rows">
+					{#each levels as l}
+						<div class="tt-row">
+							<dt>{l.label}</dt>
+							<dd>{fmtAdv(hoveredRow[l.key])}</dd>
+						</div>
+					{/each}
+				</dl>
+			</div>
+		{/if}
 	</div>
 
 	<!-- legend below: column 1 = model (color swatches), column 2 = agent (line styles) -->
@@ -218,6 +277,7 @@
 
 	.chart-wrap {
 		width: 100%;
+		position: relative;
 	}
 
 	svg {
@@ -256,27 +316,95 @@
 	}
 
 	.series-line {
-		stroke-width: 2;
+		stroke-width: 3;
 		opacity: 0.9;
-		cursor: pointer;
 		transition: opacity 120ms, stroke-width 120ms;
 	}
 
 	.series-line.hovered {
-		stroke-width: 3.2;
+		stroke-width: 4.5;
 		opacity: 1;
 	}
 
 	.series-line.dimmed {
-		opacity: 0.18;
+		opacity: 0.2;
+	}
+
+	.series-hit {
+		stroke: transparent;
+		stroke-width: 18;
+		fill: none;
+		cursor: pointer;
 	}
 
 	.series-dot {
+		cursor: pointer;
 		transition: opacity 120ms, r 120ms;
 	}
 
 	.series-dot.dimmed {
-		opacity: 0.18;
+		opacity: 0.2;
+	}
+
+	.f2-tooltip {
+		position: absolute;
+		z-index: 10;
+		pointer-events: none;
+		background: var(--bg-primary);
+		border: 1px solid var(--border-secondary);
+		border-radius: var(--radius);
+		box-shadow: var(--shadow);
+		padding: 10px 12px;
+		font-family: var(--sans);
+		font-size: 0.82rem;
+		color: var(--text-primary);
+		min-width: 220px;
+	}
+
+	.tt-head {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		margin-bottom: 6px;
+	}
+
+	.tt-swatch {
+		display: inline-block;
+		width: 10px;
+		height: 10px;
+		border-radius: 2px;
+		flex: 0 0 auto;
+	}
+
+	.tt-model {
+		color: var(--text-muted);
+		font-size: 0.78rem;
+	}
+
+	.tt-rows {
+		margin: 0;
+		display: grid;
+		gap: 2px;
+	}
+
+	.tt-row {
+		display: flex;
+		justify-content: space-between;
+		gap: 16px;
+	}
+
+	.tt-row dt {
+		color: var(--text-muted);
+		text-transform: uppercase;
+		font-size: 0.68rem;
+		letter-spacing: 0.05em;
+	}
+
+	.tt-row dd {
+		margin: 0;
+		font-variant-numeric: tabular-nums;
+		font-family: var(--mono);
+		font-size: 0.82rem;
 	}
 
 	.legend-bottom {
