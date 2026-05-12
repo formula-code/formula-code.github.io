@@ -6,7 +6,7 @@
 
 	export let title = "Long-tail repository performance";
 	export let description =
-		"Agents are weakest on Q1 — the least-popular repos, where experts still extract sizeable wins, hinting at both distribution shift and untouched headroom. They close the gap on mid-popularity Q2–Q3, then dip again on Q4, where even the expert struggles to find anything left to optimise.";
+		"Agents are weak on Q1 — the least-popular repos, where experts still extract sizeable wins, hinting at both distribution shift and untouched headroom. They close the gap on mid-popularity Q2–Q3, then dip again on Q4, where even the expert struggles to find anything left to optimise.";
 
 	const data = findings.f4_longtail;
 	const quintiles = data.quintiles || [];
@@ -25,14 +25,14 @@
 		{
 			type: "bracket",
 			range: [1, 2], // Q2–Q3
-			label: "Most competitive",
+			label: "Agents competitive",
 			tone: "positive",
 			side: "top"
 		},
 		{
 			type: "bracket",
 			range: [0, 0], // Q1
-			label: "Weakest on rare repos",
+			label: "Agents struggle",
 			tone: "negative",
 			side: "bottom"
 		},
