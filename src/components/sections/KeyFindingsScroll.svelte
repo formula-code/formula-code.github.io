@@ -180,6 +180,7 @@
 		grid-template-columns: 200px minmax(0, 1fr);
 		gap: var(--space-lg);
 		align-items: start;
+		min-width: 0;
 	}
 
 	.kf-rail {
@@ -252,6 +253,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-xl);
+		min-width: 0;
 	}
 
 	.kf-card {
@@ -262,6 +264,7 @@
 		box-shadow: var(--shadow);
 		scroll-margin-top: 64px;
 		transition: border-color 160ms, box-shadow 160ms;
+		min-width: 0;
 	}
 
 	.kf-card.active {
@@ -270,7 +273,7 @@
 
 	@media (max-width: 820px) {
 		.kf-layout {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr);
 		}
 		.kf-rail {
 			position: static;
@@ -290,6 +293,9 @@
 		}
 		.rail-btn.active {
 			border-color: var(--brand-blue, var(--accent-primary));
+		}
+		.kf-card {
+			padding: var(--space-md);
 		}
 	}
 </style>

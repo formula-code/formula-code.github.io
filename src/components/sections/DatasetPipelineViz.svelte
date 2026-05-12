@@ -156,9 +156,9 @@
 	// ticks and a new line / row / state lights up. The autoplay duration for
 	// a substep is derived from how many beats it takes to fully reveal,
 	// plus a tail for the final slide-in animation and a hold for reading.
-	const BEAT_MS = 400;
-	const ANIM_TAIL_MS = 500;
-	const HOLD_MS = 1500;
+	const BEAT_MS = 500;
+	const ANIM_TAIL_MS = 625;
+	const HOLD_MS = 1875;
 	// stepBeat thresholds at which each step is "fully revealed".
 	$: revealBeats = [
 		REPO_LINES.length, // ① find_repos
@@ -1051,13 +1051,44 @@
 								<div class="tl-self-tag">PR #56847</div>
 							</div>
 						</div>
-						{#if s7Beat >= 8}
-							<div class="canvas-stat tl-caption">
-								→ reused build script from commit
-								<code>ce6321</code> (+41d) ·
-								<span class="ok-chip">✓ verifier passed</span>
-							</div>
-						{/if}
+						<div class="tl-log" aria-live="polite">
+							{#if s7Beat >= 3}
+								<div class="tl-log-row tl-log-fail">
+									<span class="tl-log-mark">✗</span>
+									<span class="tl-log-body">
+										try <code>5e8d44</code> (+14d) ·
+										<span class="fail-chip">verifier failed</span>
+									</span>
+								</div>
+							{/if}
+							{#if s7Beat >= 5}
+								<div class="tl-log-row tl-log-fail">
+									<span class="tl-log-mark">✗</span>
+									<span class="tl-log-body">
+										try <code>b7e019</code> (−22d) ·
+										<span class="fail-chip">verifier failed</span>
+									</span>
+								</div>
+							{/if}
+							{#if s7Beat >= 7}
+								<div class="tl-log-row tl-log-pass">
+									<span class="tl-log-mark">✓</span>
+									<span class="tl-log-body">
+										try <code>ce6321</code> (+41d) ·
+										<span class="ok-chip">verifier passed</span>
+									</span>
+								</div>
+							{/if}
+							{#if s7Beat >= 8}
+								<div class="tl-log-row tl-log-summary">
+									<span class="tl-log-mark">→</span>
+									<span class="tl-log-body">
+										reused build script from commit
+										<code>ce6321</code>
+									</span>
+								</div>
+							{/if}
+						</div>
 					{:else if active === 7}
 						<div class="agent">
 							<div class="agent-meta">
@@ -2046,6 +2077,65 @@
 		padding: 2px 8px;
 		border-radius: 4px;
 		font-weight: 700;
+	}
+	.fail-chip {
+		background: rgba(220, 36, 24, 0.12);
+		color: var(--brand-red);
+		padding: 2px 8px;
+		border-radius: 4px;
+		font-weight: 700;
+	}
+	.tl-log {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+		padding-top: 10px;
+		border-top: 1px dashed var(--border-primary);
+		font-family: var(--mono);
+		font-size: 0.82rem;
+		color: var(--text-muted);
+	}
+	.tl-log-row {
+		display: flex;
+		align-items: baseline;
+		gap: 8px;
+		opacity: 0;
+		transform: translateX(-4px);
+		animation: tl-log-in 280ms ease forwards;
+	}
+	.tl-log-mark {
+		font-weight: 700;
+		width: 12px;
+		flex: 0 0 auto;
+		text-align: center;
+	}
+	.tl-log-body {
+		min-width: 0;
+	}
+	.tl-log-body code {
+		color: var(--brand-red);
+		font-weight: 600;
+	}
+	.tl-log-fail .tl-log-mark {
+		color: var(--brand-red);
+	}
+	.tl-log-pass .tl-log-mark {
+		color: #0a6b39;
+	}
+	.tl-log-summary {
+		color: var(--text-primary);
+		padding-top: 4px;
+		margin-top: 2px;
+		border-top: 1px dotted var(--border-primary);
+	}
+	.tl-log-summary .tl-log-mark {
+		color: var(--brand-red);
+	}
+	@keyframes tl-log-in {
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
 	}
 	.tl-note {
 		font-family: var(--sans);
@@ -3186,8 +3276,14 @@
 		.card-content {
 			padding: var(--space-md);
 		}
+		/* Stage 04 (classify) — the second `.classify` rule overrides to flex,
+		   so we have to override flex-direction here, not grid-template-columns. */
 		.classify {
-			grid-template-columns: 1fr;
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.cls-col {
+			min-width: 0;
 		}
 		.cls-arrow {
 			transform: rotate(90deg);
@@ -3196,12 +3292,27 @@
 		.verify-grid {
 			grid-template-columns: 1fr;
 		}
+		/* Stage 09 (machines) — keep local and remote side-by-side; squeeze
+		   the arrows into the middle. */
 		.machines {
-			grid-template-columns: 1fr;
+			grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+			gap: 6px;
+		}
+		.machine {
+			padding: 8px 10px;
+		}
+		.m-name {
+			font-size: 0.78rem;
+			word-break: break-word;
+		}
+		.m-sub {
+			font-size: 0.66rem;
 		}
 		.m-arrows {
-			flex-direction: row;
-			justify-content: space-around;
+			gap: 6px;
+		}
+		.m-arrow-lbl {
+			display: none;
 		}
 		.bench-head,
 		.bench-row {
@@ -3228,6 +3339,13 @@
 		.phase-sub {
 			display: none;
 		}
+		/* Stage 07 (try_similar) — badges overlap horizontally because three
+		   nodes (b7e019, 5e8d44, ce6321) sit within ~35% of the axis. Hide the
+		   text badges on small screens; the colored dots already encode
+		   pass/fail and the caption below spells out the verifier result. */
+		.tl-badge {
+			display: none;
+		}
 	}
 
 	@media (max-width: 520px) {
@@ -3248,6 +3366,15 @@
 		}
 		.phase-arrow {
 			display: none;
+		}
+		.m-name {
+			font-size: 0.7rem;
+		}
+		.m-sub {
+			font-size: 0.6rem;
+		}
+		.m-tag {
+			font-size: 0.56rem;
 		}
 	}
 </style>

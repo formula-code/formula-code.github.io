@@ -398,6 +398,12 @@
 		font-family: var(--sans);
 	}
 
+	@media (max-width: 520px) {
+		.hg-svg {
+			min-width: 480px;
+		}
+	}
+
 	.col-label {
 		font-size: 12px;
 		fill: var(--text-primary);
