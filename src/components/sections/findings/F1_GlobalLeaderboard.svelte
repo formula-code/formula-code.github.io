@@ -14,7 +14,6 @@
 	}));
 
 	const columns = [
-		{ key: "rp_rank", label: "RP", numeric: true, decimals: 0 },
 		{ key: "agent", label: "Agent" },
 		{ key: "model", label: "Model" },
 		{
@@ -48,7 +47,7 @@
 		{columns}
 		{rows}
 		caption="Global leaderboard on FormulaCode-V. Negative advantage = trails human expert; positive = beats expert."
-		rowLabelCols={3}
+		rowLabelCols={2}
 	/>
 
 	<PaperFigureCaption
