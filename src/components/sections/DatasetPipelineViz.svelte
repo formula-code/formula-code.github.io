@@ -40,7 +40,7 @@
 			file: "datasmith/runners/scrape_repos.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/scrape_repos.py`,
 			summary:
-				"For each (owner, repo) candidate — sourced from a CommonSQL query against the GitHub Public Dataset that filters for asv.conf.json presence — fetch metadata via the GitHub REST API and upsert a row into the repositories table with stars, language, topics, and description."
+				"Find repositories that are (1) ASV compatible (contain asv.conf.json), (2) are somewhat popular (have >100 stars), and (3) have mergable PRs. This is done using a CommonSQL BigQuery script or the GitHub Search API."
 		},
 		{
 			phase: 1,
@@ -50,7 +50,7 @@
 			file: "datasmith/runners/scrape_commits.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/scrape_commits.py`,
 			summary:
-				"For each candidate repository, paginate every merged pull request via the GitHub REST API within an optional date window. For each PR, fetch the diff and file changes, run symbolic_compliance() to mark is_performance_commit_symbolic, and upsert into the pull_requests table."
+				"For each candidate repository, paginate every merged pull request via the GitHub REST API within an optional date window. Only keep the PRs with a valid diff, that touches core code files, and that has a non-empty title and description that will fit within a reasonably sized LLM's context window."
 		},
 		{
 			phase: 1,
@@ -60,7 +60,7 @@
 			file: "datasmith/filters.py",
 			fileUrl: `${DATASMITH}/src/datasmith/filters.py`,
 			summary:
-				"A cheap pre-LLM gate: drop PRs only when the title contains a clearly negative keyword (docs, typo, lint, version) and no positive cue. Ambiguous titles are kept; the LLM classifier decides next. Recall-first by design — false positives die at the speedup gate."
+				"A cheap pre-LLM gate: drop PRs only when the title contains a clearly negative keyword (docs, typo, lint, version) and no positive cue. Ambiguous titles are kept; the LLM classifier decides next. Our priority is on higher recall in these stages."
 		},
 		{
 			phase: 2,
@@ -70,7 +70,7 @@
 			file: "datasmith/runners/classify_prs.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/classify_prs.py`,
 			summary:
-				"Two LLM passes over the PR's title, diff, linked issues, and review comments: a classifier first decides binary YES/NO; if YES, a judge picks one of 13 optimization categories and a difficulty (Easy / Medium / Hard)."
+				"Two LLM passes over the PR's title, diff, linked issues, and review comments: a classifier first decides binary YES/NO; if YES, a judge picks one of 13 optimization categories and a difficulty (Easy / Medium / Hard). Prompt is tuned to admit ambiguous cases as well."
 		},
 		{
 			phase: 3,
@@ -80,7 +80,7 @@
 			file: "datasmith/runners/resolve_packages.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/resolve_packages.py`,
 			summary:
-				"For each classified PR, analyze_commit() detects the package's pyproject.toml/setup.py/setup.cfg, infers the Python version, and pins a full transitive dependency closure with uv. Sets can_install=True/False on the packages table. PRs with can_install=False are skipped downstream."
+				"For each classified PR, we detect the package's pyproject.toml/setup.py/setup.cfg, infer the Python version, and pin a full transitive dependency closure with uv. PRs which cannot be resolved are skipped downstream."
 		},
 		{
 			phase: 3,
@@ -90,7 +90,7 @@
 			file: "datasmith/docker/verifiers.py",
 			fileUrl: `${DATASMITH}/src/datasmith/docker/verifiers.py`,
 			summary:
-				"Three CLI checks decide whether a container is good: `python -c 'import {package}'`, `asv profile`, and `pytest`. If any fail, the container is dropped. Every downstream attempt (try_similar, agent_loop) is judged by this same verifier."
+				"Three CLI checks decide whether a container is good: `python -c 'import {package}'`, `asv run`, and `pytest`. If any fail, the container is dropped. Every downstream attempt (try_similar, agent_loop) is judged by this same verifier."
 		},
 		{
 			phase: 3,
@@ -100,7 +100,7 @@
 			file: "datasmith/agents/synthesizer.py",
 			fileUrl: `${DATASMITH}/src/datasmith/agents/synthesizer.py`,
 			summary:
-				"Look up successful build scripts from the same repo, sorted by absolute chronological distance from this PR — closest in either direction first. Fall through one-by-one until a script passes the verifier."
+				"Not all PRs need a unique build script. For a new PR, we look up successful build scripts from the same repo, sorted by absolute chronological distance. The build scripts fall through one-by-one until a script passes the verifier."
 		},
 		{
 			phase: 3,
@@ -110,7 +110,7 @@
 			file: "datasmith/agents/synthesizer.py",
 			fileUrl: `${DATASMITH}/src/datasmith/agents/synthesizer.py`,
 			summary:
-				"When the cascade fails, LLM_GENERATE hands the build to a swappable installed agent (Claude / Codex / Gemini / Qwen) running in a sandboxed container. The agent reads the repo, edits docker_build_pkg.sh, and re-runs the verifier loop until the smoke checks pass or max_attempts (default 2) is exhausted."
+				"If the cascade fails, LLM_GENERATE hands the build to a swappable installed agent (Claude / Codex / Gemini / QwenCode) running in a sandboxed container. The agent reads the repo, edits docker_build_pkg.sh, and re-runs the verifier loop until the verifier passes or max_attempts (default 2) is exhausted. We don't notice any verifier hacking (so far)."
 		},
 		{
 			phase: 4,
@@ -120,7 +120,7 @@
 			file: "datasmith/runners/harbor_healthcheck.py",
 			fileUrl: `${DATASMITH}/src/datasmith/runners/harbor_healthcheck.py`,
 			summary:
-				"The local orchestrator ships each verified container to a clean AWS EC2 c5ad.large box, where the oracle agent applies the human expert's patch and ASV times base vs. patched code. Per-trial speedups stream back into harbor_runs."
+				"The local orchestrator ships each verified container to a clean AWS EC2 instance (for reproducibility and hardware invariance), where the oracle agent applies the human expert's patch and ASV times base vs. patched code. Per-trial speedups stream back to us. PRs with a statistically significant improvement over the baseline are kept."
 		},
 		{
 			phase: 4,
@@ -158,13 +158,13 @@
 	// plus a tail for the final slide-in animation and a hold for reading.
 	const BEAT_MS = 500;
 	const ANIM_TAIL_MS = 625;
-	const HOLD_MS = 1875;
+	const HOLD_MS = 3875;
 	// stepBeat thresholds at which each step is "fully revealed".
 	$: revealBeats = [
 		REPO_LINES.length, // ① find_repos
 		8, // ② scrape_prs
 		SAMPLE_PRS.length, // ③ attribute_filter
-		30, // ④ classify (3 sub-stages × ~10 beats each, ~4s per stage)
+		30, // ④ classify (3 sub-stages x ~10 beats each, ~4s per stage)
 		RESOLVE_LINES.length, // ⑤ resolve_packages
 		16, // ⑥ verify_build (smoke 2 + asv 10 + pytest 4 = 1:5:2 ratio)
 		9, // ⑦ try_similar (interleaved try → verdict cascade, 2 beats each)
@@ -446,16 +446,16 @@
 			]
 		},
 		{
-			cap: "asv profile",
-			cmd: "asv profile -b 'groupby_agg'",
+			cap: "asv run",
+			cmd: "asv run",
 			startBeat: 2,
 			endBeat: 12,
 			elapsedSec: 12.3,
 			showSpinner: true,
 			lines: [
-				{ atBeat: 3, p: "·", body: "Profiling groupby_agg…" },
+				{ atBeat: 3, p: "·", body: "Running groupby_agg…" },
 				{ atBeat: 11, p: "·", body: "cumulative 12.3s / 4 rounds" },
-				{ atBeat: 12, p: "·", body: "✓ profile passed", ok: true }
+				{ atBeat: 12, p: "·", body: "✓ run passed", ok: true }
 			]
 		},
 		{
@@ -1223,7 +1223,7 @@
 							<div class="verified-row" class:on={s10Beat >= 1}>
 								<span class="verified-badge">✓ task verified</span>
 								<span class="verified-sub"
-									>cleared the 1.05× speedup gate</span
+									>U test confirms improvement</span
 								>
 							</div>
 							<div class="targets">
@@ -1321,7 +1321,7 @@
 							<button
 								class="speed"
 								class:active={speed === s}
-								on:click={() => setSpeed(s)}>{s}×</button
+								on:click={() => setSpeed(s)}>{s}x</button
 							>
 						{/each}
 					</div>
