@@ -2,6 +2,7 @@
 	import { getContext } from "svelte";
 	import SectionShell from "$components/sections/SectionShell.svelte";
 	import GrowthHistogram from "$components/sections/dataset-statistics/GrowthHistogram.svelte";
+	import RepoLongTail from "$components/sections/dataset-statistics/RepoLongTail.svelte";
 	import RepoTreemap from "$components/sections/dataset-statistics/RepoTreemap.svelte";
 	import syncMeta from "$data/sync-metadata.json";
 
@@ -40,6 +41,7 @@
 
 		<div class="stack">
 			<GrowthHistogram />
+			<RepoLongTail />
 			<RepoTreemap />
 		</div>
 	</div>
