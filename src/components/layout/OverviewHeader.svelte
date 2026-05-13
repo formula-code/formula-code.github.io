@@ -271,7 +271,7 @@
 					>uv tool install fc-eval</span
 				></pre>
 			<pre class="terminal-line"><span class="prompt">$</span> <span class="cmd"
-					>fc-eval run --dataset formulacode --task-id shapely_shapely_2032 --config <span
+					>fc-eval run --dataset formulacode --task-id shapely_shapely_2283 --config <span
 						class="placeholder">[your-config.json]</span
 					></span
 				></pre>
