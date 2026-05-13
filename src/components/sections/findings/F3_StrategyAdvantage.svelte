@@ -18,7 +18,10 @@
 	// the brackets don't crowd each other.
 	const DISPLAY_ORDER = [0, 1, 2, 8, 3, 4, 5, 6, 7];
 
-	$: rowLabels = rawRows.map((r) => `${r.agent} · ${r.model}`);
+	$: rowLabels = rawRows.map((r) => ({
+		primary: r.agent,
+		secondary: r.model
+	}));
 	$: colLabels = DISPLAY_ORDER.map((idx) => tags[idx]?.label).filter(
 		Boolean
 	);
@@ -71,6 +74,7 @@
 			legendCaps={["Expert wins", "Agent wins"]}
 			valueFormat={fmt}
 			colDimensionLabel="Optimization strategy"
+			caption="Per-tag advantage for each agent-model configuration. Cells report human-relative advantage restricted to workloads whose expert patches use the labeled optimization strategy. Red = trails expert, blue = beats expert; scaled per column."
 		/>
 	{/if}
 

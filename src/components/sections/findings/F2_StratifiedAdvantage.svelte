@@ -24,7 +24,7 @@
 	// (OpenHands → dashed, Terminus → solid). One color per model so the eye
 	// groups by "what LLM is driving this," not by configuration index.
 	const MODEL_COLORS = scaleOrdinal()
-		.domain(["Claude 4.0 Sonnet", "GPT-5", "Qwen3 Coder 480B", "Gemini 2.5 Pro"])
+		.domain(["Claude 4.0 Sonnet", "GPT-5", "Qwen 3 Coder", "Gemini 2.5 Pro"])
 		.range(["#c47e2e", "#0ea36b", "#7c3aed", "#2563eb"]);
 
 	const AGENT_DASH = {
@@ -106,7 +106,15 @@
 		<p class="f2-desc">{description}</p>
 	</header>
 
-	<div class="chart-wrap" bind:this={chartWrap}>
+	<div class="f2-frame">
+		<div class="f2-caption">
+			Stratified advantage at each aggregation level for every
+			agent–model configuration. Each line shows whether a
+			configuration favors coarse module-level changes or
+			fine-grained function-level edits.
+		</div>
+
+		<div class="chart-wrap" bind:this={chartWrap}>
 		<svg viewBox="0 0 {W} {H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Stratified advantage by hierarchy level for each agent–model configuration">
 			<g transform="translate({M.left},{M.top})">
 				<!-- y grid + axis -->
@@ -239,6 +247,7 @@
 			</ul>
 		</div>
 	</div>
+	</div>
 
 	<PaperFigureCaption
 		artifact="Figure 3 (Stratified advantage)"
@@ -275,9 +284,28 @@
 		line-height: 1.55;
 	}
 
+	.f2-frame {
+		overflow-x: auto;
+		border-radius: var(--radius);
+		border: 1px solid var(--border-primary);
+		background: var(--bg-primary);
+		padding: 8px 4px 4px;
+	}
+
 	.chart-wrap {
 		width: 100%;
 		position: relative;
+	}
+
+	.f2-caption {
+		text-align: left;
+		padding: 12px 14px;
+		font-family: var(--sans);
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		border-bottom: 1px solid var(--border-primary);
+		margin: -8px -4px 8px;
+		line-height: 1.5;
 	}
 
 	svg {

@@ -6,7 +6,7 @@
 
 	export let title = "Temporal generalization";
 	export let description =
-		"Mean speedup in three-month windows around each model's knowledge cutoff. Performance does not consistently dip on tasks created after the cutoff, so the gap to the expert looks capability-bound rather than the result of seeing the answer at training time.";
+		"Performance does not consistently dip on tasks created after each model's knowledge cutoff, so the gap to the expert looks capability-bound rather than the result of seeing the answer at training time.";
 
 	const data = findings.f7_temporal;
 	const bins = data.bins || [];
@@ -60,6 +60,7 @@
 			colWidth={88}
 			topLabelHeight={140}
 			colDimensionLabel="Time relative to cutoff"
+			caption="Mean geomean speedup per model in three-month bins relative to its knowledge cutoff (columns left of center = before cutoff, right = after). Cells share a single color scale; darker blue = higher speedup."
 		/>
 	{/if}
 

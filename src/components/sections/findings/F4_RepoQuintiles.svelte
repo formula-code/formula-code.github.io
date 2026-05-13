@@ -12,7 +12,10 @@
 	const quintiles = data.quintiles || [];
 	const rawRows = data.rows || [];
 
-	$: rowLabels = rawRows.map((r) => `${r.agent} · ${r.model}`);
+	$: rowLabels = rawRows.map((r) => ({
+		primary: r.agent,
+		secondary: r.model
+	}));
 	$: colLabels = quintiles.map((q) => q.label);
 	$: values = rawRows.map((r) =>
 		(r.advantages || []).slice(0, quintiles.length)
@@ -74,6 +77,7 @@
 			rowLabelWidth={230}
 			colWidth={84}
 			colDimensionLabel="Popularity quintile"
+			caption="Advantage across repository popularity quintiles by GitHub stars, from least popular (Q1) to most popular (Q5). Red = trails expert, blue = beats expert; scaled across all cells."
 		/>
 	{/if}
 

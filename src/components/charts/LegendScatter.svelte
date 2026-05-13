@@ -43,6 +43,7 @@
 	// Optional faint dashed line drawn behind the dots (e.g., F5 Pareto frontier).
 	// Pass an array of point objects in the order they should be connected.
 	export let backdropLine = null;
+	export let caption = "";
 
 	const W = 760;
 	const H = 420;
@@ -126,7 +127,24 @@
 	let hovered = null;
 	let tooltipX = 0;
 	let tooltipY = 0;
+	let tooltipFlipX = false;
+	let tooltipFlipY = false;
 	let containerEl;
+	let tooltipEl;
+
+	function updateTooltipPlacement() {
+		const rect = containerEl?.getBoundingClientRect();
+		const tip = tooltipEl?.getBoundingClientRect();
+		if (!rect) return;
+		const gap = 14;
+		// Use a conservative tooltip size estimate on the first frame
+		// (before the element is measured), so the very first hover still
+		// flips correctly near the edges.
+		const tw = tip?.width || 220;
+		const th = tip?.height || 80;
+		tooltipFlipX = tooltipX + gap + tw > rect.width;
+		tooltipFlipY = tooltipY + gap + th > rect.height;
+	}
 
 	function onPointEnter(event, row) {
 		hovered = row;
@@ -135,6 +153,7 @@
 			tooltipX = event.clientX - rect.left;
 			tooltipY = event.clientY - rect.top;
 		}
+		updateTooltipPlacement();
 	}
 
 	function onPointMove(event) {
@@ -144,15 +163,23 @@
 			tooltipX = event.clientX - rect.left;
 			tooltipY = event.clientY - rect.top;
 		}
+		updateTooltipPlacement();
 	}
 
 	function onPointLeave() {
 		hovered = null;
 	}
 
+	$: tooltipLeft = tooltipFlipX ? tooltipX - 14 : tooltipX + 14;
+	$: tooltipTop = tooltipFlipY ? tooltipY - 14 : tooltipY + 14;
+	$: tooltipTransform = `translate(${tooltipFlipX ? "-100%" : "0"}, ${tooltipFlipY ? "-100%" : "0"})`;
+
 </script>
 
 <div class="ls-wrap" bind:this={containerEl}>
+	{#if caption}
+		<div class="ls-caption">{caption}</div>
+	{/if}
 	<svg
 		class="ls-chart"
 		viewBox="0 0 {W} {H}"
@@ -178,9 +205,16 @@
 			<line class="axis" x1="0" x2={iw} y1={ih} y2={ih}></line>
 			<line class="axis" x1="0" x2="0" y1="0" y2={ih}></line>
 
-			<!-- y ticks -->
-			{#each yTicks as t}
-				<text class="tick tick-y" x={-10} y={yScale(t)} dy="0.32em">
+			<!-- y ticks: bottom-most label is nudged upward so it sits
+			     above the x-axis line instead of colliding with the
+			     leftmost x-tick label below it -->
+			{#each yTicks as t, i}
+				<text
+					class="tick tick-y"
+					x={-10}
+					y={yScale(t)}
+					dy={i === 0 ? "-0.45em" : "0.32em"}
+				>
 					{yFormat(t)}
 				</text>
 			{/each}
@@ -220,7 +254,7 @@
 				<path
 					class="marker"
 					class:active={isActive}
-					d={markerPath(modelAccessor(r), isActive ? 395 : 293)}
+					d={markerPath(modelAccessor(r), isActive ? 790 : 586)}
 					fill={agentColor(agentAccessor(r))}
 					transform="translate({xScale(xAccessor(r))},{yScale(yAccessor(r))})"
 					on:mouseenter={(e) => onPointEnter(e, r)}
@@ -239,7 +273,8 @@
 	{#if hovered}
 		<div
 			class="ls-tooltip"
-			style="left:{tooltipX + 14}px; top:{tooltipY + 14}px;"
+			bind:this={tooltipEl}
+			style="left:{tooltipLeft}px; top:{tooltipTop}px; transform:{tooltipTransform};"
 			role="tooltip"
 		>
 			<div class="tt-head">
@@ -316,6 +351,22 @@
 	.ls-wrap {
 		position: relative;
 		width: 100%;
+		overflow-x: auto;
+		border-radius: var(--radius);
+		border: 1px solid var(--border-primary);
+		background: var(--bg-primary);
+		padding: 8px 4px 4px;
+	}
+
+	.ls-caption {
+		text-align: left;
+		padding: 12px 14px;
+		font-family: var(--sans);
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		border-bottom: 1px solid var(--border-primary);
+		margin: -8px -4px 8px;
+		line-height: 1.5;
 	}
 
 	.ls-chart {

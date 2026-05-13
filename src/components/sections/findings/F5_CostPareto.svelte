@@ -6,7 +6,7 @@
 
 	export let title = "Cost efficiency";
 	export let description =
-		"Per-task cost vs. advantage over the expert. The Pareto frontier is dominated by the priciest model (Claude 4.0 Sonnet) — cheaper models tend to burn more tokens inside the agent loop, eroding their per-token savings, and may simply lack the capability to reason about performance edits.";
+		"The Pareto frontier is dominated by the priciest model (Claude 4.0 Sonnet) — cheaper models burn more tokens inside the agent loop, eroding their per-token savings, and may simply lack the capability to reason about performance edits.";
 
 	const data = findings.f5_cost;
 	$: rows = data.rows || [];
@@ -57,6 +57,7 @@
 			xBetterDir="lower"
 			yBetterDir="higher"
 			backdropLine={paretoFrontier}
+			caption="Per-task cost (x) vs. mean advantage over the expert (y) for each agent-model configuration."
 		>
 			<svelte:fragment slot="tooltip-extra" let:row>
 				{#if row.is_pareto}

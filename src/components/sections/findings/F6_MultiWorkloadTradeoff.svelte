@@ -6,7 +6,7 @@
 
 	export let title = "Multi-workload tradeoffs";
 	export let description =
-		"Global speedup plotted against the worst per-workload regression each config tolerates. Experts sit clear of every agent — they accept larger localised regressions as the price of bigger global wins, a tradeoff agents are reluctant to make.";
+		"Experts sit clear of every agent — they accept larger localised regressions as the price of bigger global wins, a tradeoff agents are reluctant to make.";
 
 	const data = findings.f6_tradeoff;
 	$: rawRows = data.rows || [];
@@ -74,11 +74,12 @@
 			yLabel="Worst-workload speedup"
 			xFormat={fmtSpeedup}
 			yFormat={fmtSpeedup}
-			xDomain={[1.02, 1.14]}
-			yDomain={[0.85, 1.01]}
+			xDomain={[1.03, 1.11]}
+			yDomain={[0.86, 1.01]}
 			xTickCount={5}
 			yTickCount={5}
 			xBetterDir="higher"
+			caption="Global speedup (x) vs. worst per-workload speedup (y) for each agent-model configuration."
 		>
 			<svelte:fragment slot="tooltip-extra" let:row>
 				<div class="tt-row">

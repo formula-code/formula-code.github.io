@@ -29,9 +29,10 @@
 	export let colWidth = 56;
 	export let rowHeight = 34;
 	export let topLabelHeight = 150;
+	export let caption = "";
 
 	const GAP = 2;
-	const RIGHT_PAD = 16;
+	const RIGHT_PAD = 80;
 	const LEGEND_H = 36;
 
 	$: numCols = colLabels.length;
@@ -143,11 +144,20 @@
 	let tipX = 0;
 	let tipY = 0;
 
+	function labelToText(label) {
+		if (label && typeof label === "object" && label.primary) {
+			return label.secondary
+				? `${label.primary} · ${label.secondary}`
+				: label.primary;
+		}
+		return label;
+	}
+
 	function onEnter(event, i, j) {
 		hovered = {
 			i,
 			j,
-			rowLabel: rowLabels[i],
+			rowLabel: labelToText(rowLabels[i]),
 			colLabel: colLabels[j],
 			value: values[i]?.[j]
 		};
@@ -175,6 +185,9 @@
 </script>
 
 <div class="hg-wrap" bind:this={containerEl}>
+	{#if caption}
+		<div class="hg-caption">{caption}</div>
+	{/if}
 	<svg
 		class="hg-svg"
 		width={W}
@@ -202,14 +215,30 @@
 		<!-- row labels -->
 		{#each rowLabels as label, i}
 			{@const cy = cellsY0 + i * rowHeight + rowHeight / 2}
+			{@const isMulti =
+				label && typeof label === "object" && label.primary}
 			<text
 				class="row-label"
+				class:multi={isMulti}
 				x={rowLabelWidth - 12}
 				y={cy}
 				dominant-baseline="middle"
 				text-anchor="end"
 			>
-				{label}
+				{#if isMulti}
+					<tspan x={rowLabelWidth - 12} dy="-0.5em">
+						{label.primary}
+					</tspan>
+					<tspan
+						class="row-label-secondary"
+						x={rowLabelWidth - 12}
+						dy="1.15em"
+					>
+						{label.secondary}
+					</tspan>
+				{:else}
+					{label}
+				{/if}
 			</text>
 		{/each}
 
@@ -236,7 +265,7 @@
 					on:blur={onLeave}
 					tabindex="0"
 					role="button"
-					aria-label="{rowLabels[i]}, {colLabels[j]}: {valueFormat(v)}"
+					aria-label="{labelToText(rowLabels[i])}, {colLabels[j]}: {valueFormat(v)}"
 				></rect>
 			{/each}
 		{/each}
@@ -392,6 +421,17 @@
 		padding: 8px 4px 4px;
 	}
 
+	.hg-caption {
+		text-align: left;
+		padding: 12px 14px;
+		font-family: var(--sans);
+		font-size: 0.85rem;
+		color: var(--text-muted);
+		border-bottom: 1px solid var(--border-primary);
+		margin: -8px -4px 8px;
+		line-height: 1.5;
+	}
+
 	.hg-svg {
 		display: block;
 		width: 100%;
@@ -419,6 +459,14 @@
 	.row-label {
 		font-size: 12px;
 		fill: var(--text-primary);
+	}
+
+	.row-label.multi {
+		font-size: 10.5px;
+	}
+
+	.row-label-secondary {
+		fill: var(--text-muted);
 	}
 
 	.cell {
