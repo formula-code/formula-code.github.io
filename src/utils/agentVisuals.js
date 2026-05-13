@@ -10,21 +10,33 @@ import {
 	symbolCircle,
 	symbolSquare,
 	symbolTriangle,
-	symbolDiamond,
 	symbolCross
 } from "d3-shape";
 
+// d3's symbolDiamond is a tall, narrow rhombus. We want a literal 45°-rotated
+// square instead, so vertices sit at (±r, 0) and (0, ±r) with area = 2r².
+const symbolRotatedSquare = {
+	draw(context, size) {
+		const r = Math.sqrt(size / 2);
+		context.moveTo(0, -r);
+		context.lineTo(r, 0);
+		context.lineTo(0, r);
+		context.lineTo(-r, 0);
+		context.closePath();
+	}
+};
+
 export const AGENT_COLORS = {
-	"OpenHands": "#d97706",
-	"Terminus 2": "#1e3a8a",
+	"OpenHands": "#1e3a8a",
+	"Terminus 2": "#d97706",
 	"Human Expert": "#0f9d58"
 };
 
 export const MODEL_SYMBOLS = {
 	"Claude 4.0 Sonnet": symbolCircle,
-	"GPT-5": symbolSquare,
+	"GPT-5": symbolRotatedSquare,
 	"Gemini 2.5 Pro": symbolTriangle,
-	"Qwen3 Coder 480B": symbolDiamond,
+	"Qwen 3 Coder": symbolSquare,
 	"(oracle)": symbolCross
 };
 
@@ -34,7 +46,7 @@ export const MODEL_ORDER = [
 	"Claude 4.0 Sonnet",
 	"GPT-5",
 	"Gemini 2.5 Pro",
-	"Qwen3 Coder 480B",
+	"Qwen 3 Coder",
 	"(oracle)"
 ];
 
@@ -86,7 +98,7 @@ const SHAPE_AREA_FACTOR = new Map([
 	[symbolCircle, 1.0],
 	[symbolSquare, 1.2],
 	[symbolTriangle, 0.58],
-	[symbolDiamond, 0.36],
+	[symbolRotatedSquare, 0.64],
 	[symbolCross, 0.7]
 ]);
 
