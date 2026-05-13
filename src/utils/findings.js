@@ -1,10 +1,30 @@
-import f1 from "$data/findings/f1_leaderboard.json";
-import f2 from "$data/findings/f2_stratified.json";
-import f3 from "$data/findings/f3_tags.json";
-import f4 from "$data/findings/f4_longtail.json";
-import f5 from "$data/findings/f5_cost.json";
-import f6 from "$data/findings/f6_tradeoff.json";
-import f7 from "$data/findings/f7_temporal.json";
+import f1Raw from "$data/findings/f1_leaderboard.json";
+import f2Raw from "$data/findings/f2_stratified.json";
+import f3Raw from "$data/findings/f3_tags.json";
+import f4Raw from "$data/findings/f4_longtail.json";
+import f5Raw from "$data/findings/f5_cost.json";
+import f6Raw from "$data/findings/f6_tradeoff.json";
+import f7Raw from "$data/findings/f7_temporal.json";
+
+// OpenHands + Gemini 2.5 Pro was not evaluated to spec, so strip it from every
+// finding before downstream code sees it. The filter is at this layer (not the
+// data files) so re-pulling the JSON exports doesn't reintroduce the row.
+function isExcludedConfig(row) {
+	return row && row.agent === "OpenHands" && row.model === "Gemini 2.5 Pro";
+}
+
+function filterRows(finding) {
+	if (!finding || !Array.isArray(finding.rows)) return finding;
+	return { ...finding, rows: finding.rows.filter((r) => !isExcludedConfig(r)) };
+}
+
+const f1 = filterRows(f1Raw);
+const f2 = filterRows(f2Raw);
+const f3 = filterRows(f3Raw);
+const f4 = filterRows(f4Raw);
+const f5 = filterRows(f5Raw);
+const f6 = filterRows(f6Raw);
+const f7 = filterRows(f7Raw);
 
 // Single source-of-truth for the seven paper-figure findings. Components import
 // from here so the eventual swap to a live `api.formulacode.org` fetch lands in
