@@ -42,7 +42,6 @@
 			model: b.model,
 			global_speedup: b.global_sum / b.n,
 			worst_workload_speedup: b.worst_sum / b.n,
-			n_tasks: b.n,
 			is_expert: b.is_expert
 		}));
 	})();
@@ -80,14 +79,7 @@
 			yTickCount={5}
 			xBetterDir="higher"
 			caption="Global speedup (x) vs. worst per-workload speedup (y) for each agent-model configuration."
-		>
-			<svelte:fragment slot="tooltip-extra" let:row>
-				<div class="tt-row">
-					<dt>Tasks</dt>
-					<dd>{row.n_tasks}</dd>
-				</div>
-			</svelte:fragment>
-		</LegendScatter>
+		/>
 	{/if}
 
 	<PaperFigureCaption
@@ -123,25 +115,5 @@
 		font-size: 0.9rem;
 		color: var(--text-muted);
 		line-height: 1.55;
-	}
-
-	.tt-row {
-		display: flex;
-		justify-content: space-between;
-		gap: 16px;
-	}
-
-	.tt-row dt {
-		color: var(--text-muted);
-		text-transform: uppercase;
-		font-size: 0.68rem;
-		letter-spacing: 0.05em;
-	}
-
-	.tt-row dd {
-		margin: 0;
-		font-variant-numeric: tabular-nums;
-		font-family: var(--mono);
-		font-size: 0.82rem;
 	}
 </style>
