@@ -343,8 +343,8 @@
 		letter-spacing: 0.06em;
 	}
 
-	/* The chart's viewBox is 760×380 — on a ~440px-wide mobile card the SVG
-	   shrinks by ~0.58×, so 12px in SVG coords renders as ~7px on screen.
+	/* The chart's viewBox is 760x380 — on a ~440px-wide mobile card the SVG
+	   shrinks by ~0.58x, so 12px in SVG coords renders as ~7px on screen.
 	   Bump tick labels to keep effective size ≥80% of the description
 	   (0.9rem ≈ 14.4px → ~11.5px target). The rotated y-axis title would
 	   collide with the bigger tick labels in the cramped left margin, so we

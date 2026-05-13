@@ -58,7 +58,7 @@
 			numeric: true,
 			colorCode: true,
 			colorThreshold: 1.0,
-			suffix: "×"
+			suffix: "x"
 		}
 	];
 

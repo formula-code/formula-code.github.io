@@ -32,8 +32,8 @@
 	$: agentAdvantageValue = $overallAgentAdvantage?.[agent] ?? 0;
 	$: summaryBullets = stats
 		? [
-				`Median agent speedup: ${(stats.medianAgentNop || 0).toFixed(2)}× (target ${$thresholdAgentNum.toFixed(2)}×)`,
-				`Median Oracle speedup: ${(stats.medianOracleNop || 0).toFixed(2)}× (target ${$thresholdOracleNum.toFixed(2)}×)`,
+				`Median agent speedup: ${(stats.medianAgentNop || 0).toFixed(2)}x (target ${$thresholdAgentNum.toFixed(2)}x)`,
+				`Median Oracle speedup: ${(stats.medianOracleNop || 0).toFixed(2)}x (target ${$thresholdOracleNum.toFixed(2)}x)`,
 				`Benchmarks analyzed: ${formatter(stats.count || 0)}`,
 				`Agent advantage score: ${agentAdvantageValue.toFixed(2)}`
 			]

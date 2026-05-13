@@ -8859,9 +8859,9 @@ new it.CommandMap(
 new it.CharacterMap("Physics-vector-mo", Dn.default.mathchar0mo, {
 	dotproduct: ["⋅", { mathvariant: kt.TexConstant.Variant.BOLD }],
 	vdot: ["⋅", { mathvariant: kt.TexConstant.Variant.BOLD }],
-	crossproduct: "×",
-	cross: "×",
-	cp: "×",
+	crossproduct: "x",
+	cross: "x",
+	cp: "x",
 	gradientnabla: ["∇", { mathvariant: kt.TexConstant.Variant.BOLD }]
 });
 new it.CharacterMap("Physics-vector-mi", Dn.default.mathchar0mi, {
@@ -9838,7 +9838,7 @@ new nl.CommandMap(
 		textsurd: ["Insert", "√"],
 		textthreequarters: ["Insert", "¾"],
 		textthreesuperior: ["Insert", "³"],
-		texttimes: ["Insert", "×"],
+		texttimes: ["Insert", "x"],
 		texttwosuperior: ["Insert", "²"],
 		textuparrow: ["Insert", "↑"],
 		textborn: ["Insert", "*"],

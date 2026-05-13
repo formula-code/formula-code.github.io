@@ -61,7 +61,7 @@ flowchart LR
     S8 -.- DOC
 
     G1{{"gate: symbolic perf heuristic"}}:::gate
-    G2{{"gate: max_speedup ≥ 1.05× on Daytona"}}:::gate
+    G2{{"gate: max_speedup ≥ 1.05x on Daytona"}}:::gate
     S2 --> G1 --> S3
     S7 --> G2 --> S8
 
@@ -424,12 +424,12 @@ internally; we batch-submit PRs and let Harbor parallelize.
 HuggingFace, re-push their Docker images to DockerHub, mark
 `pull_requests.published_at`.
 
-**Why the 1.05× threshold.** The paper's stage 4 statistical test
+**Why the 1.05x threshold.** The paper's stage 4 statistical test
 (Mann–Whitney U at p<0.002) is the _correctness_ test — does the
-speedup exist statistically? The 1.05× threshold is an _interestingness_
+speedup exist statistically? The 1.05x threshold is an _interestingness_
 filter — the paper's premise is that LLMs should be evaluated on
 _meaningful_ optimizations, not noise-floor improvements. A PR that
-passes Mann–Whitney with a 1.001× speedup is real but uninteresting;
+passes Mann–Whitney with a 1.001x speedup is real but uninteresting;
 including it would inflate dataset size while diluting the benchmark.
 
 **Why publish is fail-closed.** If Harbor never ran successfully on
@@ -540,7 +540,7 @@ Important caveats so a reader doesn't take the diagram too literally:
   containers, get speedups — is one operation.
 - **The paper's "stage 4" (statistical validation) is _inside_ our
   stage 7, not our stage 8.** Mann–Whitney U is what Harbor's reward
-  computation is doing under the hood; the 1.05× filter in publish is
+  computation is doing under the hood; the 1.05x filter in publish is
   on top of that statistical test, not in place of it.
 
 If you need any of those details, fall back to Variation C

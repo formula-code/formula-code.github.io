@@ -220,7 +220,7 @@
 					on:click={() => setSpeed(s)}
 					disabled={status !== "ready"}
 				>
-					{s}×
+					{s}x
 				</button>
 			{/each}
 		</div>
@@ -254,7 +254,7 @@
 
 	<div class="meta">
 		{#if header}
-			<span>terminal {header.width}×{header.height}</span>
+			<span>terminal {header.width}x{header.height}</span>
 		{/if}
 		<span>{lines.length} lines</span>
 		<span>{visibleLineCount} shown</span>

@@ -27,7 +27,7 @@
 
 	// Each diverging column gets its own scale around its own `center` (default
 	// 0). This lets one table mix e.g. an "advantage" column centered at 0 with
-	// a "speedup" column centered at 1× — both rendered in the same RdBu
+	// a "speedup" column centered at 1x — both rendered in the same RdBu
 	// palette, so values above center always read blue and values below center
 	// always read red, regardless of absolute magnitude.
 	$: divScalesByKey = (() => {

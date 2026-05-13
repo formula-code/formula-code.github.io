@@ -321,7 +321,7 @@
 		font-family: var(--sans);
 		/* Fixed size so the page title doesn't collapse toward the subtitle on
 		   narrow viewports. Section titles on this page are 1.5rem, so the page
-		   title sits at 2× that to keep a clear hierarchy. */
+		   title sits at 2x that to keep a clear hierarchy. */
 		font-size: 3rem;
 		font-weight: 800;
 		letter-spacing: -0.025em;
@@ -339,7 +339,7 @@
 
 	.hero-subtitle {
 		font-family: var(--sans);
-		/* Fixed size, 1.5× the section title (1.5rem) so the caption stays
+		/* Fixed size, 1.5x the section title (1.5rem) so the caption stays
 		   visibly above section headers on every viewport. */
 		font-size: 2.25rem;
 		color: var(--text-muted);

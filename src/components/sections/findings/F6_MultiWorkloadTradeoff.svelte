@@ -50,7 +50,7 @@
 
 	function fmtSpeedup(v) {
 		if (!Number.isFinite(v)) return "—";
-		return `${v.toFixed(3)}×`;
+		return `${v.toFixed(3)}x`;
 	}
 </script>
 

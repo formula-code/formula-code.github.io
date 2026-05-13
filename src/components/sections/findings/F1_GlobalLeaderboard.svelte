@@ -5,7 +5,7 @@
 
 	export let title = "Agents improve runtime but underperform experts";
 	export let description =
-		"Every configuration is faster than the original code (geomean speedup > 1×), yet all finish behind the human expert on advantage. The two metrics also disagree — a few easy tasks lift raw speedup, while advantage normalises against the matching expert patch and gives a more honest read.";
+		"Every configuration is faster than the original code (geomean speedup > 1x), yet all finish behind the human expert on advantage. The two metrics also disagree — a few easy tasks lift raw speedup, while advantage normalises against the matching expert patch and gives a more honest read.";
 
 	const data = findings.f1_leaderboard;
 	const rows = (data.rows || []).map((r, i) => ({
@@ -30,7 +30,7 @@
 			label: "Speedup (geomean)",
 			numeric: true,
 			decimals: 4,
-			suffix: "×",
+			suffix: "x",
 			color: "diverging",
 			center: 1
 		}

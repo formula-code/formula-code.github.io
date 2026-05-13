@@ -16,7 +16,7 @@ Legend: ✅ = matches paper · ⚠️ = partial / known divergence · ❌ = wron
 | F4 | Long-tail repository performance | Table 3 (Repo popularity quintiles) | ✅ | Per-task stars sourced from `task.metadata["pr_base_stargazers_count"]`; 39/40 cells populated. Q2 best / Q4 weak matches paper. |
 | F5 | Cost efficiency | Figure 4 (Cost-Performance Pareto) | ✅ | Frontier line + halos; Claude at expensive-end of Pareto matches. |
 | F6 | Multi-workload tradeoffs | Figure 5 (Multi-workload tradeoff) | ✅ | Re-exported from plain `multi_objective_analysis.ipynb` (excludes failed agents). 226 rows = 188 agent + 38 expert. |
-| F7 | Temporal generalization | Table 4 (Temporal analysis) | ⚠️ | Schema now matches paper Table 4's 6-bin layout (`6+ mo before` … `6+ mo after`) and Qwen 3 Coder is excluded — 3 models × 6 bins. **11 of 18 cells populated** vs paper's 18/18; the 7 nulls reflect the upstream task set being sparser per bin than the paper's run. Will fill in as more tasks ingest. |
+| F7 | Temporal generalization | Table 4 (Temporal analysis) | ⚠️ | Schema now matches paper Table 4's 6-bin layout (`6+ mo before` … `6+ mo after`) and Qwen 3 Coder is excluded — 3 models x 6 bins. **11 of 18 cells populated** vs paper's 18/18; the 7 nulls reflect the upstream task set being sparser per bin than the paper's run. Will fill in as more tasks ingest. |
 
 Open upstream issue tracking the divergences: [`formula-code/fc-eval#19`](https://github.com/formula-code/fc-eval/issues/19).
 
@@ -32,9 +32,9 @@ Open upstream issue tracking the divergences: [`formula-code/fc-eval#19`](https:
 | API table | `findings_global_leaderboard` |
 | Website component | `src/components/sections/findings/F1_GlobalLeaderboard.svelte` |
 | Cached JSON | `src/data/findings/f1_leaderboard.json` |
-| Render style | Heatmap table — RP rank, agent, model, advantage (diverging RdBu @ 0), speedup geomean (diverging RdBu @ 1×) |
+| Render style | Heatmap table — RP rank, agent, model, advantage (diverging RdBu @ 0), speedup geomean (diverging RdBu @ 1x) |
 
-**Parity check:** Baseline row's `speedup_geomean` now shows **1.1193×** (was previously `null`), so the diverging color scale on the Speedup column has a center to read against. The RP ordering is what `analysis.task.compute_leaderboard` returns — that's the paper's methodology (Ranked Pairs voting), not advantage-sorted. The earlier-flagged "Claude at rp_rank=1" expectation came from a stale scaffold that had been sorted on advantage rather than computed via RP.
+**Parity check:** Baseline row's `speedup_geomean` now shows **1.1193x** (was previously `null`), so the diverging color scale on the Speedup column has a center to read against. The RP ordering is what `analysis.task.compute_leaderboard` returns — that's the paper's methodology (Ranked Pairs voting), not advantage-sorted. The earlier-flagged "Claude at rp_rank=1" expectation came from a stale scaffold that had been sorted on advantage rather than computed via RP.
 
 ### F2 — Figure 3 (Stratified advantage)
 
@@ -62,7 +62,7 @@ Open upstream issue tracking the divergences: [`formula-code/fc-eval#19`](https:
 | API table | `findings_tag_advantage` |
 | Website component | `src/components/sections/findings/F3_StrategyAdvantage.svelte` |
 | Cached JSON | `src/data/findings/f3_tags.json` |
-| Render style | Heatmap table — agent × tag matrix, diverging RdBu @ 0 |
+| Render style | Heatmap table — agent x tag matrix, diverging RdBu @ 0 |
 
 **Parity check:** The exporter now reads from `task.metadata["classification"]` (the same per-PR enum `analysis/table_8_tags.ipynb` uses), so the website table carries 9 tag keys — `parallelization, batching, caching, algorithmic, data_structure, reduce_work, higher_level, micro, lower_level`. The five paper tags missing from the API (`approximation, scale, db, io, uncategorized`) have zero tasks classified into them in `filtered_formulacode-verified.parquet`; that matches Table 2's actual sparsity. The website renders those columns as `—` and otherwise mirrors the paper.
 
@@ -76,7 +76,7 @@ Open upstream issue tracking the divergences: [`formula-code/fc-eval#19`](https:
 | API table | `findings_repo_quintiles` |
 | Website component | `src/components/sections/findings/F4_RepoQuintiles.svelte` |
 | Cached JSON | `src/data/findings/f4_longtail.json` |
-| Render style | Heatmap table — agent × Q1–Q5 matrix, diverging RdBu @ 0 |
+| Render style | Heatmap table — agent x Q1–Q5 matrix, diverging RdBu @ 0 |
 
 **Visual sanity:** Q2 row mostly positive (best quintile), Q3 / Q4 rows mostly negative (worst quintiles). Matches paper claim "performance varies dramatically by repository popularity; worst in Q4, best in Q2."
 
@@ -118,7 +118,7 @@ Open upstream issue tracking the divergences: [`formula-code/fc-eval#19`](https:
 | API table | `findings_temporal_generalization` |
 | Website component | `src/components/sections/findings/F7_TemporalGeneralization.svelte` |
 | Cached JSON | `src/data/findings/f7_temporal.json` |
-| Render style | Heatmap table — model × 6 paper-Table-4 bins (`6+ mo before` / `3–6 mo before` / `0–3 mo before` / `0–3 mo after` / `3–6 mo after` / `6+ mo after`), sequential blues on speedup |
+| Render style | Heatmap table — model x 6 paper-Table-4 bins (`6+ mo before` / `3–6 mo before` / `0–3 mo before` / `0–3 mo after` / `3–6 mo after` / `6+ mo after`), sequential blues on speedup |
 
 **Parity check:** Upstream re-shipped `findings_temporal_generalization` with the paper Table 4 binning — six 3-month-wide windows (`pre6plus`, `pre3to6`, `pre0to3`, `post0to3`, `post3to6`, `post6plus`), three models (Claude / GPT-5 / Gemini, Qwen excluded per `figure_1_temporal.ipynb` cell 5 popping its cutoff). Cell values are mean `agent/nop` within each bin.
 

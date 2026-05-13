@@ -16,7 +16,7 @@
 
 	function fmt(v) {
 		if (v === null || v === undefined || !Number.isFinite(v)) return "—";
-		return `${v.toFixed(3)}×`;
+		return `${v.toFixed(3)}x`;
 	}
 
 	function delta(v) {
@@ -80,7 +80,7 @@
 				<span class="badge">★ super</span>
 			{/if}
 		</div>
-		<button class="close" on:click={onClose} aria-label="Close">×</button>
+		<button class="close" on:click={onClose} aria-label="Close">x</button>
 	</header>
 
 	<div class="drawer-body">

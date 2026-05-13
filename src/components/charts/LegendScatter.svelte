@@ -422,8 +422,8 @@
 		opacity: 0.9;
 	}
 
-	/* viewBox is 760×420; on a ~440px-wide mobile card the SVG shrinks
-	   ~0.58×, so the desktop sizes above render below the 80%-of-caption
+	/* viewBox is 760x420; on a ~440px-wide mobile card the SVG shrinks
+	   ~0.58x, so the desktop sizes above render below the 80%-of-caption
 	   legibility floor (~11.5px). Bump them in SVG units to compensate.
 	   The rotated y-axis title would collide with the bigger y-tick labels
 	   in the cramped left margin, so we hide it on mobile — the chart

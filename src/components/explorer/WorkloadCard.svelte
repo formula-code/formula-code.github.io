@@ -14,7 +14,7 @@
 
 	function fmt(v) {
 		if (v === null || v === undefined || !Number.isFinite(v)) return "—";
-		return `${v.toFixed(2)}×`;
+		return `${v.toFixed(2)}x`;
 	}
 
 	function trim(name) {

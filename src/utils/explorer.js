@@ -46,7 +46,7 @@ export function levelShort(level) {
 }
 
 /**
- * Pivot CSV rows (one per agent × benchmark × level) into one row per
+ * Pivot CSV rows (one per agent x benchmark x level) into one row per
  * (task_id, level, benchmark_name) with per-agent stats.
  *
  * The CSV structure has each benchmark replicated across the three agents

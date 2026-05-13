@@ -27,7 +27,7 @@ single fetch shim that will swap from static-JSON to live once these land.
 
 - [ ] `GET /findings/global_leaderboard` → **Table 1** (Global Leaderboard)
 - [ ] `GET /findings/stratified_advantage` → **Figure 3** (one row per agent-model with `level2`/`level3`/`level4` advantage)
-- [ ] `GET /findings/tag_advantage` → **Table 2** (Per-Tag advantage; agent-model × tag matrix)
+- [ ] `GET /findings/tag_advantage` → **Table 2** (Per-Tag advantage; agent-model x tag matrix)
 - [ ] `GET /findings/repo_quintiles` → **Table 3** (advantage bucketed by stars quintile)
 - [ ] `GET /findings/cost_pareto` → **Figure 4 / Table 10** (cost-weighted advantage vs cost USD; Pareto-frontier flag)
 - [ ] `GET /findings/workload_tradeoff` → **Figure 5** (per-task global vs worst-workload speedup)
@@ -89,7 +89,7 @@ f6_tradeoff:     304 rows
 f7_temporal:      14 rows
 ```
 
-The f1 snapshot's numerical values agree with the scaffold's ported-in `advantage-leaderboard.json` values to within float noise (e.g. OpenHands × Claude 4.0 Sonnet → `advantage ≈ -0.011`, `speedup_geomean ≈ 1.054`).
+The f1 snapshot's numerical values agree with the scaffold's ported-in `advantage-leaderboard.json` values to within float noise (e.g. OpenHands x Claude 4.0 Sonnet → `advantage ≈ -0.011`, `speedup_geomean ≈ 1.054`).
 
 ## Curl examples (live once the migration lands + exporter runs)
 
@@ -143,13 +143,13 @@ caching, algorithmic, data_structure, reduce_work, micro, uncategorized
 
 Missing from the API but in the paper: **parallelization, batching, vectorization (lower_level), I/O, scale, db, higher_level, approximation**. These are exactly the tags the paper highlights as headline strengths/weaknesses — "agents outperform experts on parallelization and batching tasks", "agents struggle when solutions require lower-level / vectorized implementations." Because those tags are absent from the table, the corresponding cells render empty (`—`) and the website's F3 visualization can't surface the paper's claim.
 
-Beyond the tag-set gap, 26 of 48 (agent–model × tag) cells are null even for the 6 tags that are present — only Qwen and a few Terminus rows have non-null entries. Looks like the tag classifier hasn't been run on most agent runs in the current export.
+Beyond the tag-set gap, 26 of 48 (agent–model x tag) cells are null even for the 6 tags that are present — only Qwen and a few Terminus rows have non-null entries. Looks like the tag classifier hasn't been run on most agent runs in the current export.
 
 ### 3. F7 / Table 4 — extra model row vs. paper
 
 Paper Table 4 reports temporal generalization across **3 frontier models** (Claude 4.0 Sonnet, GPT-5, Gemini 2.5 Pro). `findings_temporal_generalization` includes a 4th row for **Qwen 3 Coder**. Probably fine — newer data than the paper run — but worth confirming this is intentional, otherwise the export should filter to the paper's three.
 
-Also: 6 of 20 (model × bin) cells are null due to thin per-bin task counts. That's expected with the current sample size; will improve as more tasks accumulate.
+Also: 6 of 20 (model x bin) cells are null due to thin per-bin task counts. That's expected with the current sample size; will improve as more tasks accumulate.
 
 ### Summary of asks
 
@@ -288,7 +288,7 @@ Three findings are at full parity with the paper; four still have known upstream
 | F4 | Repo quintiles | Table 3 | ✅ | Q2 best / Q4 weak pattern matches paper. |
 | F5 | Cost-Performance Pareto | Figure 4 (`cost_vs_performance.pdf`) | ✅ | Frontier line + halos; Claude at expensive-end of Pareto matches. |
 | F6 | Multi-workload tradeoff | Figure 5 (`tradeoff.pdf`) | ⚠️ | Upstream `findings_workload_tradeoff` is computed from `multi_objective_analysis_corrected.ipynb` (which imputes `speedup=1.0` for failed non-baseline agents to align with the leaderboard). Paper figure uses the plain `multi_objective_analysis.ipynb`. |
-| F7 | Temporal generalization | Figure 1 (`temporal_ood.pdf`) | ⚠️ | **Scope is correct** (per-model, aggregated across working harnesses, with `openhands × gemini-2.5-pro` excluded upstream). Only **bin granularity** differs: paper plots a running monthly mean over `pr_merged_at`; the API serves 5 coarse `pre6 / pre3 / cutoff / post3 / post6` bins. The API also exposes both `speedup` and `advantage` per row — paper figure plots `advantage`, website currently renders `speedup` (one-line swap if you'd prefer parity on that axis too). |
+| F7 | Temporal generalization | Figure 1 (`temporal_ood.pdf`) | ⚠️ | **Scope is correct** (per-model, aggregated across working harnesses, with `openhands x gemini-2.5-pro` excluded upstream). Only **bin granularity** differs: paper plots a running monthly mean over `pr_merged_at`; the API serves 5 coarse `pre6 / pre3 / cutoff / post3 / post6` bins. The API also exposes both `speedup` and `advantage` per row — paper figure plots `advantage`, website currently renders `speedup` (one-line swap if you'd prefer parity on that axis too). |
 
 ### Open upstream asks (no website work needed)
 
@@ -359,7 +359,7 @@ These persist because of the underlying task-data distribution, not the export c
 
 2. **F3 has 9 of the 14 paper tag categories.** The 5 missing keys (`approximation`, `scale`, `db`, `io`, `uncategorized`) have **zero tasks** classified into them in `filtered_formulacode-verified.parquet` — same distribution as Table 2 in the paper. The website renders those columns as `—`.
 
-3. **F7 has 14 of 20 (model × bin) cells.** Qwen lacks `pre3` and `cutoff` rows, Claude lacks `post6`, etc. Natural sparsity from the relationship between each model's knowledge cutoff and the dataset's PR creation dates. Will fill in as more tasks accumulate.
+3. **F7 has 14 of 20 (model x bin) cells.** Qwen lacks `pre3` and `cutoff` rows, Claude lacks `post6`, etc. Natural sparsity from the relationship between each model's knowledge cutoff and the dataset's PR creation dates. Will fill in as more tasks accumulate.
 
 4. **F6's expert row count (38) is lower than the agent count (~188).** This is by design after the dedupe fix — each PR contributes at most one expert row regardless of how many run timestamps appear in `tasks.txt`.
 
@@ -382,13 +382,13 @@ Pulled fresh from the API (`python tasks/process_remote_data.py` against `api.fo
 
 | # | Before | After re-pull | Status |
 |---|---|---|---|
-| **F1** | baseline row's `speedup_geomean=null` → website cell rendered `—` | baseline `1.1193×` populated; heatmap on Speedup column now has a center to read against | ✅ |
+| **F1** | baseline row's `speedup_geomean=null` → website cell rendered `—` | baseline `1.1193x` populated; heatmap on Speedup column now has a center to read against | ✅ |
 | **F2** | already ✅ | no change | ✅ |
 | **F3** | 22 rows, 6 tag keys, headline tags (parallelization, batching, lower_level) absent | 70 rows, **9 tag keys**: `parallelization, batching, caching, algorithmic, data_structure, reduce_work, higher_level, micro, lower_level`. 70/72 non-null cells. | ✅ |
 | **F4** | quintile bucketing on subset-parquet stars (most tasks missing) | per-task stars from `task.metadata["pr_base_stargazers_count"]`; 39/40 non-null cells | ✅ |
 | **F5** | already ✅ | no change | ✅ |
 | **F6** | 304 rows from `_corrected` (imputed) | **226 rows** = 188 agent + 38 expert from the plain notebook; failed agents excluded | ✅ |
-| **F7** | scope misread on my end | scope confirmed correct (per-model, all working harnesses minus `openhands × gemini`); 14/20 non-null cells | ⚠️ bin granularity only |
+| **F7** | scope misread on my end | scope confirmed correct (per-model, all working harnesses minus `openhands x gemini`); 14/20 non-null cells | ⚠️ bin granularity only |
 
 ### Spot checks from the live data
 
@@ -539,7 +539,7 @@ The table is what most readers will compare against, and the API's current 5-bin
 
 1. **Bin boundaries.** Paper uses 6 contiguous 3-month-wide bins covering `(-∞, -6] / (-6, -3] / (-3, 0] / (0, 3] / (3, 6] / (6, ∞)` months from cutoff (per `figure_1_temporal.ipynb` cell 9: `bins = [-np.inf, -D6, -D3, 0, D3, D6, np.inf]` with D3≈91.3d, D6≈182.6d). API's `pre6 / pre3 / cutoff / post3 / post6` schema is missing the `3-6 mo before` analog and includes a narrow `cutoff` bin that's not in the paper.
 2. **Model filter.** Paper Table 4 restricts to Claude / GPT-5 / Gemini (cell 5 does `cutoffs.pop('Qwen 3 Coder')`). API includes Qwen 3 Coder as a 4th row.
-3. **Sparsity.** Because the bin boundaries don't align, several (model, bin) cells fall outside any task's `pr_merged_at − cutoff` window and render as `null` on the website. The paper proves all 18 (3 models × 6 bins) cells are populated when the paper's binning is used; the current `null` cells aren't natural sparsity, they're a schema mismatch.
+3. **Sparsity.** Because the bin boundaries don't align, several (model, bin) cells fall outside any task's `pr_merged_at − cutoff` window and render as `null` on the website. The paper proves all 18 (3 models x 6 bins) cells are populated when the paper's binning is used; the current `null` cells aren't natural sparsity, they're a schema mismatch.
 
 ### Ask
 
@@ -554,7 +554,7 @@ The website's F7 component will pick up the new 6 bins automatically through `fe
 
 ## F7 — full parity with Table 4 achieved
 
-Re-exported `findings_temporal_generalization` with the schema correction from your previous comment. **All 18 cells (3 models × 6 bins) now match paper Table 4 cell-for-cell.**
+Re-exported `findings_temporal_generalization` with the schema correction from your previous comment. **All 18 cells (3 models x 6 bins) now match paper Table 4 cell-for-cell.**
 
 ### Live values
 
@@ -571,7 +571,7 @@ Re-exported `findings_temporal_generalization` with the schema correction from y
 1. **6 bins instead of 5.** Added `pre3to6` and split into `pre6plus / pre3to6 / pre0to3 / post0to3 / post3to6 / post6plus`. Bin boundaries are now day-based (`D3 = 365.2425 / 12 * 3 ≈ 91.31` days, `D6 ≈ 182.62`) per `figure_1_temporal.ipynb` cell 9, instead of the float-month conversion my previous version used.
 2. **Drop Qwen 3 Coder** (matches `cutoffs.pop('Qwen 3 Coder')` in cell 5). Table 4 has 3 models, not 4.
 3. **Arithmetic mean for `speedup`**, not geomean. The notebook's cell 10 does `.mean()` on the per-task `agent/nop` column. My exporter was previously calling `_safe_gmean` here.
-4. **No EXCLUDED_CONFIGS exclusion**. While `figure_1_temporal.ipynb` cell 3 defines `EXCLUDED_CONFIGS = ['openhands:google-gemini-2.5-pro', ...]`, **cells 4-10 do not apply that filter** in the Table 4 data path. My previous instinct to exclude `openhands × gemini` (carried over from a misread of the figure-vs-table distinction) was wrong for this artifact. Removing the exclusion was what made the Gemini row match.
+4. **No EXCLUDED_CONFIGS exclusion**. While `figure_1_temporal.ipynb` cell 3 defines `EXCLUDED_CONFIGS = ['openhands:google-gemini-2.5-pro', ...]`, **cells 4-10 do not apply that filter** in the Table 4 data path. My previous instinct to exclude `openhands x gemini` (carried over from a misread of the figure-vs-table distinction) was wrong for this artifact. Removing the exclusion was what made the Gemini row match.
 
 ### Verification harness
 
@@ -626,13 +626,13 @@ All seven paper findings are live on `https://api.formulacode.org` at full parit
 # Global leaderboard, ordered by Ranked-Pairs rank
 curl -s "https://api.formulacode.org/rest/v1/findings_global_leaderboard?select=*&order=rp_rank.asc" | jq .
 
-# Tag-advantage matrix (agent × model × optimization category)
+# Tag-advantage matrix (agent x model x optimization category)
 curl -s "https://api.formulacode.org/rest/v1/findings_tag_advantage?select=agent,model,tag,advantage,n_tasks&order=tag,agent,model" | jq .
 
 # Per-task workload tradeoff for one repo
 curl -s "https://api.formulacode.org/rest/v1/findings_workload_tradeoff?owner=eq.numpy&repo=eq.numpy&select=*" | jq .
 
-# Temporal Table 4 — 6 bins × 3 models, paper-cell-for-cell
+# Temporal Table 4 — 6 bins x 3 models, paper-cell-for-cell
 curl -s "https://api.formulacode.org/rest/v1/findings_temporal_generalization?select=model,bin,speedup,n_tasks&order=model,bin" | jq .
 
 # Cost-Pareto frontier configs only
@@ -746,7 +746,7 @@ Returns one row per `(agent, model, task, level)` with the columns rankingEngine
 | `pr_merged_at` | `pull_requests.merged_at` via `task_id_map` join | **new column the slider depends on** |
 | `ran_at` | `harbor_runs.ran_at` | optional, future-proofs a "ran_at" mode if we ever want one |
 
-Row count: ~8 agent-models × ~226 tasks × 3 levels ≈ 5–6K rows. Comfortable single-page fetch.
+Row count: ~8 agent-models x ~226 tasks x 3 levels ≈ 5–6K rows. Comfortable single-page fetch.
 
 ### Why client-side, not `?cutoff_date=` server-side
 

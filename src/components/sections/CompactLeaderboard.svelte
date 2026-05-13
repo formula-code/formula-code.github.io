@@ -31,7 +31,7 @@
 
 	function formatSpeedup(s) {
 		if (!Number.isFinite(s)) return "—";
-		return `${s.toFixed(3)}×`;
+		return `${s.toFixed(3)}x`;
 	}
 
 	function formatAdvantage(a) {

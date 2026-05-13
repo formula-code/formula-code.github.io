@@ -88,7 +88,7 @@
 	function fmtSpeed(v) {
 		if (v === undefined || v === null || Number.isNaN(Number(v))) return "—";
 		const n = Number(v);
-		return `${n.toFixed(2)}×`;
+		return `${n.toFixed(2)}x`;
 	}
 
 	function fmtAdvantage(b) {
@@ -96,7 +96,7 @@
 		const a = Number(b["agent/nop"]);
 		const o = Number(b["oracle/nop"]);
 		if (Number.isNaN(a) || Number.isNaN(o)) return "—";
-		return `${(a - o).toFixed(2)}×`;
+		return `${(a - o).toFixed(2)}x`;
 	}
 
 	$: agentDisplay = benchmark?.agent_id
