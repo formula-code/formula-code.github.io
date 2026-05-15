@@ -131,6 +131,16 @@
 
 <section class="hero">
 	<div class="hero-content">
+		<a
+			class="venue-badge"
+			href="https://icml.cc/Conferences/2026"
+			target="_blank"
+			rel="noopener noreferrer"
+		>
+			<span class="venue-dot" aria-hidden="true"></span>
+			Accepted at ICML 2026
+		</a>
+
 		<div class="hero-title">
 			<div class="hero-mark">
 				<img
@@ -293,6 +303,40 @@
 		flex-direction: column;
 		align-items: center;
 		gap: var(--space-sm);
+	}
+
+	.venue-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		padding: 4px 12px;
+		border-radius: 999px;
+		background: var(--brand-red-soft);
+		color: var(--brand-red-dark);
+		font-family: var(--sans);
+		font-size: 0.8rem;
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		text-decoration: none;
+		border: 1px solid transparent;
+		transition:
+			background 140ms,
+			border-color 140ms,
+			color 140ms;
+	}
+
+	.venue-badge:hover {
+		background: var(--bg-primary);
+		border-color: var(--brand-red);
+		color: var(--brand-red);
+	}
+
+	.venue-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--brand-red);
+		display: inline-block;
 	}
 
 	/* ── Hero title: small logo + name on one line, subtitle below ── */
