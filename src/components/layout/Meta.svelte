@@ -1,57 +1,65 @@
 <script>
-	export let title = "FormulaCode";
+	export let title =
+		"FormulaCode: LLM Agent Benchmark for Python Code Optimization";
 	export let description =
-		"FormulaCode is the first large-scale analysis of the holistic ability of LLM agents to optimize codebases.";
+		"FormulaCode is a continually updated benchmark evaluating LLM coding agents on real-world Python code optimization. 957 performance bottlenecks from 70+ scientific Python repositories, each paired with expert patches and community-maintained performance workloads.";
 	export let url = "https://formulacode.org/";
 	export let keywords =
-		"Code Optimization, Large Language Models, LLMs, AI Agents, Software Performance, Machine Learning, AI Research";
+		"code optimization benchmark, LLM agent benchmark, Python performance benchmark, AI coding agents, code performance dataset, agentic optimization, LLM evaluation, software engineering benchmark, code optimization dataset, FormulaCode";
+	export let ogType = "website";
 	export let preloadFont = [];
+
+	// JSON-LD structured data: pass an array of plain JS objects. Each is
+	// serialized into its own <script type="application/ld+json"> tag.
+	export let jsonLd = [];
+
+	// Strip trailing slash so we don't render "https://formulacode.org//" in
+	// canonical / og:url. SvelteKit's trailingSlash: "always" guarantees the
+	// trailing slash on the input.
+	$: canonicalUrl = (url || "https://formulacode.org/").replace(/\/+$/, "/");
+	$: ogImage = "https://formulacode.org/assets/images/formula-code-banner.png";
 </script>
 
 <svelte:head>
 	<title>{title}</title>
 	<meta name="description" content={description} />
 	<meta name="author" content="Atharva Sehgal" />
+	<meta name="keywords" content={keywords} />
 	<meta name="news_keywords" content={keywords} />
 
 	<meta property="og:title" content={title} />
 	<meta property="og:site_name" content="FormulaCode" />
-	<meta property="og:url" content={url} />
+	<meta property="og:url" content={canonicalUrl} />
 	<meta property="og:description" content={description} />
-	<meta property="og:type" content="article" />
+	<meta property="og:type" content={ogType} />
 	<meta property="og:locale" content="en_US" />
 
-	<meta
-		property="og:image"
-		content="{url}assets/images/formula-code-banner.png"
-	/>
+	<meta property="og:image" content={ogImage} />
 	<meta
 		property="og:image:alt"
-		content="FormulaCode Data Analysis Logo and Banner"
+		content="FormulaCode benchmark — agentic optimization on large codebases"
 	/>
 	<meta property="og:image:type" content="image/png" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
 
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="https://formulacode.org/" />
+	<meta name="twitter:site" content="@atharvas" />
 	<meta name="twitter:creator" content="@atharvas" />
 	<meta name="twitter:title" content={title} />
 	<meta name="twitter:description" content={description} />
-	<meta
-		name="twitter:image:src"
-		content="{url}assets/images/formula-code-banner.png"
-	/>
+	<meta name="twitter:image" content={ogImage} />
 	<meta
 		name="twitter:image:alt"
-		content="FormulaCode Data Analysis Logo and Banner"
+		content="FormulaCode benchmark — agentic optimization on large codebases"
 	/>
 
-	<meta name="robots" content="max-image-preview:large" />
+	<meta name="robots" content="index,follow,max-image-preview:large" />
+	<meta name="googlebot" content="index,follow,max-image-preview:large" />
 	<meta name="theme-color" content="#ffffff" />
 	<meta name="color-scheme" content="light" />
 
-	<link rel="canonical" href="{url}/" />
+	<link rel="canonical" href={canonicalUrl} />
 
 	<!-- Google Fonts preconnect (the actual font CSS is imported from
 	     variables.css; Lexend + Lexend Deca + Roboto Mono). -->
@@ -60,5 +68,9 @@
 
 	{#each preloadFont as href}
 		<link rel="preload" {href} as="font" type="font/woff2" crossorigin />
+	{/each}
+
+	{#each jsonLd as item}
+		{@html `<script type="application/ld+json">${JSON.stringify(item)}<\/script>`}
 	{/each}
 </svelte:head>
