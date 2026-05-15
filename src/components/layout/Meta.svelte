@@ -61,6 +61,11 @@
 
 	<link rel="canonical" href={canonicalUrl} />
 
+	<meta
+		name="google-site-verification"
+		content="PdUgASNM0lz8KY_57xKg13BN-3427cDf9oBnkJbWYIQ"
+	/>
+
 	<!-- Google Fonts preconnect (the actual font CSS is imported from
 	     variables.css; Lexend + Lexend Deca + Roboto Mono). -->
 	<link rel="preconnect" href="https://fonts.googleapis.com" />
