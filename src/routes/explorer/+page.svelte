@@ -6,14 +6,35 @@
 
 	export let data;
 
-	const title = "Workload Explorer — FormulaCode";
-	const description =
-		"Browse, search, and inspect performance workloads in the FormulaCode benchmark.";
-	const { url, keywords } = copy;
-
 	setContext("copy", copy);
 	setContext("data", []);
+
+	const title = "Workload Explorer | FormulaCode Benchmark Dataset";
+	const description =
+		"Browse and search all 957 code-optimization tasks in the FormulaCode benchmark — pull-request sources, agent results, and per-workload performance traces from real-world Python repositories.";
+	const url = "https://formulacode.org/explorer/";
+
+	const breadcrumbs = {
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: [
+			{
+				"@type": "ListItem",
+				position: 1,
+				name: "FormulaCode",
+				item: "https://formulacode.org/"
+			},
+			{
+				"@type": "ListItem",
+				position: 2,
+				name: "Workload Explorer",
+				item: url
+			}
+		]
+	};
+
+	const jsonLd = [breadcrumbs];
 </script>
 
-<Meta {title} {description} {url} {keywords} />
+<Meta {title} {description} {url} {jsonLd} />
 <ExplorerPage workloads={data.workloads} facets={data.facets} />
