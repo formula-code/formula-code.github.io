@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block partial / experimental routes from indexing
+Disallow: /demo/
+Disallow: /blog/
+Disallow: /player/
+
+Sitemap: https://formulacode.org/sitemap.xml
