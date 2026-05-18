@@ -420,16 +420,6 @@
 		font-size: 0.78rem;
 	}
 
-	.pr-chip-accent {
-		background: var(--brand-red-soft);
-		border-color: var(--brand-red-soft);
-		color: var(--brand-red-dark);
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.06em;
-		font-size: 0.7rem;
-	}
-
 	.topic-chip {
 		font-family: var(--mono);
 		font-size: 0.7rem;
