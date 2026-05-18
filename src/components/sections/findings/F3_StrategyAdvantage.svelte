@@ -6,7 +6,7 @@
 
 	export let title = "Optimization strategy strengths";
 	export let description =
-		"Advantage broken out by the strategy the expert used. Agents match or beat experts when the win is parallelisation or batching, but fall behind whenever the human reached for a C extension or a vectorised primitive — the categories where capability, not effort, is the bottleneck.";
+		"Advantage broken out by the strategy the expert used. Agents match or beat experts when the win is parallelisation or batching, but fall behind whenever the human reached for a lower level library (numpy/pandas/etc.) or a vectorised primitive — the categories where capability, not effort, is the bottleneck.";
 
 	const data = findings.f3_tags;
 	const tags = data.tags || [];
