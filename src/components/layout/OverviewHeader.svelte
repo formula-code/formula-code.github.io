@@ -211,8 +211,9 @@
 		<div class="hero-blurb-top hero-blurb">
 			<p>
 				FormulaCode is a <em>continually updating</em> benchmark for evaluating
-				the <em>holistic</em> ability of LLM agents to optimize codebases. Our
-				current dataset consists of <strong>{fmt(FINAL_TASKS)}</strong> tasks
+				the <em>holistic</em> ability of LLM agents to optimize codebases. The
+				<a href="/explorer/">FormulaCode dataset</a> currently consists of
+				<strong>{fmt(FINAL_TASKS)}</strong> tasks
 				scraped from <strong>{fmt(totals.pull_requests)}</strong> pull requests
 				in
 				<strong>{fmt(INITIAL_REPOS)}+</strong> compliant repositories.

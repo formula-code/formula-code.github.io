@@ -14,9 +14,9 @@
 	setContext("data", data.data);
 
 	const title =
-		"FormulaCode: LLM Agent Benchmark for Python Code Optimization";
+		"FormulaCode: LLM Agent Benchmark & Dataset for Python Code Optimization";
 	const description =
-		"FormulaCode is a continually updated benchmark evaluating LLM coding agents on real-world Python code optimization. 957 performance bottlenecks from 70+ scientific Python repositories, each paired with expert patches and community-maintained performance workloads. Accepted at ICML 2026.";
+		"FormulaCode is a continually updated benchmark and dataset for evaluating LLM coding agents on real-world Python code optimization. The FormulaCode dataset has 957 performance bottlenecks from 70+ scientific Python repositories, each paired with expert patches and community-maintained performance workloads. Accepted at ICML 2026.";
 	const url = "https://formulacode.org/";
 
 	const dataset = {

@@ -1,6 +1,6 @@
 <script>
 	export let title =
-		"FormulaCode: LLM Agent Benchmark for Python Code Optimization";
+		"FormulaCode: LLM Agent Benchmark & Dataset for Python Code Optimization";
 	export let description =
 		"FormulaCode is a continually updated benchmark evaluating LLM coding agents on real-world Python code optimization. 957 performance bottlenecks from 70+ scientific Python repositories, each paired with expert patches and community-maintained performance workloads.";
 	export let url = "https://formulacode.org/";

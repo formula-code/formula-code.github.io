@@ -115,10 +115,11 @@
 					width="44"
 					height="44"
 				/>
-				<span class="mark-label">Workload Explorer</span>
+				<span class="mark-label">FormulaCode Benchmark Dataset</span>
 			</div>
 			<h1 class="page-title">
-				Browse {facets.stats.total.toLocaleString()} performance workloads
+				Explore the FormulaCode dataset — {facets.stats.total.toLocaleString()}
+				benchmark workloads
 			</h1>
 			<p class="page-desc">
 				This is a preview slice of the FormulaCode workload dataset, while we work

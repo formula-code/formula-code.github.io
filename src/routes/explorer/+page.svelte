@@ -11,7 +11,7 @@
 
 	const title = "Workload Explorer | FormulaCode Benchmark Dataset";
 	const description =
-		"Browse and search all 957 code-optimization tasks in the FormulaCode benchmark — pull-request sources, agent results, and per-workload performance traces from real-world Python repositories.";
+		"Browse and search the FormulaCode dataset — all 957 code-optimization tasks in the benchmark, with pull-request sources, agent results, and per-workload performance traces from real-world Python repositories.";
 	const url = "https://formulacode.org/explorer/";
 
 	const breadcrumbs = {
